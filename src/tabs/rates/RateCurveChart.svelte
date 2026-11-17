@@ -4,14 +4,7 @@
 
   import Section from "@/components/Section.svelte";
 
-  let {
-    currentRates,
-    maxAngularVel,
-    maxAngularRoll,
-    maxAngularPitch,
-    maxAngularYaw,
-    liveSetpoints,
-  } = $props();
+  let { currentRates, maxAngularVel, maxAngularYaw, liveSetpoints } = $props();
 
   const RATES_TYPE_GRIPORA = 0;
   const SUPER_EXPO = true;
@@ -76,22 +69,6 @@
       currentRates.yaw_rc_expo,
       "#0000ff",
       4,
-      context,
-    );
-    drawCurve(
-      currentRates.roll_srate,
-      currentRates.roll_rc_rate,
-      currentRates.roll_rc_expo,
-      "#ff0000",
-      -2,
-      context,
-    );
-    drawCurve(
-      currentRates.pitch_srate,
-      currentRates.pitch_rc_rate,
-      currentRates.pitch_rc_expo,
-      "#00ff00",
-      2,
       context,
     );
   }
@@ -223,16 +200,6 @@
   }
 
   const BALLOON_COLORS = {
-    roll: {
-      color: "rgba(255,128,128,0.4)",
-      border: "rgba(255,128,128,0.6)",
-      text: "#000000",
-    },
-    pitch: {
-      color: "rgba(128,255,128,0.4)",
-      border: "rgba(128,255,128,0.6)",
-      text: "#000000",
-    },
     yaw: {
       color: "rgba(128,128,255,0.4)",
       border: "rgba(128,128,255,0.6)",
@@ -262,20 +229,6 @@
 
     drawStickPosition(
       context,
-      "#FF8080",
-      FC.RC_COMMAND[0],
-      liveSetpoints.roll,
-      maxAngularVel,
-    );
-    drawStickPosition(
-      context,
-      "#80FF80",
-      FC.RC_COMMAND[1],
-      liveSetpoints.pitch,
-      maxAngularVel,
-    );
-    drawStickPosition(
-      context,
       "#8080FF",
       FC.RC_COMMAND[2],
       liveSetpoints.yaw,
@@ -297,8 +250,6 @@
 
     const maxValBalloons = [
       { value: maxAngularYaw, color: BALLOON_COLORS.yaw },
-      { value: maxAngularRoll, color: BALLOON_COLORS.roll },
-      { value: maxAngularPitch, color: BALLOON_COLORS.pitch },
     ];
     maxValBalloons
       .sort((a, b) => b.value - a.value)
@@ -314,24 +265,6 @@
         );
       });
 
-    drawBalloonLabel(
-      context,
-      liveSetpoints.roll.toFixed(0) + "°/s",
-      10,
-      150,
-      "none",
-      BALLOON_COLORS.roll,
-      balloonsDirty,
-    );
-    drawBalloonLabel(
-      context,
-      liveSetpoints.pitch.toFixed(0) + "°/s",
-      10,
-      250,
-      "none",
-      BALLOON_COLORS.pitch,
-      balloonsDirty,
-    );
     drawBalloonLabel(
       context,
       liveSetpoints.yaw.toFixed(0) + "°/s",
@@ -354,8 +287,6 @@
   $effect(() => {
     void liveSetpoints;
     void maxAngularVel;
-    void maxAngularRoll;
-    void maxAngularPitch;
     void maxAngularYaw;
     redrawStick();
   });

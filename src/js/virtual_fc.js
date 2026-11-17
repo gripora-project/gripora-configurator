@@ -38,19 +38,12 @@ function currentVirtualEscBuffer() {
 // alias the live FC objects a tab is editing.
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
-// Mirrors the firmware's reset templates (pg/pid.c resetPidProfile(), pg/rates.c,
-// pg/tv_pid.c) so a fresh virtual FC looks like a freshly flashed one.
+// Mirrors the firmware's reset templates (pg/pid.c resetPidProfile(), pg/rates.c)
+// so a fresh virtual FC looks like a freshly flashed one.
 const DEFAULT_PIDS = [
   [150, 75, 0, 75, 35], // roll  P I D F B
   [150, 75, 0, 75, 35], // pitch
   [310, 75, 0, 75, 35], // yaw
-];
-
-// pg/tv_pid.c resetTvPidProfile(): nozzle defaults, the same on every axis.
-const DEFAULT_TV_PIDS = [
-  [150, 15, 0, 30, 35], // roll  P I D F B
-  [150, 15, 0, 30, 35], // pitch
-  [150, 15, 0, 30, 35], // yaw
 ];
 
 function defaultPidSlot() {
@@ -159,53 +152,12 @@ function defaultRateSlot() {
   };
 }
 
-function defaultTvSlot() {
-  return {
-    pids: clone(DEFAULT_TV_PIDS),
-    profile: {
-      masterGainRoll: 100,
-      masterGainPitch: 100,
-      masterGainYaw: 100,
-      gainCurveRoll: 0,
-      gainCurvePitch: 0,
-      gainCurveYaw: 0,
-      itermDecayTimeRoll: 30,
-      itermDecayTimePitch: 30,
-      itermDecayTimeYaw: 30,
-      iterm_decay_limit: 0,
-      itermRelaxLevelRoll: 22,
-      itermRelaxLevelPitch: 22,
-      itermRelaxLevelYaw: 22,
-      bouncebackRoll: 5,
-      bouncebackPitch: 5,
-      bouncebackYaw: 5,
-      errorLimitRoll: 25,
-      errorLimitPitch: 25,
-      errorLimitYaw: 25,
-      dtermCutoffRoll: 15,
-      dtermCutoffPitch: 15,
-      dtermCutoffYaw: 20,
-      btermCutoffRoll: 15,
-      btermCutoffPitch: 15,
-      btermCutoffYaw: 20,
-      gyroCutoffRoll: 50,
-      gyroCutoffPitch: 50,
-      gyroCutoffYaw: 100,
-      tvHoldGain: 45,
-      tvHoldDeadband: 5,
-      tvHoldMaxRate: 300,
-    },
-  };
-}
-
-// The FC's per-profile "EEPROM": FC.PIDS/PID_PROFILE, FC.RC_TUNING and FC.TV_PIDS/
-// TV_PID_PROFILE only ever hold the active profile (as on real hardware), so every
-// profile's saved copy lives here. A save writes the active slot, a select loads one -
+// The FC's per-profile "EEPROM": FC.PIDS/PID_PROFILE and FC.RC_TUNING only ever
+// hold the active profile (as on real hardware), so every profile's saved copy lives here. A save writes the active slot, a select loads one -
 // saving on the SET rather than on the switch means edits discarded on the way out of
 // a tab are never persisted.
 let pidSlots = [];
 let rateSlots = [];
-let tvSlots = [];
 
 function copyPids(target, pids) {
   pids.forEach((axis, i) => axis.forEach((value, j) => (target[i][j] = value)));
@@ -235,28 +187,12 @@ function storeRateSlot() {
   rateSlots[FC.CONFIG.rateProfile] = clone(FC.RC_TUNING);
 }
 
-function loadTvSlot(index) {
-  const slot = clone(tvSlots[index]);
-  copyPids(FC.TV_PIDS, slot.pids);
-  Object.assign(FC.TV_PID_PROFILE, slot.profile);
-  FC.CONFIG.tvProfile = index;
-}
-
-function storeTvSlot() {
-  tvSlots[FC.CONFIG.tvProfile] = {
-    pids: clone(FC.TV_PIDS),
-    profile: clone(FC.TV_PID_PROFILE),
-  };
-}
-
 function resetProfileSlots() {
   const count = FC.CONFIG.numProfiles;
   pidSlots = Array.from({ length: count }, defaultPidSlot);
   rateSlots = Array.from({ length: count }, defaultRateSlot);
-  tvSlots = Array.from({ length: count }, defaultTvSlot);
   loadPidSlot(0);
   loadRateSlot(0);
-  loadTvSlot(0);
 }
 
 // Mirrors pidGetRuntimeGains() (flight/pid.c) for the active profile's *saved* values -
@@ -299,41 +235,6 @@ function encodeEffectivePidGains() {
   buffer.push32(centi(100)); // SPA scale: no GPS fix
   buffer.push16(0); // SPA speed
   buffer.push8(profile.fwSpaCurve > 0 ? 1 : 0);
-
-  return Uint8Array.from(buffer);
-}
-
-// Mirrors tvPidGetRuntimeGains() (flight/tv_pid.c) for the active TV profile's saved
-// values, at rest like encodeEffectivePidGains(). Master gain (with its curve) scales
-// P, I, D and F, B is unscaled, and the TV loop has no throttle or speed attenuation.
-function encodeTvEffectivePidGains() {
-  const { pids, profile } = tvSlots[FC.CONFIG.tvProfile];
-  const curveScale = (index, x) => {
-    const curve = FC.GAIN_CURVES[index - 1];
-    return index > 0 && curve ? GainCurve.evaluate(curve, x) / 100 : 1;
-  };
-  const centi = (value) => Math.round(Math.max(0, value) * 100);
-
-  const buffer = [];
-  buffer.push8(1); // payload version
-  buffer.push8(FC.CONFIG.tvProfile);
-
-  ["Roll", "Pitch", "Yaw"].forEach((axis, i) => {
-    const [P, I, D, F, B] = pids[i];
-    const masterGainRaw = profile[`masterGain${axis}`];
-    const gainCurve = curveScale(profile[`gainCurve${axis}`], 0);
-    const masterGain = (masterGainRaw / 100) * gainCurve;
-
-    [P, I, D, F, B].forEach((value) => buffer.push16(value));
-    buffer.push16(masterGainRaw);
-    buffer.push32(centi(gainCurve * 100));
-    buffer.push32(0); // gain curve position: stick centred
-    buffer.push32(centi(P * masterGain));
-    buffer.push32(centi(I * masterGain));
-    buffer.push32(centi(D * masterGain));
-    buffer.push32(centi(F * masterGain));
-    buffer.push32(centi(B));
-  });
 
   return Uint8Array.from(buffer);
 }
@@ -688,20 +589,6 @@ export function getVirtualResponse(code, requestData) {
       pidSlots[FC.CONFIG.profile] = defaultPidSlot();
       loadPidSlot(FC.CONFIG.profile);
       return undefined;
-    case MSPCodes.MSP2_WING_SET_TV_PID_CONFIG:
-      storeTvSlot();
-      return undefined;
-    case MSPCodes.MSP2_WING_SELECT_TV_PROFILE:
-      loadTvSlot(requestData[0]);
-      return undefined;
-    case MSPCodes.MSP2_WING_COPY_TV_PID_PROFILE: {
-      const [dst, src] = requestData;
-      tvSlots[dst] = clone(tvSlots[src]);
-      if (dst === FC.CONFIG.tvProfile) {
-        loadTvSlot(dst);
-      }
-      return undefined;
-    }
     // Like the FC's validateAndFixServoConfig(): keep the center in the
     // signal range and min/max in their travel range. min/max aren't cut
     // against the center; the FC only limits them when working out the output.
@@ -715,8 +602,6 @@ export function getVirtualResponse(code, requestData) {
     }
     case MSPCodes.MSP2_WING_EFFECTIVE_PID_GAINS:
       return decodeVirtualReply(code, encodeEffectivePidGains());
-    case MSPCodes.MSP2_WING_TV_EFFECTIVE_PID_GAINS:
-      return decodeVirtualReply(code, encodeTvEffectivePidGains());
     case MSPCodes.MSP_SERVO_TRIM:
       return decodeVirtualReply(code, encodeServoTrim());
     case MSPCodes.MSP2_WING_SERVO_TIMING:
@@ -979,7 +864,7 @@ export function applyVirtualConfig() {
   FC.MOTOR_DATA = new Array(8);
   Object.assign(FC.MOTOR_CONFIG, {
     mincommand: 1000,
-    minthrottle: 1070,
+    minthrottle: 1000, // car ESC: 1000..2000us, neutral 1500
     maxthrottle: 2000,
     motor_count_blheli: 2, // lets ESC2 (motor 2) be exercised in virtual mode
     motor_pwm_protocol: 0,
@@ -1105,28 +990,21 @@ export function applyVirtualConfig() {
     mag_hardware: 1,
   };
 
-  // Mirrors the boxes gripora-firmware reports (msp/msp_box.c) for a board with an
-  // accelerometer and no GPS, LED strip or thrust vector: names and permanent IDs pair by index.
+  // Mirrors the boxes gripora-firmware reports (msp/msp_box.c) for a board with no
+  // GPS or LED strip: names and permanent IDs pair by index.
   FC.AUX_CONFIG = [
     "ARM",
-    "ANGLE",
-    "TRAINER",
-    "ATT HOLD",
     "FAILSAFE",
-    "PASSTHROUGH",
+    "GYRO OFF",
     "PREARM",
     "BEEPER",
     "BEEPER MUTE",
     "BLACKBOX",
     "BLACKBOX ERASE",
-    "GOVERNOR",
-    "MANUAL",
-    "AUTO TRIM",
-    "TRADITIONAL",
   ];
-  FC.AUX_CONFIG_IDS = [0, 1, 47, 6, 27, 12, 36, 13, 52, 26, 31, 55, 59, 60, 65];
+  FC.AUX_CONFIG_IDS = [0, 27, 12, 36, 13, 52, 26, 31];
 
-  // Modes: ARM on AUX1 high, ANGLE on AUX2 mid; the rest of the
+  // Modes: ARM on AUX1 high, GYRO OFF on AUX2 high; the rest of the
   // MAX_MODE_ACTIVATION_CONDITION_COUNT slots unused, as the FC reports them.
   FC.MODE_RANGES = Array.from({ length: 20 }, () => ({
     id: 0,
@@ -1144,14 +1022,14 @@ export function applyVirtualConfig() {
     range: { start: 1700, end: 2100 },
   };
   FC.MODE_RANGES[1] = {
-    id: 1,
+    id: 12,
     auxChannelIndex: 1,
-    range: { start: 1300, end: 1700 },
+    range: { start: 1700, end: 2100 },
   };
-  FC.MODE_RANGES_EXTRA[1].id = 1;
+  FC.MODE_RANGES_EXTRA[1].id = 12;
 
-  // Profiles/Rates/Thrust Vector (also sets FC.PIDS, PID_PROFILE, RC_TUNING,
-  // TV_PIDS and TV_PID_PROFILE from the active slots)
+  // Profiles/Rates (also sets FC.PIDS, PID_PROFILE and RC_TUNING from the
+  // active slots)
   resetProfileSlots();
 
   FC.GAIN_CURVES = Array.from({ length: GainCurve.CURVE_COUNT }, () =>
@@ -1164,7 +1042,7 @@ export function applyVirtualConfig() {
 
   FC.MIXER_INPUTS = Array.from({ length: 35 }, (_, i) => {
     if (i === 0) return { rate: 0, min: 0, max: 0 }; // MIXER_IN_NONE
-    if (i === 4) return { rate: 1000, min: 0, max: 1000 }; // stabilized throttle
+    if (i === 4) return { rate: 1000, min: -1000, max: 1000 }; // stabilized throttle: signed (car: brake/reverse below neutral)
     return { rate: 1000, min: -1000, max: 1000 };
   });
 

@@ -475,19 +475,6 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_GOVERNOR_CONFIG: {
-                FC.GOVERNOR_CONFIG.governor_mode = data.readU8();
-                FC.GOVERNOR_CONFIG.governor_rpm = data.readU16();
-                FC.GOVERNOR_CONFIG.governor_gain = data.readU16();
-                FC.GOVERNOR_CONFIG.governor_i_gain = data.readU16();
-                FC.GOVERNOR_CONFIG.governor_throttle = data.readU8();
-                FC.GOVERNOR_CONFIG.governor_handover = data.readU8();
-                FC.GOVERNOR_CONFIG.governor_ceiling = data.readU8();
-                FC.GOVERNOR_CONFIG.governor_rpm_min = data.readU16();
-                FC.GOVERNOR_CONFIG.governor_rpm_max = data.readU16();
-                break;
-            }
-
             case MSPCodes.MSP2_WING_EFFECTIVE_PID_GAINS: {
                 const gains = ["P", "I", "D", "F", "B"];
                 const version = data.readU8();
@@ -537,45 +524,6 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 }
 
                 FC.PID_RUNTIME_GAINS = runtimeGains;
-                break;
-            }
-
-            // Same per-axis layout as MSP2_WING_EFFECTIVE_PID_GAINS v2, with no
-            // throttle or speed attenuation (the TV loop never applies them).
-            case MSPCodes.MSP2_WING_TV_EFFECTIVE_PID_GAINS: {
-                const gains = ["P", "I", "D", "F", "B"];
-                const runtimeGains = {
-                    version: data.readU8(),
-                    tvProfile: data.readU8(),
-                    axes: [],
-                };
-
-                for (let axis = 0; axis < 3; axis++) {
-                    const raw = {};
-                    const effective = {};
-
-                    for (const gain of gains) {
-                        raw[gain] = data.readU16();
-                    }
-
-                    const masterGain = data.readU16();
-                    const gainCurve = data.readU32() / 100;
-                    const gainCurvePosition = data.readU32() / 100;
-
-                    for (const gain of gains) {
-                        effective[gain] = data.readU32() / 100;
-                    }
-
-                    runtimeGains.axes.push({
-                        raw,
-                        masterGain,
-                        gainCurve,
-                        gainCurvePosition,
-                        effective,
-                    });
-                }
-
-                FC.TV_PID_RUNTIME_GAINS = runtimeGains;
                 break;
             }
 
@@ -944,23 +892,6 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP_GPS_RESCUE: {
-                FC.GPS_RESCUE.angle             = data.readU16();
-                FC.GPS_RESCUE.initialAltitudeM  = data.readU16();
-                FC.GPS_RESCUE.descentDistanceM  = data.readU16();
-                FC.GPS_RESCUE.rescueGroundspeed = data.readU16();
-                FC.GPS_RESCUE.throttleMin       = data.readU16();
-                FC.GPS_RESCUE.throttleMax       = data.readU16();
-                FC.GPS_RESCUE.throttleHover     = data.readU16();
-                FC.GPS_RESCUE.sanityChecks      = data.readU8();
-                FC.GPS_RESCUE.minSats           = data.readU8();
-                FC.GPS_RESCUE.ascendRate            = data.readU16();
-                FC.GPS_RESCUE.descendRate           = data.readU16();
-                FC.GPS_RESCUE.allowArmingWithoutFix = data.readU8();
-                FC.GPS_RESCUE.altitudeMode          = data.readU8();
-                break;
-            }
-
             case MSPCodes.MSP_RSSI_CONFIG: {
                 FC.RSSI_CONFIG.channel = data.readU8();
                 FC.RSSI_CONFIG.scale   = data.readU8();
@@ -1067,16 +998,8 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 console.log('Motor Configuration saved');
                 break;
             }
-            case MSPCodes.MSP2_WING_SET_GOVERNOR_CONFIG: {
-                console.log('Governor Configuration saved');
-                break;
-            }
             case MSPCodes.MSP_SET_GPS_CONFIG: {
                 console.log('GPS Configuration saved');
-                break;
-            }
-            case MSPCodes.MSP_SET_GPS_RESCUE: {
-                console.log('GPS Rescue Configuration saved');
                 break;
             }
             case MSPCodes.MSP_SET_RSSI_CONFIG: {
@@ -1244,51 +1167,6 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 FC.BOARD_MOUNT_TRIM.roll = data.read16(); // decidegrees, -3600 - 3600
                 FC.BOARD_MOUNT_TRIM.pitch = data.read16(); // decidegrees, -3600 - 3600
                 FC.BOARD_MOUNT_TRIM.yaw = data.read16(); // decidegrees, -3600 - 3600
-                break;
-            }
-
-            case MSPCodes.MSP2_WING_TV_PID_CONFIG: {
-                // Leading byte identifies which TV profile the rest of this
-                // payload describes -- always "currently active" (see
-                // MSP2_WING_SELECT_TV_PROFILE).
-                FC.CONFIG.tvProfile = data.readU8();
-                for (let i = 0; i < 3; i++) { // RPY
-                    for (let j = 0; j < 5; j++) { // PIDFB
-                        FC.TV_PIDS[i][j] = data.readU16();
-                    }
-                }
-                FC.TV_PID_PROFILE.masterGainRoll        = data.readU16();
-                FC.TV_PID_PROFILE.masterGainPitch       = data.readU16();
-                FC.TV_PID_PROFILE.masterGainYaw         = data.readU16();
-                FC.TV_PID_PROFILE.itermDecayTimeRoll    = data.readU8();
-                FC.TV_PID_PROFILE.itermDecayTimePitch   = data.readU8();
-                FC.TV_PID_PROFILE.itermDecayTimeYaw     = data.readU8();
-                FC.TV_PID_PROFILE.iterm_decay_limit     = data.readU8();
-                FC.TV_PID_PROFILE.itermRelaxLevelRoll   = data.readU8();
-                FC.TV_PID_PROFILE.itermRelaxLevelPitch  = data.readU8();
-                FC.TV_PID_PROFILE.itermRelaxLevelYaw    = data.readU8();
-                FC.TV_PID_PROFILE.bouncebackRoll  = data.readU8();
-                FC.TV_PID_PROFILE.bouncebackPitch = data.readU8();
-                FC.TV_PID_PROFILE.bouncebackYaw   = data.readU8();
-                FC.TV_PID_PROFILE.errorLimitRoll        = data.readU8();
-                FC.TV_PID_PROFILE.errorLimitPitch       = data.readU8();
-                FC.TV_PID_PROFILE.errorLimitYaw         = data.readU8();
-                FC.TV_PID_PROFILE.dtermCutoffRoll       = data.readU8();
-                FC.TV_PID_PROFILE.dtermCutoffPitch      = data.readU8();
-                FC.TV_PID_PROFILE.dtermCutoffYaw        = data.readU8();
-                FC.TV_PID_PROFILE.btermCutoffRoll       = data.readU8();
-                FC.TV_PID_PROFILE.btermCutoffPitch      = data.readU8();
-                FC.TV_PID_PROFILE.btermCutoffYaw        = data.readU8();
-                FC.TV_PID_PROFILE.gyroCutoffRoll        = data.readU8();
-                FC.TV_PID_PROFILE.gyroCutoffPitch       = data.readU8();
-                FC.TV_PID_PROFILE.gyroCutoffYaw         = data.readU8();
-                // TV Hold -- independent attitude/heading hold for this loop only //
-                FC.TV_PID_PROFILE.tvHoldGain            = data.remaining() >= 4 ? data.readU8() : 0;
-                FC.TV_PID_PROFILE.tvHoldDeadband        = data.remaining() >= 3 ? data.readU8() : 0;
-                FC.TV_PID_PROFILE.tvHoldMaxRate         = data.remaining() >= 2 ? data.readU16() : 0;
-                FC.TV_PID_PROFILE.gainCurveRoll         = data.remaining() >= 3 ? data.readU8() : 0;
-                FC.TV_PID_PROFILE.gainCurvePitch        = data.remaining() >= 2 ? data.readU8() : 0;
-                FC.TV_PID_PROFILE.gainCurveYaw          = data.remaining() >= 1 ? data.readU8() : 0;
                 break;
             }
 
@@ -1560,24 +1438,6 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 // Appended field; older firmware only sends the six above.
                 if (data.remaining() >= 2) {
                     FC.FAILSAFE_CONFIG.failsafe_recovery_delay = data.readU16();
-                }
-                break;
-            }
-
-            case MSPCodes.MSP2_WING_GPS_NAV_CONFIG: {
-                FC.GPS_NAV_CONFIG.nav_loiter_radius = data.readU16();
-                FC.GPS_NAV_CONFIG.nav_loiter_direction = data.readU8();
-                FC.GPS_NAV_CONFIG.nav_rth_altitude = data.readU16();
-                FC.GPS_NAV_CONFIG.nav_min_sats = data.readU8();
-                FC.GPS_NAV_CONFIG.nav_max_bank_angle = data.readU8();
-                FC.GPS_NAV_CONFIG.nav_max_pitch_angle = data.readU8();
-                FC.GPS_NAV_CONFIG.nav_bearing_kp = data.readU16();
-                FC.GPS_NAV_CONFIG.nav_altitude_kp = data.readU16();
-                // Appended fields; older firmware only sends the eight above.
-                if (data.remaining() >= 4) {
-                    FC.GPS_NAV_CONFIG.nav_altitude_kd = data.readU16();
-                    FC.GPS_NAV_CONFIG.nav_throttle = data.readU8();
-                    FC.GPS_NAV_CONFIG.nav_turn_coordination = data.readU8();
                 }
                 break;
             }
@@ -2246,10 +2106,6 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 console.log('Failsafe config saved');
                 break;
             }
-            case MSPCodes.MSP2_WING_SET_GPS_NAV_CONFIG: {
-                console.log('GPS nav config saved');
-                break;
-            }
             case MSPCodes.MSP_SET_TELEMETRY_CONFIG: {
                 console.log('Telemetry config saved');
                 break;
@@ -2272,14 +2128,6 @@ MspHelper.prototype.process_data = function(dataHandler) {
             }
             case MSPCodes.MSP_COPY_PROFILE: {
                 console.log('Copy profile');
-                break;
-            }
-            case MSPCodes.MSP2_WING_SELECT_TV_PROFILE: {
-                console.log('Select TV profile');
-                break;
-            }
-            case MSPCodes.MSP2_WING_COPY_TV_PID_PROFILE: {
-                console.log('Copy TV PID profile');
                 break;
             }
             case MSPCodes.MSP_ARMING_DISABLE: {
@@ -2426,47 +2274,6 @@ MspHelper.prototype.crunch = function(code) {
             break;
         }
 
-        case MSPCodes.MSP2_WING_SET_TV_PID_CONFIG: {
-            for (let i = 0; i < 3; i++) { // RPY
-                for (let j = 0; j < 5; j++) { // PIDFB
-                    buffer.push16(parseInt(FC.TV_PIDS[i][j]));
-                }
-            }
-            buffer.push16(FC.TV_PID_PROFILE.masterGainRoll)
-                .push16(FC.TV_PID_PROFILE.masterGainPitch)
-                .push16(FC.TV_PID_PROFILE.masterGainYaw)
-                .push8(FC.TV_PID_PROFILE.itermDecayTimeRoll)
-                .push8(FC.TV_PID_PROFILE.itermDecayTimePitch)
-                .push8(FC.TV_PID_PROFILE.itermDecayTimeYaw)
-                .push8(FC.TV_PID_PROFILE.iterm_decay_limit)
-                .push8(FC.TV_PID_PROFILE.itermRelaxLevelRoll)
-                .push8(FC.TV_PID_PROFILE.itermRelaxLevelPitch)
-                .push8(FC.TV_PID_PROFILE.itermRelaxLevelYaw)
-                .push8(FC.TV_PID_PROFILE.bouncebackRoll)
-                .push8(FC.TV_PID_PROFILE.bouncebackPitch)
-                .push8(FC.TV_PID_PROFILE.bouncebackYaw)
-                .push8(FC.TV_PID_PROFILE.errorLimitRoll)
-                .push8(FC.TV_PID_PROFILE.errorLimitPitch)
-                .push8(FC.TV_PID_PROFILE.errorLimitYaw)
-                .push8(FC.TV_PID_PROFILE.dtermCutoffRoll)
-                .push8(FC.TV_PID_PROFILE.dtermCutoffPitch)
-                .push8(FC.TV_PID_PROFILE.dtermCutoffYaw)
-                .push8(FC.TV_PID_PROFILE.btermCutoffRoll)
-                .push8(FC.TV_PID_PROFILE.btermCutoffPitch)
-                .push8(FC.TV_PID_PROFILE.btermCutoffYaw)
-                .push8(FC.TV_PID_PROFILE.gyroCutoffRoll)
-                .push8(FC.TV_PID_PROFILE.gyroCutoffPitch)
-                .push8(FC.TV_PID_PROFILE.gyroCutoffYaw)
-                // TV Hold -- independent attitude/heading hold for this loop only //
-                .push8(FC.TV_PID_PROFILE.tvHoldGain)
-                .push8(FC.TV_PID_PROFILE.tvHoldDeadband)
-                .push16(FC.TV_PID_PROFILE.tvHoldMaxRate)
-                .push8(FC.TV_PID_PROFILE.gainCurveRoll)
-                .push8(FC.TV_PID_PROFILE.gainCurvePitch)
-                .push8(FC.TV_PID_PROFILE.gainCurveYaw);
-            break;
-        }
-
         case MSPCodes.MSP_SET_PID_TUNING: {
             for (let i = 0; i < 3; i++) { // RPY
                 for (let j = 0; j < 4; j++) { // PIDF
@@ -2568,19 +2375,6 @@ MspHelper.prototype.crunch = function(code) {
             break;
         }
 
-        case MSPCodes.MSP2_WING_SET_GOVERNOR_CONFIG: {
-            buffer.push8(FC.GOVERNOR_CONFIG.governor_mode)
-                .push16(FC.GOVERNOR_CONFIG.governor_rpm)
-                .push16(FC.GOVERNOR_CONFIG.governor_gain)
-                .push16(FC.GOVERNOR_CONFIG.governor_i_gain)
-                .push8(FC.GOVERNOR_CONFIG.governor_throttle)
-                .push8(FC.GOVERNOR_CONFIG.governor_handover)
-                .push8(FC.GOVERNOR_CONFIG.governor_ceiling)
-                .push16(FC.GOVERNOR_CONFIG.governor_rpm_min)
-                .push16(FC.GOVERNOR_CONFIG.governor_rpm_max);
-            break;
-        }
-
         case MSPCodes.MSP2_WING_SET_FBUS_MASTER_CONFIG: {
             // matches FBUS_MASTER_MAX_FORWARDED_SENSORS in pg/fbus_master.h
             for (let i = 0; i < 8; i++) {
@@ -2614,23 +2408,6 @@ MspHelper.prototype.crunch = function(code) {
                   .push8(FC.GPS_CONFIG.auto_baud)
                   .push8(FC.GPS_CONFIG.home_point_once)
                   .push8(FC.GPS_CONFIG.ublox_use_galileo);
-            break;
-        }
-
-        case MSPCodes.MSP_SET_GPS_RESCUE: {
-            buffer.push16(FC.GPS_RESCUE.angle)
-                  .push16(FC.GPS_RESCUE.initialAltitudeM)
-                  .push16(FC.GPS_RESCUE.descentDistanceM)
-                  .push16(FC.GPS_RESCUE.rescueGroundspeed)
-                  .push16(FC.GPS_RESCUE.throttleMin)
-                  .push16(FC.GPS_RESCUE.throttleMax)
-                  .push16(FC.GPS_RESCUE.throttleHover)
-                  .push8(FC.GPS_RESCUE.sanityChecks)
-                  .push8(FC.GPS_RESCUE.minSats)
-                  .push16(FC.GPS_RESCUE.ascendRate)
-                  .push16(FC.GPS_RESCUE.descendRate)
-                  .push8(FC.GPS_RESCUE.allowArmingWithoutFix)
-                  .push8(FC.GPS_RESCUE.altitudeMode);
             break;
         }
 
@@ -2739,21 +2516,6 @@ MspHelper.prototype.crunch = function(code) {
                 .push16(FC.FAILSAFE_CONFIG.failsafe_throttle_low_delay)
                 .push8(FC.FAILSAFE_CONFIG.failsafe_procedure)
                 .push16(FC.FAILSAFE_CONFIG.failsafe_recovery_delay);
-            break;
-        }
-
-        case MSPCodes.MSP2_WING_SET_GPS_NAV_CONFIG: {
-            buffer.push16(FC.GPS_NAV_CONFIG.nav_loiter_radius)
-                .push8(FC.GPS_NAV_CONFIG.nav_loiter_direction)
-                .push16(FC.GPS_NAV_CONFIG.nav_rth_altitude)
-                .push8(FC.GPS_NAV_CONFIG.nav_min_sats)
-                .push8(FC.GPS_NAV_CONFIG.nav_max_bank_angle)
-                .push8(FC.GPS_NAV_CONFIG.nav_max_pitch_angle)
-                .push16(FC.GPS_NAV_CONFIG.nav_bearing_kp)
-                .push16(FC.GPS_NAV_CONFIG.nav_altitude_kp)
-                .push16(FC.GPS_NAV_CONFIG.nav_altitude_kd)
-                .push8(FC.GPS_NAV_CONFIG.nav_throttle)
-                .push8(FC.GPS_NAV_CONFIG.nav_turn_coordination);
             break;
         }
 
@@ -3011,12 +2773,6 @@ MspHelper.prototype.crunch = function(code) {
         case MSPCodes.MSP_COPY_PROFILE: {
             buffer.push8(FC.COPY_PROFILE.type)
                 .push8(FC.COPY_PROFILE.dstProfile)
-                .push8(FC.COPY_PROFILE.srcProfile);
-            break;
-        }
-
-        case MSPCodes.MSP2_WING_COPY_TV_PID_PROFILE: {
-            buffer.push8(FC.COPY_PROFILE.dstProfile)
                 .push8(FC.COPY_PROFILE.srcProfile);
             break;
         }

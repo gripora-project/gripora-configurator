@@ -17,11 +17,15 @@
 
   let width = $state(0);
   let mobile = $derived(width <= 480);
+  // A bidirectional (reversible) motor runs -100..+100% with neutral at 0;
+  // a unidirectional one 0..100%.
+  let bidirectional = $derived(motorState.isBidirectional(index));
+  let sliderMin = $derived(bidirectional ? -100 : 0);
   let sliderDensity = $derived(mobile ? 10 : 5);
   let sliderValues = $derived.by(() => {
     const values = [];
-    const step = mobile ? 20 : 10;
-    for (let i = 0; i <= 100; i += step) {
+    const step = (mobile ? 20 : 10) * (bidirectional ? 2 : 1);
+    for (let i = sliderMin; i <= 100; i += step) {
       values.push(i);
     }
 
@@ -30,10 +34,10 @@
 
   let sliderOpts = $derived({
     range: {
-      min: 0,
+      min: sliderMin,
       max: 100,
     },
-    connect: [true, false],
+    connect: bidirectional ? false : [true, false],
     start: 0,
     step: 1,
     behaviour: "snap-drag",
@@ -165,9 +169,9 @@
         <div class="bar">
           <Meter
             title={$i18n.t("motorThrottle")}
-            rightLabel="100%"
+            rightLabel={bidirectional ? "±100%" : "100%"}
             leftLabel={`${throttle}%`}
-            value={throttle}
+            value={Math.abs(throttle)}
           />
         </div>
       </div>

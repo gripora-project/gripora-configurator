@@ -37,11 +37,8 @@ class FlightController {
   FLIGHT_STATS = $state();
   SERIAL_STATUS = $state();
   GAIN_CURVES = $state();
-  GOVERNOR_CONFIG = $state();
   GPS_CONFIG = $state();
-  GPS_NAV_CONFIG = $state();
   GPS_DATA = $state();
-  GPS_RESCUE = $state();
   LED_COLORS = $state();
   LED_MODE_COLORS = $state();
   LED_STRIP = $state();
@@ -67,7 +64,6 @@ class FlightController {
   PID_NAMES = $state();
   PID_PROFILE = $state();
   PID_RUNTIME_GAINS = $state();
-  TV_PID_RUNTIME_GAINS = $state();
   PILOT_CONFIG = $state();
   RC = $state();
   RC_COMMAND = $state();
@@ -106,8 +102,6 @@ class FlightController {
   TELEMETRY_CONFIG = $state();
   TRANSPONDER = $state();
   TUNING_SLIDERS = $state();
-  TV_PIDS = $state();
-  TV_PID_PROFILE = $state();
   VOLTAGE_METERS = $state();
   VOLTAGE_METER_CONFIGS = $state();
 
@@ -138,7 +132,6 @@ class FlightController {
       profile:                    0,
       numRateProfile:             6,
       rateProfile:                0,
-      tvProfile:                  0, // populated from MSP2_WING_TV_PID_CONFIG's leading byte, not MSP_STATUS -- see TV_PID_PROFILE below
       uid:                        [0, 0, 0],
       accelerometerTrims:         [0, 0],
       name:                       '',
@@ -282,7 +275,6 @@ class FlightController {
     };
 
     this.PID_RUNTIME_GAINS = null;
-    this.TV_PID_RUNTIME_GAINS = null;
     this.FBUS_SENSORS = [];
     this.FBUS_SENSORS_STATUS = {
       gps:                        null,
@@ -456,18 +448,6 @@ class FlightController {
       use_unsynced_pwm:           false,
       motor1_gear_ratio:          [ 1, 1 ],
       motor2_gear_ratio:          [ 1, 1 ],
-    };
-
-    this.GOVERNOR_CONFIG = {
-      governor_mode:          0,
-      governor_rpm:           0,
-      governor_gain:          20,
-      governor_i_gain:        30,
-      governor_throttle:      15,
-      governor_handover:      10,
-      governor_ceiling:       30,
-      governor_rpm_min:       0,
-      governor_rpm_max:       0,
     };
 
     this.GPS_CONFIG = {
@@ -697,46 +677,6 @@ class FlightController {
       gainCurveYaw:               0,
     };
 
-    // Independent Thrust Vector PID loop. One of
-    // numProfiles independently-switchable profiles (mirrors FC.PID_PROFILE) --
-    // see MSP2_WING_TV_PID_CONFIG / MSP2_WING_SELECT_TV_PROFILE. TV_PIDS/
-    // TV_PID_PROFILE always reflect whichever profile is currently active.
-    this.TV_PIDS = Array.from({length: 3}, () => Array.from({length: 5}).fill(0));
-
-    this.TV_PID_PROFILE = {
-      masterGainRoll:        100,
-      masterGainPitch:       100,
-      masterGainYaw:         100,
-      gainCurveRoll:         0,
-      gainCurvePitch:        0,
-      gainCurveYaw:          0,
-      itermDecayTimeRoll:  0,
-      itermDecayTimePitch: 0,
-      itermDecayTimeYaw:   0,
-      iterm_decay_limit:     0,
-      itermRelaxLevelRoll:   0,
-      itermRelaxLevelPitch:  0,
-      itermRelaxLevelYaw:    0,
-      bouncebackRoll:  0,
-      bouncebackPitch: 0,
-      bouncebackYaw:   0,
-      errorLimitRoll:        0,
-      errorLimitPitch:       0,
-      errorLimitYaw:         0,
-      dtermCutoffRoll:       0,
-      dtermCutoffPitch:      0,
-      dtermCutoffYaw:        0,
-      btermCutoffRoll:       0,
-      btermCutoffPitch:      0,
-      btermCutoffYaw:        0,
-      gyroCutoffRoll:        0,
-      gyroCutoffPitch:       0,
-      gyroCutoffYaw:         0,
-      tvHoldGain:            0,
-      tvHoldDeadband:        0,
-      tvHoldMaxRate:         0,
-    };
-
     this.SENSOR_CONFIG = {
       acc_hardware:               0,
       baro_hardware:              0,
@@ -783,22 +723,6 @@ class FlightController {
       failsafe_recovery_delay:        0,
     };
 
-    this.GPS_NAV_CONFIG = {
-      nav_loiter_radius:              100,
-      nav_loiter_direction:           0,
-      nav_rth_altitude:               50,
-      nav_min_sats:                   8,
-      nav_max_bank_angle:             25,
-      nav_max_pitch_angle:            15,
-      nav_bearing_kp:                 120,
-      nav_altitude_kp:                100,
-      // Appended MSP fields; defaulted here so a save against firmware that
-      // predates them still crunches real numbers (older firmware ignores them).
-      nav_altitude_kd:                200,
-      nav_throttle:                   65,
-      nav_turn_coordination:          100,
-    };
-
     this.TELEMETRY_CONFIG = {
       telemetry_inverted:             false,
       telemetry_halfduplex:           false,
@@ -808,22 +732,6 @@ class FlightController {
       crsf_telemetry_rate:            0,
       crsf_telemetry_ratio:           0,
       telemetry_sensors_list:         [],
-    };
-
-    this.GPS_RESCUE = {
-      angle:                          0,
-      initialAltitudeM:               0,
-      descentDistanceM:               0,
-      rescueGroundspeed:              0,
-      throttleMin:                    0,
-      throttleMax:                    0,
-      throttleHover:                  0,
-      sanityChecks:                   0,
-      minSats:                        0,
-      ascendRate:                     0,
-      descendRate:                    0,
-      allowArmingWithoutFix:          0,
-      altitudeMode:                   0,
     };
 
     this.RXFAIL_CONFIG = [];

@@ -12,9 +12,10 @@
   // Expert Mode panel assigning a gain curve (from the shared pool on the
   // Curves tab) to each axis's Flight Feel Gain. Kept out of the Flight Feel
   // table because curves are an advanced shaping tool; Flight Feel shows a
-  // CURVE badge on any Gain a curve is shaping. `profile` is FC.PID_PROFILE
-  // or FC.TV_PID_PROFILE; `throttle` adds the Throttle row (main loop only),
-  // and the GPS Speed curve and range, on one line, when GPS is active.
+  // CURVE badge on any Gain a curve is shaping. `profile` is FC.PID_PROFILE;
+  // `throttle` adds the Throttle row, and the GPS Speed curve and range, on
+  // one line, when GPS is active. Only yaw is stabilised, so the roll and
+  // pitch curve assignments are not shown (they still round-trip unchanged).
   let { profile, throttle = false, idPrefix = "" } = $props();
 
   let showSpeed = $derived(
@@ -23,11 +24,7 @@
       isGpsActive(FC.SERIAL_CONFIG.ports, FC.GPS_CONFIG.provider),
   );
 
-  const AXES = [
-    { key: "gainCurveRoll", label: "axisROLL" },
-    { key: "gainCurvePitch", label: "axisPITCH" },
-    { key: "gainCurveYaw", label: "axisYAW" },
-  ];
+  const AXES = [{ key: "gainCurveYaw", label: "axisYAW" }];
 
   let rows = $derived([
     ...AXES,
@@ -47,7 +44,7 @@
 
 <Section label="profilesGainCurvesGroup" summary="profilesGainCurveHelp">
   {#each rows as row (row.key)}
-    <!-- Throttle in capitals, like Roll, Pitch and Yaw -->
+    <!-- Throttle in capitals, like Yaw -->
     {#snippet upperLabel()}
       {$i18n.t(row.label).toUpperCase()}
     {/snippet}

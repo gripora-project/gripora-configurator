@@ -16,27 +16,15 @@
   const wiz = getContext("setupWizard");
 
   // Permanent box IDs (gripora-firmware msp/msp_box.c) and the box names
-  // the FC reports for them, before and after the firmware#182 rename. ARM
-  // is the only one the model can't fly without; the rest are optional,
-  // flight modes first and the PASSTHROUGH bench tool last. ATT HOLD and TRAINER
-  // need an accelerometer, so the FC only reports them on a board with one.
+  // the FC reports for them. ARM is the only one the model can't drive
+  // without; GYRO OFF is optional.
   const MODES = [
     { id: 0, key: "arm", names: ["ARM"], icon: "fa-power-off", required: true },
     {
-      id: 59,
-      key: "manual",
-      names: ["MANUAL", "GYRO OFF"],
-      icon: "fa-hand-paper",
-    },
-    { id: 6, key: "attHold", names: ["ATT HOLD"], icon: "fa-lock" },
-    { id: 47, key: "trainer", names: ["TRAINER"], icon: "fa-graduation-cap" },
-    // See the Trim and gain step.
-    { id: 60, key: "autoTrim", names: ["AUTO TRIM"], icon: "fa-crosshairs" },
-    {
       id: 12,
-      key: "passthrough",
-      names: ["PASSTHROUGH", "SETUP"],
-      icon: "fa-tools",
+      key: "gyroOff",
+      names: ["GYRO OFF"],
+      icon: "fa-hand-paper",
     },
   ];
 

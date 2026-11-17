@@ -5,7 +5,9 @@
 
   import HelpIcon from "@/components/HelpIcon.svelte";
 
-  const PID_AXES = ["ROLL", "PITCH", "YAW"];
+  // Only yaw is stabilised (yaw-rate gyro steering); roll and pitch are not
+  // shown. `index` is the firmware axis (0 roll, 1 pitch, 2 yaw).
+  const PID_AXES = [{ name: "YAW", index: 2 }];
   const CURVE_PREVIEW_WIDTH = 190;
   const CURVE_PREVIEW_HEIGHT = 34;
   const CURVE_PREVIEW_HEIGHT_EXPANDED = 68;
@@ -55,27 +57,15 @@
       atten: true,
     },
   ];
-  // The thrust vector loop, after tvPidGetRuntimeGains() (flight/tv_pid.c):
-  // master gain scales P, I, D and F, B is unscaled, and nothing is
-  // attenuated by throttle or speed.
-  const TV_PID_GAINS = PID_GAINS.map((gain) => ({
-    ...gain,
-    master: gain.key !== "B",
-    atten: false,
-  }));
-
-  // `thrustVector` shows the thrust vector loop instead of the main loop.
   // `saved` holds the values last loaded from or saved to the FC
-  // ({ PIDS, PID_PROFILE }, or { TV_PIDS, TV_PID_PROFILE } for the TV loop).
-  let { saved = null, thrustVector = false } = $props();
+  // ({ PIDS, PID_PROFILE }).
+  let { saved = null } = $props();
 
-  let gains = $derived(thrustVector ? TV_PID_GAINS : PID_GAINS);
-  let pids = $derived(thrustVector ? FC.TV_PIDS : FC.PIDS);
-  let profile = $derived(thrustVector ? FC.TV_PID_PROFILE : FC.PID_PROFILE);
-  let savedPids = $derived(thrustVector ? saved?.TV_PIDS : saved?.PIDS);
-  let savedProfile = $derived(
-    thrustVector ? saved?.TV_PID_PROFILE : saved?.PID_PROFILE,
-  );
+  const gains = PID_GAINS;
+  let pids = $derived(FC.PIDS);
+  let profile = $derived(FC.PID_PROFILE);
+  let savedPids = $derived(saved?.PIDS);
+  let savedProfile = $derived(saved?.PID_PROFILE);
 
   // The FC reports its live values, which follow adjustment functions but
   // not unsaved edits on this page. A value edited here wins; an untouched
@@ -85,7 +75,7 @@
   }
 
   let runtimeGains = $derived.by(() => {
-    const live = thrustVector ? FC.TV_PID_RUNTIME_GAINS : FC.PID_RUNTIME_GAINS;
+    const live = FC.PID_RUNTIME_GAINS;
     return live?.version >= 1 ? live : null;
   });
   let curveExpanded = $state(false);
@@ -407,11 +397,7 @@
     <span class="header-label">
       Effective PID Gains
       <HelpIcon>
-        {$i18n.t(
-          thrustVector
-            ? "thrustVectorEffectivePidGainsHelp"
-            : "profilesEffectivePidGainsHelp",
-        )}
+        {$i18n.t("profilesEffectivePidGainsHelp")}
       </HelpIcon>
     </span>
     <button
@@ -449,7 +435,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each PID_AXES as axis, axisIndex (axis)}
+        {#each PID_AXES as { name: axis, index: axisIndex } (axis)}
           <tr>
             <td class="axis {axis}">{$i18n.t(`axis${axis}`)}</td>
             {#each gains as gain, gainIndex (gain.key)}
@@ -472,7 +458,7 @@
       <thead>
         <tr>
           <th></th>
-          {#each PID_AXES as axis (axis)}
+          {#each PID_AXES as { name: axis } (axis)}
             <th class="axis-header {axis}">{$i18n.t(`axis${axis}`)}</th>
           {/each}
         </tr>
@@ -486,7 +472,7 @@
                 <HelpIcon>{$i18n.t(gain.help)}</HelpIcon>
               </span>
             </td>
-            {#each PID_AXES as axis, axisIndex (axis)}
+            {#each PID_AXES as { name: axis, index: axisIndex } (axis)}
               <td>{@render valueCell(axisIndex, gainIndex)}</td>
             {/each}
           </tr>

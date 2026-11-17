@@ -24,27 +24,15 @@
   // mechanism differs from the per-axis rows. Curves are assigned in the
   // Expert Mode Gain Curves panel (GainCurves.svelte); a CURVE badge on Master Gain
   // shows when one is shaping that row.
+  //
+  // Only yaw is stabilised (yaw-rate gyro steering), so the roll and pitch
+  // rows are not shown. Their fields still round-trip untouched through
+  // FC.PID_PROFILE. `axisIndex` is the firmware axis (0 roll, 1 pitch, 2 yaw)
+  // used to look up adjustments and runtime gains.
   const MASTER_GAIN_AXES = [
     {
-      key: "roll",
-      axisClass: "ROLL",
-      label: "axisROLL",
-      gainKey: "masterGainRoll",
-      curveKey: "gainCurveRoll",
-      decayKey: "itermDecayTimeRoll",
-      bouncebackKey: "bouncebackRoll",
-    },
-    {
-      key: "pitch",
-      axisClass: "PITCH",
-      label: "axisPITCH",
-      gainKey: "masterGainPitch",
-      curveKey: "gainCurvePitch",
-      decayKey: "itermDecayTimePitch",
-      bouncebackKey: "bouncebackPitch",
-    },
-    {
       key: "yaw",
+      axisIndex: 2,
       axisClass: "YAW",
       label: "axisYAW",
       gainKey: "masterGainYaw",
@@ -54,6 +42,7 @@
     },
     {
       key: "throttle",
+      axisIndex: 3,
       axisClass: "THROTTLE",
       label: "controlAxisThrottle",
       uppercase: true,
@@ -71,6 +60,7 @@
   // and GPS is active.
   const SPEED_ROW = {
     key: "speed",
+    axisIndex: 4,
     axisClass: "SPEED",
     label: "controlAxisSpeed",
     uppercase: true,
@@ -152,7 +142,8 @@
           </tr>
         </thead>
         <tbody>
-          {#each rows as axis, axisIndex (axis.key)}
+          {#each rows as axis (axis.key)}
+            {@const axisIndex = axis.axisIndex}
             {@const adjustment = masterGainAdjustmentState(axisIndex)}
             <tr>
               <td class="axis {axis.axisClass}">

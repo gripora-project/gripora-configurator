@@ -36,7 +36,9 @@
   // Save writes them to EEPROM.
   const wiz = getContext("setupWizard");
 
-  const AXES = ["roll", "pitch", "yaw"];
+  // Only yaw is stabilised (yaw-rate gyro steering), so the trims and gain
+  // knobs are set up for yaw only.
+  const AXES = ["yaw"];
   const AUX_OFFSET = 4; // AUX1 is the fifth channel
   const LISTEN_MS = 15000;
   // A trim button moves its channel a little at a time; a knob a long way.
@@ -170,7 +172,7 @@
   }
 
   // The shared trim channel, and the button it shows now.
-  let buttonsChannel = $derived(channelOf(ranges, SERVO_TRIM.roll));
+  let buttonsChannel = $derived(channelOf(ranges, SERVO_TRIM.yaw));
   let buttonsPosition = $derived(auxValue(buttonsChannel));
   let pressed = $derived(buttonAt(buttonsPosition));
 
@@ -193,15 +195,15 @@
     if (value === "none") {
       for (const a of AXES) await removeFunction(MASTER_GAIN[a]);
     } else if (value === "single" && was === "separate") {
-      // Keep the roll knob for all three.
-      const aux = channelOf(FC.ADJUSTMENT_RANGES, MASTER_GAIN.roll);
+      // Keep the first knob.
+      const aux = channelOf(FC.ADJUSTMENT_RANGES, MASTER_GAIN.yaw);
       if (aux !== null) {
         for (const a of AXES) await writeRange(gainRange(a, aux));
       }
     }
   }
 
-  let singleChannel = $derived(channelOf(ranges, MASTER_GAIN.roll));
+  let singleChannel = $derived(channelOf(ranges, MASTER_GAIN.yaw));
   // Every knob the chosen gain mode needs is on a channel: one for a single
   // knob, one per axis otherwise.
   let gainAssigned = $derived(
@@ -547,7 +549,7 @@
 <section class="card">
   <div class="card-head">
     <KnobArt
-      value={liveValue(MASTER_GAIN.roll) ?? 100}
+      value={liveValue(MASTER_GAIN.yaw) ?? 100}
       min={GAIN_MIN}
       max={GAIN_MAX}
     />
@@ -586,7 +588,7 @@
 
   {#if mode === "single"}
     <ul class="rows">
-      {@render channelRow("gain", null, MASTER_GAIN.roll, "%")}
+      {@render channelRow("gain", null, MASTER_GAIN.yaw, "%")}
     </ul>
     {#if singleChannel !== null}
       <p class="muted">{$i18n.t("setupWizardGainCentre")}</p>

@@ -122,20 +122,9 @@
     );
   }
 
-  let maxAngularRoll = $derived(
-    maxAngularVelFor(
-      currentRates.roll_srate,
-      currentRates.roll_rc_rate,
-      currentRates.roll_rc_expo,
-    ),
-  );
-  let maxAngularPitch = $derived(
-    maxAngularVelFor(
-      currentRates.pitch_srate,
-      currentRates.pitch_rc_rate,
-      currentRates.pitch_rc_expo,
-    ),
-  );
+  // Only yaw is stabilised (yaw-rate gyro steering), so only the yaw rates
+  // are shown and charted. Roll and pitch stay in FC.RC_TUNING and are
+  // written back unchanged.
   let maxAngularYaw = $derived(
     maxAngularVelFor(
       currentRates.yaw_srate,
@@ -146,32 +135,12 @@
 
   // Rounds up to the nearest multiple of 200°/s so the chart's auto-scale
   // doesn't jitter for small changes near a boundary.
-  let maxAngularVel = $derived(
-    rateCurve.setMaxAngularVel(
-      Math.max(maxAngularRoll, maxAngularPitch, maxAngularYaw),
-    ),
-  );
+  let maxAngularVel = $derived(rateCurve.setMaxAngularVel(maxAngularYaw));
 
   function updateLiveSetpoints() {
     liveSetpoints = {
-      roll: rateCurve.rcCommandRawToDegreesPerSecond(
-        1500 + FC.RC_COMMAND[0],
-        RATES_TYPE_GRIPORA,
-        currentRates.roll_srate,
-        currentRates.roll_rc_rate,
-        currentRates.roll_rc_expo,
-        SUPER_EXPO,
-        DEADBAND,
-      ),
-      pitch: rateCurve.rcCommandRawToDegreesPerSecond(
-        1500 + FC.RC_COMMAND[1],
-        RATES_TYPE_GRIPORA,
-        currentRates.pitch_srate,
-        currentRates.pitch_rc_rate,
-        currentRates.pitch_rc_expo,
-        SUPER_EXPO,
-        DEADBAND,
-      ),
+      roll: 0,
+      pitch: 0,
       yaw: rateCurve.rcCommandRawToDegreesPerSecond(
         1500 + FC.RC_COMMAND[2],
         RATES_TYPE_GRIPORA,
@@ -350,12 +319,10 @@
 
   <div class="content">
     <div>
-      <RatesTable {maxAngularRoll} {maxAngularPitch} {maxAngularYaw} />
+      <RatesTable {maxAngularYaw} />
       <RateCurveChart
         {currentRates}
         {maxAngularVel}
-        {maxAngularRoll}
-        {maxAngularPitch}
         {maxAngularYaw}
         {liveSetpoints}
       />

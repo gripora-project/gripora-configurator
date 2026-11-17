@@ -5,7 +5,7 @@
   import NumberInput from "@/components/NumberInput.svelte";
   import Section from "@/components/Section.svelte";
 
-  let { maxAngularRoll, maxAngularPitch, maxAngularYaw } = $props();
+  let { maxAngularYaw } = $props();
 
   // Runtime ranges/precision the legacy tab applied via jQuery .attr()
   // overrides on load (rates.js RATES_DEFAULTS) -- the static HTML
@@ -20,9 +20,9 @@
   const EXPO_MAX = 100;
   const EXPO_STEP = 1;
 
+  // Only yaw is stabilised (yaw-rate gyro steering), so only the yaw rates
+  // are shown. The roll and pitch rates still round-trip unchanged.
   const AXES = [
-    { key: "roll", label: "axisROLL", maxAngular: () => maxAngularRoll },
-    { key: "pitch", label: "axisPITCH", maxAngular: () => maxAngularPitch },
     { key: "yaw", label: "axisYAW", maxAngular: () => maxAngularYaw },
   ];
 </script>

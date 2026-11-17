@@ -7,12 +7,12 @@
   import Section from "@/components/Section.svelte";
 </script>
 
+<!-- Only yaw is stabilised (yaw-rate gyro steering), so only the yaw column
+     is shown. The roll and pitch fields still round-trip unchanged. -->
 <Section label="rateSetupDynamic">
   <div class="grid">
     <div class="title">
       <div class="header"></div>
-      <div class="axis-title roll">{$i18n.t("axisROLL")}</div>
-      <div class="axis-title pitch">{$i18n.t("axisPITCH")}</div>
       <div class="axis-title yaw">{$i18n.t("axisYAW")}</div>
     </div>
 
@@ -23,16 +23,6 @@
         >
         <HelpIcon>{$i18n.t("rateSetupResponseHelp")}</HelpIcon>
       </div>
-      <NumberInput
-        min="0"
-        max="250"
-        bind:value={FC.RC_TUNING.roll_response_time}
-      />
-      <NumberInput
-        min="0"
-        max="250"
-        bind:value={FC.RC_TUNING.pitch_response_time}
-      />
       <NumberInput
         min="0"
         max="250"
@@ -50,16 +40,6 @@
       <NumberInput
         min="0"
         max="250"
-        bind:value={FC.RC_TUNING.roll_setpoint_boost_gain}
-      />
-      <NumberInput
-        min="0"
-        max="250"
-        bind:value={FC.RC_TUNING.pitch_setpoint_boost_gain}
-      />
-      <NumberInput
-        min="0"
-        max="250"
         bind:value={FC.RC_TUNING.yaw_setpoint_boost_gain}
       />
 
@@ -70,16 +50,6 @@
           >{$i18n.t("rateSetpointBoostCutoff")} [Hz]</span
         >
       </div>
-      <NumberInput
-        min="0"
-        max="250"
-        bind:value={FC.RC_TUNING.roll_setpoint_boost_cutoff}
-      />
-      <NumberInput
-        min="0"
-        max="250"
-        bind:value={FC.RC_TUNING.pitch_setpoint_boost_cutoff}
-      />
       <NumberInput
         min="0"
         max="250"
@@ -94,8 +64,6 @@
         >
         <HelpIcon>{$i18n.t("rateYawDynamicCeilingGainHelp")}</HelpIcon>
       </div>
-      <div></div>
-      <div></div>
       <NumberInput
         min="0"
         max="250"
@@ -108,8 +76,6 @@
         >
         <HelpIcon>{$i18n.t("rateYawDynamicDeadbandGainHelp")}</HelpIcon>
       </div>
-      <div></div>
-      <div></div>
       <NumberInput
         min="0"
         max="250"
@@ -123,8 +89,6 @@
           >{$i18n.t("rateYawDynamicDeadbandFilter")} [Hz]</span
         >
       </div>
-      <div></div>
-      <div></div>
       <NumberInput
         min="0"
         max="25"
@@ -141,10 +105,7 @@
 <style lang="scss">
   .grid {
     display: grid;
-    grid-template-columns: minmax(min-content, 220px) repeat(
-        3,
-        minmax(60px, 1fr)
-      );
+    grid-template-columns: minmax(min-content, 220px) minmax(60px, 1fr);
     align-items: center;
   }
 
@@ -190,24 +151,8 @@
     min-width: 0;
   }
 
-  .axis-title.roll {
-    background-color: hsl(0, 100%, 85%);
-  }
-
-  .axis-title.pitch {
-    background-color: hsl(120, 100%, 85%);
-  }
-
   .axis-title.yaw {
     background-color: hsl(240, 100%, 88%);
-  }
-
-  :global(html[data-theme="dark"]) .axis-title.roll {
-    background-color: hsl(0, 40%, 30%);
-  }
-
-  :global(html[data-theme="dark"]) .axis-title.pitch {
-    background-color: hsl(120, 25%, 25%);
   }
 
   :global(html[data-theme="dark"]) .axis-title.yaw {
@@ -216,7 +161,7 @@
 
   // 650px, not the usual 480px phone breakpoint: this grid's label column
   // (up to 220px, for the longest untruncated labels like "Setpoint Boost
-  // Cutoff [Hz]") starts crowding the 3 input columns well before 480px.
+  // Cutoff [Hz]") starts crowding the input column well before 480px.
   // Shrinking it earlier - with the label truncating to an ellipsis, full
   // text still available as a tooltip/via each row's help icon - gives
   // the inputs real room instead of staying squeezed. Matches
@@ -224,7 +169,7 @@
   // point so the whole page goes compact together.
   @media only screen and (max-width: 650px) {
     .grid {
-      grid-template-columns: minmax(70px, 110px) repeat(3, minmax(70px, 1fr));
+      grid-template-columns: minmax(70px, 110px) minmax(70px, 1fr);
     }
 
     .row-label {

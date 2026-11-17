@@ -34,7 +34,9 @@ export const STYLES = [
   },
 ];
 
-export const STYLE_AXES = ["roll", "pitch", "yaw"];
+// Only yaw is stabilised (yaw-rate gyro steering), so a style only sets and
+// matches the yaw rate, expo and relax. Roll and pitch are left as they are.
+export const STYLE_AXES = ["yaw"];
 const AXIS_SUFFIX = { roll: "Roll", pitch: "Pitch", yaw: "Yaw" };
 
 export function rateOf(rcTuning, axis) {

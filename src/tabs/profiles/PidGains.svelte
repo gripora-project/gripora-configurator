@@ -11,7 +11,10 @@
     getAdjustmentState,
   } from "@/tabs/adjustments/adjustmentState.js";
 
-  const AXES = ["ROLL", "PITCH", "YAW"];
+  // Only yaw is stabilised (yaw-rate gyro steering). Roll and pitch gains are
+  // still read from and written back to the FC unchanged, just not shown.
+  // `index` is the firmware axis (0 roll, 1 pitch, 2 yaw).
+  const AXES = [{ name: "YAW", index: 2 }];
   const GAINS = [
     {
       key: "P",
@@ -20,8 +23,7 @@
     },
     { key: "I", label: "profilesIntegral", help: "profilesIntegralHelp" },
     { key: "D", label: "profilesDerivative", help: "profilesDerivativeHelp" },
-    // Firmware floors F at 50 (PID_F_GAIN_MIN): MANUAL mode flies on the F-term
-    // alone, so F = 0 meant no surface movement in MANUAL.
+    // Firmware floors F at 50 (PID_F_GAIN_MIN).
     {
       key: "F",
       label: "profilesFeedforward",
@@ -77,7 +79,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each AXES as axis, axisIndex (axis)}
+        {#each AXES as { name: axis, index: axisIndex } (axis)}
           <tr>
             <td class="axis {axis}">{$i18n.t(`axis${axis}`)}</td>
             {#each GAINS as gain, gainIndex (gain.key)}
@@ -97,7 +99,7 @@
       <thead>
         <tr>
           <th></th>
-          {#each AXES as axis (axis)}
+          {#each AXES as { name: axis } (axis)}
             <th class="axis-header {axis}">{$i18n.t(`axis${axis}`)}</th>
           {/each}
         </tr>
@@ -111,7 +113,7 @@
                 <HelpIcon>{$i18n.t(gain.help)}</HelpIcon>
               </span>
             </td>
-            {#each AXES as axis, axisIndex (axis)}
+            {#each AXES as { name: axis, index: axisIndex } (axis)}
               <td>{@render valueCell(axisIndex, gainIndex)}</td>
             {/each}
           </tr>

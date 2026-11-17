@@ -17,7 +17,6 @@
   import Telemetry from "./Telemetry.svelte";
   import Motor from "./Motor.svelte";
   import RotorSpeed from "./RotorSpeed.svelte";
-  import Governor from "./Governor.svelte";
   import Override from "./Override.svelte";
   import motorState from "./state.svelte.js";
 
@@ -57,7 +56,6 @@
       MOTOR_CONFIG: FC.MOTOR_CONFIG,
       ESC_SENSOR_CONFIG: FC.ESC_SENSOR_CONFIG,
       SRXL2_ESC_CONFIG: FC.SRXL2_ESC_CONFIG,
-      GOVERNOR_CONFIG: FC.GOVERNOR_CONFIG,
       features: FC.FEATURE_CONFIG.features.bitfield,
     });
   }
@@ -85,7 +83,6 @@
     if (semver.gte(FC.CONFIG.apiVersion, API_VERSION_22_15)) {
       await MSP.promise(MSPCodes.MSP2_WING_SRXL2_ESC_CONFIG);
     }
-    await MSP.promise(MSPCodes.MSP2_WING_GOVERNOR_CONFIG);
     await MSP.promise(MSPCodes.MSP_MOTOR);
     await MSP.promise(MSPCodes.MSP_MOTOR_TELEMETRY);
     await MSP.promise(MSPCodes.MSP_BATTERY_STATE);
@@ -158,7 +155,6 @@
     if (FC.SRXL2_ESC_CONFIG) {
       await save(MSPCodes.MSP2_WING_SET_SRXL2_ESC_CONFIG);
     }
-    await save(MSPCodes.MSP2_WING_SET_GOVERNOR_CONFIG);
 
     await MSP.promise(MSPCodes.MSP_EEPROM_WRITE);
     GUI.log($i18n.t("eepromSaved"));
@@ -176,7 +172,6 @@
     FC.SRXL2_ESC_CONFIG = initialState.SRXL2_ESC_CONFIG
       ? { ...initialState.SRXL2_ESC_CONFIG }
       : null;
-    Object.assign(FC.GOVERNOR_CONFIG, initialState.GOVERNOR_CONFIG);
     FC.FEATURE_CONFIG.features.bitfield = initialState.features;
     telemetryRef?.cleanup();
   }
@@ -234,9 +229,6 @@
               <RotorSpeed />
             </div>
           {/if}
-          <div transition:slide>
-            <Governor {rpmAvailable} />
-          </div>
         </div>
         <div transition:slide>
           <Override />

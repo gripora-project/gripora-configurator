@@ -47,11 +47,15 @@
 
   // failsafe_procedure values match TABLE_FAILSAFE in src/main/cli/settings.c
   // (AUTO-LAND, DROP, GPS-RESCUE), 0-indexed. Key numbering (1, 2, 4) is
-  // inherited from upstream and does not correspond to these values.
+  // inherited from upstream and does not correspond to these values. GPS
+  // rescue (return to home) is gone, so it is only listed when the FC
+  // reports it, to show the stored value instead of a blank select.
   let procedureOptions = $derived([
     { value: 0, label: $i18n.t("failsafeProcedureItemSelect1") },
     { value: 1, label: $i18n.t("failsafeProcedureItemSelect2") },
-    { value: 2, label: $i18n.t("failsafeProcedureItemSelect4") },
+    ...(FC.FAILSAFE_CONFIG.failsafe_procedure === 2
+      ? [{ value: 2, label: $i18n.t("failsafeProcedureItemSelect4") }]
+      : []),
   ]);
 
   // failsafe_switch_mode values match TABLE_FAILSAFE_SWITCH_MODE (STAGE1, KILL, STAGE2).
@@ -218,11 +222,6 @@
               options={procedureOptions}
             />
           </Field>
-          {#if FC.FAILSAFE_CONFIG.failsafe_procedure === 2}
-            <div class="note" transition:slide>
-              {$i18n.t("failsafeGpsRescueNavNote")}
-            </div>
-          {/if}
         </SubSection>
       </Section>
       <Section
@@ -322,12 +321,6 @@
     display: flex;
     flex-direction: row;
     gap: 8px;
-  }
-
-  .note {
-    font-size: 0.85rem;
-    color: var(--color-neutral-700);
-    padding: 4px 12px 8px;
   }
 
   .help-btn {

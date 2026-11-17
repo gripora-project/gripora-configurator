@@ -17,6 +17,16 @@ const SRXL2_ESC_FUNCTION_ID =
 class State {
   overrideEnabled = $state(false);
 
+  // Car ESCs are reversible: the firmware defaults every motor's
+  // motor_control_mode to bidirectional, where 0 is neutral, positive is
+  // forward and negative is brake/reverse. motor_control_mode isn't carried
+  // over MSP, so the configurator treats every motor as bidirectional. A motor
+  // switched to unidirectional in the CLI just ignores negative overrides.
+  isBidirectional(index) {
+    void index;
+    return true;
+  }
+
   throttleProtocols = $derived([
     "PWM",
     "ONESHOT125",

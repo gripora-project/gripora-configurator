@@ -82,7 +82,6 @@
   let armed = $state(false);
   let passthroughActive = $state(false);
   let bypassMode = $state(null);
-  let angleModeActive = $state(false);
   let passthroughAssigned = $state(false);
   let commitFn = null;
   let leaveFn = null;
@@ -191,32 +190,18 @@
     }, 200);
   });
 
-  // PASSTHROUGH: named SETUP by firmware 0.0.x up to API 22.13; permanent box ID 12.
-  const ANGLE_BOX_ID = 1;
+  // GYRO OFF (permanent box ID 12): steering and throttle pass straight from
+  // the transmitter with no gyro correction. Looked up by ID, not name.
   const PASSTHROUGH_BOX_ID = 12;
 
   function updateModes() {
     armed = isArmed();
-    const passthroughIndex = FC.AUX_CONFIG.findIndex(
-      (name) => name === "PASSTHROUGH" || name === "SETUP",
-    );
+    const passthroughIndex = FC.AUX_CONFIG_IDS.indexOf(PASSTHROUGH_BOX_ID);
     passthroughActive =
       passthroughIndex >= 0 && bit_check(FC.CONFIG.mode, passthroughIndex);
-    // PASSTHROUGH and MANUAL both put the sticks on the surfaces instead of
-    // the stabilizer. Firmware before the fix also lets them win over the
-    // wizard's mixer overrides, so the FC can't move the surfaces.
-    const manualIndex = FC.AUX_CONFIG.findIndex(
-      (name) => name === "MANUAL" || name === "GYRO OFF",
-    );
-    const manualActive =
-      manualIndex >= 0 && bit_check(FC.CONFIG.mode, manualIndex);
-    bypassMode = passthroughActive
-      ? FC.AUX_CONFIG[passthroughIndex]
-      : manualActive
-        ? FC.AUX_CONFIG[manualIndex]
-        : null;
-    const angleIndex = FC.AUX_CONFIG.indexOf("ANGLE");
-    angleModeActive = angleIndex >= 0 && bit_check(FC.CONFIG.mode, angleIndex);
+    // GYRO OFF puts the sticks on the outputs instead of the stabilizer, so
+    // the FC can't move the surfaces while it is on.
+    bypassMode = passthroughActive ? FC.AUX_CONFIG[passthroughIndex] : null;
     passthroughAssigned = FC.MODE_RANGES.some(
       (r) => r.id === PASSTHROUGH_BOX_ID && r.range.start < r.range.end,
     );
@@ -230,7 +215,7 @@
   //// pulled cable can't leave any of them on: the FC drops them by itself.
   //// The whole wizard runs in the FC's setup state: the mode override is
   //// held with no mode forced from open to close, and a step that forces
-  //// ANGLE or PASSTHROUGH adds it on top. Radios show SETUP and don't call
+  //// GYRO OFF adds it on top. Radios show SETUP and don't call
   //// out modes meanwhile. Older firmware has no timeouts: overrides are sent untimed as before,
   //// modes can't be forced (the steps fall back to the pilot's own switch)
   //// and the Limits step widens the stored limits while exploring.
@@ -319,16 +304,6 @@
   // Called by the steps that measure throws.
   async function forcePassthrough() {
     return applyModeForce(PASSTHROUGH_BOX_ID);
-  }
-
-  // Called by the gyro check so the stabilizer holds attitude while the model
-  // is tilted, which makes the correction direction easier to see.
-  async function forceAngleMode() {
-    return applyModeForce(ANGLE_BOX_ID);
-  }
-
-  async function releaseAngleMode() {
-    await removeModeForce(ANGLE_BOX_ID);
   }
 
   onDestroy(() => {
@@ -504,14 +479,8 @@
     get bypassMode() {
       return bypassMode;
     },
-    get angleModeActive() {
-      return angleModeActive;
-    },
     get passthroughForced() {
       return forced?.id === PASSTHROUGH_BOX_ID;
-    },
-    get angleModeForced() {
-      return forced?.id === ANGLE_BOX_ID;
     },
     get pending() {
       return pending;
@@ -521,8 +490,6 @@
     },
     save,
     forcePassthrough,
-    forceAngleMode,
-    releaseAngleMode,
     get passthroughAssigned() {
       return passthroughAssigned;
     },

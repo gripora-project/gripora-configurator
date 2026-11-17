@@ -76,7 +76,7 @@ test('largest scale that keeps full stick inside the binding limit', () => {
     assert.equal(maxScale(0, 700), 1000);    // axis gain 0: nothing to limit
 });
 
-test('flying styles set rates and I-term relax, and are recognised afterwards', () => {
+test('flying styles set yaw rates and I-term relax, and are recognised afterwards', () => {
     const rcTuning = {};
     const pidProfile = {};
     for (const axis of ['roll', 'pitch', 'yaw']) {
@@ -87,10 +87,14 @@ test('flying styles set rates and I-term relax, and are recognised afterwards', 
 
     const threeD = STYLES.find((s) => s.key === '3d');
     applyStyle(threeD, rcTuning, pidProfile);
-    assert.equal(rcTuning.roll_rc_rate, 1);    // 500 deg/s, stored as deg/s / 500
+    assert.equal(rcTuning.yaw_rc_rate, 0.6);   // 300 deg/s, stored as deg/s / 500
     assert.equal(rcTuning.yaw_rc_expo, 0.6);
-    assert.equal(pidProfile.bouncebackPitch, 7);
+    assert.equal(pidProfile.bouncebackYaw, 7);
     assert.equal(pidProfile.itermRelaxLevelYaw, 15);
+    // Only yaw is stabilised: roll and pitch are left as they were.
+    assert.equal(rcTuning.roll_rc_rate, 0.5);
+    assert.equal(rcTuning.pitch_rc_expo, 0);
+    assert.equal(pidProfile.bouncebackPitch, undefined);
     assert.equal(matchingStyle(rcTuning, pidProfile).key, '3d');
 
     rcTuning.yaw_rc_rate = 0.7; // edited on the Rates tab: no longer a preset

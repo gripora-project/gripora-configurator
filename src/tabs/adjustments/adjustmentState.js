@@ -22,29 +22,11 @@ export const MASTER_GAIN_ADJUSTMENT_FUNCTIONS = [85, 84, 86]; // Roll/Pitch/Yaw
 // the affected servo(s) themselves (see Servos tab).
 export const SERVO_TRIM_ADJUSTMENT_FUNCTIONS = [89, 90, 91]; // Roll/Pitch/Yaw
 
-// Thrust Vector's own independent PID loop -- same
-// shape as PID_ADJUSTMENT_FUNCTIONS/MASTER_GAIN_ADJUSTMENT_FUNCTIONS above,
-// but a separate table since these tune FC.TV_PIDS/TV_PID_PROFILE, not the
-// main loop's FC.PIDS/PID_PROFILE.
-export const TV_PID_ADJUSTMENT_FUNCTIONS = [
-  [95, 96, 97, 98, 99],    // TV Roll P/I/D/F/B
-  [100, 101, 102, 103, 104], // TV Pitch P/I/D/F/B
-  [105, 106, 107, 108, 109], // TV Yaw P/I/D/F/B
-];
-
-export const TV_MASTER_GAIN_ADJUSTMENT_FUNCTIONS = [92, 93, 94]; // Roll/Pitch/Yaw
-
-// TV Hold's gain (flight/tv_hold.c) -- a single scalar, not per-axis like the
-// tables above (the hold engine itself is a single 3-axis instance).
-export const TV_HOLD_GAIN_ADJUSTMENT_FUNCTION = 110;
-
-// Per-axis I-term decay time (0.01 s), main loop and Thrust Vector loop.
+// Per-axis I-term decay time (0.01 s).
 export const ITERM_DECAY_TIME_ADJUSTMENT_FUNCTIONS = [114, 115, 116]; // Roll/Pitch/Yaw
-export const TV_ITERM_DECAY_TIME_ADJUSTMENT_FUNCTIONS = [117, 118, 119]; // Roll/Pitch/Yaw
 
-// Per-axis Bounce Back score (1-10), main loop and Thrust Vector loop.
+// Per-axis Bounce Back score (1-10).
 export const BOUNCEBACK_ADJUSTMENT_FUNCTIONS = [120, 121, 122]; // Roll/Pitch/Yaw
-export const TV_BOUNCEBACK_ADJUSTMENT_FUNCTIONS = [123, 124, 125]; // Roll/Pitch/Yaw
 
 // Mixer rule role (Mixer.ROLE_*, pg/mixer.h) -> the adjustment function that
 // live-tunes every rule tagged with that role (flight/mixer.c's

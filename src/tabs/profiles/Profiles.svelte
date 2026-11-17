@@ -16,8 +16,6 @@
   import PidSettings from "./PidSettings.svelte";
   import PidBandwidth from "./PidBandwidth.svelte";
   import GainCurves from "./GainCurves.svelte";
-  import LevelingSettings from "./LevelingSettings.svelte";
-  import TrainerSettings from "./TrainerSettings.svelte";
   import MasterGains from "./MasterGains.svelte";
 
   let loading = $state(true);
@@ -59,21 +57,6 @@
 
   let showPidBoxes = $derived(FC.PID_PROFILE.pid_mode === 1);
   let showExpertSettings = $derived(showPidBoxes && CONFIGURATOR.expertMode);
-
-  // Use configured assignments, not the live switch state.
-  let configuredModes = $derived.by(() => {
-    const ids = [];
-    FC.MODE_RANGES.forEach((entry, index) => {
-      const extra = FC.MODE_RANGES_EXTRA[index];
-      const linked = extra?.id === entry.id && extra.linkedTo > 0;
-      if (entry.range.start < entry.range.end || linked) ids.push(entry.id);
-    });
-    return new Set(
-      FC.AUX_CONFIG.filter((_, index) =>
-        ids.includes(FC.AUX_CONFIG_IDS[index]),
-      ),
-    );
-  });
 
   let profileTabs = $derived(
     Array.from({ length: FC.CONFIG.numProfiles }, (_, i) => i),
@@ -275,10 +258,6 @@
         <PidGains />
         <MasterGains />
       {/if}
-      {#if configuredModes.has("TRAINER")}
-        <TrainerSettings />
-      {/if}
-      <LevelingSettings {configuredModes} />
     </div>
     <!-- Expert Mode panels sit below the main ones rather than in a side
          column, so Flight Feel keeps the full width for its guide. -->
