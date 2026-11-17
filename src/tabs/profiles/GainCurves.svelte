@@ -73,7 +73,7 @@
         <NumberInput
           id="{idPrefix}gain-curve-speed-max"
           min="10"
-          max="600"
+          max="300"
           bind:value={profile.fwSpaSpeedMax}
         />
         <span class="unit">km/h</span>

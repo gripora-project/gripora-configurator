@@ -6889,7 +6889,7 @@
         "message": "GPS Speed: scales Yaw P, D, F and B with GPS speed, on top of Throttle. Steering gets more effective as speed rises, so this is used to reduce gain when fast, for example on a long straight. Set a percentage and a curve (evaluated on GPS speed, 0 to the speed at the curve's right edge, set in Gain Curves). It needs a GPS with a fix and does nothing without a curve. If the fix is lost it holds for 3 s, then eases back to 100%."
     },
     "profilesFwSpaCurveTooltip": {
-        "message": "GPS Speed: the curve shapes the Speed gain by GPS speed. Left: the speed at the curve's right edge (10-600 km/h); faster than that uses the curve's last point. Right: the curve, edited on the Curves tab. \"-\" turns GPS Speed off, so its Driving Feel percentage has no effect. Needs a GPS with a fix."
+        "message": "Speed: the curve shapes the Speed gain by the car's speed, from the motor RPM (wheel speed) or, without an RPM source, a GPS. Left: the speed at the curve's right edge (10-300 km/h, default 60); faster than that uses the curve's last point. Right: the curve, edited on the Curves tab. \"-\" turns Speed off, so its Driving Feel percentage has no effect."
     },
     "profilesMasterGainGroup": {
         "message": "Driving Feel"

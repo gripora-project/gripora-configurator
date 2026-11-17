@@ -688,7 +688,7 @@ class FlightController {
       hasFwSpa:                   false,
       fwSpaGain:                  100,
       fwSpaCurve:                 0,
-      fwSpaSpeedMax:              150,
+      fwSpaSpeedMax:              60,
       hasLevelDamping:            false,
       levelDamping:               0,
       hasSnapRelax:               false,
