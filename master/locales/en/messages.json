@@ -2535,7 +2535,7 @@
         "message": "Channel Range"
     },
     "receiverSettingsThrottleChannel": {
-        "message": "Throttle Channel"
+        "message": "Throttle"
     },
     "receiver.channel_range.automatic_throttle_range.label": {
         "message": "Automatic Throttle Range"
@@ -2613,16 +2613,16 @@
         "message": "Close"
     },
     "receiverStickCenter": {
-        "message": "Stick Center"
+        "message": "Channel Center"
     },
     "receiverHelpStickCenter": {
-        "message": "The channel value when the stick is centered. Usually 1500µs or 1520µs."
+        "message": "The channel value with the steering wheel and the throttle trigger at neutral. Usually 1500µs or 1520µs."
     },
     "receiverStickDeflection": {
-        "message": "Stick Travel"
+        "message": "Channel Travel"
     },
     "receiverHelpStickDeflection": {
-        "message": "The maximum value for stick deflection from the center."
+        "message": "How far the channel value moves from center at full steering lock or full throttle."
     },
     "receiverArmingThrottle": {
         "message": "Arm Limit"
@@ -2661,10 +2661,19 @@
         "message": "How far the pitch channel value must move from center before it's considered an input."
     },
     "receiverYawDeadband": {
-        "message": "Yaw Deadband"
+        "message": "Steering Deadband"
     },
     "receiverHelpYawDeadband": {
-        "message": "How far the yaw channel value must move from center before it's considered an input."
+        "message": "How far the steering channel must move from center before the car steers. Keeps a wheel that rests slightly off center from steering on its own."
+    },
+    "receiverThrottleNeutral": {
+        "message": "Throttle Neutral"
+    },
+    "receiverThrottleNeutralValue": {
+        "message": "$1 ± $2"
+    },
+    "receiverHelpThrottleNeutral": {
+        "message": "<p>Throttle is centered like steering: above neutral drives forward, below it brakes and reverses. Neutral is the Channel Center, with a small fixed deadband around it.</p><p>The car only arms with the throttle at neutral, and a receiver failsafe returns the throttle to neutral.</p>"
     },
     "receiverTelemetrySettings": {
         "message": "Telemetry"
@@ -3093,10 +3102,34 @@
         "message": "Channel Assignment"
     },
     "receiverChannelOrder": {
-        "message": "Apply Preset"
+        "message": "Channel Order"
     },
     "receiverChannelOrderPresetPlaceholder": {
-        "message": "Select a preset..."
+        "message": "Select a channel order..."
+    },
+    "receiverChannelOrderPresetCar": {
+        "message": "Car (CH1 steering, CH2 throttle)"
+    },
+    "receiverChannelOrderPresetCustom": {
+        "message": "Custom order"
+    },
+    "receiverChannelOrderHelp": {
+        "message": "Which receiver channel drives steering, throttle and the AUX channels. Car and pistol-grip radios (Futaba, Sanwa, Spektrum, FrSky, Radiomaster and most others) send steering on CH1 and throttle on CH2. Pick <i>Custom order</i>, or change a channel below, if yours differs."
+    },
+    "receiverChannelOrderCustom": {
+        "message": "Order"
+    },
+    "receiverChannelOrderCustomHelp": {
+        "message": "One letter per channel, starting at CH1: <b>S</b> steering, <b>T</b> throttle, <b>1</b>-<b>4</b> AUX 1-4, <b>-</b> not used. For example <b>TS1234</b> puts throttle on CH1 and steering on CH2. Anything left out goes on the next free channels."
+    },
+    "receiverChannelOrderInvalid": {
+        "message": "Not a valid order: use S, T, 1-4 and -, each only once."
+    },
+    "receiverChannelNotUsed": {
+        "message": "Not used"
+    },
+    "receiverChannelAux": {
+        "message": "AUX $1"
     },
     "receiverButtonBind": {
         "message": "Bind Receiver"
@@ -3105,13 +3138,13 @@
         "message": "Bind request sent to the controller."
     },
     "receiverButtonSticks": {
-        "message": "Control sticks"
+        "message": "Virtual radio"
     },
     "receiverModelPreview": {
         "message": "Preview"
     },
     "receiverMspWarningText": {
-        "message": "These sticks allow Gripora to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for driving and the wheels must be off the ground.</strong><br /><br />This feature does not guarantee reliable control of your car. <strong>Serious injury is likely to result if the wheels are left on the ground.</strong>"
+        "message": "These virtual controls allow Gripora to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for driving and the wheels must be off the ground.</strong><br /><br />This feature does not guarantee reliable control of your car. <strong>Serious injury is likely to result if the wheels are left on the ground.</strong>"
     },
     "receiverMspEnableButton": {
         "message": "Enable controls"
@@ -4252,7 +4285,7 @@
         "message": "RC Pitch (bypass)"
     },
     "mixerInputRCChannelYaw": {
-        "message": "RC Yaw (bypass)"
+        "message": "RC Steering (bypass)"
     },
     "mixerInputRCChannelCollective": {
         "message": "RC Channel Collective"
@@ -4702,7 +4735,7 @@
         "message": "Pitch"
     },
     "logicChannelYaw": {
-        "message": "Yaw"
+        "message": "Steering"
     },
     "logicChannelThrottle": {
         "message": "Throttle"
@@ -6598,7 +6631,7 @@
         "message": "Pitch"
     },
     "controlAxisYaw": {
-        "message": "Yaw"
+        "message": "Steering"
     },
     "controlAxisCollective": {
         "message": "Aux 0"
@@ -8590,7 +8623,7 @@
         "message": "Choose a protocol"
     },
     "receiverElrsFullResWarning": {
-        "message": "ExpressLRS: set the switch mode to <b>Full Res 16ch Rate/2</b> (100Hz Full or 333Hz Full packet rate). Gripora doesn't support the other switch modes, which send channel 5 (AUX1) only as a two-position arm switch. Gripora uses channel 5 as a normal full-resolution channel, for example for flaps."
+        "message": "ExpressLRS: set the switch mode to <b>Full Res 16ch Rate/2</b> (100Hz Full or 333Hz Full packet rate). Gripora doesn't support the other switch modes, which send channel 5 (ExpressLRS AUX1) only as a two-position arm switch. Gripora uses channel 5 as a normal full-resolution channel (AUX 3 in the car channel order)."
     },
     "setupWizardReceiverProtocolHelp": {
         "message": "ExpressLRS and Crossfire use TBS CRSF."
@@ -8613,23 +8646,23 @@
     "setupWizardReceiverChannelsTitle": {
         "message": "Channel order and direction"
     },
-    "setupWizardReceiverOrder_aetr": {
-        "message": "AETR"
-    },
     "setupWizardReceiverOrderHelp_aetr": {
         "message": "Aileron, elevator, throttle, rudder. ExpressLRS, Crossfire, FrSky, Futaba, Jeti."
     },
-    "setupWizardReceiverOrder_taer": {
-        "message": "TAER"
-    },
     "setupWizardReceiverOrderHelp_taer": {
         "message": "Throttle, aileron, elevator, rudder. Spektrum, Graupner, JR."
+    },
+    "setupWizardReceiverOrder_car": {
+        "message": "Car"
+    },
+    "setupWizardReceiverOrderHelp_car": {
+        "message": "CH1 steering, CH2 throttle. Futaba, Sanwa, Spektrum, FrSky, Radiomaster and most other car radios."
     },
     "setupWizardReceiverOrder_custom": {
         "message": "Detect"
     },
     "setupWizardReceiverOrderHelp_custom": {
-        "message": "Any other order: move each stick in turn and the wizard finds its channel."
+        "message": "Any other order: move the throttle, then the steering, and the wizard finds their channels."
     },
     "setupWizardReceiverDetectTitle": {
         "message": "Move each one in turn, all the way, and leave the others still."
@@ -8653,22 +8686,22 @@
         "message": "Start again"
     },
     "setupWizardReceiverCheckTitle": {
-        "message": "Put both sticks in the bottom-left corner"
+        "message": "Turn the wheel full left and push the trigger to full brake"
     },
     "setupWizardReceiverCheckText": {
-        "message": "Throttle and pitch down, roll and steering left. Every bar below should go to the left."
+        "message": "Steering full left and throttle at full brake. Both bars below should go to the left."
     },
     "setupWizardReceiverChannel": {
         "message": "Ch $1"
     },
     "setupWizardReceiverCheckOk": {
-        "message": "All four are the right way round."
+        "message": "Both are the right way round."
     },
     "setupWizardReceiverCheckReversed": {
         "message": "A bar going to the right is reversed. Reverse that channel in your radio, not here."
     },
     "setupWizardReceiverCheckWrongBar": {
-        "message": "If moving one stick moves a different bar, choose the other order or use Detect."
+        "message": "If turning the wheel moves the throttle bar (or the trigger moves steering), use Detect or the Receiver tab's channel order."
     },
     "setupWizardOpenReceiver": {
         "message": "Open the Receiver tab"
