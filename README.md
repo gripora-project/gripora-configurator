@@ -13,8 +13,7 @@ logging. Gripora is open-source flight controller firmware for fixed-wing aircra
 
 **[Open in the browser](https://cfg.gripora.org)** ·
 **[Desktop downloads](https://github.com/gripora-project/gripora-configurator/releases)** ·
-**[Documentation](https://doc.gripora.org/configurator/)** ·
-**[Discord](https://discord.gg/aEyyAJTXRw)**
+**[Documentation](https://doc.gripora.org/configurator/)**
 
 ![The Configurator's Status tab](https://raw.githubusercontent.com/gripora-project/gripora-docs/main/docs/assets/images/configurator-status.png)
 
@@ -100,7 +99,6 @@ web app, and [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 Gripora is a community project. You can help by:
 
 * testing new versions and [reporting bugs](https://github.com/gripora-project/gripora-configurator/issues)
-* helping other pilots on [Discord](https://discord.gg/aEyyAJTXRw)
 * translating the Configurator, or keeping a translation up to date
 * fixing bugs and adding features
 

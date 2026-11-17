@@ -105,7 +105,7 @@ body {
 }
 
 .box .box_titlebar.warning {
-  background-color: hsl(0, 78%, 47%);
+  background-color: hsl(17, 100%, 47%);
   border-bottom-color: transparent;
   color: #fff;
 }
@@ -122,7 +122,7 @@ body {
 .btn {
   padding: 8px 14px;
   text-align: center;
-  background-color: hsl(0, 78%, 47%);
+  background-color: hsl(17, 100%, 47%);
   border-radius: 6px;
   border: 1px solid transparent;
   color: #fff;
@@ -136,11 +136,11 @@ body {
 }
 
 .btn:hover {
-  background-color: hsl(0, 78%, 40%);
+  background-color: hsl(17, 100%, 40%);
 }
 
 .btn:focus {
   outline: none;
-  background-color: hsl(0, 78%, 40%);
+  background-color: hsl(17, 100%, 40%);
   box-shadow: 0 0 0 3px hsl(0 78% 47% / 0.28);
 }

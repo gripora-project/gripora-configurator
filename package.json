@@ -1,7 +1,7 @@
 {
   "name": "gripora-configurator",
   "productName": "Gripora Configurator",
-  "description": "Crossplatform configuration tool for Gripora.",
+  "description": "Configuration tool for Gripora, open-source stability control for RC cars.",
   "version": "0.0.0",
   "main": "http://localhost:5077/",
   "node-remote": "http://localhost:*",

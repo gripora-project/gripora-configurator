@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name={{name}}
-Comment=Crossplatform configuration tool for the Gripora flight control system
+Comment=Configuration tool for Gripora, stability control for RC cars
 Exec={{installdir}}/gripora-configurator
 Icon={{installdir}}/icon/rf_icon.png
 Terminal=false

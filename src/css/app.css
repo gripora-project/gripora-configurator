@@ -43,8 +43,8 @@
 html[data-theme="light"] {
   --val-neutral-hue: 220;
   --val-neutral-sat: 8%;
-  --val-accent-hue: 0;
-  --val-accent-sat: 78%;
+  --val-accent-hue: 17;
+  --val-accent-sat: 100%;
 
   --color-yellow-100: hsl(50, 100%, 92%);
   --color-yellow-500: hsl(45, 90%, 50%);
@@ -171,8 +171,8 @@ html[data-theme="light"] {
 html[data-theme="dark"] {
   --val-neutral-hue: 220;
   --val-neutral-sat: 8%;
-  --val-accent-hue: 0;
-  --val-accent-sat: 72%;
+  --val-accent-hue: 17;
+  --val-accent-sat: 95%;
 
   --color-yellow-100: hsl(45, 100%, 90%);
   --color-yellow-500: hsl(45, 60%, 55%);

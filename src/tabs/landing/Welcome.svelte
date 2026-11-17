@@ -40,10 +40,6 @@
         <ul class="social">
           <!-- eslint-disable-next-line svelte/no-at-html-tags -->
           <li>{@html $i18n.t("defaultWebsiteText")}</li>
-          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-          <li>{@html $i18n.t("defaultDiscordText")}</li>
-          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-          <li>{@html $i18n.t("defaultFacebookText")}</li>
         </ul>
       </section>
     </div>

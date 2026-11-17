@@ -63,7 +63,12 @@ import { getSerialProvider } from '@/js/protocols/WebSerial.js';
 export const REMOTE_PORT_PREFIX = 'remote:';
 
 // Where remote support runs: the desktop app and the browser.
-export const REMOTE_SUPPORT_AVAILABLE = __BACKEND__ === 'nwjs' || __BACKEND__ === 'web';
+// Switched off in Gripora until the project has its own relay
+// (remote.gripora.org) and support tool; this hides the Remote Support
+// tab, its overlay and the Welcome/Setup entry points. Restore the
+// backend check below to bring it back.
+const REMOTE_SUPPORT_ENABLED = false;
+export const REMOTE_SUPPORT_AVAILABLE = REMOTE_SUPPORT_ENABLED && (__BACKEND__ === 'nwjs' || __BACKEND__ === 'web');
 
 /**
  * Whether this configurator can share a flight controller: the desktop app

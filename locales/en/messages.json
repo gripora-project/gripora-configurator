@@ -1456,7 +1456,7 @@
         "message": "EEPROM <span class=\"message-positive\">saved</span>"
     },
     "defaultWelcomeIntro": {
-        "message": "Welcome to <strong>Gripora - Configurator</strong>, a utility designed to simplify updating, configuring and tuning of your flight controller."
+        "message": "Welcome to <strong>Gripora - Configurator</strong>, a utility designed to simplify updating, configuring and tuning of your Gripora controller."
     },
     "defaultDownloadsHead": {
         "message": "Downloads"
@@ -1468,7 +1468,7 @@
         "message": "Community"
     },
     "defaultCommunityText": {
-        "message": "Gripora has an active online community of normal users, pro-pilots, and developers."
+        "message": "Gripora is a new open-source project for RC cars, and it is just getting started."
     },
     "defaultWebsiteText": {
         "message": "<a href=\"https://www.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora website</a> is the first stop for instructions, manuals, and information."
@@ -1483,7 +1483,7 @@
         "message": "Contributing"
     },
     "defaultContributingText": {
-        "message": "Gripora is an open-source community project. Anybody can join in and help to make it better, including:<br /><ul><li>helping other users on Gripora Discord or other online forums</li><li><a href=\"https://github.com/gripora-project?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">reporting</a> bugs and issues, and suggesting improvements</li><li>testing new software versions, new features and fixes; and providing feedback</li><li>participating in discussions on new features</li><li>create or update content on <a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">our Website</a></li><li><a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">contributing</a> to the software development - fixing bugs, implementing new features and improvements</li><li><a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">translating</a> Gripora Configurator into a new language, or helping to maintain an existing translation</li></ul>"
+        "message": "Gripora is an open-source community project. Anybody can join in and help to make it better, including:<br /><ul><li>helping other users in online forums</li><li><a href=\"https://github.com/gripora-project?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">reporting</a> bugs and issues, and suggesting improvements</li><li>testing new software versions, new features and fixes; and providing feedback</li><li>participating in discussions on new features</li><li>create or update content on <a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">our Website</a></li><li><a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">contributing</a> to the software development - fixing bugs, implementing new features and improvements</li><li><a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">translating</a> Gripora Configurator into a new language, or helping to maintain an existing translation</li></ul>"
     },
     "defaultDonateHead": {
         "message": "Supporting Gripora"
