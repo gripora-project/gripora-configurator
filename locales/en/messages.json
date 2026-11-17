@@ -5379,6 +5379,141 @@
     "motorsDriveSaveRejected": {
         "message": "The flight controller refused the Drive settings (a value is out of range), so they were not changed."
     },
+    "profilesSectionLabelAbs": {
+        "message": "ABS"
+    },
+    "profilesAbsSummary": {
+        "message": "Pulses the brake when you brake hard, so the wheels keep turning and the car keeps steering instead of locking up and sliding. These settings belong to the profile selected above: each profile has its own, and switching profile switches them. ABS never pushes the throttle past neutral into reverse."
+    },
+    "profilesAbsMode": {
+        "message": "ABS"
+    },
+    "profilesAbsModeHelp": {
+        "message": "ABS works only while the ESC is braking a car that is still rolling. A DRIVE AIDS OFF switch on the Modes tab turns it off from the transmitter. The ESC's mixer rule must take the stabilized throttle, as the car mixer preset does; a rule fed straight from the RC throttle bypasses ABS."
+    },
+    "profilesAbsMode_OFF": {
+        "message": "Off"
+    },
+    "profilesAbsMode_STATIC": {
+        "message": "Fixed"
+    },
+    "profilesAbsMode_DYNAMIC": {
+        "message": "Follows brake depth"
+    },
+    "profilesAbsModeHelp_OFF": {
+        "message": "The brake goes to the ESC as you give it."
+    },
+    "profilesAbsModeHelp_STATIC": {
+        "message": "Past the trigger the brake pulses at a fixed rate: each pulse is full brake for half the pulse plus the hold, then eases to the release brake for the rest."
+    },
+    "profilesAbsModeHelp_DYNAMIC": {
+        "message": "Like Fixed, but the harder you brake (from the trigger to full brake), the more the pulse rate moves to the full-brake rate, the release brake eases to 60% of its setting, and the hold moves to the full-brake hold."
+    },
+    "profilesAbsNoBrakeNote": {
+        "message": "The ESC reverses directly and there is no motor RPM, so the controller can't tell braking from reversing and ABS may not run. Fit an RPM source, or set the ESC to <b>Brake, then reverse</b> if it supports it."
+    },
+    "profilesAbsPulseTitle": {
+        "message": "Brake pulses"
+    },
+    "profilesAbs_abs_trigger": {
+        "message": "Trigger"
+    },
+    "profilesAbs_abs_trigger_help": {
+        "message": "ABS runs once the brake goes past this, as a percentage of full brake. Lighter braking goes to the ESC unchanged."
+    },
+    "profilesAbs_abs_freq": {
+        "message": "Pulse rate"
+    },
+    "profilesAbs_abs_freq_help": {
+        "message": "Brake pulses per second."
+    },
+    "profilesAbs_abs_floor": {
+        "message": "Release brake"
+    },
+    "profilesAbs_abs_floor_help": {
+        "message": "Brake kept while a pulse lets off, as a percentage of your brake. It never drops below 10% brake, so a brake-then-reverse ESC never sees neutral and never switches to reverse."
+    },
+    "profilesAbs_abs_hold": {
+        "message": "Hold"
+    },
+    "profilesAbs_abs_hold_help": {
+        "message": "Extra full-brake time in each pulse, beyond half the pulse. Full brake never takes more than 85% of a pulse."
+    },
+    "profilesAbsPulsePreview": {
+        "message": "At full brake, steering straight: {{freq}} pulses per second, each {{full}} ms of full brake then {{release}} ms at {{brake}}% brake."
+    },
+    "profilesAbsDynamicTitle": {
+        "message": "At full brake"
+    },
+    "profilesAbs_abs_dyn_freq": {
+        "message": "Pulse rate"
+    },
+    "profilesAbs_abs_dyn_freq_help": {
+        "message": "Pulse rate at full brake. Between the trigger and full brake the rate moves from the pulse rate above to this."
+    },
+    "profilesAbs_abs_dyn_hold": {
+        "message": "Hold"
+    },
+    "profilesAbs_abs_dyn_hold_help": {
+        "message": "Hold at full brake. 0 keeps the hold above. Only a shorter hold applies."
+    },
+    "profilesAbsCornerTitle": {
+        "message": "With steering"
+    },
+    "profilesAbs_abs_corner_freq": {
+        "message": "Extra pulse rate"
+    },
+    "profilesAbs_abs_corner_freq_help": {
+        "message": "Pulses per second added at full steering lock, less with less steering. 0 is off."
+    },
+    "profilesAbs_abs_corner_hold": {
+        "message": "Hold"
+    },
+    "profilesAbs_abs_corner_hold_help": {
+        "message": "Hold at full steering lock, moving towards it with steering. 0 is off. Where this and the full-brake hold both apply, the shorter one wins."
+    },
+    "profilesAbsLiveTitle": {
+        "message": "Live"
+    },
+    "profilesAbsLiveAids": {
+        "message": "Drive aids"
+    },
+    "profilesAbsLiveAidsOn": {
+        "message": "On"
+    },
+    "profilesAbsLiveAidsOff": {
+        "message": "Off (disarmed, failsafe or DRIVE AIDS OFF)"
+    },
+    "profilesAbsLiveAbs": {
+        "message": "ABS"
+    },
+    "profilesAbsLiveIdle": {
+        "message": "Idle"
+    },
+    "profilesAbsLiveArmed": {
+        "message": "Braking past the trigger"
+    },
+    "profilesAbsLiveReleasing": {
+        "message": "Releasing the brake"
+    },
+    "profilesAbsLiveIn": {
+        "message": "Throttle from the transmitter"
+    },
+    "profilesAbsLiveOut": {
+        "message": "Throttle to the ESC"
+    },
+    "profilesAbsThrottleForward": {
+        "message": "Forward {{percent}}%"
+    },
+    "profilesAbsThrottleBrake": {
+        "message": "Brake / reverse {{percent}}%"
+    },
+    "profilesAbsThrottleNeutral": {
+        "message": "Neutral"
+    },
+    "profilesAbsSaveRejected": {
+        "message": "The flight controller refused the ABS settings (a value is out of range), so they were not changed."
+    },
     "motorsThrottleEndpoints": {
         "message": "Throttle Range"
     },
@@ -7896,6 +8031,12 @@
     "modeHelp GYRO OFF": {
         "message": "Turns the gyro off: steering and throttle pass straight from the transmitter, with no gyro correction."
     },
+    "mode DRIVE AIDS OFF": {
+        "message": "DRIVE AIDS OFF"
+    },
+    "modeHelp DRIVE AIDS OFF": {
+        "message": "Turns the drive aids (ABS) off: the throttle and brake go to the ESC exactly as you give them. The gyro still steers."
+    },
     "mode BEEPER": {
         "message": "BEEPER"
     },
@@ -9649,7 +9790,7 @@
         "message": "Optional"
     },
     "setupWizardModesOptionalHint": {
-        "message": "Add GYRO OFF if you want a switch that turns the gyro off."
+        "message": "Add GYRO OFF if you want a switch that turns the gyro off, and DRIVE AIDS OFF for one that turns ABS off."
     },
     "setupWizardModesArmMissing": {
         "message": "ARM isn't on a switch yet. Without it the motor can't be armed and the car can't drive."
@@ -9665,6 +9806,12 @@
     },
     "setupWizardModesHelp_gyroOff": {
         "message": "Turns the gyro off: steering and throttle pass straight from the transmitter, with no gyro correction. Put it on a switch you can reach while driving."
+    },
+    "setupWizardModes_driveAidsOff": {
+        "message": "DRIVE AIDS OFF"
+    },
+    "setupWizardModesHelp_driveAidsOff": {
+        "message": "Turns ABS off: the throttle and brake go straight to the ESC. The gyro still steers."
     },
     "setupWizardModesAssigned": {
         "message": "On a switch"

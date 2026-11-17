@@ -1,6 +1,7 @@
 import { readAttitudeLimits, writeAttitudeLimits } from "@/js/AttitudeLimits.js";
 import { readFbusMuxConfig } from "@/js/FbusMux.js";
 import { readDriveConfig, readDriveStatus, writeDriveConfig } from "@/js/Drive.js";
+import { readDriveAidsConfig, readDriveAidsStatus, writeDriveAidsConfig } from "@/js/DriveAids.js";
 import { readFwSpa, writeFwSpa } from "@/js/FwSpa.js";
 import { readLevelDamping, writeLevelDamping } from "@/js/LevelDamping.js";
 import { readSnapRelax, writeSnapRelax } from "@/js/SnapRelax.js";
@@ -784,6 +785,29 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 FC.DRIVE_STATUS.supported = !!status;
                 if (status) {
                     Object.assign(FC.DRIVE_STATUS, status);
+                }
+                break;
+            }
+
+            case MSPCodes.MSP2_GRIPORA_DRIVE_AIDS_CONFIG: {
+                // Reads the fields it knows; later aids append theirs.
+                const config = readDriveAidsConfig(data);
+                FC.DRIVE_AIDS_CONFIG.supported = !!config;
+                if (config) {
+                    Object.assign(FC.DRIVE_AIDS_CONFIG, config);
+                }
+                break;
+            }
+
+            case MSPCodes.MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG:
+                console.log('Drive aids config saved');
+                break;
+
+            case MSPCodes.MSP2_GRIPORA_DRIVE_AIDS_STATUS: {
+                const status = readDriveAidsStatus(data);
+                FC.DRIVE_AIDS_STATUS.supported = !!status;
+                if (status) {
+                    Object.assign(FC.DRIVE_AIDS_STATUS, status);
                 }
                 break;
             }
@@ -2426,6 +2450,10 @@ MspHelper.prototype.crunch = function(code) {
             writeDriveConfig(buffer, FC.DRIVE_CONFIG);
             break;
 
+        case MSPCodes.MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG:
+            writeDriveAidsConfig(buffer, FC.DRIVE_AIDS_CONFIG);
+            break;
+
         case MSPCodes.MSP2_GRIPORA_SET_SRXL2_ESC_CONFIG: {
             // Same fields as the read, without its version byte.
             buffer.push16(FC.SRXL2_ESC_CONFIG.throttle_rate_hz)
@@ -3320,6 +3348,38 @@ MspHelper.prototype.loadDriveStatus = async function()
 MspHelper.prototype.sendDriveConfig = function()
 {
     const code = MSPCodes.MSP2_GRIPORA_SET_DRIVE_CONFIG;
+    return new Promise((resolve) => {
+        MSP.send_message(code, this.crunch(code), false,
+            (response) => resolve(!!response && !response.unsupported && !response.crcError), true);
+    });
+};
+
+// Reads MSP2_GRIPORA_DRIVE_AIDS_CONFIG. Firmware without it answers
+// unsupported, which leaves FC.DRIVE_AIDS_CONFIG.supported false. Resolves to
+// that flag.
+MspHelper.prototype.loadDriveAidsConfig = async function()
+{
+    FC.DRIVE_AIDS_CONFIG.supported = false;
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_DRIVE_AIDS_CONFIG);
+    return FC.DRIVE_AIDS_CONFIG.supported;
+};
+
+// Reads MSP2_GRIPORA_DRIVE_AIDS_STATUS into FC.DRIVE_AIDS_STATUS; `supported`
+// stays false on firmware without it.
+MspHelper.prototype.loadDriveAidsStatus = async function()
+{
+    const response = await MSP.promise(MSPCodes.MSP2_GRIPORA_DRIVE_AIDS_STATUS);
+    if (!response || response.unsupported || response.crcError) {
+        FC.DRIVE_AIDS_STATUS.supported = false;
+    }
+    return FC.DRIVE_AIDS_STATUS.supported;
+};
+
+// Sends FC.DRIVE_AIDS_CONFIG. Resolves false when the FC refused it: it
+// applies none of the fields if any is out of range.
+MspHelper.prototype.sendDriveAidsConfig = function()
+{
+    const code = MSPCodes.MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG;
     return new Promise((resolve) => {
         MSP.send_message(code, this.crunch(code), false,
             (response) => resolve(!!response && !response.unsupported && !response.crcError), true);

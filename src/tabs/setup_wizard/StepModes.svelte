@@ -17,7 +17,7 @@
 
   // Permanent box IDs (gripora-firmware msp/msp_box.c) and the box names
   // the FC reports for them. ARM is the only one the model can't drive
-  // without; GYRO OFF is optional.
+  // without; GYRO OFF and DRIVE AIDS OFF are optional.
   const MODES = [
     { id: 0, key: "arm", names: ["ARM"], icon: "fa-power-off", required: true },
     {
@@ -25,6 +25,12 @@
       key: "gyroOff",
       names: ["GYRO OFF"],
       icon: "fa-hand-paper",
+    },
+    {
+      id: 66,
+      key: "driveAidsOff",
+      names: ["DRIVE AIDS OFF"],
+      icon: "fa-ban",
     },
   ];
 

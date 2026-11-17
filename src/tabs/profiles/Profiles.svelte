@@ -17,6 +17,7 @@
   import PidBandwidth from "./PidBandwidth.svelte";
   import GainCurves from "./GainCurves.svelte";
   import MasterGains from "./MasterGains.svelte";
+  import DriveAids from "./DriveAids.svelte";
 
   let loading = $state(true);
   let initialState = $state(null);
@@ -31,7 +32,11 @@
   let copyDestination = $state(0);
 
   function snapshotState() {
-    return $state.snapshot({ PIDS: FC.PIDS, PID_PROFILE: FC.PID_PROFILE });
+    return $state.snapshot({
+      PIDS: FC.PIDS,
+      PID_PROFILE: FC.PID_PROFILE,
+      DRIVE_AIDS_CONFIG: FC.DRIVE_AIDS_CONFIG,
+    });
   }
 
   let changes = $derived.by(() => {
@@ -97,6 +102,13 @@
     await updateRuntimeGains();
     await MSP.promise(MSPCodes.MSP_SENSOR_CONFIG);
     await MSP.promise(MSPCodes.MSP_BATTERY_CONFIG);
+    // Drive aids (ABS), per PID profile (next API version): detected by the
+    // FC answering with a payload. The drive status tells the ABS panel
+    // whether the controller can see a brake.
+    if (await mspHelper.loadDriveAidsConfig()) {
+      await mspHelper.loadDriveAidsStatus();
+      await mspHelper.loadDriveStatus();
+    }
 
     mountedProfile = FC.CONFIG.profile;
     initialState = snapshotState();
@@ -106,6 +118,9 @@
       await MSP.promise(MSPCodes.MSP_STATUS);
       await MSP.promise(MSPCodes.MSP_RC);
       await updateRuntimeGains();
+      if (FC.DRIVE_AIDS_STATUS.supported) {
+        await mspHelper.loadDriveAidsStatus();
+      }
 
       if (FC.CONFIG.profile !== mountedProfile) {
         mountedProfile = FC.CONFIG.profile;
@@ -195,6 +210,14 @@
       MSPCodes.MSP_SET_PID_PROFILE,
       mspHelper.crunch(MSPCodes.MSP_SET_PID_PROFILE),
     );
+    // The FC refuses the whole message if any value is out of range; the
+    // rest of the profile still saves.
+    if (
+      FC.DRIVE_AIDS_CONFIG.supported &&
+      !(await mspHelper.sendDriveAidsConfig())
+    ) {
+      GUI.log($i18n.t("profilesAbsSaveRejected"));
+    }
     await MSP.promise(MSPCodes.MSP_EEPROM_WRITE);
     GUI.log($i18n.t("eepromSaved"));
 
@@ -204,6 +227,7 @@
   export async function onRevert() {
     FC.PIDS.forEach((axis, i) => Object.assign(axis, initialState.PIDS[i]));
     Object.assign(FC.PID_PROFILE, initialState.PID_PROFILE);
+    Object.assign(FC.DRIVE_AIDS_CONFIG, initialState.DRIVE_AIDS_CONFIG);
   }
 
   export function isDirty() {
@@ -259,6 +283,9 @@
         <EffectivePidGains saved={initialState} />
         <PidGains />
         <MasterGains />
+      {/if}
+      {#if FC.DRIVE_AIDS_CONFIG.supported}
+        <DriveAids />
       {/if}
     </div>
     <!-- Expert Mode panels sit below the main ones rather than in a side

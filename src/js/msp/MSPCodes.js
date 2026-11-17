@@ -265,6 +265,10 @@ export const MSPCodes = {
     MSP2_GRIPORA_DRIVE_CONFIG:        0x5F3C,
     MSP2_GRIPORA_SET_DRIVE_CONFIG:    0x5F3D,
     MSP2_GRIPORA_DRIVE_STATUS:        0x5F3E,
+    // Drive aids: ABS (src/js/DriveAids.js)
+    MSP2_GRIPORA_DRIVE_AIDS_CONFIG:   0x5F3F,
+    MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG: 0x5F40,
+    MSP2_GRIPORA_DRIVE_AIDS_STATUS:   0x5F41,
 
     // MSPv2 Betaflight specific
     MSP2_BETAFLIGHT_BIND:               0x3000,

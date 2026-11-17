@@ -6,6 +6,14 @@ import {
   writeDriveConfig,
   writeDriveStatus,
 } from "@/js/Drive.js";
+import {
+  defaultDriveAidsConfig,
+  idleDriveAidsStatus,
+  isValidDriveAidsConfig,
+  parseDriveAidsConfigRequest,
+  writeDriveAidsConfig,
+  writeDriveAidsStatus,
+} from "@/js/DriveAids.js";
 import { FC } from "@/js/fc.svelte.js";
 import { GainCurve } from "@/js/GainCurve.js";
 import { MixerCurve } from "@/js/MixerCurve.js";
@@ -128,6 +136,8 @@ function defaultPidSlot() {
       axisLimitsRaw: [0, 0, 0, 0],
       axisLimitsInitial: [55, 55, 20, 20],
     },
+    // MSP2_GRIPORA_DRIVE_AIDS_CONFIG: per profile, pg/drive_aids.c defaults
+    driveAids: defaultDriveAidsConfig(),
   };
 }
 
@@ -176,11 +186,14 @@ function loadPidSlot(index) {
   copyPids(FC.PIDS, slot.pids);
   copyPids(FC.PIDS_ACTIVE, slot.pids);
   Object.assign(FC.PID_PROFILE, slot.profile);
+  Object.assign(FC.DRIVE_AIDS_CONFIG, slot.driveAids);
   FC.CONFIG.profile = index;
 }
 
+// The drive aids are saved on their own SET code, so they stay as they are.
 function storePidSlot() {
   pidSlots[FC.CONFIG.profile] = {
+    ...pidSlots[FC.CONFIG.profile],
     pids: FC.PIDS.map((axis) => axis.slice(0, 5)),
     profile: clone(FC.PID_PROFILE),
   };
@@ -578,6 +591,19 @@ function encodeDriveStatus() {
   return Uint8Array.from(writeDriveStatus([], status));
 }
 
+// MSP2_GRIPORA_DRIVE_AIDS_CONFIG / _SET_: the active PID profile's slot, as
+// the firmware keeps one per profile.
+function encodeDriveAidsConfig() {
+  return Uint8Array.from(
+    writeDriveAidsConfig([], pidSlots[FC.CONFIG.profile].driveAids),
+  );
+}
+
+// MSP2_GRIPORA_DRIVE_AIDS_STATUS for a disarmed car: aids off, nothing shaped.
+function encodeDriveAidsStatus() {
+  return Uint8Array.from(writeDriveAidsStatus([], idleDriveAidsStatus()));
+}
+
 // Runs a virtual reply through the real decoder, so FC is updated exactly as it would
 // be by hardware (and a payload that drifts from the wire format shows up here).
 function decodeVirtualReply(code, payload) {
@@ -621,6 +647,17 @@ export function getVirtualResponse(code, requestData) {
     }
     case MSPCodes.MSP2_GRIPORA_DRIVE_STATUS:
       return decodeVirtualReply(code, encodeDriveStatus());
+    case MSPCodes.MSP2_GRIPORA_DRIVE_AIDS_CONFIG:
+      return decodeVirtualReply(code, encodeDriveAidsConfig());
+    // Checked like msp.c: one bad value refuses the lot and changes nothing.
+    case MSPCodes.MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG: {
+      const config = parseDriveAidsConfigRequest(requestData);
+      if (!config || !isValidDriveAidsConfig(config)) return VIRTUAL_ERROR;
+      pidSlots[FC.CONFIG.profile].driveAids = config;
+      return new Uint8Array(0);
+    }
+    case MSPCodes.MSP2_GRIPORA_DRIVE_AIDS_STATUS:
+      return decodeVirtualReply(code, encodeDriveAidsStatus());
     case MSPCodes.MSP_SELECT_SETTING: {
       const index = requestData[0];
       if (index & RATE_PROFILE_MASK) {
@@ -1074,8 +1111,9 @@ export function applyVirtualConfig() {
     "BEEPER MUTE",
     "BLACKBOX",
     "BLACKBOX ERASE",
+    "DRIVE AIDS OFF",
   ];
-  FC.AUX_CONFIG_IDS = [0, 27, 12, 36, 13, 52, 26, 31];
+  FC.AUX_CONFIG_IDS = [0, 27, 12, 36, 13, 52, 26, 31, 66];
 
   // Modes: ARM on AUX1 high, GYRO OFF on AUX2 high; the rest of the
   // MAX_MODE_ACTIVATION_CONDITION_COUNT slots unused, as the FC reports them.
@@ -1101,9 +1139,10 @@ export function applyVirtualConfig() {
   };
   FC.MODE_RANGES_EXTRA[1].id = 12;
 
-  // Profiles/Rates (also sets FC.PIDS, PID_PROFILE and RC_TUNING from the
-  // active slots)
+  // Profiles/Rates (also sets FC.PIDS, PID_PROFILE, DRIVE_AIDS_CONFIG and
+  // RC_TUNING from the active slots)
   resetProfileSlots();
+  FC.DRIVE_AIDS_CONFIG.supported = true;
 
   FC.GAIN_CURVES = Array.from({ length: GainCurve.CURVE_COUNT }, () =>
     GainCurve.nullCurve(),
