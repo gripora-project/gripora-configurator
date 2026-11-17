@@ -94,8 +94,8 @@ test("stepped trim ranges: left/up step down, right/down step up", () => {
   assert.deepEqual(pitch.adjRange2, { start: 1730, end: 1780 }); // T2 Down 50%
 
   const yaw = steppedTrimRange("yaw", 3);
-  assert.deepEqual(yaw.adjRange1, { start: 1630, end: 1680 }); // T4 Left 30%
-  assert.deepEqual(yaw.adjRange2, { start: 1680, end: 1730 }); // T4 Right 40%
+  assert.deepEqual(yaw.adjRange1, { start: 1630, end: 1680 }); // T1 CCW 30%
+  assert.deepEqual(yaw.adjRange2, { start: 1680, end: 1730 }); // T1 CW 40%
 });
 
 test("trim mode is read back from the ranges", () => {

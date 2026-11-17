@@ -22,14 +22,15 @@
 
   // The firmware's expo exponent for an axis: sRates / 16 + 2
   // (applyGriporaRates() in fc/rc_rates.c); RC_TUNING holds sRates / 100.
-  // The styles leave it alone, so their curves use the current roll shape.
+  // The styles leave it alone, so their curves use the current steering
+  // (yaw) shape.
   function shape(axis) {
     return ((FC.RC_TUNING[`${axis}_srate`] ?? 0) * 100) / 16 + 2;
   }
 
   // One rate scale for every curve on the page, so they compare.
   let scale = $derived(
-    Math.max(...STYLES.map((s) => s.rate.roll), ...AXES.map((a) => rate(a))),
+    Math.max(...STYLES.map((s) => s.rate.yaw), ...AXES.map((a) => rate(a))),
   );
 
   let changed = $state(false);
@@ -89,18 +90,16 @@
       </span>
       <span class="muted">{$i18n.t(`setupWizardStyleHelp_${style.key}`)}</span>
       <RateCurve
-        rate={style.rate.roll}
+        rate={style.rate.yaw}
         expo={style.expo}
-        shape={shape("roll")}
+        shape={shape("yaw")}
         {scale}
         axisLabel={$i18n.t("setupWizardStyleStickAxis")}
       />
       <span class="numbers">
         {$i18n.t("setupWizardStyleAxisRates", {
-          1: style.rate.roll,
-          2: style.rate.pitch,
-          3: style.rate.yaw,
-          4: style.expo,
+          1: style.rate.yaw,
+          2: style.expo,
         })}
       </span>
       <span class="relax">
@@ -209,7 +208,7 @@
     font-size: 0.85em;
   }
 
-  //// What the model has now, per axis, on the same scale.
+  //// What the car has now (steering), on the same scale.
 
   .now {
     display: flex;

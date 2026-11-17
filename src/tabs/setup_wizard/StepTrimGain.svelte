@@ -432,7 +432,7 @@
       {@render guideStep(
         2,
         "setupWizardTrimButtonsStep2",
-        "ethos_stick_mix_trim_off.png",
+        "ethos_steering_mix_no_trim.png",
         "setupWizardTrimButtonsImage2",
       )}
       {@render guideStep(
@@ -515,7 +515,7 @@
       {@render guideStep(
         2,
         "setupWizardTrimChannelsStep2",
-        "ethos_rudder_mix_trim_off.png",
+        "ethos_steering_mix_no_trim.png",
         "setupWizardTrimChannelsImage2",
       )}
       {@render guideStep(
@@ -559,8 +559,10 @@
     </div>
   </div>
 
+  <!-- Only steering is stabilised, so one knob is all a car needs. "One per
+       axis" is offered only to show a setup that already has it. -->
   <div class="tiles three" role="radiogroup">
-    {#each ["single", "separate", "none"] as value (value)}
+    {#each mode === "separate" ? ["single", "separate", "none"] : ["single", "none"] as value (value)}
       <button
         type="button"
         role="radio"

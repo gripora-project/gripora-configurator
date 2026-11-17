@@ -1,6 +1,7 @@
 <script>
   // A small model rotating about one axis: roll seen from behind, pitch
-  // from the side, yaw from above. Decorative; the axis name is next to it.
+  // from the side, yaw (steering) as a car from above. Only yaw is used on
+  // a car. Decorative; the axis name is next to it.
   let { axis, size = 36 } = $props();
 </script>
 
@@ -29,13 +30,17 @@
     <path class="arrow" d="M44 40 A18 18 0 0 0 44 16" />
     <path class="head" d="M40 18.5 L44 11 L47.5 18.5 Z" />
   {:else}
+    <!-- Steering (yaw): a car from above, nose up, turning. -->
     <g transform="rotate(18 24 28)">
-      <line class="wing" x1="7" y1="24" x2="41" y2="24" />
-      <line class="wing" x1="17" y1="40" x2="31" y2="40" />
+      <rect class="tyre" x="13" y="18" width="3.4" height="7" rx="1.2" />
+      <rect class="tyre" x="31.6" y="18" width="3.4" height="7" rx="1.2" />
+      <rect class="tyre" x="13" y="33" width="3.4" height="7" rx="1.2" />
+      <rect class="tyre" x="31.6" y="33" width="3.4" height="7" rx="1.2" />
       <path
         class="body"
-        d="M24 9 C27 11 27 14 26.5 18 L25.5 42 L22.5 42 L21.5 18 C21 14 21 11 24 9 Z"
+        d="M17 18 C17 14.5 20 13 24 13 C28 13 31 14.5 31 18 L31 40 C31 42 30 43 28 43 L20 43 C18 43 17 42 17 40 Z"
       />
+      <line class="stripe" x1="24" y1="27" x2="24" y2="39" />
     </g>
     <path class="arrow" d="M12 8 A20 20 0 0 1 38 9" />
     <path class="head" d="M35 4.5 L42 10.5 L34 12.5 Z" />
@@ -73,6 +78,16 @@
 
   .wing-fill {
     fill: var(--color-accent-500);
+  }
+
+  .tyre {
+    fill: currentColor;
+  }
+
+  .stripe {
+    stroke: var(--color-accent-500);
+    stroke-width: 3.2;
+    stroke-linecap: round;
   }
 
   .arrow {

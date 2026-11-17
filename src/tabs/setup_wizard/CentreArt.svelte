@@ -1,34 +1,39 @@
-<!-- Side view of a tail section with its servo and linkage at neutral: the
-     servo horn square to the pushrod (1) and the surface in line with the
-     fixed part (2). Decorative; the tips next to it say the same. -->
+<!-- The front of a car from above (nose up) with the steering servo at
+     neutral: the servo horn square to the steering link (1) and both front
+     wheels pointing straight ahead (2). Decorative; the tips next to it say
+     the same. -->
 <svg
   viewBox="0 0 200 90"
   class="centre-art"
   aria-hidden="true"
   focusable="false"
 >
-  <!-- In-line reference along the chord. -->
-  <line class="guide" x1="4" y1="40" x2="196" y2="40" />
+  <!-- Straight-ahead reference through each front wheel. -->
+  <line class="guide" x1="40" y1="2" x2="40" y2="88" />
+  <line class="guide" x1="160" y1="2" x2="160" y2="88" />
 
-  <path
-    class="fixed"
-    d="M8 40 C8 34 18 32 32 32 L120 37 L120 43 L32 48 C18 48 8 46 8 40 Z"
-  />
-  <path class="surface" d="M120 37 L186 40 L120 43 Z" />
-  <circle class="hinge" cx="120" cy="40" r="2" />
+  <!-- Front bumper and the axle the wheels pivot on. -->
+  <path class="fixed" d="M46 14 Q100 2 154 14" />
+  <line class="rod" x1="48" y1="40" x2="152" y2="40" />
 
-  <!-- Control horn on the surface, pushrod, servo horn and servo. -->
-  <path class="horn" d="M131 41.5 L134 54 L139 54 L139 41 Z" />
-  <line class="rod" x1="40" y1="52" x2="136" y2="52" />
-  <rect class="servo" x="28" y="62" width="40" height="20" rx="3" />
-  <rect class="horn" x="37" y="50" width="6" height="14" rx="3" />
-  <circle class="spline" cx="40" cy="62" r="2.6" />
-  <path class="square" d="M40 57 L45 57 L45 52" />
+  <rect class="wheel" x="33" y="25" width="14" height="30" rx="4" />
+  <rect class="wheel" x="153" y="25" width="14" height="30" rx="4" />
+  <circle class="hinge" cx="48" cy="40" r="2" />
+  <circle class="hinge" cx="152" cy="40" r="2" />
 
-  <circle class="badge" cx="18" cy="62" r="7" />
-  <text class="badge-text" x="18" y="65.5">1</text>
-  <circle class="badge" cx="186" cy="24" r="7" />
-  <text class="badge-text" x="186" y="27.5">2</text>
+  <!-- Steering arms, the link across, servo horn and servo. -->
+  <line class="rod" x1="48" y1="40" x2="56" y2="54" />
+  <line class="rod" x1="152" y1="40" x2="144" y2="54" />
+  <line class="rod" x1="56" y1="54" x2="144" y2="54" />
+  <rect class="servo" x="80" y="62" width="40" height="20" rx="3" />
+  <rect class="horn" x="97" y="52" width="6" height="14" rx="3" />
+  <circle class="spline" cx="100" cy="64" r="2.6" />
+  <path class="square" d="M100 59 L105 59 L105 54" />
+
+  <circle class="badge" cx="68" cy="72" r="7" />
+  <text class="badge-text" x="68" y="75.5">1</text>
+  <circle class="badge" cx="176" cy="12" r="7" />
+  <text class="badge-text" x="176" y="15.5">2</text>
 </svg>
 
 <style lang="scss">
@@ -47,7 +52,13 @@
     stroke-dasharray: 4 3;
   }
 
-  .fixed,
+  .fixed {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+  }
+
   .servo {
     fill: var(--color-surface);
     stroke: currentColor;
@@ -55,8 +66,10 @@
     stroke-linejoin: round;
   }
 
-  .surface {
-    fill: var(--color-accent-500);
+  .wheel {
+    fill: var(--color-surface);
+    stroke: currentColor;
+    stroke-width: 2.4;
   }
 
   .hinge,

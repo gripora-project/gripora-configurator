@@ -6,8 +6,8 @@
   // "switch"), with Ethos as the worked example.
   //
   // The screenshots are from the Ethos simulator (FrSkyRC/ethos-tools,
-  // X20S): a Free mix with the control as its source and a spare channel as
-  // its output.
+  // FrSky Velox VX10 with a car model): a Free mix with the control as its
+  // source and a spare channel as its output.
   import { i18n } from "@/js/i18n.js";
 
   // done: the control is already on a channel, so the steps fold away

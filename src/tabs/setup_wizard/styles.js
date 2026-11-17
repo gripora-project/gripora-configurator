@@ -1,15 +1,16 @@
-// Flying-style starting points, applied to roll, pitch and yaw:
-//  - rates: deg/s at full stick per axis and expo percent (the Rates tab
-//    holds rate as deg/s / 500 and expo as a fraction). Pitch and yaw are
-//    slower than roll, about 0.8 and 0.6 of it: logs of a 3D model asked for
-//    500 deg/s on every axis reached about 400 on pitch and 115-230 on yaw
-//    with the surface pinned. Sport matches the firmware's default rates;
+// Driving-style starting points. Only the yaw (steering) values are applied
+// and shown (STYLE_AXES below); the roll and pitch rates are left as they were
+// and are not written.
+//  - rates: deg/s at full steering and expo percent (the Rates tab holds
+//    rate as deg/s / 500 and expo as a fraction). Sport matches the
+//    firmware's default rates;
 //  - I-term relax score (1-10, pidItermRelaxCutoff() in the firmware's
-//    flight/pid.c: higher holds I back longer after a stick movement) and
-//    relax level (deg/s of stick movement at which I is held fully).
-// Sport is the firmware default for relax. Trainer lets I hold trim against
-// wind sooner; 3D keeps I from winding up through big, fast inputs, which
-// shows as bounce-back at the end of a snap or roll.
+//    flight/pid.c: higher holds I back longer after a steering input) and
+//    relax level (deg/s of input movement at which I is held fully).
+// Sport is the firmware default for relax. Beginner (key "trainer") lets I
+// hold the car straight sooner; Drift (key "3d") keeps I from winding up
+// through big, fast counter-steer, which shows as a snap back at the end of
+// a slide.
 export const STYLES = [
   {
     key: "trainer",
