@@ -12,7 +12,7 @@
   } from "./surfaces.js";
 
   import LivePulse from "./LivePulse.svelte";
-  import SurfaceBothWays from "./SurfaceBothWays.svelte";
+  import SteerBothWays from "./SteerBothWays.svelte";
 
   const wiz = getContext("setupWizard");
 
@@ -146,7 +146,7 @@
 <p>{$i18n.t("setupWizardLimitsIntro")}</p>
 
 <div class="both">
-  <SurfaceBothWays />
+  <SteerBothWays />
   <span>{$i18n.t("setupWizardLimitsBothSides")}</span>
 </div>
 

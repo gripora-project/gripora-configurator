@@ -1,3 +1,11 @@
+import {
+  defaultDriveConfig,
+  idleDriveStatus,
+  isValidDriveConfig,
+  parseDriveConfigRequest,
+  writeDriveConfig,
+  writeDriveStatus,
+} from "@/js/Drive.js";
 import { FC } from "@/js/fc.svelte.js";
 import { GainCurve } from "@/js/GainCurve.js";
 import { MixerCurve } from "@/js/MixerCurve.js";
@@ -521,6 +529,55 @@ function encodeSrxl2EscConfig() {
   return Uint8Array.from(buffer);
 }
 
+// Returned by getVirtualResponse() for a request the FC refuses: MSP.send_message
+// answers it like the FC's MSP_RESULT_ERROR reply (unsupported, no payload).
+export const VIRTUAL_ERROR = Symbol("virtual MSP error");
+
+// MSP2_GRIPORA_DRIVE_CONFIG / _SET_, firmware pg/drive.c defaults. A save is kept
+// so the Motors tab reads it back after its reboot.
+const virtualDriveConfig = defaultDriveConfig();
+
+function encodeDriveConfig() {
+  return Uint8Array.from(writeDriveConfig([], virtualDriveConfig));
+}
+
+// PWM_TYPE_DSHOT150..PWM_TYPE_PROSHOT1000 (drivers/motor.h)
+function virtualMotorIsDshot() {
+  const protocol = FC.MOTOR_CONFIG.motor_pwm_protocol;
+  return protocol >= 5 && protocol <= 8;
+}
+
+// rpmSourceInit(): a pole count, then the frequency sensor, bidirectional
+// DShot or ESC telemetry. Follows the tab's edits before they are saved,
+// which a real FC only does after its reboot.
+function virtualRpmSource(motor) {
+  const features = FC.FEATURE_CONFIG.features;
+  return (
+    motor < (FC.CONFIG.motorCount ?? 0) &&
+    (FC.MOTOR_CONFIG.motor_poles?.[motor] ?? 0) > 0 &&
+    (!!features.FREQ_SENSOR ||
+      (virtualMotorIsDshot() && !!FC.MOTOR_CONFIG.use_dshot_telemetry) ||
+      !!features.ESC_SENSOR)
+  );
+}
+
+// MSP2_GRIPORA_DRIVE_STATUS for a disarmed car: NEUTRAL, forward, with the
+// speed of the virtual motor RPM through the gear ratio and tyre size.
+function encodeDriveStatus() {
+  const rpm = FC.MOTOR_TELEMETRY_DATA.rpm ?? [];
+  const status = idleDriveStatus({
+    config: virtualDriveConfig,
+    dshot: virtualMotorIsDshot(),
+    speedKnown: virtualRpmSource(0),
+    motorRpm: [rpm[0] ?? 0, virtualRpmSource(1) ? rpm[1] : undefined],
+    gearRatios: [
+      FC.MOTOR_CONFIG.motor1_gear_ratio,
+      FC.MOTOR_CONFIG.motor2_gear_ratio,
+    ],
+  });
+  return Uint8Array.from(writeDriveStatus([], status));
+}
+
 // Runs a virtual reply through the real decoder, so FC is updated exactly as it would
 // be by hardware (and a payload that drifts from the wire format shows up here).
 function decodeVirtualReply(code, payload) {
@@ -553,6 +610,17 @@ export function getVirtualResponse(code, requestData) {
           requestData[3] >= 2 && requestData[3] <= 32 ? requestData[3] : 0;
       }
       return undefined;
+    case MSPCodes.MSP2_GRIPORA_DRIVE_CONFIG:
+      return decodeVirtualReply(code, encodeDriveConfig());
+    // Checked like msp.c: one bad value refuses the lot and changes nothing.
+    case MSPCodes.MSP2_GRIPORA_SET_DRIVE_CONFIG: {
+      const config = parseDriveConfigRequest(requestData);
+      if (!config || !isValidDriveConfig(config)) return VIRTUAL_ERROR;
+      Object.assign(virtualDriveConfig, config);
+      return new Uint8Array(0);
+    }
+    case MSPCodes.MSP2_GRIPORA_DRIVE_STATUS:
+      return decodeVirtualReply(code, encodeDriveStatus());
     case MSPCodes.MSP_SELECT_SETTING: {
       const index = requestData[0];
       if (index & RATE_PROFILE_MASK) {
@@ -879,6 +947,9 @@ export function applyVirtualConfig() {
 
   FC.FEATURE_CONFIG.features.ESC_SENSOR = true;
   FC.FEATURE_CONFIG.features.FREQ_SENSOR = true;
+
+  // Drive state (MSP2_GRIPORA_DRIVE_CONFIG): the saved virtual config
+  FC.DRIVE_CONFIG = { supported: true, ...virtualDriveConfig };
   Object.assign(FC.ESC_SENSOR_CONFIG, {
     protocol: 1,
   });

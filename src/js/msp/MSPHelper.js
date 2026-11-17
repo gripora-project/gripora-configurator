@@ -1,5 +1,6 @@
 import { readAttitudeLimits, writeAttitudeLimits } from "@/js/AttitudeLimits.js";
 import { readFbusMuxConfig } from "@/js/FbusMux.js";
+import { readDriveConfig, readDriveStatus, writeDriveConfig } from "@/js/Drive.js";
 import { readFwSpa, writeFwSpa } from "@/js/FwSpa.js";
 import { readLevelDamping, writeLevelDamping } from "@/js/LevelDamping.js";
 import { readSnapRelax, writeSnapRelax } from "@/js/SnapRelax.js";
@@ -760,6 +761,30 @@ MspHelper.prototype.process_data = function(dataHandler) {
 
             case MSPCodes.MSP2_WING_SET_SRXL2_ESC_CONFIG: {
                 console.log('SRXL2 ESC config saved');
+                break;
+            }
+
+            case MSPCodes.MSP2_GRIPORA_DRIVE_CONFIG: {
+                // Firmware without the message answers unsupported, which
+                // never gets here: loadDriveConfig() clears `supported` first.
+                const config = readDriveConfig(data);
+                FC.DRIVE_CONFIG.supported = !!config;
+                if (config) {
+                    Object.assign(FC.DRIVE_CONFIG, config);
+                }
+                break;
+            }
+
+            case MSPCodes.MSP2_GRIPORA_SET_DRIVE_CONFIG:
+                console.log('Drive config saved');
+                break;
+
+            case MSPCodes.MSP2_GRIPORA_DRIVE_STATUS: {
+                const status = readDriveStatus(data);
+                FC.DRIVE_STATUS.supported = !!status;
+                if (status) {
+                    Object.assign(FC.DRIVE_STATUS, status);
+                }
                 break;
             }
 
@@ -2397,6 +2422,10 @@ MspHelper.prototype.crunch = function(code) {
             break;
         }
 
+        case MSPCodes.MSP2_GRIPORA_SET_DRIVE_CONFIG:
+            writeDriveConfig(buffer, FC.DRIVE_CONFIG);
+            break;
+
         case MSPCodes.MSP2_WING_SET_SRXL2_ESC_CONFIG: {
             // Same fields as the read, without its version byte.
             buffer.push16(FC.SRXL2_ESC_CONFIG.throttle_rate_hz)
@@ -3261,6 +3290,38 @@ MspHelper.prototype.sendModeOverride = function(permanentIds, timeoutMs)
     return new Promise((resolve) => {
         MSP.send_message(MSPCodes.MSP2_WING_SET_MODE_OVERRIDE, buffer, false,
             // No response at all: the request was dropped (link lost).
+            (response) => resolve(!!response && !response.unsupported && !response.crcError), true);
+    });
+};
+
+// Reads MSP2_GRIPORA_DRIVE_CONFIG. Firmware without it answers unsupported
+// (or not with a payload), which leaves FC.DRIVE_CONFIG.supported false.
+// Resolves to that flag.
+MspHelper.prototype.loadDriveConfig = async function()
+{
+    FC.DRIVE_CONFIG.supported = false;
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_DRIVE_CONFIG);
+    return FC.DRIVE_CONFIG.supported;
+};
+
+// Reads MSP2_GRIPORA_DRIVE_STATUS into FC.DRIVE_STATUS; `supported` stays
+// false on firmware without it.
+MspHelper.prototype.loadDriveStatus = async function()
+{
+    const response = await MSP.promise(MSPCodes.MSP2_GRIPORA_DRIVE_STATUS);
+    if (!response || response.unsupported || response.crcError) {
+        FC.DRIVE_STATUS.supported = false;
+    }
+    return FC.DRIVE_STATUS.supported;
+};
+
+// Sends FC.DRIVE_CONFIG. Resolves false when the FC refused it: it applies
+// none of the fields if any is out of range.
+MspHelper.prototype.sendDriveConfig = function()
+{
+    const code = MSPCodes.MSP2_GRIPORA_SET_DRIVE_CONFIG;
+    return new Promise((resolve) => {
+        MSP.send_message(code, this.crunch(code), false,
             (response) => resolve(!!response && !response.unsupported && !response.crcError), true);
     });
 };

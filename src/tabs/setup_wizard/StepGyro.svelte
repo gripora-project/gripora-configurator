@@ -1,5 +1,5 @@
 <script>
-  import { getContext } from "svelte";
+  import { getContext, onMount } from "svelte";
 
   import { FC } from "@/js/fc.svelte.js";
   import { i18n } from "@/js/i18n.js";
@@ -35,6 +35,24 @@
   // Toggled on this visit: shows the "check again" note.
   let toggled = $state(false);
 
+  //// Drive state (next API version). Reverse needs no setup: travelling
+  //// backwards the firmware negates the yaw rate for the steering loop by
+  //// itself (drive_gyro_reverse). With motor RPM the correction is faded
+  //// out below drive_gyro_min_speed, so at a standstill it is zero and
+  //// turning the car by hand moves nothing: say so, or the check reads as
+  //// "wrong".
+
+  let driveSupported = $state(false);
+  let standstillFaded = $state(false);
+
+  onMount(async () => {
+    driveSupported = await mspHelper.loadDriveConfig();
+    if (driveSupported && (await mspHelper.loadDriveStatus())) {
+      standstillFaded =
+        FC.DRIVE_STATUS.speed_known && FC.DRIVE_STATUS.correction === 0;
+    }
+  });
+
   function toggleGyroReverse() {
     FC.MIXER_CONFIG.yaw_gyro_reverse = reversed ? 0 : 1;
     mspHelper.sendMixerConfig();
@@ -46,6 +64,16 @@
 </script>
 
 <p>{$i18n.t("setupWizardGyroIntro")}</p>
+{#if driveSupported}
+  <p class="muted">{$i18n.t("setupWizardGyroReverseAuto")}</p>
+{/if}
+{#if standstillFaded}
+  <div class="passthrough-on">
+    {$i18n.t("setupWizardGyroStandstill", {
+      speed: (FC.DRIVE_CONFIG.gyro_min_speed / 10).toFixed(1),
+    })}
+  </div>
+{/if}
 
 <div class="legend">
   <span class="key">

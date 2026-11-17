@@ -261,6 +261,10 @@ export const MSPCodes = {
     // Servo names. 0x5F38-0x5F39 are taken on an open firmware branch.
     MSP2_WING_SERVO_NAMES:            0x5F3A,
     MSP2_WING_SET_SERVO_NAME:         0x5F3B,
+    // Drive state: ESC model, tyre size, gyro fade-in and reverse (src/js/Drive.js)
+    MSP2_GRIPORA_DRIVE_CONFIG:        0x5F3C,
+    MSP2_GRIPORA_SET_DRIVE_CONFIG:    0x5F3D,
+    MSP2_GRIPORA_DRIVE_STATUS:        0x5F3E,
 
     // MSPv2 Betaflight specific
     MSP2_BETAFLIGHT_BIND:               0x3000,

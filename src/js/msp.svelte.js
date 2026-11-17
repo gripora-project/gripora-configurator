@@ -1,4 +1,4 @@
-import { getVirtualResponse } from "@/js/virtual_fc.js";
+import { getVirtualResponse, VIRTUAL_ERROR } from "@/js/virtual_fc.js";
 import { MSPCodes } from "@/js/msp/MSPCodes.js";
 
 let packet_error = $state(0);
@@ -339,7 +339,10 @@ export const MSP = {
             // Run even without a callback: writes like MSP_SELECT_SETTING change virtual FC state
             const virtualPayload = getVirtualResponse(code, data);
             if (callback_msp) {
-                if (virtualPayload) {
+                if (virtualPayload === VIRTUAL_ERROR) {
+                    // Refused, like the FC's MSP_RESULT_ERROR reply
+                    callback_msp({ command: code, data: new DataView(new ArrayBuffer(0)), length: 0, crcError: false, unsupported: true });
+                } else if (virtualPayload) {
                     const buffer = new ArrayBuffer(virtualPayload.length);
                     new Uint8Array(buffer).set(virtualPayload);
                     callback_msp({ command: code, data: new DataView(buffer), length: virtualPayload.length, crcError: false });

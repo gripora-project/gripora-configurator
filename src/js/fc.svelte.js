@@ -1,3 +1,4 @@
+import { defaultDriveConfig } from "./Drive.js";
 import { Features } from "./features.svelte.js";
 import {
   RX_INPUT_BACKUP_COUNT,
@@ -98,7 +99,8 @@ class FlightController {
   SERVO_DATA = $state();
   SERVO_OVERRIDE = $state();
   SMARTFUEL_CONFIG = $state();
-  SRXL2_ESC_CONFIG = $state();
+  DRIVE_CONFIG = $state();
+  DRIVE_STATUS = $state();
   TELEMETRY_CONFIG = $state();
   TRANSPONDER = $state();
   TUNING_SLIDERS = $state();
@@ -297,6 +299,24 @@ class FlightController {
     // MSP2_WING_SRXL2_ESC_CONFIG: throttle_rate_hz, telem_interval_frames, motor2_channel.
     // Null until read, and on firmware without the message.
     this.SRXL2_ESC_CONFIG = null;
+    // MSP2_GRIPORA_DRIVE_CONFIG (src/js/Drive.js), firmware defaults until read.
+    // `supported` is set only when the FC answers with a payload.
+    this.DRIVE_CONFIG = {
+      supported:                  false,
+      ...defaultDriveConfig(),
+    };
+    // MSP2_GRIPORA_DRIVE_STATUS: ESC mode in use (never AUTO), state (NEUTRAL,
+    // FORWARD, BRAKE, REVERSE), direction +1/-1, speed known, speed (0.1 km/h)
+    // and steering gyro correction (%).
+    this.DRIVE_STATUS = {
+      supported:                  false,
+      esc_mode:                   1,
+      state:                      0,
+      direction:                  1,
+      speed_known:                false,
+      speed:                      0,
+      correction:                 100,
+    };
     // FBUS mux FPGA (src/js/FbusMux.js), null on builds without one
     this.FBUS_MUX = null;
     this.PID_NAMES =                [];

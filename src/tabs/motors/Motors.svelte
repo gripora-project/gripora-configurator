@@ -14,6 +14,7 @@
 
   import Throttle from "./Throttle.svelte";
   import RPM from "./RPM.svelte";
+  import Drive from "./Drive.svelte";
   import Telemetry from "./Telemetry.svelte";
   import Motor from "./Motor.svelte";
   import RotorSpeed from "./RotorSpeed.svelte";
@@ -31,6 +32,7 @@
   let initialState = $state();
   let pollerTimer;
   let armedPollerTimer;
+  let drivePollerTimer;
   let pollerStopped = false;
   let telemetryRef;
 
@@ -56,6 +58,7 @@
       MOTOR_CONFIG: FC.MOTOR_CONFIG,
       ESC_SENSOR_CONFIG: FC.ESC_SENSOR_CONFIG,
       SRXL2_ESC_CONFIG: FC.SRXL2_ESC_CONFIG,
+      DRIVE_CONFIG: FC.DRIVE_CONFIG,
       features: FC.FEATURE_CONFIG.features.bitfield,
     });
   }
@@ -82,6 +85,12 @@
     FC.SRXL2_ESC_CONFIG = null;
     if (semver.gte(FC.CONFIG.apiVersion, API_VERSION_22_15)) {
       await MSP.promise(MSPCodes.MSP2_WING_SRXL2_ESC_CONFIG);
+    }
+    // Drive state (next API version): detected by the FC answering with a
+    // payload. Firmware without it answers unsupported, which leaves
+    // DRIVE_CONFIG.supported false and hides the Drive section.
+    if (await mspHelper.loadDriveConfig()) {
+      await mspHelper.loadDriveStatus();
     }
     await MSP.promise(MSPCodes.MSP_MOTOR);
     await MSP.promise(MSPCodes.MSP_MOTOR_TELEMETRY);
@@ -128,12 +137,24 @@
       }
     }
     pollArmed();
+
+    // The Drive section's live readout, about 5 Hz, same self-rescheduling
+    // shape. Stops for good if the FC stops answering it.
+    async function pollDrive() {
+      if (pollerStopped || !FC.DRIVE_CONFIG.supported) return;
+      const ok = await mspHelper.loadDriveStatus();
+      if (ok && !pollerStopped) {
+        drivePollerTimer = setTimeout(pollDrive, 200);
+      }
+    }
+    pollDrive();
   });
 
   onDestroy(() => {
     pollerStopped = true;
     clearTimeout(pollerTimer);
     clearTimeout(armedPollerTimer);
+    clearTimeout(drivePollerTimer);
     telemetryRef?.cleanup();
   });
 
@@ -155,6 +176,11 @@
     if (FC.SRXL2_ESC_CONFIG) {
       await save(MSPCodes.MSP2_WING_SET_SRXL2_ESC_CONFIG);
     }
+    // The FC refuses the whole message if any value is out of range; the
+    // rest of the tab still saves.
+    if (FC.DRIVE_CONFIG.supported && !(await mspHelper.sendDriveConfig())) {
+      GUI.log($i18n.t("motorsDriveSaveRejected"));
+    }
 
     await MSP.promise(MSPCodes.MSP_EEPROM_WRITE);
     GUI.log($i18n.t("eepromSaved"));
@@ -172,6 +198,7 @@
     FC.SRXL2_ESC_CONFIG = initialState.SRXL2_ESC_CONFIG
       ? { ...initialState.SRXL2_ESC_CONFIG }
       : null;
+    Object.assign(FC.DRIVE_CONFIG, initialState.DRIVE_CONFIG);
     FC.FEATURE_CONFIG.features.bitfield = initialState.features;
     telemetryRef?.cleanup();
   }
@@ -222,6 +249,13 @@
       {/if}
     </div>
     <div>
+      <!-- Next to the ESC settings and above the live motor readouts: what
+           the ESC does below neutral, and the live drive state. -->
+      {#if FC.DRIVE_CONFIG.supported}
+        <div transition:slide>
+          <Drive />
+        </div>
+      {/if}
       {#if isEnabled}
         <div transition:slide>
           {#if rpmAvailable}

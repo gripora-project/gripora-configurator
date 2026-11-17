@@ -1,6 +1,7 @@
 <script>
   import { getContext, onDestroy, onMount } from "svelte";
 
+  import { DRIVE_ESC_MODES, resolveEscMode } from "@/js/Drive.js";
   import { FC } from "@/js/fc.svelte.js";
   import { isFbusMuxSerialPort } from "@/js/FbusMux.js";
   import { i18n } from "@/js/i18n.js";
@@ -93,6 +94,35 @@
     // Read at connect, but another tab may have edited them since.
     await MSP.promise(MSPCodes.MSP_SERIAL_CONFIG);
   });
+
+  //// ESC behaviour (drive_esc_mode, next API version): what the ESC does
+  //// below neutral, so the controller knows when the car is reversing.
+  //// Hidden on firmware that doesn't answer MSP2_GRIPORA_DRIVE_CONFIG.
+  //// Sent with the rest of the step on Save; no restart needed.
+
+  let driveSupported = $state(false);
+  let driveChanged = $state(false);
+  // From the running firmware: whether motor 1 has an RPM source.
+  let speedKnown = $state(true);
+
+  onMount(async () => {
+    driveSupported = await mspHelper.loadDriveConfig();
+    if (driveSupported && (await mspHelper.loadDriveStatus())) {
+      speedKnown = FC.DRIVE_STATUS.speed_known;
+    }
+  });
+
+  // What AUTO picks with the protocol shown on this page.
+  let autoMode = $derived(
+    DRIVE_ESC_MODES[resolveEscMode(0, motorState.isDshot)],
+  );
+
+  function chooseEscMode(index) {
+    if (FC.DRIVE_CONFIG.esc_mode === index) return;
+    FC.DRIVE_CONFIG.esc_mode = index;
+    driveChanged = true;
+    wiz.markChanged();
+  }
 
   function stopEverything() {
     // A protocol change hides the test controls, so nothing may be left
@@ -190,6 +220,12 @@
   }
 
   wiz.setCommit(async () => {
+    if (driveChanged) {
+      if (!(await mspHelper.sendDriveConfig())) {
+        GUI.log($i18n.t("motorsDriveSaveRejected"));
+      }
+      driveChanged = false;
+    }
     if (!changed) return;
     function send(code) {
       return MSP.promise(code, mspHelper.crunch(code));
@@ -383,6 +419,46 @@
   <p class="muted">{$i18n.t("setupWizardMotorCastle")}</p>
 {:else if motorState.isDshot && !motorState.bidirCapable}
   <p class="muted">{$i18n.t("setupWizardMotorDshot150NoRpm")}</p>
+{/if}
+
+{#if driveSupported && current !== "DISABLED"}
+  <!-- How the ESC brakes and reverses: no wheels off needed to choose. -->
+  <fieldset class="choices esc-modes">
+    <legend>{$i18n.t("setupWizardMotorEscModeTitle")}</legend>
+    {#each DRIVE_ESC_MODES as mode, index (mode)}
+      {@const selected = FC.DRIVE_CONFIG.esc_mode === index}
+      <label class={["choice", selected && "selected"]}>
+        <input
+          type="radio"
+          name="esc-mode"
+          value={index}
+          checked={selected}
+          onchange={() => chooseEscMode(index)}
+        />
+        <span class="choice-name">
+          {$i18n.t(`motorsDriveEscMode_${mode}`)}
+          {#if selected}
+            <i class="fas fa-check-circle" aria-hidden="true"></i>
+          {/if}
+        </span>
+        <span class="muted">
+          {$i18n.t(`setupWizardMotorEscModeHelp_${mode}`)}
+          {#if mode === "AUTO"}
+            {$i18n.t("setupWizardMotorEscModeAutoNow", {
+              mode: $i18n.t(`motorsDriveEscModeShort_${autoMode}`),
+            })}
+          {/if}
+        </span>
+      </label>
+    {/each}
+  </fieldset>
+  <p class="muted">{$i18n.t("setupWizardMotorEscModeTell")}</p>
+  {#if !speedKnown}
+    <div class="no-rpm">
+      <i class="fas fa-info-circle" aria-hidden="true"></i>
+      <span>{$i18n.t("motorsDriveNoRpmNote")}</span>
+    </div>
+  {/if}
 {/if}
 
 {#if changed}
@@ -822,5 +898,25 @@
   .muted {
     color: var(--color-text-soft);
     font-size: 0.9em;
+  }
+
+  // Four tiles: two by two on most widths.
+  .esc-modes {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .no-rpm {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    max-width: 80ch;
+    padding: 10px 14px;
+    border-left: 4px solid var(--color-accent-500);
+    border-radius: var(--radius-xs);
+    background-color: var(--color-surface-sunken);
+
+    i {
+      color: var(--color-accent-500);
+    }
   }
 </style>
