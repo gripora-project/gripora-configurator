@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gripora Configurator</title>
-  <meta name="description" content="Gripora Configurator — Advanced open source flight control configuration for fixed wing aircraft.">
-  <link rel="icon" type="image/svg+xml" href="bundle/images/favicon/favicon.svg">
+  <meta name="description" content="Gripora Configurator — set up and tune Gripora, open-source stability control for RC cars.">
+  <link rel="icon" type="image/svg+xml" href="logos/gripora_icon_tile.svg">
   <style>
     /* ── Reset & Base ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:        #d40000;
-      --red-dark:   #a40000;
-      --red-light:  #ff4d4d;
+      --red:        #ff5f1f;
+      --red-dark:   #c2410c;
+      --red-light:  #ff8a57;
       --gray-dark:  #4e4e4e;
       --gray-light: #f5f5f5;
       --almost-black: #333333;
       --border-gray:  #e0e0e0;
-      --bg:         #0f0f0f;
-      --bg-card:    #1a1a1a;
-      --bg-card2:   #222222;
+      --bg:         #101215;
+      --bg-card:    #1b1e24;
+      --bg-card2:   #23272f;
       --text:       #ffffff;
       --text-muted: #aaaaaa;
       --font: 'Helvetica Now Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -110,8 +110,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212, 0, 0, 0.12) 0%, transparent 70%),
-        linear-gradient(180deg, #0f0f0f 0%, #141414 100%);
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 95, 31, 0.12) 0%, transparent 70%),
+        linear-gradient(180deg, #101215 0%, #141414 100%);
       z-index: 0;
     }
 
@@ -143,7 +143,7 @@
       color: var(--red);
       margin-bottom: 20px;
       padding: 6px 16px;
-      border: 1px solid rgba(212, 0, 0, 0.35);
+      border: 1px solid rgba(255, 95, 31, 0.35);
       border-radius: 100px;
       display: inline-block;
     }
@@ -283,7 +283,7 @@
     }
 
     .version-card:hover {
-      border-color: rgba(212, 0, 0, 0.45);
+      border-color: rgba(255, 95, 31, 0.45);
       transform: translateY(-3px);
       box-shadow: 0 16px 48px rgba(0,0,0,0.45);
     }
@@ -295,8 +295,8 @@
     }
 
     .version-card.featured {
-      border-color: rgba(212, 0, 0, 0.35);
-      background: linear-gradient(140deg, #1f0808 0%, #1a1a1a 55%);
+      border-color: rgba(255, 95, 31, 0.35);
+      background: linear-gradient(140deg, #1f0808 0%, #1b1e24 55%);
     }
 
     .version-card.featured::before {
@@ -322,9 +322,9 @@
     }
 
     .badge-stable {
-      background: rgba(212, 0, 0, 0.18);
+      background: rgba(255, 95, 31, 0.18);
       color: #ff6b6b;
-      border: 1px solid rgba(212, 0, 0, 0.4);
+      border: 1px solid rgba(255, 95, 31, 0.4);
     }
     .badge-stable::before {
       content: '';
@@ -350,9 +350,9 @@
     }
 
     .badge-line {
-      background: rgba(212, 0, 0, 0.08);
+      background: rgba(255, 95, 31, 0.08);
       color: #ff9b9b;
-      border: 1px solid rgba(212, 0, 0, 0.3);
+      border: 1px solid rgba(255, 95, 31, 0.3);
     }
 
     .badge-release {
@@ -537,19 +537,19 @@
     }
     /* Featured variant */
     .version-card.featured .card-launch {
-      border-top-color: rgba(212,0,0,0.25);
+      border-top-color: rgba(255, 95, 31,0.25);
       color: rgba(255,140,140,0.7);
     }
     .version-card.featured .card-launch:hover {
-      background: rgba(212,0,0,0.1);
+      background: rgba(255, 95, 31,0.1);
       color: #fff;
     }
     .version-card.featured .card-launch .card-launch-icon {
-      border-color: rgba(212,0,0,0.35);
+      border-color: rgba(255, 95, 31,0.35);
     }
     .version-card.featured .card-launch:hover .card-launch-icon {
-      background: rgba(212,0,0,0.2);
-      border-color: rgba(212,0,0,0.6);
+      background: rgba(255, 95, 31,0.2);
+      border-color: rgba(255, 95, 31,0.6);
     }
 
     /* Card icon decoration */
@@ -667,7 +667,7 @@
   <!-- ── Navigation ──────────────────────────────────────────── -->
   <nav>
     <a href="#" class="nav-logo">
-      <img src="bundle/images/cf_logo_white.svg" alt="Gripora">
+      <img src="logos/gripora_logo_white.svg" alt="Gripora">
     </a>
     <ul class="nav-links">
       <li><a href="#versions">Versions</a></li>
@@ -680,12 +680,12 @@
     <div class="hero-bg"></div>
 
     <div class="hero-wing-bg">
-      <img src="bundle/images/light-wide-2-compact.svg" alt="">
+      <img src="logos/gripora_wordmark_white.svg" alt="">
     </div>
 
-    <span class="hero-eyebrow">Open Source Flight Control</span>
+    <span class="hero-eyebrow">Open Source Stability Control</span>
     <h1>Gripora <em>Configurator</em></h1>
-    <p class="hero-sub">Browser-based configuration tool for Gripora flight controllers. Advanced stabilization for gliders, sport aircraft, and jets.</p>
+    <p class="hero-sub">Browser-based configuration tool for Gripora: gyro steering assist, ABS and traction control for RC cars.</p>
     <div class="hero-actions">
       <a href="#versions" class="btn btn-primary">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5-5 3a.5.5 0 0 1-.5-.866V6.366a.5.5 0 0 1 .5-.866l5 3a.5.5 0 0 1 0 .866z"/></svg>
@@ -753,14 +753,13 @@
       <div class="footer-top">
         <div>
           <a href="https://gripora.org/" target="_blank" rel="noopener" class="footer-logo">
-            <img src="bundle/images/cf_logo_white.svg" alt="Gripora">
+            <img src="logos/gripora_logo_white.svg" alt="Gripora">
           </a>
-          <p class="footer-tagline">Advanced Open Source Flight Control for Fixed Wing Aircraft</p>
+          <p class="footer-tagline">Open-source stability control for RC cars</p>
         </div>
         <ul class="footer-links">
           <li><a href="https://gripora.org/" target="_blank" rel="noopener">Project Website</a></li>
           <li><a href="https://github.com/gripora-project" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://discord.gg/aEyyAJTXRw" target="_blank" rel="noopener">Discord</a></li>
           <li><a href="#versions">Versions</a></li>
         </ul>
       </div>
@@ -842,7 +841,7 @@
       if (notes) meta += `<span>${ICON_CLOCK} ${esc(notes)}</span>`;
 
       card.innerHTML = `
-        <img class="version-card-icon" src="bundle/images/favicon/favicon.svg" alt="" aria-hidden="true">
+        <img class="version-card-icon" src="logos/gripora_icon_white.svg" alt="" aria-hidden="true">
         <div class="badge-row">${badges}</div>
         ${heading}
         ${meta ? `<div class="version-meta">${meta}</div>` : ''}
