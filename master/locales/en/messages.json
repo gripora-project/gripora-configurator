@@ -8725,19 +8725,19 @@
         "message": "Each trim button puts its own value on one spare channel. A press moves the controller's trim by $1 µs; hold the button to repeat. The steps below use Ethos as the example; on other radios (EdgeTX, OpenTX, Jeti and so on) set up the same mix and weights, with each trim button as the switch for its mix line."
     },
     "setupWizardTrimButtonsStep1": {
-        "message": "<b>Model → Trims</b>: leave the steering (rudder) trim enabled, with <b>Audio</b> on so each press clicks."
+        "message": "<b>Model → Trims</b>: leave the steering trim enabled, with <b>Audio</b> on so each press clicks."
     },
     "setupWizardTrimButtonsStep2": {
-        "message": "<b>Model → Mixes</b>: in the steering (Rudder) mix, turn <b>Trim</b> OFF. The trim buttons then only drive the TRIM mix below. A trim left on a stick is read as a small stick input, which the stabilizer holds against."
+        "message": "<b>Model → Mixes</b>: keep the steering trim off the steering channel. If your steering mix has a <b>Trim</b> switch, turn it OFF. An Ethos car model's Steering mix has none: add a <b>Free mix</b> with <b>Source</b> Steering (under Analogs) and <b>Output</b> the steering channel (CH1 here), which leaves the trim out, then delete the Steering mix. The trim buttons then only drive the TRIM mix below. A trim left on the steering is read as a small steering input, which the stabilizer holds against."
     },
     "setupWizardTrimButtonsStep3": {
-        "message": "Add a <b>Free mix</b> named TRIM: <b>Active condition</b> Always on, <b>Source</b> Maximum, <b>Operation</b> Add, <b>Output</b> a spare channel (CH8 here). Then <b>Add a new action</b> for each trim button, with these weights:"
+        "message": "Add a <b>Free mix</b> named TRIM: <b>Active condition</b> Always on, <b>Source</b> Maximum (under Special), <b>Operation</b> Add, <b>Output</b> a spare channel (CH8 here). Then <b>Add a new action</b> for each steering trim button, with the trim position as its <b>Active condition</b> and these weights:"
     },
     "setupWizardTrimButtonsStep4": {
         "message": "Click Detect and press any trim button."
     },
     "setupWizardTrimButtonsLayout": {
-        "message": "T4 is the steering (rudder) trim on this radio. If yours differs, use your own steering trim with the weights shown. Only steering trim matters on a car."
+        "message": "T1 is the steering trim on the VX10, turned CCW or CW. If yours differs, use your own steering trim buttons with the weights shown. Only the steering trim matters on a car."
     },
     "setupWizardTrimButtonsButton": {
         "message": "Trim button"
@@ -8749,13 +8749,13 @@
         "message": "Trims"
     },
     "setupWizardTrimButtonsImage1": {
-        "message": "Ethos Trims page: Trim Rudder with Audio on"
+        "message": "Ethos Trims page: Trim Steering with Audio on"
     },
     "setupWizardTrimButtonsImage2": {
-        "message": "Ethos Rudder mix with Trim off"
+        "message": "Ethos STEERING free mix: Source Steering, Output CH1 (Steering), no trim added"
     },
     "setupWizardTrimButtonsImage3": {
-        "message": "Ethos TRIM free mix: source Maximum, operation Add, an action per trim button, output CH8"
+        "message": "Ethos TRIM free mix: source Maximum, operation Add, an action for T1 CCW and T1 CW, output CH8"
     },
     "setupWizardTrimButtonsZoom": {
         "message": "Click to enlarge or shrink"
@@ -8779,34 +8779,34 @@
         "message": "No trim channels: trim with the Auto trim switch. For radios that can't send their trims."
     },
     "setupWizardTrimProgrammable": {
-        "message": "The controller needs one spare channel for the steering trim, moved by the steering (rudder) trim buttons. The radio keeps the trim. The steps below use Ethos as the example; on other radios (EdgeTX, OpenTX, Jeti and so on) set up the same mix, with the trim as the source of its own channel."
+        "message": "The controller needs one spare channel for the steering trim, moved by the steering trim buttons. The radio keeps the trim. The steps below use Ethos as the example; on other radios (EdgeTX, OpenTX, Jeti and so on) set up the same mix, with the trim as the source of its own channel."
     },
     "setupWizardTrimChannelsStep1": {
-        "message": "<b>Model → Trims</b>: for the steering (rudder) trim set <b>Step</b> to Coarse, so each press moves the trim noticeably. Leave <b>Range</b> at 25%."
+        "message": "<b>Model → Trims</b>: for the steering trim set <b>Step</b> to Coarse, so each press moves the trim noticeably. Leave <b>Range</b> at 25%."
     },
     "setupWizardTrimChannelsStep2": {
-        "message": "<b>Model → Mixes</b>: in the steering (Rudders) mix, turn <b>Trim</b> OFF. The trim then only drives the trim channel below. A trim left on a stick is read as a small stick input, which the stabilizer holds against."
+        "message": "<b>Model → Mixes</b>: keep the steering trim off the steering channel. If your steering mix has a <b>Trim</b> switch, turn it OFF. An Ethos car model's Steering mix has none: add a <b>Free mix</b> with <b>Source</b> Steering (under Analogs) and <b>Output</b> the steering channel (CH1 here), which leaves the trim out, then delete the Steering mix. The trim then only drives the trim channel below. A trim left on the steering is read as a small steering input, which the stabilizer holds against."
     },
     "setupWizardTrimChannelsStep3": {
-        "message": "Add a <b>Free mix</b> named YAW TRIM: <b>Active condition</b> Always on, <b>Source</b> Trims → Trim Rudder, <b>Operation</b> Add, <b>Weight</b> 100%, <b>Output</b> a spare channel (CH9 here)."
+        "message": "Add a <b>Free mix</b> named STEERING TRIM: <b>Active condition</b> Always on, <b>Source</b> Trims → Trim Steering, <b>Operation</b> Add, <b>Weight</b> 100%, <b>Output</b> a spare channel (CH11 here)."
     },
     "setupWizardTrimChannelsStep4": {
-        "message": "That is the only trim channel a car needs: no ROLL TRIM or PITCH TRIM mix is required."
+        "message": "The Mixes page then lists STEERING TRIM with its channel and the trim as its source. That is the only trim channel a car needs."
     },
     "setupWizardTrimChannelsStep5": {
         "message": "Click Detect next to each trim below and press that trim."
     },
     "setupWizardTrimChannelsImage1": {
-        "message": "Ethos Trims page: Trim Rudder with Step Coarse and Range 25%"
+        "message": "Ethos Trims page: Trim Steering with Step Coarse and Range 25%"
     },
     "setupWizardTrimChannelsImage2": {
-        "message": "Ethos Rudders mix with Trim off"
+        "message": "Ethos STEERING free mix: Source Steering, Output CH1 (Steering), no trim added"
     },
     "setupWizardTrimChannelsImage3": {
-        "message": "Ethos ROLL TRIM free mix: source Trim Aileron, operation Add, weight 100%, output CH9"
+        "message": "Ethos STEERING TRIM free mix: source Trim Steering, operation Add, weight 100%, output CH11"
     },
     "setupWizardTrimChannelsImage4": {
-        "message": "Ethos Mixes list: ROLL, PITCH and YAW TRIM on CH9, CH10 and CH11"
+        "message": "Ethos Mixes list: STEERING TRIM on CH11 from Trim Steering"
     },
     "setupWizardTrimPress": {
         "message": "Press and hold the $1 trim…"
@@ -8830,7 +8830,7 @@
         "message": "<b>Model → Mixes</b>: press <b>+</b> and choose <b>Free mix</b>."
     },
     "setupWizardRadioMixStep2_knob": {
-        "message": "Name it GAIN. Set <b>Source</b> to the knob or slider (S1 here, under Analogs) and <b>Output</b> to a spare channel (CH9 here). Leave the weight at 100%."
+        "message": "Name it GAIN. Set <b>Source</b> to the knob (S1 here, under Analogs) and <b>Output</b> to a spare channel (CH9 here). Leave the weight at 100%."
     },
     "setupWizardRadioMixStep3_knob": {
         "message": "The Mixes page then lists GAIN with its channel and source. For one knob per axis, add a mix like this for each knob, each on its own spare channel."
@@ -8890,13 +8890,13 @@
         "message": "One knob"
     },
     "setupWizardGainModeHelp_single": {
-        "message": "One gain for every axis. Simplest for first runs."
+        "message": "One knob for the stabilizer gain. Simplest for first runs."
     },
     "setupWizardGainMode_separate": {
         "message": "One per axis"
     },
     "setupWizardGainModeHelp_separate": {
-        "message": "Roll, pitch and yaw on three knobs."
+        "message": "Gain knobs on separate channels, from an earlier setup."
     },
     "setupWizardGainMode_none": {
         "message": "None"
@@ -8905,7 +8905,7 @@
         "message": "No gain adjustment while driving."
     },
     "setupWizardGainAllAxes": {
-        "message": "Roll, pitch and yaw"
+        "message": "Stabilizer gain"
     },
     "setupWizardGainTurn": {
         "message": "Turn the knob or slider…"
@@ -9118,7 +9118,7 @@
         "message": "Pitch"
     },
     "setupWizardAxis_yaw": {
-        "message": "Yaw"
+        "message": "Steering"
     },
     "setupWizardSensorsIntro": {
         "message": "The controller needs to know how it is mounted and which way is level. Power on with the car still: the gyro calibrates itself at power-up."
@@ -9169,7 +9169,7 @@
         "message": "None yet. Choose Car."
     },
     "setupWizardAirframeCustomNote": {
-        "message": "The wizard sets up the servos driven by steering (yaw) and the ESCs driven by throttle."
+        "message": "The wizard sets up the servos driven by steering and the ESCs driven by throttle."
     },
     "setupWizardServoTypeIntro": {
         "message": "What kind of servo drives the steering?"
@@ -9436,7 +9436,7 @@
         "message": "The steering is held at center. First set the servo horn and linkage so the wheels point close to straight ahead, then fine-tune the center here."
     },
     "setupWizardCentreTipHorn": {
-        "message": "Servo horn square to the pushrod"
+        "message": "Servo horn square to the steering link"
     },
     "setupWizardCentreTipSurface": {
         "message": "Wheels pointing straight ahead"
@@ -9565,10 +9565,10 @@
         "message": "Turn the car clockwise (nose to the right, seen from above): the front wheels steer left, against the turn."
     },
     "setupWizardGyroWrong": {
-        "message": "If the steering was right in the Steering direction step but corrects the wrong way here, the gyro reads yaw backwards for this mounting. Reverse the gyro below. Don't reverse the servo: that would reverse the steering stick too."
+        "message": "If the steering was right in the Steering direction step but corrects the wrong way here, the gyro reads the car's turning backwards for this mounting. Reverse the gyro below. Don't reverse the servo: that would reverse the steering on the radio too."
     },
     "setupWizardGyroWrongOldFirmware": {
-        "message": "If the steering was right in the Steering direction step but corrects the wrong way here, the gyro reads yaw backwards for this mounting. This firmware can't reverse the gyro on its own: update the firmware, then reverse it here. Don't reverse the servo, as that would reverse the steering stick too."
+        "message": "If the steering was right in the Steering direction step but corrects the wrong way here, the gyro reads the car's turning backwards for this mounting. This firmware can't reverse the gyro on its own: update the firmware, then reverse it here. Don't reverse the servo, as that would reverse the steering on the radio too."
     },
     "setupWizardGyroReverseOn": {
         "message": "Reverse the gyro"
@@ -9691,7 +9691,7 @@
         "message": "$1 °/s, $2% expo"
     },
     "setupWizardStyleAxisRates": {
-        "message": "Roll $1, pitch $2, yaw $3 °/s, $4% expo"
+        "message": "Steering $1 °/s, $2% expo"
     },
     "setupWizardStyleRelax_trainer": {
         "message": "I-term holds trim soon after each input"
@@ -9703,16 +9703,16 @@
         "message": "I-term held back through big inputs, less bounce-back"
     },
     "setupWizardStyleNow": {
-        "message": "What the model has now"
+        "message": "What the car has now"
     },
     "setupWizardStyleStickAxis": {
-        "message": "stick →"
+        "message": "steering →"
     },
     "setupWizardStyleRelaxValue": {
         "message": "I-term relax $1"
     },
     "setupWizardStyleMore": {
-        "message": "Applies to roll, pitch and yaw in the current rate and PID profiles."
+        "message": "Applies to steering in the current rate and PID profiles."
     },
     "setupWizardFinishIntro": {
         "message": "That's the setup done. Here is what the wizard set."
