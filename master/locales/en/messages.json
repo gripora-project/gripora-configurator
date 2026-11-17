@@ -5199,6 +5199,153 @@
     "motorsMotorPolesHelp": {
         "message": "The <i>pole count</i> is the number of magnets on the motor bell. The manual should give this number. Or you can count the magnets. Do NOT count the stators with the copper wire windings."
     },
+    "motorsSectionLabelDrive": {
+        "message": "Drive"
+    },
+    "motorsDriveSummary": {
+        "message": "The controller works out which way the car is travelling and how fast, from the throttle it sends to the ESC and the motor RPM. It uses this to keep the steering gyro correcting the right way in reverse, and to fade the gyro out when the car is nearly stopped."
+    },
+    "motorsDriveEscMode": {
+        "message": "ESC behaviour"
+    },
+    "motorsDriveEscModeHelp": {
+        "message": "What your ESC does when the throttle goes below neutral. The controller follows the same rules to tell when the car is reversing."
+    },
+    "motorsDriveEscMode_AUTO": {
+        "message": "Automatic"
+    },
+    "motorsDriveEscMode_FWD_BRK_REV": {
+        "message": "Brake, then reverse"
+    },
+    "motorsDriveEscMode_FWD_REV": {
+        "message": "Reverse directly"
+    },
+    "motorsDriveEscMode_FWD_BRK": {
+        "message": "Forward and brake only"
+    },
+    "motorsDriveEscModeShort_AUTO": {
+        "message": "Automatic"
+    },
+    "motorsDriveEscModeShort_FWD_BRK_REV": {
+        "message": "Brake, then reverse"
+    },
+    "motorsDriveEscModeShort_FWD_REV": {
+        "message": "Reverse directly"
+    },
+    "motorsDriveEscModeShort_FWD_BRK": {
+        "message": "Forward and brake only"
+    },
+    "motorsDriveEscModeHelp_AUTO": {
+        "message": "Chosen from the ESC protocol. With DShot the ESC reverses directly, as AM32 does by default. With PWM it brakes first and reverses after the throttle returns to neutral, like most car ESCs. An AM32 with RC car reverse turned on needs <b>Brake, then reverse</b>."
+    },
+    "motorsDriveEscModeHelp_FWD_BRK_REV": {
+        "message": "Below neutral the ESC brakes after driving forward. Back to neutral, then below neutral again, and it reverses. Most car ESCs, and AM32 with RC car reverse turned on."
+    },
+    "motorsDriveEscModeHelp_FWD_REV": {
+        "message": "Below neutral the ESC reverses straight away, after braking or coasting while the car still rolls forward. AM32 in its default bidirectional mode, and DShot ESCs."
+    },
+    "motorsDriveEscModeHelp_FWD_BRK": {
+        "message": "Below neutral the ESC only ever brakes. The car never reverses."
+    },
+    "motorsDriveSpeedTitle": {
+        "message": "Speed from motor RPM"
+    },
+    "motorsDriveWheelDiameter": {
+        "message": "Tyre diameter"
+    },
+    "motorsDriveWheelDiameterHelp": {
+        "message": "Outside diameter of the driven tyres. With the gear ratio it turns motor RPM into the car's speed, which fades the gyro in. Speed attenuation in the profiles uses this speed too, in place of GPS speed."
+    },
+    "motorsDriveGearRatio": {
+        "message": "Gear ratio"
+    },
+    "motorsDriveGearRatioMotor1": {
+        "message": "Motor 1 gear ratio"
+    },
+    "motorsDriveGearRatioMotor2": {
+        "message": "Motor 2 gear ratio"
+    },
+    "motorsDriveGearRatioHelp": {
+        "message": "Motor turns per wheel turn (the final drive ratio): motor turns on the left, wheel turns on the right. For a 10.4 : 1 final drive enter 104 : 10. The RPM filter uses it too. Applied after the save and restart."
+    },
+    "motorsDriveSpeedFormula": {
+        "message": "Speed = motor RPM ÷ gear ratio ({{ratio}} : 1) × tyre circumference ({{circumference}} mm)."
+    },
+    "motorsDriveGyroTitle": {
+        "message": "Steering gyro"
+    },
+    "motorsDriveGyroMinSpeed": {
+        "message": "Gyro starts at"
+    },
+    "motorsDriveGyroMinSpeedHelp": {
+        "message": "Below this speed the gyro doesn't correct the steering, so at a standstill the steering follows the stick alone. Needs motor RPM: without it the gyro is always fully on."
+    },
+    "motorsDriveGyroFullSpeed": {
+        "message": "Gyro fully on at"
+    },
+    "motorsDriveGyroFullSpeedHelp": {
+        "message": "The gyro correction rises from nothing at the start speed to full at this speed. It must be above the start speed."
+    },
+    "motorsDriveGyroReverse": {
+        "message": "Gyro in reverse"
+    },
+    "motorsDriveGyroReverseHelp": {
+        "message": "Correct the steering while the car reverses. The controller turns the correction round for reverse by itself. Turn this off to steer by the stick alone when reversing."
+    },
+    "motorsDriveGyroReverseGain": {
+        "message": "Reverse gyro gain"
+    },
+    "motorsDriveGyroReverseGainHelp": {
+        "message": "Gyro correction while reversing, as a percentage of the forward correction."
+    },
+    "motorsDriveLiveTitle": {
+        "message": "Live"
+    },
+    "motorsDriveLiveEscMode": {
+        "message": "ESC behaviour in use"
+    },
+    "motorsDriveLiveState": {
+        "message": "ESC state"
+    },
+    "motorsDriveLiveDirection": {
+        "message": "Direction"
+    },
+    "motorsDriveLiveSpeed": {
+        "message": "Speed"
+    },
+    "motorsDriveLiveCorrection": {
+        "message": "Gyro correction"
+    },
+    "motorsDriveState_NEUTRAL": {
+        "message": "Neutral"
+    },
+    "motorsDriveState_FORWARD": {
+        "message": "Forward"
+    },
+    "motorsDriveState_BRAKE": {
+        "message": "Braking"
+    },
+    "motorsDriveState_REVERSE": {
+        "message": "Reverse"
+    },
+    "motorsDriveDirectionForward": {
+        "message": "Forward"
+    },
+    "motorsDriveDirectionReverse": {
+        "message": "Reverse"
+    },
+    "motorsDriveSpeedValue": {
+        "message": "{{speed}} km/h"
+    },
+    "motorsDriveNoRpmSource": {
+        "message": "No RPM source"
+    },
+    "motorsDriveNoRpmNote": {
+        "message": "Without motor RPM the controller can't tell when the car is stopped, so the gyro stays fully active at a standstill. For the best low-speed and reverse behaviour, use an ESC with RPM telemetry (bidirectional DShot or ESC telemetry) or fit a speed sensor on the frequency input."
+    },
+    "motorsDriveSaveRejected": {
+        "message": "The flight controller refused the Drive settings (a value is out of range), so they were not changed."
+    },
     "motorsThrottleEndpoints": {
         "message": "Throttle Range"
     },
@@ -9075,6 +9222,27 @@
     "setupWizardMotorDshot150NoRpm": {
         "message": "DShot150 can't report motor RPM. For anything that needs motor RPM, use DShot300 with bidirectional DShot, or an RPM sensor or ESC telemetry."
     },
+    "setupWizardMotorEscModeTitle": {
+        "message": "How does your ESC reverse?"
+    },
+    "setupWizardMotorEscModeHelp_AUTO": {
+        "message": "Let the controller decide from the protocol: DShot reverses directly, PWM brakes first."
+    },
+    "setupWizardMotorEscModeHelp_FWD_BRK_REV": {
+        "message": "Brakes, then reverses after the throttle returns to neutral. Most car ESCs; AM32 with RC car reverse on."
+    },
+    "setupWizardMotorEscModeHelp_FWD_REV": {
+        "message": "Reverses as soon as the throttle goes below neutral. AM32's default bidirectional mode; DShot."
+    },
+    "setupWizardMotorEscModeHelp_FWD_BRK": {
+        "message": "The ESC brakes but never reverses."
+    },
+    "setupWizardMotorEscModeAutoNow": {
+        "message": "Now: {{mode}}."
+    },
+    "setupWizardMotorEscModeTell": {
+        "message": "Not sure? With the wheels off the ground, hold Forward below, let go, then hold Reverse straight away. If the wheels only stop, and turn backwards only after you let go and hold Reverse again, choose Brake, then reverse."
+    },
     "setupWizardMotorOther": {
         "message": "Other"
     },
@@ -9343,7 +9511,7 @@
         "message": "Find how far each servo can move before the steering or linkage binds."
     },
     "setupWizardLimitsHardStop": {
-        "message": "These limits are hard stops that protect the servo. Don't use them to set throw: steering at its limit leaves the stabilizer nothing to work with. Throw is set in a later step."
+        "message": "These limits are hard stops that protect the servo from binding. Don't use them to set how far the wheels turn: steering held at its limit leaves the gyro nothing to correct with. Set the steering throw on the Mixer tab instead."
     },
     "setupWizardLimitsStart": {
         "message": "Find limits"
@@ -9416,6 +9584,12 @@
     },
     "setupWizardGyroCheckAgain": {
         "message": "This works straight away. Turn the car by hand again and answer the check above."
+    },
+    "setupWizardGyroReverseAuto": {
+        "message": "Reverse needs no setup: when the car drives backwards, the controller turns the gyro correction round by itself. The reverse gain is on the Motors tab."
+    },
+    "setupWizardGyroStandstill": {
+        "message": "With motor RPM, the gyro only corrects once the car is moving (from {{speed}} km/h), so at a standstill the steering doesn't answer when you turn the car by hand. That isn't the wrong direction. Check it on the first drive instead: at low speed, kick the tail out and the steering should turn into the slide."
     },
     "setupWizardGyroLegendMove": {
         "message": "How you turn the car"
