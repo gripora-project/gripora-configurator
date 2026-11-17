@@ -14,6 +14,10 @@
     DRIVE_ABS_OFF,
     DRIVE_ABS_TRIGGER_MAX,
     DRIVE_ABS_TRIGGER_MIN,
+    DRIVE_TC_MODES,
+    DRIVE_TC_OFF,
+    DRIVE_TC_RAMP_TIME_MAX,
+    DRIVE_TC_RAMP_TIME_MIN,
   } from "@/js/DriveAids.js";
   import { FC } from "@/js/fc.svelte.js";
   import { i18n } from "@/js/i18n.js";
@@ -25,10 +29,11 @@
   import Tooltip from "@/components/Tooltip.svelte";
   import WarningNote from "@/components/notes/WarningNote.svelte";
 
-  // Drive aids (firmware flight/drive_aids.c): timed ABS for now, stored per
-  // PID profile. Shown only on firmware that answers
-  // MSP2_GRIPORA_DRIVE_AIDS_CONFIG; Profiles.svelte loads (for the active
-  // profile), saves and polls it, and reloads on a profile change.
+  // Drive aids (firmware flight/drive_aids.c): timed ABS and timed traction
+  // control, stored per PID profile. Shown only on firmware that answers
+  // MSP2_GRIPORA_DRIVE_AIDS_CONFIG, traction control only when the reply
+  // carries its fields; Profiles.svelte loads (for the active profile),
+  // saves and polls it, and reloads on a profile change.
 
   const config = $derived(FC.DRIVE_AIDS_CONFIG);
   const status = $derived(FC.DRIVE_AIDS_STATUS);
@@ -58,6 +63,14 @@
         ? $i18n.t("profilesAbsLiveArmed")
         : $i18n.t("profilesAbsLiveIdle"),
   );
+
+  let tcText = $derived(
+    status.tc_active
+      ? $i18n.t("profilesTcLiveLimiting")
+      : status.tc_armed
+        ? $i18n.t("profilesTcLiveArmed")
+        : $i18n.t("profilesTcLiveIdle"),
+  );
 </script>
 
 {#snippet numberField(key, unit, min, max, def)}
@@ -75,8 +88,11 @@
   </Field>
 {/snippet}
 
-<Section label="profilesSectionLabelAbs" summary="profilesAbsSummary">
-  <SubSection>
+<Section
+  label="profilesSectionLabelDriveAids"
+  summary="profilesDriveAidsSummary"
+>
+  <SubSection label="profilesAbsTitle">
     <Field id="abs-mode" label="profilesAbsMode">
       {#snippet tooltip()}
         <Tooltip help="profilesAbsModeHelp" />
@@ -164,6 +180,56 @@
     </div>
   {/if}
 
+  {#if config.tc_supported}
+    <SubSection label="profilesTcTitle">
+      <Field id="tc-mode" label="profilesTcMode">
+        {#snippet tooltip()}
+          <Tooltip help="profilesTcModeHelp" />
+        {/snippet}
+        <select id="tc-mode" bind:value={config.tc_mode}>
+          {#each DRIVE_TC_MODES as mode, index (mode)}
+            <option value={index}>{$i18n.t(`profilesTcMode_${mode}`)}</option>
+          {/each}
+        </select>
+      </Field>
+      <p class="explain">
+        {$i18n.t(
+          `profilesTcModeHelp_${DRIVE_TC_MODES[config.tc_mode] ?? "OFF"}`,
+        )}
+      </p>
+      {#if config.tc_mode !== DRIVE_TC_OFF}
+        <div transition:slide>
+          <Field id="tc-ramp-time" label="profilesTc_tc_ramp_time" unit="ms">
+            {#snippet tooltip()}
+              <Tooltip
+                help="profilesTc_tc_ramp_time_help"
+                attrs={[
+                  { name: "genericDefault", value: "500 ms" },
+                  {
+                    name: "genericRange",
+                    value: `${DRIVE_TC_RAMP_TIME_MIN} - ${DRIVE_TC_RAMP_TIME_MAX} ms`,
+                  },
+                ]}
+              />
+            {/snippet}
+            <NumberInput
+              id="tc-ramp-time"
+              min={DRIVE_TC_RAMP_TIME_MIN}
+              max={DRIVE_TC_RAMP_TIME_MAX}
+              step="10"
+              bind:value={config.tc_ramp_time}
+            />
+          </Field>
+          <p class="explain">
+            {$i18n.t("profilesTcRampPreview", {
+              seconds: +(config.tc_ramp_time / 1000).toFixed(2),
+            })}
+          </p>
+        </div>
+      {/if}
+    </SubSection>
+  {/if}
+
   {#if status.supported}
     <SubSection label="profilesAbsLiveTitle">
       <dl class="live">
@@ -175,6 +241,10 @@
         </dd>
         <dt>{$i18n.t("profilesAbsLiveAbs")}</dt>
         <dd class={[!status.abs_armed && "muted"]}>{absText}</dd>
+        {#if config.tc_supported}
+          <dt>{$i18n.t("profilesTcLive")}</dt>
+          <dd class={[!status.tc_armed && "muted"]}>{tcText}</dd>
+        {/if}
         <dt>{$i18n.t("profilesAbsLiveIn")}</dt>
         <dd>{throttleText(status.throttle_in)}</dd>
         <dt>{$i18n.t("profilesAbsLiveOut")}</dt>

@@ -653,7 +653,8 @@ export function getVirtualResponse(code, requestData) {
     case MSPCodes.MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG: {
       const config = parseDriveAidsConfigRequest(requestData);
       if (!config || !isValidDriveAidsConfig(config)) return VIRTUAL_ERROR;
-      pidSlots[FC.CONFIG.profile].driveAids = config;
+      // A 9-byte request leaves traction control as it is
+      Object.assign(pidSlots[FC.CONFIG.profile].driveAids, config);
       return new Uint8Array(0);
     }
     case MSPCodes.MSP2_GRIPORA_DRIVE_AIDS_STATUS:
@@ -1143,6 +1144,7 @@ export function applyVirtualConfig() {
   // RC_TUNING from the active slots)
   resetProfileSlots();
   FC.DRIVE_AIDS_CONFIG.supported = true;
+  FC.DRIVE_AIDS_CONFIG.tc_supported = true;
 
   FC.GAIN_CURVES = Array.from({ length: GainCurve.CURVE_COUNT }, () =>
     GainCurve.nullCurve(),

@@ -77,8 +77,9 @@ function selectProfile(index) {
     getVirtualResponse(MSPCodes.MSP_SELECT_SETTING, [index]);
 }
 
-const defaults = defaultDriveAidsConfig();
-const tuned = { ...defaults, abs_mode: 2, abs_freq: 12, abs_corner_hold: 15 };
+// The Virtual FC has traction control, so its replies carry the TC fields
+const defaults = { ...defaultDriveAidsConfig(), tc_supported: true };
+const tuned = { ...defaults, abs_mode: 2, abs_freq: 12, abs_corner_hold: 15, tc_mode: 1, tc_ramp_time: 800 };
 
 test('each PID profile has its own drive aids', () => {
     applyVirtualConfig();
@@ -98,6 +99,16 @@ test('each PID profile has its own drive aids', () => {
     assert.deepEqual(readAids(), tuned);
     assert.equal(FC.DRIVE_AIDS_CONFIG.abs_mode, 2);
     assert.equal(FC.DRIVE_AIDS_CONFIG.abs_freq, 12);
+    assert.equal(FC.DRIVE_AIDS_CONFIG.tc_mode, 1);
+    assert.equal(FC.DRIVE_AIDS_CONFIG.tc_ramp_time, 800);
+});
+
+test('a 9-byte SET leaves traction control as it is', () => {
+    applyVirtualConfig();
+    assert.equal(FC.DRIVE_AIDS_CONFIG.tc_supported, true);
+    setAids(tuned);
+    assert.deepEqual(setAids({ ...tuned, abs_mode: 1, tc_supported: false }), new Uint8Array(0));
+    assert.deepEqual(readAids(), { ...tuned, abs_mode: 1 });
 });
 
 test('saving the PID profile keeps the drive aids', () => {
@@ -114,6 +125,8 @@ test('a refused SET changes nothing', () => {
     applyVirtualConfig();
     setAids(tuned);
     assert.equal(setAids({ ...tuned, abs_freq: 34 }), VIRTUAL_ERROR);
+    assert.equal(setAids({ ...tuned, tc_ramp_time: 49 }), VIRTUAL_ERROR);
+    assert.equal(setAids({ ...tuned, tc_mode: 2 }), VIRTUAL_ERROR);
     assert.equal(getVirtualResponse(MSPCodes.MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG, [2, 12]), VIRTUAL_ERROR);
     assert.deepEqual(readAids(), tuned);
 });

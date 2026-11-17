@@ -216,7 +216,7 @@
       FC.DRIVE_AIDS_CONFIG.supported &&
       !(await mspHelper.sendDriveAidsConfig())
     ) {
-      GUI.log($i18n.t("profilesAbsSaveRejected"));
+      GUI.log($i18n.t("profilesDriveAidsSaveRejected"));
     }
     await MSP.promise(MSPCodes.MSP_EEPROM_WRITE);
     GUI.log($i18n.t("eepromSaved"));

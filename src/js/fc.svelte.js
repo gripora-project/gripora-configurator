@@ -322,12 +322,15 @@ class FlightController {
     };
     // MSP2_GRIPORA_DRIVE_AIDS_CONFIG (src/js/DriveAids.js), firmware defaults
     // until read. `supported` is set only when the FC answers with a payload.
+    // `tc_supported` is set when the reply carries the traction control fields.
     this.DRIVE_AIDS_CONFIG = {
       supported:                  false,
+      tc_supported:               false,
       ...defaultDriveAidsConfig(),
     };
-    // MSP2_GRIPORA_DRIVE_AIDS_STATUS: aids on, ABS armed, ABS releasing, and
-    // the throttle command in and out (-1000..1000, negative is brake/reverse).
+    // MSP2_GRIPORA_DRIVE_AIDS_STATUS: aids on, ABS armed/releasing, traction
+    // control armed/limiting, and the throttle command in and out
+    // (-1000..1000, negative is brake/reverse).
     this.DRIVE_AIDS_STATUS = {
       supported:                  false,
       ...idleDriveAidsStatus(),
