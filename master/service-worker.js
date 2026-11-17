@@ -9,8 +9,8 @@
 // its own scope -- never another installed version's offline copy -- and
 // only ever reads from its own cache.
 
-const CACHE_PREFIX = `wingflight-configurator@${self.registration.scope}@`;
-const CACHE_VERSION = `${CACHE_PREFIX}0.0.0-4adca423`;
+const CACHE_PREFIX = `gripora-configurator@${self.registration.scope}@`;
+const CACHE_VERSION = `${CACHE_PREFIX}0.0.0-f2988caa`;
 const APP_SHELL = [
   "./",
   "./index.html",

@@ -1,7 +1,7 @@
 var e={hasWebSerial(){return`serial`in navigator},hasWebBluetooth(){return`bluetooth`in navigator},hasWebUSB(){return`usb`in navigator},hasWebStorage(){try{let e=`__storage_test__`;return localStorage.setItem(e,e),localStorage.removeItem(e),!0}catch{return!1}},getBrowserName(){let e=navigator.userAgent;return e.includes(`Edg/`)?`Microsoft Edge`:e.includes(`Chrome/`)?`Google Chrome`:e.includes(`Safari/`)&&!e.includes(`Chrome/`)?`Safari`:e.includes(`Firefox/`)?`Mozilla Firefox`:e.includes(`OPR/`)?`Opera`:e.includes(`Brave/`)?`Brave`:`Unknown Browser`},checkAll(){let e=this.hasWebSerial(),t=this.hasWebBluetooth(),n=this.hasWebUSB(),r=this.hasWebStorage();return{hasWebSerial:e,hasWebBluetooth:t,hasWebUSB:n,hasWebStorage:r,browserName:this.getBrowserName(),isCompatible:(e||t||n)&&r}},displayWarning(e){if(e.isCompatible)return!0;let t=[];e.hasWebSerial||t.push(`Web Serial`),e.hasWebBluetooth||t.push(`Web Bluetooth`),e.hasWebUSB||t.push(`WebUSB`);let n=`
 ⚠️ Unsupported Browser: ${e.browserName}
 
-Wingflight Configurator Web needs at least one of the following APIs to
+Gripora Configurator Web needs at least one of the following APIs to
 talk to a flight controller, and your browser has none of them:
 ${t.map(e=>`  • ${e}`).join(`
 `)}

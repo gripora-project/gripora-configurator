@@ -336,13 +336,13 @@
         "english": "Show update notifications for unstable versions of the configurator"
     },
     "configuratorDevelopmentNotice": {
-        "message": "You are using a <b>development version</b> of the <b>Wingflight Configurator</b>.<br> Please consider using a released version, unless you have a good reason for using an unreleased development version.",
-        "english": "You are using a <b>development version</b> of the <b>Wingflight Configurator</b>.<br> Please consider using a released version, unless you have a good reason for using an unreleased development version.",
+        "message": "You are using a <b>development version</b> of the <b>Gripora Configurator</b>.<br> Please consider using a released version, unless you have a good reason for using an unreleased development version.",
+        "english": "You are using a <b>development version</b> of the <b>Gripora Configurator</b>.<br> Please consider using a released version, unless you have a good reason for using an unreleased development version.",
         "status": "New entry. Please translate!"
     },
     "configuratorUpdateNotice": {
-        "message": "Używasz przestarzałej wersji <b>Konfiguratora Wingflight</b>.<br>$t(configuratorUpdateHelp.message)",
-        "english": "You are using an outdated version of the <b>Wingflight Configurator</b>.<br>$t(configuratorUpdateHelp.message)",
+        "message": "Używasz przestarzałej wersji <b>Konfiguratora Gripora</b>.<br>$t(configuratorUpdateHelp.message)",
+        "english": "You are using an outdated version of the <b>Gripora Configurator</b>.<br>$t(configuratorUpdateHelp.message)",
         "status": "Auto-converted translation. Please check!",
         "previous": {
             "message": "Używasz przestarzałej wersji <b>Konfiguratora Betaflight</b>.<br>$t(configuratorUpdateHelp.message)",
@@ -350,8 +350,8 @@
         }
     },
     "configuratorUpdateHelp": {
-        "message": "Używanie nowszej wersji oprogramowania z przestarzałą wersją Konfiguratora oznacza, że zmiana niektórych ustawień spowoduje <strong>Uszkodzenie konfiguracji oprogramowania kontrolera i uziemienie maszyny</strong>. Ponadto niektóre funkcje oprogramowania będą konfigurowalne tylko przez konsolę (CLI).<br><strong>Wersja konfiguratora Wingflight <b>$1</b> jest dostępna do pobrania online</strong>, odwiedź <a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">tę stronę</a>, aby pobrać i zainstalować najnowszą wersję z poprawkami i ulepszeniami.<br>Zamknij okno konfiguratora przed aktualizacją.",
-        "english": "Using a newer version of the firmware with an outdated version of Configurator means that changing some settings will result in a <strong>corrupted firmware configuration and a non-working craft</strong>. Furthermore, some features of the firmware will only be configurable in CLI.<br><strong>Wingflight Configurator version <b>$1</b> is available for download online</strong>, please visit <a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">this page</a> to download and install the latest version with fixes and improvements.<br>Please close the configurator window before updating.",
+        "message": "Używanie nowszej wersji oprogramowania z przestarzałą wersją Konfiguratora oznacza, że zmiana niektórych ustawień spowoduje <strong>Uszkodzenie konfiguracji oprogramowania kontrolera i uziemienie maszyny</strong>. Ponadto niektóre funkcje oprogramowania będą konfigurowalne tylko przez konsolę (CLI).<br><strong>Wersja konfiguratora Gripora <b>$1</b> jest dostępna do pobrania online</strong>, odwiedź <a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">tę stronę</a>, aby pobrać i zainstalować najnowszą wersję z poprawkami i ulepszeniami.<br>Zamknij okno konfiguratora przed aktualizacją.",
+        "english": "Using a newer version of the firmware with an outdated version of Configurator means that changing some settings will result in a <strong>corrupted firmware configuration and a non-working craft</strong>. Furthermore, some features of the firmware will only be configurable in CLI.<br><strong>Gripora Configurator version <b>$1</b> is available for download online</strong>, please visit <a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">this page</a> to download and install the latest version with fixes and improvements.<br>Please close the configurator window before updating.",
         "status": "Auto-converted translation. Please check!",
         "previous": {
             "message": "Używanie nowszej wersji oprogramowania z przestarzałą wersją Konfiguratora oznacza, że zmiana niektórych ustawień spowoduje <strong>Uszkodzenie konfiguracji oprogramowania kontrolera i uziemienie maszyny</strong>. Ponadto niektóre funkcje oprogramowania będą konfigurowalne tylko przez konsolę (CLI).<br><strong>Wersja konfiguratora Betaflight <b>$1</b> jest dostępna do pobrania online</strong>, odwiedź <a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">tę stronę</a>, aby pobrać i zainstalować najnowszą wersję z poprawkami i ulepszeniami.<br>Zamknij okno konfiguratora przed aktualizacją.",
@@ -716,8 +716,8 @@
         }
     },
     "firmwareTypeNotSupported": {
-        "message": "Oprogramowanie inne niż Wingflight <span class=\"message-negative\">nie jest wspierane</span>, z wyjątkiem trybu CLI.",
-        "english": "Non - Wingflight firmware is <span class=\"message-negative\">not supported</span>, except for CLI mode.",
+        "message": "Oprogramowanie inne niż Gripora <span class=\"message-negative\">nie jest wspierane</span>, z wyjątkiem trybu CLI.",
+        "english": "Non - Gripora firmware is <span class=\"message-negative\">not supported</span>, except for CLI mode.",
         "status": "Auto-converted translation. Please check!",
         "previous": {
             "message": "Oprogramowanie inne niż Betaflight <span class=\"message-negative\">nie jest wspierane</span>, z wyjątkiem trybu CLI.",
@@ -937,8 +937,8 @@
         "english": "EEPROM <span class=\"message-positive\">saved</span>"
     },
     "defaultWelcomeIntro": {
-        "message": "Witaj w <strong>Wingflight - Configurator</strong>, narzędziu stworzonym by uprościć aktualizację i konfigurację Twojego kontrolera lotu.",
-        "english": "Welcome to <strong>Wingflight - Configurator</strong>, a utility designed to simplify updating, configuring and tuning of your flight controller.",
+        "message": "Witaj w <strong>Gripora - Configurator</strong>, narzędziu stworzonym by uprościć aktualizację i konfigurację Twojego kontrolera lotu.",
+        "english": "Welcome to <strong>Gripora - Configurator</strong>, a utility designed to simplify updating, configuring and tuning of your flight controller.",
         "status": "Auto-converted translation. Please check!",
         "previous": {
             "message": "Witaj w <strong>Betaflight - Configurator</strong>, narzędziu stworzonym by uprościć aktualizację i konfigurację Twojego kontrolera lotu.",
@@ -951,8 +951,8 @@
         "status": "New entry. Please translate!"
     },
     "defaultDownloadsText": {
-        "message": "The latest Rotorflight software downloads are available here:<br /><ul><li><a href=\"https://github.com/WingFlight/wingflight-configurator/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight Configurator</a></li><li><a href=\"https://github.com/rotorflight/rotorflight-blackbox/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Rotorflight Blackbox Log Viewer</a></li><li><a href=\"https://github.com/rotorflight/rotorflight-lua-scripts/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for EdgeTx & OpenTx</a></li><li><a href=\"https://github.com/WingFlight/wingflight-lua-ethos-suite/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for FrSky Ethos</a></li></ul>Wingflight is <b>Open Source</b> software. The source code is available in <a href=\"https://github.com/WingFlight?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.",
-        "english": "The latest Rotorflight software downloads are available here:<br /><ul><li><a href=\"https://github.com/WingFlight/wingflight-configurator/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight Configurator</a></li><li><a href=\"https://github.com/rotorflight/rotorflight-blackbox/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Rotorflight Blackbox Log Viewer</a></li><li><a href=\"https://github.com/rotorflight/rotorflight-lua-scripts/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for EdgeTx & OpenTx</a></li><li><a href=\"https://github.com/WingFlight/wingflight-lua-ethos-suite/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for FrSky Ethos</a></li></ul>Wingflight is <b>Open Source</b> software. The source code is available in <a href=\"https://github.com/WingFlight?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.",
+        "message": "The latest Rotorflight software downloads are available here:<br /><ul><li><a href=\"https://github.com/gripora-project/gripora-configurator/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora Configurator</a></li><li><a href=\"https://github.com/rotorflight/rotorflight-blackbox/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Rotorflight Blackbox Log Viewer</a></li><li><a href=\"https://github.com/rotorflight/rotorflight-lua-scripts/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for EdgeTx & OpenTx</a></li><li><a href=\"https://github.com/gripora-project/gripora-lua-ethos-suite/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for FrSky Ethos</a></li></ul>Gripora is <b>Open Source</b> software. The source code is available in <a href=\"https://github.com/gripora-project?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.",
+        "english": "The latest Rotorflight software downloads are available here:<br /><ul><li><a href=\"https://github.com/gripora-project/gripora-configurator/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora Configurator</a></li><li><a href=\"https://github.com/rotorflight/rotorflight-blackbox/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Rotorflight Blackbox Log Viewer</a></li><li><a href=\"https://github.com/rotorflight/rotorflight-lua-scripts/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for EdgeTx & OpenTx</a></li><li><a href=\"https://github.com/gripora-project/gripora-lua-ethos-suite/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for FrSky Ethos</a></li></ul>Gripora is <b>Open Source</b> software. The source code is available in <a href=\"https://github.com/gripora-project?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>.",
         "status": "New entry. Please translate!"
     },
     "defaultCommunityHead": {
@@ -961,13 +961,13 @@
         "status": "New entry. Please translate!"
     },
     "defaultCommunityText": {
-        "message": "Wingflight has an active online community of normal users, pro-pilots, and developers.",
-        "english": "Wingflight has an active online community of normal users, pro-pilots, and developers.",
+        "message": "Gripora has an active online community of normal users, pro-pilots, and developers.",
+        "english": "Gripora has an active online community of normal users, pro-pilots, and developers.",
         "status": "New entry. Please translate!"
     },
     "defaultWebsiteText": {
-        "message": "<a href=\"https://www.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight website</a> is the first stop for instructions, manuals, and information.",
-        "english": "<a href=\"https://www.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight website</a> is the first stop for instructions, manuals, and information.",
+        "message": "<a href=\"https://www.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora website</a> is the first stop for instructions, manuals, and information.",
+        "english": "<a href=\"https://www.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora website</a> is the first stop for instructions, manuals, and information.",
         "status": "New entry. Please translate!"
     },
     "defaultDiscordText": {
@@ -985,8 +985,8 @@
         "english": "Contributing"
     },
     "defaultContributingText": {
-        "message": "Wingflight is a open-source community project. Anybody can join in and help to make it better, including:<br /><ul><li>helping other users on Wingflight Discord or other online forums</li><li><a href=\"https://github.com/WingFlight?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">reporting</a> bugs and issues, and suggesting improvements</li><li>testing new software versions, new features and fixes; and providing feedback</li><li>participating in discussions on new features</li><li>create or update content on <a href=\"https://www.wingflight.org\" target=\"_blank\" rel=\"noopener noreferrer\">our Website</a></li><li><a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">contributing</a> to the software development - fixing bugs, implementing new features and improvements</li><li><a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">translating</a> Wingflight Configurator into a new language, or helping to maintain an existing translation</li></ul>",
-        "english": "Wingflight is a open-source community project. Anybody can join in and help to make it better, including:<br /><ul><li>helping other users on Wingflight Discord or other online forums</li><li><a href=\"https://github.com/WingFlight?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">reporting</a> bugs and issues, and suggesting improvements</li><li>testing new software versions, new features and fixes; and providing feedback</li><li>participating in discussions on new features</li><li>create or update content on <a href=\"https://www.wingflight.org\" target=\"_blank\" rel=\"noopener noreferrer\">our Website</a></li><li><a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">contributing</a> to the software development - fixing bugs, implementing new features and improvements</li><li><a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">translating</a> Wingflight Configurator into a new language, or helping to maintain an existing translation</li></ul>",
+        "message": "Gripora is a open-source community project. Anybody can join in and help to make it better, including:<br /><ul><li>helping other users on Gripora Discord or other online forums</li><li><a href=\"https://github.com/gripora-project?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">reporting</a> bugs and issues, and suggesting improvements</li><li>testing new software versions, new features and fixes; and providing feedback</li><li>participating in discussions on new features</li><li>create or update content on <a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">our Website</a></li><li><a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">contributing</a> to the software development - fixing bugs, implementing new features and improvements</li><li><a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">translating</a> Gripora Configurator into a new language, or helping to maintain an existing translation</li></ul>",
+        "english": "Gripora is a open-source community project. Anybody can join in and help to make it better, including:<br /><ul><li>helping other users on Gripora Discord or other online forums</li><li><a href=\"https://github.com/gripora-project?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">reporting</a> bugs and issues, and suggesting improvements</li><li>testing new software versions, new features and fixes; and providing feedback</li><li>participating in discussions on new features</li><li>create or update content on <a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">our Website</a></li><li><a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">contributing</a> to the software development - fixing bugs, implementing new features and improvements</li><li><a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">translating</a> Gripora Configurator into a new language, or helping to maintain an existing translation</li></ul>",
         "status": "Modified entry. Please translate!",
         "previous": {
             "message": "Jeśli chcesz pomóc ulepszyć Betaflight, możesz to robić na wiele sposobów, możesz pomóc swoją wiedzą:<br /><ul><li>korzystania z Betaflight do tworzenia lub aktualizowania treści na <a href=\"https://github.com/betaflight/betaflight/wiki\" target=\"_blank\" rel=\"noopener noreferrer\">naszej Wiki</a>, lub odpowiadania na pytania innych użytkowników na forach internetowych;</li><li><a href=\"https://github.com/betaflight/betaflight/blob/master/docs/development/Development.md\" target=\"_blank\" rel=\"noopener noreferrer\">wnosząc wkład na rzecz oprogramowania i konfiguratora</a> - nowe funkcje, poprawki, ulepszenia;</li><li>testowanie <a href=\"https://github.com/Betaflight/betaflight/pulls\" target=\"_blank\" rel=\"noopener noreferrer\">nowych funkcji i poprawek</a> i dostarczanie informacji zwrotnych;</li><li>pomoc innym użytkownikom w rozwiązywaniu problemów, które zgłosili w <a href=\"https://github.com/betaflight/betaflight/issues\" target=\"_blank\" rel=\"noopener noreferrer\">naszym systemie śledzenia problemów</a>oraz uczestniczenie w dyskusjach na temat wniosków o nowe funkcjonalności;</li><li><a href=\"https://github.com/betaflight/betaflight/tree/master/README.md#Translators\" target=\"_blank\" rel=\"noopener noreferrer\">tłumaczenie</a> Konfigurator Betaflight na nowy język lub pomoc w utrzymaniu istniejących tłumaczeń.</li></ul>",
@@ -999,8 +999,8 @@
         "status": "New entry. Please translate!"
     },
     "defaultDonateText": {
-        "message": "<p>Wingflight is <i>open source software</i> and is available <i>free of charge</i>, without warranty.</p><p>If you find Wingflight useful, please consider <b>supporting</b> the development by donating to the Rotorflight Project.</p>",
-        "english": "<p>Wingflight is <i>open source software</i> and is available <i>free of charge</i>, without warranty.</p><p>If you find Wingflight useful, please consider <b>supporting</b> the development by donating to the Rotorflight Project.</p>",
+        "message": "<p>Gripora is <i>open source software</i> and is available <i>free of charge</i>, without warranty.</p><p>If you find Gripora useful, please consider <b>supporting</b> the development by donating to the Rotorflight Project.</p>",
+        "english": "<p>Gripora is <i>open source software</i> and is available <i>free of charge</i>, without warranty.</p><p>If you find Gripora useful, please consider <b>supporting</b> the development by donating to the Rotorflight Project.</p>",
         "status": "New entry. Please translate!"
     },
     "defaultDonateTooltip": {
@@ -1017,8 +1017,8 @@
         "english": "Documentation / Manual"
     },
     "defaultDocumentation": {
-        "message": "Wingflight documentation is available in release notes and website.<br /><br />",
-        "english": "Wingflight documentation is available in release notes and website.<br /><br />",
+        "message": "Gripora documentation is available in release notes and website.<br /><br />",
+        "english": "Gripora documentation is available in release notes and website.<br /><br />",
         "status": "Auto-converted translation. Please check!",
         "previous": {
             "message": "Dokumentacja Betaflight dostępna jest w formie do wydania oraz w formie elektronicznej.<br /><br />",
@@ -1026,8 +1026,8 @@
         }
     },
     "defaultDocumentation1": {
-        "message": "The Wingflight documentation is a great resource for information, it can be found <a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
-        "english": "The Wingflight documentation is a great resource for information, it can be found <a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
+        "message": "The Gripora documentation is a great resource for information, it can be found <a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
+        "english": "The Gripora documentation is a great resource for information, it can be found <a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
         "status": "Auto-converted translation. Please check!",
         "previous": {
             "message": "Wikipedia Betaflight jest świetnym źródłem informacji, można je znaleźć <a href=\"https://github.com/betaflight/betaflight/wiki\" target=\"_blank\" rel=\"noopener noreferrer\">tutaj</a>.",
@@ -1035,8 +1035,8 @@
         }
     },
     "defaultDocumentation2": {
-        "message": "The latest news can be read on the Wingflight website, <a href=\"https://www.wingflight.org\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
-        "english": "The latest news can be read on the Wingflight website, <a href=\"https://www.wingflight.org\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
+        "message": "The latest news can be read on the Gripora website, <a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
+        "english": "The latest news can be read on the Gripora website, <a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
         "status": "Modified entry. Please translate!",
         "previous": {
             "message": "Dokumentację zmian do wydanego oprogramowania możesz przeczytać na stronie GitHub, <a href=\"https://github.com/Betaflight/Betaflight/releases\" target=\"_blank\" rel=\"noopener noreferrer\">tutaj</a>.",
@@ -1044,8 +1044,8 @@
         }
     },
     "defaultDocumentation3": {
-        "message": "The release notes for the firmware can be read at GitHub releases page, <a href=\"https://github.com/WingFlight/wingflight-firmware/releases\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
-        "english": "The release notes for the firmware can be read at GitHub releases page, <a href=\"https://github.com/WingFlight/wingflight-firmware/releases\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
+        "message": "The release notes for the firmware can be read at GitHub releases page, <a href=\"https://github.com/gripora-project/gripora-firmware/releases\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
+        "english": "The release notes for the firmware can be read at GitHub releases page, <a href=\"https://github.com/gripora-project/gripora-firmware/releases\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
         "status": "New entry. Please translate!"
     },
     "defaultSupportHead": {
@@ -1075,8 +1075,8 @@
         }
     },
     "defaultSupport1": {
-        "message": "<a href=\"https://www.wingflight.org\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight Website</a>",
-        "english": "<a href=\"https://www.wingflight.org\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight Website</a>",
+        "message": "<a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora Website</a>",
+        "english": "<a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora Website</a>",
         "status": "Modified entry. Please translate!",
         "previous": {
             "message": "<a href=\"http://www.rcgroups.com/forums/showthread.php?t=2464844&page=1\" target=\"_blank\" rel=\"noopener noreferrer\">Wątek na forum RC Groups</a>",
@@ -1093,8 +1093,8 @@
         }
     },
     "defaultSupport3": {
-        "message": "<a href=\"https://discord.com/invite/aEyyAJTXRw\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight discussion on Discord</a>",
-        "english": "<a href=\"https://discord.com/invite/aEyyAJTXRw\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight discussion on Discord</a>",
+        "message": "<a href=\"https://discord.com/invite/aEyyAJTXRw\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora discussion on Discord</a>",
+        "english": "<a href=\"https://discord.com/invite/aEyyAJTXRw\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora discussion on Discord</a>",
         "status": "New entry. Please translate!"
     },
     "defaultSupport4": {
@@ -1186,8 +1186,8 @@
         "status": "Reused translation. Please check!"
     },
     "statusArmingDisableFlagsTooltip": {
-        "message": "List of flags indicating why arming is currently not allowed. Pass the mouse over the flag or refer to the Website tutorial <a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">(Arm Mode flags)</a> for more info.",
-        "english": "List of flags indicating why arming is currently not allowed. Pass the mouse over the flag or refer to the Website tutorial <a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">(Arm Mode flags)</a> for more info.",
+        "message": "List of flags indicating why arming is currently not allowed. Pass the mouse over the flag or refer to the Website tutorial <a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">(Arm Mode flags)</a> for more info.",
+        "english": "List of flags indicating why arming is currently not allowed. Pass the mouse over the flag or refer to the Website tutorial <a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">(Arm Mode flags)</a> for more info.",
         "status": "Reused translation. Please check!",
         "previous": {
             "message": "Lista flag wskazuje dlaczego uzbrojenie jest obecnie niedozwolone. Ustaw kursor myszki na fladze aby uzyskać więcej informacji. Lub (odwiedź stronę internetową gdźie znajdźiesz informacje na temat sekwencji uzbrajania oraz poznasz podstawowe zasady bezpieczeństwa).",
@@ -1297,8 +1297,8 @@
         "description": "Message that pops up to describe the BST arming disable flag"
     },
     "statusArmingDisableFlagsTooltipMSP": {
-        "message": "MSP connection is active, probably with this Wingflight Configurator",
-        "english": "MSP connection is active, probably with this Wingflight Configurator",
+        "message": "MSP connection is active, probably with this Gripora Configurator",
+        "english": "MSP connection is active, probably with this Gripora Configurator",
         "status": "New entry. Please translate!",
         "description": "Message that pops up to describe the MSP arming disable flag"
     },
@@ -3394,8 +3394,8 @@
         "english": "Preview"
     },
     "receiverMspWarningText": {
-        "message": "These sticks allow Wingflight to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and rotor blades must not be attached.</strong><br /><br />This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if rotor blades are left on.</strong>",
-        "english": "These sticks allow Wingflight to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and rotor blades must not be attached.</strong><br /><br />This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if rotor blades are left on.</strong>",
+        "message": "These sticks allow Gripora to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and rotor blades must not be attached.</strong><br /><br />This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if rotor blades are left on.</strong>",
+        "english": "These sticks allow Gripora to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and rotor blades must not be attached.</strong><br /><br />This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if rotor blades are left on.</strong>",
         "status": "New entry. Please translate!"
     },
     "receiverMspEnableButton": {
@@ -6300,8 +6300,8 @@
         "english": "Message:"
     },
     "firmwareFlasherWarningText": {
-        "message": "Please do <span class=\"message-negative\">ONLY</span> flash <strong>Wingflight</strong> or <strong>Betaflight</strong> hardware with this firmware flasher.<br /><br /><strong>Note: </strong>STM32 bootloader is stored in ROM, it cannot be bricked.<br /><strong>Note: </strong><span class=\"message-negative\">Auto-Connect</span> is always disabled while you are inside firmware flasher.<br /><strong>Note: </strong>Make sure you have a backup; some upgrades/downgrades will wipe your configuration.<br /><strong>Note:</strong> If you have problems flashing <strong>try disconnecting all cables from your FC</strong> first, try rebooting, upgrade drivers.<br /><strong>Note:</strong> When flashing boards that have directly connected USB sockets (most newer boards) ensure you have read the USB Flashing section of the manual and have the correct software and drivers installed",
-        "english": "Please do <span class=\"message-negative\">ONLY</span> flash <strong>Wingflight</strong> or <strong>Betaflight</strong> hardware with this firmware flasher.<br /><br /><strong>Note: </strong>STM32 bootloader is stored in ROM, it cannot be bricked.<br /><strong>Note: </strong><span class=\"message-negative\">Auto-Connect</span> is always disabled while you are inside firmware flasher.<br /><strong>Note: </strong>Make sure you have a backup; some upgrades/downgrades will wipe your configuration.<br /><strong>Note:</strong> If you have problems flashing <strong>try disconnecting all cables from your FC</strong> first, try rebooting, upgrade drivers.<br /><strong>Note:</strong> When flashing boards that have directly connected USB sockets (most newer boards) ensure you have read the USB Flashing section of the manual and have the correct software and drivers installed",
+        "message": "Please do <span class=\"message-negative\">ONLY</span> flash <strong>Gripora</strong> or <strong>Betaflight</strong> hardware with this firmware flasher.<br /><br /><strong>Note: </strong>STM32 bootloader is stored in ROM, it cannot be bricked.<br /><strong>Note: </strong><span class=\"message-negative\">Auto-Connect</span> is always disabled while you are inside firmware flasher.<br /><strong>Note: </strong>Make sure you have a backup; some upgrades/downgrades will wipe your configuration.<br /><strong>Note:</strong> If you have problems flashing <strong>try disconnecting all cables from your FC</strong> first, try rebooting, upgrade drivers.<br /><strong>Note:</strong> When flashing boards that have directly connected USB sockets (most newer boards) ensure you have read the USB Flashing section of the manual and have the correct software and drivers installed",
+        "english": "Please do <span class=\"message-negative\">ONLY</span> flash <strong>Gripora</strong> or <strong>Betaflight</strong> hardware with this firmware flasher.<br /><br /><strong>Note: </strong>STM32 bootloader is stored in ROM, it cannot be bricked.<br /><strong>Note: </strong><span class=\"message-negative\">Auto-Connect</span> is always disabled while you are inside firmware flasher.<br /><strong>Note: </strong>Make sure you have a backup; some upgrades/downgrades will wipe your configuration.<br /><strong>Note:</strong> If you have problems flashing <strong>try disconnecting all cables from your FC</strong> first, try rebooting, upgrade drivers.<br /><strong>Note:</strong> When flashing boards that have directly connected USB sockets (most newer boards) ensure you have read the USB Flashing section of the manual and have the correct software and drivers installed",
         "status": "New entry. Please translate!"
     },
     "firmwareFlasherRecoveryHead": {
@@ -6309,8 +6309,8 @@
         "english": "<strong>Recovery / Lost communication</strong>"
     },
     "firmwareFlasherRecoveryText": {
-        "message": "If you have lost communication with your board follow these steps to restore communication: <ul><li>Power off</li><li>Enable 'No reboot sequence', enable 'Full chip erase'.</li><li>Jumper the BOOT pins or hold BOOT button.</li><li>Power on (activity LED will NOT flash if done correctly).</li><li>Install all STM32 drivers and Zadig if required (see <a href=\"https://doc.wingflight.org/getting-started/flashing-the-firmware/\"target=\"_blank\" rel=\"noopener noreferrer\">USB Flashing</a> section of the manual).</li><li>Close configurator, Restart Configurator.</li><li>Release BOOT button if your FC has one.</li><li>Flash with correct firmware (using manual baud rate if specified in your FC's manual).</li><li>Power off.</li><li>Remove BOOT jumper.</li><li>Power on (activity LED should flash).</li><li>Connect normally.</li></ul>",
-        "english": "If you have lost communication with your board follow these steps to restore communication: <ul><li>Power off</li><li>Enable 'No reboot sequence', enable 'Full chip erase'.</li><li>Jumper the BOOT pins or hold BOOT button.</li><li>Power on (activity LED will NOT flash if done correctly).</li><li>Install all STM32 drivers and Zadig if required (see <a href=\"https://doc.wingflight.org/getting-started/flashing-the-firmware/\"target=\"_blank\" rel=\"noopener noreferrer\">USB Flashing</a> section of the manual).</li><li>Close configurator, Restart Configurator.</li><li>Release BOOT button if your FC has one.</li><li>Flash with correct firmware (using manual baud rate if specified in your FC's manual).</li><li>Power off.</li><li>Remove BOOT jumper.</li><li>Power on (activity LED should flash).</li><li>Connect normally.</li></ul>",
+        "message": "If you have lost communication with your board follow these steps to restore communication: <ul><li>Power off</li><li>Enable 'No reboot sequence', enable 'Full chip erase'.</li><li>Jumper the BOOT pins or hold BOOT button.</li><li>Power on (activity LED will NOT flash if done correctly).</li><li>Install all STM32 drivers and Zadig if required (see <a href=\"https://doc.gripora.org/getting-started/flashing-the-firmware/\"target=\"_blank\" rel=\"noopener noreferrer\">USB Flashing</a> section of the manual).</li><li>Close configurator, Restart Configurator.</li><li>Release BOOT button if your FC has one.</li><li>Flash with correct firmware (using manual baud rate if specified in your FC's manual).</li><li>Power off.</li><li>Remove BOOT jumper.</li><li>Power on (activity LED should flash).</li><li>Connect normally.</li></ul>",
+        "english": "If you have lost communication with your board follow these steps to restore communication: <ul><li>Power off</li><li>Enable 'No reboot sequence', enable 'Full chip erase'.</li><li>Jumper the BOOT pins or hold BOOT button.</li><li>Power on (activity LED will NOT flash if done correctly).</li><li>Install all STM32 drivers and Zadig if required (see <a href=\"https://doc.gripora.org/getting-started/flashing-the-firmware/\"target=\"_blank\" rel=\"noopener noreferrer\">USB Flashing</a> section of the manual).</li><li>Close configurator, Restart Configurator.</li><li>Release BOOT button if your FC has one.</li><li>Flash with correct firmware (using manual baud rate if specified in your FC's manual).</li><li>Power off.</li><li>Remove BOOT jumper.</li><li>Power on (activity LED should flash).</li><li>Connect normally.</li></ul>",
         "status": "New entry. Please translate!"
     },
     "firmwareFlasherFirmwareNotLoaded": {
