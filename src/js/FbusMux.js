@@ -1,7 +1,7 @@
 // FBUS mux FPGA (STM32F7X2M builds, e.g. the FrSky Vantac RF007 V3): an FPGA
 // between the MCU and some outputs that switches each one between the MCU's
 // timer output (PWM), the FBUS master line (FBUS) and a bidirectional DShot
-// bridge (DSHOT). Read with MSP2_WING_FBUS_MUX_CONFIG; other builds answer it
+// bridge (DSHOT). Read with MSP2_GRIPORA_FBUS_MUX_CONFIG; other builds answer it
 // as unsupported, which leaves FC.FBUS_MUX null.
 
 // fbusMuxMode_e and fbusMuxFpgaStatus_e, in firmware order
@@ -12,7 +12,7 @@ export const FBUS_MUX_STATUSES = ["DISABLED", "RESOURCE_ERROR", "LOAD_FAILED", "
 const DSHOT_BRIDGE_PROTOCOLS = ["DSHOT300", "DSHOT600"];
 
 /**
- * Decodes MSP2_WING_FBUS_MUX_CONFIG. Returns null for a reply too short to hold
+ * Decodes MSP2_GRIPORA_FBUS_MUX_CONFIG. Returns null for a reply too short to hold
  * the fixed fields (the Virtual FC answers every read with an empty reply).
  */
 export function readFbusMuxConfig(data) {
@@ -33,7 +33,7 @@ export function readFbusMuxConfig(data) {
         });
     }
 
-    // Held by MSP2_WING_SET_FBUS_MUX_OVERRIDE; the modes in use are then its modes
+    // Held by MSP2_GRIPORA_SET_FBUS_MUX_OVERRIDE; the modes in use are then its modes
     const overrideActive = data.remaining() >= 1 && data.readU8() !== 0;
 
     return { dshotMask, serialPort, status, modeWord, channels, overrideActive };

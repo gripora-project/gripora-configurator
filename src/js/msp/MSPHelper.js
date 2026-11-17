@@ -476,7 +476,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_EFFECTIVE_PID_GAINS: {
+            case MSPCodes.MSP2_GRIPORA_EFFECTIVE_PID_GAINS: {
                 const gains = ["P", "I", "D", "F", "B"];
                 const version = data.readU8();
                 const runtimeGains = {
@@ -528,7 +528,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_FBUS_SENSORS: {
+            case MSPCodes.MSP2_GRIPORA_FBUS_SENSORS: {
                 const count = data.readU8();
                 const sensors = [];
 
@@ -560,7 +560,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_CLEAR_FBUS_SENSORS: {
+            case MSPCodes.MSP2_GRIPORA_CLEAR_FBUS_SENSORS: {
                 console.log('Observed FBUS/S.Port sensors cleared');
                 break;
             }
@@ -568,7 +568,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
             // Latest decoded value per sensor type (drivers/fbus_sensor.c). Each
             // block opens with a flags byte; 0 means no fresh data, and the
             // block's fields are then zero.
-            case MSPCodes.MSP2_WING_FBUS_SENSORS_STATUS: {
+            case MSPCodes.MSP2_GRIPORA_FBUS_SENSORS_STATUS: {
                 data.readU8(); // payload version, unused for now
 
                 const gpsFlags = data.readU8();
@@ -650,7 +650,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
             // Serial port diagnostics, like the CLI's serialdebug: every port,
             // then a detail block for the port asked for, with a sub-block per
             // function on it that reports state (GPS for now).
-            case MSPCodes.MSP2_WING_SERIAL_STATUS: {
+            case MSPCodes.MSP2_GRIPORA_SERIAL_STATUS: {
                 data.readU8(); // payload version, unused for now
                 const portCount = data.readU8();
                 const ports = [];
@@ -721,7 +721,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_FBUS_MASTER_CONFIG: {
+            case MSPCodes.MSP2_GRIPORA_FBUS_MASTER_CONFIG: {
                 data.readU8(); // payload version, unused for now
                 const forwardedSensors = [];
                 // matches FBUS_MASTER_MAX_FORWARDED_SENSORS in pg/fbus_master.h
@@ -737,12 +737,12 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_SET_FBUS_MASTER_CONFIG: {
+            case MSPCodes.MSP2_GRIPORA_SET_FBUS_MASTER_CONFIG: {
                 console.log('FBUS master forwarding config saved');
                 break;
             }
 
-            case MSPCodes.MSP2_WING_SRXL2_ESC_CONFIG: {
+            case MSPCodes.MSP2_GRIPORA_SRXL2_ESC_CONFIG: {
                 // Firmware without the message answers unsupported with no
                 // payload; SRXL2_ESC_CONFIG then stays null and the Motors
                 // tab hides the section.
@@ -759,7 +759,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_SET_SRXL2_ESC_CONFIG: {
+            case MSPCodes.MSP2_GRIPORA_SET_SRXL2_ESC_CONFIG: {
                 console.log('SRXL2 ESC config saved');
                 break;
             }
@@ -788,31 +788,31 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_FBUS_MUX_CONFIG:
+            case MSPCodes.MSP2_GRIPORA_FBUS_MUX_CONFIG:
                 FC.FBUS_MUX = readFbusMuxConfig(data);
                 break;
 
-            case MSPCodes.MSP2_WING_SET_FBUS_MUX_CONFIG:
-            case MSPCodes.MSP2_WING_SET_FBUS_MUX_OVERRIDE:
+            case MSPCodes.MSP2_GRIPORA_SET_FBUS_MUX_CONFIG:
+            case MSPCodes.MSP2_GRIPORA_SET_FBUS_MUX_OVERRIDE:
                 break;
 
-            case MSPCodes.MSP2_WING_RX_INPUT_BACKUP_STATUS:
+            case MSPCodes.MSP2_GRIPORA_RX_INPUT_BACKUP_STATUS:
                 // Version-tagged payload; the decoder branches on the version so
                 // older firmware (one backup, no provider or mainLinkUp byte) still
                 // reads correctly.
                 FC.RX_INPUT_BACKUP_STATUS = readRxInputBackupStatus(data);
                 break;
 
-            case MSPCodes.MSP2_WING_RX_INPUT_BACKUP_CONFIG:
+            case MSPCodes.MSP2_GRIPORA_RX_INPUT_BACKUP_CONFIG:
                 FC.RX_INPUT_BACKUP_CONFIG = readRxInputBackupConfig(data);
                 break;
 
-            case MSPCodes.MSP2_WING_SET_RX_INPUT_BACKUP_CONFIG: {
+            case MSPCodes.MSP2_GRIPORA_SET_RX_INPUT_BACKUP_CONFIG: {
                 console.log('Backup RX config saved');
                 break;
             }
 
-            case MSPCodes.MSP2_WING_CRSF_SENSORS_STATUS: {
+            case MSPCodes.MSP2_GRIPORA_CRSF_SENSORS_STATUS: {
                 data.readU8(); // payload version, unused for now
                 const enabled = data.readU8() !== 0;
                 const rxByteCount = data.readU32();
@@ -1191,7 +1191,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_BOARD_MOUNT_TRIM: {
+            case MSPCodes.MSP2_GRIPORA_BOARD_MOUNT_TRIM: {
                 FC.BOARD_MOUNT_TRIM.roll = data.read16(); // decidegrees, -3600 - 3600
                 FC.BOARD_MOUNT_TRIM.pitch = data.read16(); // decidegrees, -3600 - 3600
                 FC.BOARD_MOUNT_TRIM.yaw = data.read16(); // decidegrees, -3600 - 3600
@@ -1723,7 +1723,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_SERVO_NAMES: {
+            case MSPCodes.MSP2_GRIPORA_SERVO_NAMES: {
                 // U8 servo count, U8 name length, then that many zero-padded
                 // ASCII bytes per servo. Firmware without servo names answers
                 // unsupported, which leaves FC.SERVO_NAMES null.
@@ -1743,7 +1743,7 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_SERVO_TIMING: {
+            case MSPCodes.MSP2_GRIPORA_SERVO_TIMING: {
                 // Per PWM servo: the rate it really runs at (Hz) and the first
                 // servo on its hardware timer. Servos sharing a timer run at
                 // the lowest rate set among them.
@@ -2105,10 +2105,10 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 break;
             }
 
-            case MSPCodes.MSP2_WING_SET_MODE_OVERRIDE:
-            case MSPCodes.MSP2_WING_SET_SERVO_PROBE:
-            case MSPCodes.MSP2_WING_SET_SERVO_TRIM:
-            case MSPCodes.MSP2_WING_SET_SERVO_NAME:
+            case MSPCodes.MSP2_GRIPORA_SET_MODE_OVERRIDE:
+            case MSPCodes.MSP2_GRIPORA_SET_SERVO_PROBE:
+            case MSPCodes.MSP2_GRIPORA_SET_SERVO_TRIM:
+            case MSPCodes.MSP2_GRIPORA_SET_SERVO_NAME:
                 break;
             case MSPCodes.MSP_SET_RC_CONFIG: {
                 console.log('RC controls settings saved');
@@ -2301,7 +2301,7 @@ MspHelper.prototype.crunch = function(code) {
             break;
         }
 
-        case MSPCodes.MSP2_WING_SET_BOARD_MOUNT_TRIM: {
+        case MSPCodes.MSP2_GRIPORA_SET_BOARD_MOUNT_TRIM: {
             buffer.push16(FC.BOARD_MOUNT_TRIM.roll)
                 .push16(FC.BOARD_MOUNT_TRIM.pitch)
                 .push16(FC.BOARD_MOUNT_TRIM.yaw);
@@ -2409,7 +2409,7 @@ MspHelper.prototype.crunch = function(code) {
             break;
         }
 
-        case MSPCodes.MSP2_WING_SET_FBUS_MASTER_CONFIG: {
+        case MSPCodes.MSP2_GRIPORA_SET_FBUS_MASTER_CONFIG: {
             // matches FBUS_MASTER_MAX_FORWARDED_SENSORS in pg/fbus_master.h
             for (let i = 0; i < 8; i++) {
                 buffer.push8(FC.FBUS_MASTER_CONFIG.forwardedSensors[i] ?? 0xFF);
@@ -2426,7 +2426,7 @@ MspHelper.prototype.crunch = function(code) {
             writeDriveConfig(buffer, FC.DRIVE_CONFIG);
             break;
 
-        case MSPCodes.MSP2_WING_SET_SRXL2_ESC_CONFIG: {
+        case MSPCodes.MSP2_GRIPORA_SET_SRXL2_ESC_CONFIG: {
             // Same fields as the read, without its version byte.
             buffer.push16(FC.SRXL2_ESC_CONFIG.throttle_rate_hz)
                   .push8(FC.SRXL2_ESC_CONFIG.telem_interval_frames)
@@ -2434,7 +2434,7 @@ MspHelper.prototype.crunch = function(code) {
             break;
         }
 
-        case MSPCodes.MSP2_WING_SET_RX_INPUT_BACKUP_CONFIG: {
+        case MSPCodes.MSP2_GRIPORA_SET_RX_INPUT_BACKUP_CONFIG: {
             writeRxInputBackupConfig(buffer, FC.RX_INPUT_BACKUP_CONFIG);
             break;
         }
@@ -3276,7 +3276,7 @@ MspHelper.prototype.sendMixerOverride = function(mixerIndex, onCompleteCallback,
 // RAM, until timeoutMs after the last call. An empty list holds the setup state
 // with nothing forced; timeoutMs 0 clears it. Resolves false if the FC refused
 // (armed, a mode that can't be forced, or firmware without
-// MSP2_WING_SET_MODE_OVERRIDE).
+// MSP2_GRIPORA_SET_MODE_OVERRIDE).
 MspHelper.prototype.sendModeOverride = function(permanentIds, timeoutMs)
 {
     const buffer = [];
@@ -3288,7 +3288,7 @@ MspHelper.prototype.sendModeOverride = function(permanentIds, timeoutMs)
     }
 
     return new Promise((resolve) => {
-        MSP.send_message(MSPCodes.MSP2_WING_SET_MODE_OVERRIDE, buffer, false,
+        MSP.send_message(MSPCodes.MSP2_GRIPORA_SET_MODE_OVERRIDE, buffer, false,
             // No response at all: the request was dropped (link lost).
             (response) => resolve(!!response && !response.unsupported && !response.crcError), true);
     });
@@ -3336,7 +3336,7 @@ MspHelper.prototype.sendServoTrim = function(servoIndex)
     buffer.push8(servoIndex)
           .push16(FC.SERVO_SAVED_TRIM[servoIndex]);
 
-    return MSP.promise(MSPCodes.MSP2_WING_SET_SERVO_TRIM, buffer);
+    return MSP.promise(MSPCodes.MSP2_GRIPORA_SET_SERVO_TRIM, buffer);
 };
 
 // Sets the name of servo `servoIndex` from FC.SERVO_NAMES (empty clears it).
@@ -3351,7 +3351,7 @@ MspHelper.prototype.sendServoName = function(servoIndex)
         buffer.push8(name.charCodeAt(i));
     }
 
-    return MSP.promise(MSPCodes.MSP2_WING_SET_SERVO_NAME, buffer);
+    return MSP.promise(MSPCodes.MSP2_GRIPORA_SET_SERVO_NAME, buffer);
 };
 
 // Holds PWM servo `servo` at Mid + offsetUs, ignoring its Min/Max limits,
@@ -3366,7 +3366,7 @@ MspHelper.prototype.sendServoProbe = function(servo, offsetUs, timeoutMs)
           .push16(timeoutMs);
 
     return new Promise((resolve) => {
-        MSP.send_message(MSPCodes.MSP2_WING_SET_SERVO_PROBE, buffer, false,
+        MSP.send_message(MSPCodes.MSP2_GRIPORA_SET_SERVO_PROBE, buffer, false,
             (response) => resolve(!!response && !response.unsupported && !response.crcError), true);
     });
 };

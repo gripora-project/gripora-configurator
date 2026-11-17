@@ -66,8 +66,8 @@
       mspHelper.crunch(MSPCodes.MSP_SET_BOARD_ALIGNMENT_CONFIG),
     );
     await MSP.promise(
-      MSPCodes.MSP2_WING_SET_BOARD_MOUNT_TRIM,
-      mspHelper.crunch(MSPCodes.MSP2_WING_SET_BOARD_MOUNT_TRIM),
+      MSPCodes.MSP2_GRIPORA_SET_BOARD_MOUNT_TRIM,
+      mspHelper.crunch(MSPCodes.MSP2_GRIPORA_SET_BOARD_MOUNT_TRIM),
     );
   });
 

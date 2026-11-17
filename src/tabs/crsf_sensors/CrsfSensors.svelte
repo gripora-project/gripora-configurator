@@ -25,7 +25,9 @@
   }
 
   async function refresh() {
-    const response = await MSP.promise(MSPCodes.MSP2_WING_CRSF_SENSORS_STATUS);
+    const response = await MSP.promise(
+      MSPCodes.MSP2_GRIPORA_CRSF_SENSORS_STATUS,
+    );
     // Older firmware without this command simply won't populate any data.
     if (!response || response.length === 0) {
       supported = false;

@@ -84,7 +84,7 @@
     // firmware that doesn't answer the message, which hides the section.
     FC.SRXL2_ESC_CONFIG = null;
     if (semver.gte(FC.CONFIG.apiVersion, API_VERSION_22_15)) {
-      await MSP.promise(MSPCodes.MSP2_WING_SRXL2_ESC_CONFIG);
+      await MSP.promise(MSPCodes.MSP2_GRIPORA_SRXL2_ESC_CONFIG);
     }
     // Drive state (next API version): detected by the FC answering with a
     // payload. Firmware without it answers unsupported, which leaves
@@ -174,7 +174,7 @@
     await save(MSPCodes.MSP_SET_MOTOR_CONFIG);
     await save(MSPCodes.MSP_SET_ESC_SENSOR_CONFIG);
     if (FC.SRXL2_ESC_CONFIG) {
-      await save(MSPCodes.MSP2_WING_SET_SRXL2_ESC_CONFIG);
+      await save(MSPCodes.MSP2_GRIPORA_SET_SRXL2_ESC_CONFIG);
     }
     // The FC refuses the whole message if any value is out of range; the
     // rest of the tab still saves.

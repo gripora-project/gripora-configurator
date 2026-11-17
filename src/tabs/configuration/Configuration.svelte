@@ -164,7 +164,7 @@
     await MSP.promise(MSPCodes.MSP_ARMING_CONFIG);
     await MSP.promise(MSPCodes.MSP_SENSOR_ALIGNMENT);
     await MSP.promise(MSPCodes.MSP_BOARD_ALIGNMENT_CONFIG);
-    await MSP.promise(MSPCodes.MSP2_WING_BOARD_MOUNT_TRIM);
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_BOARD_MOUNT_TRIM);
     await MSP.promise(MSPCodes.MSP_ACC_TRIM);
     await MSP.promise(MSPCodes.MSP_SERIAL_CONFIG);
     await MSP.promise(MSPCodes.MSP_PILOT_CONFIG);
@@ -198,7 +198,7 @@
     await save(MSPCodes.MSP_SET_ARMING_CONFIG);
     await save(MSPCodes.MSP_SET_SENSOR_ALIGNMENT);
     await save(MSPCodes.MSP_SET_BOARD_ALIGNMENT_CONFIG);
-    await save(MSPCodes.MSP2_WING_SET_BOARD_MOUNT_TRIM);
+    await save(MSPCodes.MSP2_GRIPORA_SET_BOARD_MOUNT_TRIM);
     await save(MSPCodes.MSP_SET_ACC_TRIM);
     await save(MSPCodes.MSP_SET_SERIAL_CONFIG);
     await save(MSPCodes.MSP_SET_PILOT_CONFIG);

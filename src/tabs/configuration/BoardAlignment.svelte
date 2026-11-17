@@ -24,7 +24,7 @@
   let autoAlignWizardInstance = null;
   let mountTrimAutoWizardInstance = null;
 
-  // Both wizards poll their own MSP2_WING_BOARD_*_AUTO status every 250ms
+  // Both wizards poll their own MSP2_GRIPORA_BOARD_*_AUTO status every 250ms
   // while open. Pausing the 3D model's MSP_ATTITUDE poll for that window
   // avoids contending with that traffic on a real (non-instant) serial
   // link, which previously showed up as edits to the roll/pitch/yaw/trim

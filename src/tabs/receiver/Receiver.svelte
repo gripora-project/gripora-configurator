@@ -82,7 +82,7 @@
     backupWizardInstance = mount(RxWiringDetectWizard, {
       target: document.body,
       props: {
-        mspCode: MSPCodes.MSP2_WING_RX_INPUT_BACKUP_TRIAL,
+        mspCode: MSPCodes.MSP2_GRIPORA_RX_INPUT_BACKUP_TRIAL,
         trialIndex: index,
         titleKey: "receiverBackupWiringDetectWizardTitle",
         titleArgs: [index + 1],
@@ -169,7 +169,7 @@
     pollSensors();
 
     if (hasBackupRxPort) {
-      await MSP.promise(MSPCodes.MSP2_WING_RX_INPUT_BACKUP_CONFIG);
+      await MSP.promise(MSPCodes.MSP2_GRIPORA_RX_INPUT_BACKUP_CONFIG);
     }
 
     // Polled unconditionally, not just when hasBackupRxPort - mainLinkUp
@@ -177,12 +177,12 @@
     // Receiver box regardless of whether a backup port is configured at all; the
     // backup-specific fields just stay at their disabled/empty defaults when
     // it isn't.
-    await MSP.promise(MSPCodes.MSP2_WING_RX_INPUT_BACKUP_STATUS);
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_RX_INPUT_BACKUP_STATUS);
     // 200ms rather than the 25ms main-channel poll above - this only needs to
     // look live for a status badge, not drive a hot loop always.
     async function pollBackupRx() {
       if (pollersStopped) return;
-      await MSP.promise(MSPCodes.MSP2_WING_RX_INPUT_BACKUP_STATUS);
+      await MSP.promise(MSPCodes.MSP2_GRIPORA_RX_INPUT_BACKUP_STATUS);
       if (!pollersStopped) {
         backupRxPollerTimer = setTimeout(pollBackupRx, 200);
       }
@@ -195,7 +195,7 @@
     // risks queueing/contending with a wizard's own polling under real
     // (non-instant) serial traffic, which read there as the ESC wiring
     // wizard "hanging" even though the firmware's trial kept running fine.
-    // Less traffic here (one MSP2_WING_RX_INPUT_BACKUP_STATUS call per
+    // Less traffic here (one MSP2_GRIPORA_RX_INPUT_BACKUP_STATUS call per
     // cycle, not three), but the same shaped risk, so the same fix.
     async function pollArmed() {
       if (pollersStopped) return;
@@ -235,7 +235,7 @@
     await save(MSPCodes.MSP_SET_TELEMETRY_CONFIG);
     await save(MSPCodes.MSP_SET_FEATURE_CONFIG);
     if (hasBackupRxPort) {
-      await save(MSPCodes.MSP2_WING_SET_RX_INPUT_BACKUP_CONFIG);
+      await save(MSPCodes.MSP2_GRIPORA_SET_RX_INPUT_BACKUP_CONFIG);
     }
 
     await MSP.promise(MSPCodes.MSP_EEPROM_WRITE);

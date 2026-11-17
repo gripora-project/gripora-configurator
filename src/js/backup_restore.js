@@ -189,7 +189,7 @@ export function configuration_backup(callback) {
         }).then(function() {
             return MSP.promise(MSPCodes.MSP_BOARD_ALIGNMENT_CONFIG);
         }).then(function() {
-            return MSP.promise(MSPCodes.MSP2_WING_BOARD_MOUNT_TRIM);
+            return MSP.promise(MSPCodes.MSP2_GRIPORA_BOARD_MOUNT_TRIM);
         }).then(function() {
             return MSP.promise(MSPCodes.MSP_MIXER_CONFIG);
         }).then(function() {
@@ -777,7 +777,7 @@ export function configuration_restore(callback) {
                     uniqueData.push(MSPCodes.MSP_SET_MIXER_CONFIG);
                     uniqueData.push(MSPCodes.MSP_SET_BEEPER_CONFIG);
                     uniqueData.push(MSPCodes.MSP_SET_BOARD_ALIGNMENT_CONFIG);
-                    uniqueData.push(MSPCodes.MSP2_WING_SET_BOARD_MOUNT_TRIM);
+                    uniqueData.push(MSPCodes.MSP2_GRIPORA_SET_BOARD_MOUNT_TRIM);
                     uniqueData.push(MSPCodes.MSP_SET_ADVANCED_CONFIG);
 
                     if (semver.gte(FC.CONFIG.apiVersion, "1.8.0")) {

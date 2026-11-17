@@ -34,7 +34,7 @@ test('override payload', () => {
     assert.deepEqual(buildMuxOverridePayload(0), [0, 0]);
 });
 
-// MSP2_WING_FBUS_SENSORS as read with FBUS on S1 of the bench unit: a GPS and an XACT servo
+// MSP2_GRIPORA_FBUS_SENSORS as read with FBUS on S1 of the bench unit: a GPS and an XACT servo
 // (the stale entry under its Physical ID before it was renamed)
 const SENSORS = [
     { physicalId: 3, name: 'GPS', appIds: [0x800, 0x820, 0x830, 0x850] },

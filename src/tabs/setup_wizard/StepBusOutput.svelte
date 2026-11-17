@@ -44,13 +44,13 @@
   onMount(async () => {
     await MSP.promise(MSPCodes.MSP_SERIAL_CONFIG);
     await MSP.promise(MSPCodes.MSP_MIXER_CONFIG);
-    await MSP.promise(MSPCodes.MSP2_WING_FBUS_MASTER_CONFIG);
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_FBUS_MASTER_CONFIG);
     loading = false;
 
     async function poll() {
       if (stopped) return;
       if (protocol === "fbus" && !rebootNeeded) {
-        await MSP.promise(MSPCodes.MSP2_WING_FBUS_SENSORS);
+        await MSP.promise(MSPCodes.MSP2_GRIPORA_FBUS_SENSORS);
         const result = answeringDevices(packetCounts, FC.FBUS_SENSORS);
         packetCounts = result.counts;
         devices = result.answering;
@@ -86,7 +86,7 @@
     // The wiring the trial found is already live and in the FC's config;
     // this sends the same values, for the save that follows.
     if (rebootNeeded || wiringFound) {
-      await send(MSPCodes.MSP2_WING_SET_FBUS_MASTER_CONFIG);
+      await send(MSPCodes.MSP2_GRIPORA_SET_FBUS_MASTER_CONFIG);
     }
     if (rebootNeeded || changed) {
       await send(MSPCodes.MSP_SET_MIXER_CONFIG);
@@ -245,7 +245,7 @@
       };
       const timeout = setTimeout(() => finish(null), 1000);
       MSP.send_message(
-        MSPCodes.MSP2_WING_FBUS_MASTER_TRIAL,
+        MSPCodes.MSP2_GRIPORA_FBUS_MASTER_TRIAL,
         [action],
         false,
         finish,

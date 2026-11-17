@@ -76,7 +76,7 @@
   // Saved trims (FC.SERVO_SAVED_TRIM): firmware that has them keeps every
   // kind of trim apart from Mid.
   let savedTrimSupported = $derived(Array.isArray(FC.SERVO_SAVED_TRIM));
-  // Firmware with servo names fills FC.SERVO_NAMES (MSP2_WING_SERVO_NAMES)
+  // Firmware with servo names fills FC.SERVO_NAMES (MSP2_GRIPORA_SERVO_NAMES)
   let namesSupported = $derived(Array.isArray(FC.SERVO_NAMES));
 
   // Firmware without saved trims has a Stepped ServoTrim adjustment rewrite

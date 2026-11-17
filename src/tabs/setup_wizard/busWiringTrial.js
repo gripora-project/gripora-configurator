@@ -1,4 +1,4 @@
-// The F.Bus wiring trial (MSP2_WING_FBUS_MASTER_TRIAL): the flight
+// The F.Bus wiring trial (MSP2_GRIPORA_FBUS_MASTER_TRIAL): the flight
 // controller tries each pin and polarity on the bus port until a device on
 // the line answers. A found wiring is left live and in the FC's config (RAM);
 // saving keeps it, and a stop puts the old wiring back.

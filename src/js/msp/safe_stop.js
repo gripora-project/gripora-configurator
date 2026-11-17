@@ -25,9 +25,9 @@ const MSP_SET_MIXER_OVERRIDE = 191;
 const MSP_SET_SERVO_OVERRIDE = 193;
 const MSP_SET_MOTOR_OVERRIDE = 195;
 const MSP_SET_SERVO_OVERRIDE_ALL = 196;
-const MSP2_WING_SET_MODE_OVERRIDE = 0x5f1b;
-const MSP2_WING_SET_SERVO_PROBE = 0x5f1c;
-const MSP2_WING_SET_FBUS_MUX_OVERRIDE = 0x5f24;
+const MSP2_GRIPORA_SET_MODE_OVERRIDE = 0x5f1b;
+const MSP2_GRIPORA_SET_SERVO_PROBE = 0x5f1c;
+const MSP2_GRIPORA_SET_FBUS_MUX_OVERRIDE = 0x5f24;
 
 const MOTOR_OVERRIDE_OFF = 0;
 const SERVO_OVERRIDE_OFF = 2001;
@@ -85,9 +85,9 @@ export function safeStopGroups({ disarm = false } = {}) {
         ),
         // Timeout 0 clears a probe, the mode override and the mux override.
         Array.from({ length: SERVO_COUNT }, (_, i) =>
-            encodeRequest(MSP2_WING_SET_SERVO_PROBE, [i, 0, 0, 0, 0]),
+            encodeRequest(MSP2_GRIPORA_SET_SERVO_PROBE, [i, 0, 0, 0, 0]),
         ),
-        [encodeRequest(MSP2_WING_SET_MODE_OVERRIDE, [0, 0, 0]), encodeRequest(MSP2_WING_SET_FBUS_MUX_OVERRIDE, [0, 0])],
+        [encodeRequest(MSP2_GRIPORA_SET_MODE_OVERRIDE, [0, 0, 0]), encodeRequest(MSP2_GRIPORA_SET_FBUS_MUX_OVERRIDE, [0, 0])],
     );
     if (disarm) {
         groups.push([encodeRequest(MSP_SET_ARMING_DISABLED, [0])]);

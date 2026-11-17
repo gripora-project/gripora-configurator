@@ -267,7 +267,7 @@ const virtualServoNames = ["STEER"].concat(
   Array(VIRTUAL_SERVO_COUNT - 1).fill(""),
 );
 
-// MSP2_WING_SERVO_NAMES: count, name length, then each name zero-padded
+// MSP2_GRIPORA_SERVO_NAMES: count, name length, then each name zero-padded
 function encodeServoNames() {
   const buffer = [];
   buffer.push8(VIRTUAL_SERVO_COUNT);
@@ -284,7 +284,7 @@ function encodeServoNames() {
 // boards, and S4 has its own.
 const VIRTUAL_SERVO_TIMERS = [0, 0, 0, 1];
 
-// MSP2_WING_SERVO_TIMING: count, then per PWM servo the rate it runs at and
+// MSP2_GRIPORA_SERVO_TIMING: count, then per PWM servo the rate it runs at and
 // the first servo on its timer. Every PWM output runs at the one rate
 // (servo_pwm_rate). The FC sets it at boot; here it follows the config at
 // once.
@@ -322,7 +322,7 @@ const VIRTUAL_FBUS_SENSORS = [
 
 let virtualFbusClearedAt = Date.now();
 
-// MSP2_WING_FBUS_MASTER_TRIAL (firmware drivers/fbus_master.c): state, combo
+// MSP2_GRIPORA_FBUS_MASTER_TRIAL (firmware drivers/fbus_master.c): state, combo
 // index, combo count, pin swap, inverted, u16 valid frames, port open. The
 // virtual bus answers on the wiring already set, once it has been tried for
 // a second. States: 0 idle, 1 running, 2 success, 4 rejected.
@@ -360,7 +360,7 @@ function encodeFbusMasterTrial(requestData) {
   ]);
 }
 
-// MSP2_WING_FBUS_SENSORS: count, then per sensor physical ID, source,
+// MSP2_GRIPORA_FBUS_SENSORS: count, then per sensor physical ID, source,
 // forwarded, packet count, name and app IDs.
 function encodeFbusSensors() {
   const seconds = (Date.now() - virtualFbusClearedAt) / 1000;
@@ -380,7 +380,7 @@ function encodeFbusSensors() {
   return Uint8Array.from(buffer);
 }
 
-// MSP2_WING_SERIAL_STATUS: VCP, a serial receiver on UART3 and an NMEA GPS on
+// MSP2_GRIPORA_SERIAL_STATUS: VCP, a serial receiver on UART3 and an NMEA GPS on
 // UART7 that is receiving data. The byte count grows so the live view moves.
 function encodeSerialStatus(requestData) {
   const t = Date.now();
@@ -456,7 +456,7 @@ function encodeSerialStatus(requestData) {
   return Uint8Array.from(buffer);
 }
 
-// MSP2_WING_FBUS_SENSORS_STATUS, for the sensors above: a 6S pack on a
+// MSP2_GRIPORA_FBUS_SENSORS_STATUS, for the sensors above: a 6S pack on a
 // FAS-150S and FLVSS, a GPS with a fix and an idling ESC. Values drift a
 // little so the page shows them updating. The XACT servo block reports no data.
 function encodeFbusSensorsStatus() {
@@ -512,7 +512,7 @@ function encodeFbusSensorsStatus() {
   return Uint8Array.from(buffer);
 }
 
-// MSP2_WING_SRXL2_ESC_CONFIG / _SET_, firmware pg/srxl2_esc.c defaults. A save is
+// MSP2_GRIPORA_SRXL2_ESC_CONFIG / _SET_, firmware pg/srxl2_esc.c defaults. A save is
 // kept so the Motors tab reads it back after its reboot.
 const virtualSrxl2EscConfig = {
   throttle_rate_hz: 250,
@@ -597,11 +597,11 @@ function decodeVirtualReply(code, payload) {
 // the outgoing write payload (a plain array of byte values) for write codes.
 export function getVirtualResponse(code, requestData) {
   switch (code) {
-    case MSPCodes.MSP2_WING_SRXL2_ESC_CONFIG:
+    case MSPCodes.MSP2_GRIPORA_SRXL2_ESC_CONFIG:
       return decodeVirtualReply(code, encodeSrxl2EscConfig());
     // Exactly four bytes, as msp.c requires: u16 rate, u8 interval, u8 channel.
     // Motor 2 channel: 0 = off, 2..32 (channel 1 is motor 1), as the firmware.
-    case MSPCodes.MSP2_WING_SET_SRXL2_ESC_CONFIG:
+    case MSPCodes.MSP2_GRIPORA_SET_SRXL2_ESC_CONFIG:
       if (requestData?.length === 4) {
         virtualSrxl2EscConfig.throttle_rate_hz =
           requestData[0] | (requestData[1] << 8);
@@ -668,16 +668,16 @@ export function getVirtualResponse(code, requestData) {
       }
       return undefined;
     }
-    case MSPCodes.MSP2_WING_EFFECTIVE_PID_GAINS:
+    case MSPCodes.MSP2_GRIPORA_EFFECTIVE_PID_GAINS:
       return decodeVirtualReply(code, encodeEffectivePidGains());
     case MSPCodes.MSP_SERVO_TRIM:
       return decodeVirtualReply(code, encodeServoTrim());
-    case MSPCodes.MSP2_WING_SERVO_TIMING:
+    case MSPCodes.MSP2_GRIPORA_SERVO_TIMING:
       return decodeVirtualReply(code, encodeServoTiming());
-    case MSPCodes.MSP2_WING_SERVO_NAMES:
+    case MSPCodes.MSP2_GRIPORA_SERVO_NAMES:
       return decodeVirtualReply(code, encodeServoNames());
-    // Checked like the FC's setServoName(); the next MSP2_WING_SERVO_NAMES reads it back
-    case MSPCodes.MSP2_WING_SET_SERVO_NAME: {
+    // Checked like the FC's setServoName(); the next MSP2_GRIPORA_SERVO_NAMES reads it back
+    case MSPCodes.MSP2_GRIPORA_SET_SERVO_NAME: {
       const index = requestData[0];
       const name = String.fromCharCode(...requestData.slice(1)).trim();
       if (
@@ -689,20 +689,20 @@ export function getVirtualResponse(code, requestData) {
       }
       return new Uint8Array(0);
     }
-    case MSPCodes.MSP2_WING_FBUS_SENSORS:
+    case MSPCodes.MSP2_GRIPORA_FBUS_SENSORS:
       return decodeVirtualReply(code, encodeFbusSensors());
-    case MSPCodes.MSP2_WING_FBUS_SENSORS_STATUS:
+    case MSPCodes.MSP2_GRIPORA_FBUS_SENSORS_STATUS:
       return decodeVirtualReply(code, encodeFbusSensorsStatus());
-    case MSPCodes.MSP2_WING_SERIAL_STATUS:
+    case MSPCodes.MSP2_GRIPORA_SERIAL_STATUS:
       return decodeVirtualReply(code, encodeSerialStatus(requestData));
-    case MSPCodes.MSP2_WING_FBUS_MASTER_TRIAL:
+    case MSPCodes.MSP2_GRIPORA_FBUS_MASTER_TRIAL:
       return encodeFbusMasterTrial(requestData);
     // The sensors keep answering, so they show again at once with fresh counts
-    case MSPCodes.MSP2_WING_CLEAR_FBUS_SENSORS:
+    case MSPCodes.MSP2_GRIPORA_CLEAR_FBUS_SENSORS:
       virtualFbusClearedAt = Date.now();
       return new Uint8Array(0);
     // Limited like the FC's setServoSavedTrim(); the next MSP_SERVO_TRIM reads it back.
-    case MSPCodes.MSP2_WING_SET_SERVO_TRIM: {
+    case MSPCodes.MSP2_GRIPORA_SET_SERVO_TRIM: {
       const index = requestData[0];
       const config = FC.SERVO_CONFIG[index];
       if (config && FC.SERVO_SAVED_TRIM) {
@@ -712,12 +712,12 @@ export function getVirtualResponse(code, requestData) {
       }
       return new Uint8Array(0);
     }
-    case MSPCodes.MSP2_WING_SET_MODE_OVERRIDE:
+    case MSPCodes.MSP2_GRIPORA_SET_MODE_OVERRIDE:
       applyVirtualModeOverride(requestData.slice(3));
       return new Uint8Array(0);
     // Acknowledged so the wizard sees it accepted; the servo readout stays
     // as seeded, as it does for servo overrides.
-    case MSPCodes.MSP2_WING_SET_SERVO_PROBE:
+    case MSPCodes.MSP2_GRIPORA_SET_SERVO_PROBE:
       return new Uint8Array(0);
     default:
       return getVirtualEscResponse(code, requestData);
@@ -781,7 +781,7 @@ export function applyVirtualConfig() {
     pid_process_denom: 2,
   });
 
-  // Not an FBUS mux build (STM32F7X2M): MSP2_WING_FBUS_MUX_CONFIG is unsupported there
+  // Not an FBUS mux build (STM32F7X2M): MSP2_GRIPORA_FBUS_MUX_CONFIG is unsupported there
   FC.FBUS_MUX = null;
 
   // Status

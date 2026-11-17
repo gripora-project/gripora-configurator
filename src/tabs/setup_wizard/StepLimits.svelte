@@ -32,7 +32,7 @@
   // range allow at this centre.
   //
   // With timed overrides (API 22.14+) the servo is held by a probe
-  // (MSP2_WING_SET_SERVO_PROBE), which ignores Min/Max, so the stored limits
+  // (MSP2_GRIPORA_SET_SERVO_PROBE), which ignores Min/Max, so the stored limits
   // are never widened and each limit is sent as soon as it is set. Older
   // firmware only has the servo override, which goes through scale and the
   // Min/Max clamp (servoUpdate() in flight/servos.c), so there the limits

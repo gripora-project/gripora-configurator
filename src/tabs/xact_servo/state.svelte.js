@@ -52,7 +52,7 @@ const PARAMS_POLL_INTERVAL_MS = 250;
 const LIST_REFRESH_TIMEOUT_MS = 4000;
 const LIST_REFRESH_INTERVAL_MS = 500;
 
-// FBUS mux override (MSP2_WING_SET_FBUS_MUX_OVERRIDE): the firmware drops it this long after
+// FBUS mux override (MSP2_GRIPORA_SET_FBUS_MUX_OVERRIDE): the firmware drops it this long after
 // the last refresh, so a closed tab or lost link can't leave the outputs switched.
 const MUX_OVERRIDE_TIMEOUT_MS = 3000;
 const MUX_OVERRIDE_REFRESH_MS = 1000;
@@ -133,7 +133,7 @@ class State {
 
     async #sendMuxOverride() {
         const payload = buildMuxOverridePayload(MUX_OVERRIDE_TIMEOUT_MS, this.#muxOverrideModes);
-        const response = await MSP.promise(MSPCodes.MSP2_WING_SET_FBUS_MUX_OVERRIDE, payload);
+        const response = await MSP.promise(MSPCodes.MSP2_GRIPORA_SET_FBUS_MUX_OVERRIDE, payload);
         if (!response || response.unsupported) {
             throw new Error("the FBUS mux refused the output modes");
         }
@@ -144,7 +144,7 @@ class State {
         this.#muxOverrideTimer = null;
         if (this.#muxOverrideModes) {
             this.#muxOverrideModes = null;
-            await MSP.promise(MSPCodes.MSP2_WING_SET_FBUS_MUX_OVERRIDE, buildMuxOverridePayload(0));
+            await MSP.promise(MSPCodes.MSP2_GRIPORA_SET_FBUS_MUX_OVERRIDE, buildMuxOverridePayload(0));
         }
     }
 
@@ -278,7 +278,7 @@ class State {
                 await this.holdMuxOverride(isolateChannelModes(FC.FBUS_MUX, channel));
 
                 // Only the devices on this output: forget the ones seen before
-                await MSP.promise(MSPCodes.MSP2_WING_CLEAR_FBUS_SENSORS);
+                await MSP.promise(MSPCodes.MSP2_GRIPORA_CLEAR_FBUS_SENSORS);
                 const found = await this.discoverServos();
                 const servos = [];
                 for (const servo of found) {
@@ -286,7 +286,7 @@ class State {
                     servos.push(params ? { ...servo, ...params } : servo);
                 }
 
-                await MSP.promise(MSPCodes.MSP2_WING_FBUS_SENSORS);
+                await MSP.promise(MSPCodes.MSP2_GRIPORA_FBUS_SENSORS);
                 this.#checkMuxHeld(run);
                 const devices = otherDevicePhysicalIds(FC.FBUS_SENSORS);
                 otherIds.push(...devices);
@@ -370,7 +370,7 @@ class State {
     // Saves PWM for the empty outputs and reboots, like the other tabs' Save
     async setEmptyOutputsToPwm() {
         const modes = modesWithPwm(FC.FBUS_MUX, this.emptyChannels());
-        const response = await MSP.promise(MSPCodes.MSP2_WING_SET_FBUS_MUX_CONFIG, buildMuxConfigPayload(modes));
+        const response = await MSP.promise(MSPCodes.MSP2_GRIPORA_SET_FBUS_MUX_CONFIG, buildMuxConfigPayload(modes));
         if (!response || response.unsupported) {
             this.error = "the FBUS mux refused the output modes";
             return;

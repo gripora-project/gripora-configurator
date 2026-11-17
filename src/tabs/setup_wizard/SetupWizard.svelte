@@ -146,7 +146,7 @@
     await MSP.promise(MSPCodes.MSP_ADJUSTMENT_RANGES);
     await MSP.promise(MSPCodes.MSP_FEATURE_CONFIG);
     await MSP.promise(MSPCodes.MSP_BOARD_ALIGNMENT_CONFIG);
-    await MSP.promise(MSPCodes.MSP2_WING_BOARD_MOUNT_TRIM);
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_BOARD_MOUNT_TRIM);
     await MSP.promise(MSPCodes.MSP_RX_MAP);
     await MSP.promise(MSPCodes.MSP_RX_CONFIG);
     await MSP.promise(MSPCodes.MSP_RC_TUNING);

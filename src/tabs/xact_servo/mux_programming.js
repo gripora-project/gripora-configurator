@@ -1,5 +1,5 @@
 // XACT programming on boards with an FBUS mux FPGA (FC.FBUS_MUX, e.g. the RF007 V3). Each
-// mux output can be put on the FBUS line on its own with MSP2_WING_SET_FBUS_MUX_OVERRIDE, so
+// mux output can be put on the FBUS line on its own with MSP2_GRIPORA_SET_FBUS_MUX_OVERRIDE, so
 // servos that share factory IDs can be told apart: one output at a time.
 //
 // Auto-programming gives the servo on each output saved as FBUS fixed values for that
@@ -49,12 +49,12 @@ export function modesWithPwm(mux, channels) {
     return mux.channels.map((saved, i) => (channels.includes(i + 1) ? MODE_PWM : MODE_INDEX[saved.mode]));
 }
 
-/** MSP2_WING_SET_FBUS_MUX_CONFIG payload. */
+/** MSP2_GRIPORA_SET_FBUS_MUX_CONFIG payload. */
 export function buildMuxConfigPayload(modes) {
     return [1, modes.length, ...modes];
 }
 
-/** MSP2_WING_SET_FBUS_MUX_OVERRIDE payload; timeout 0 ends the override. */
+/** MSP2_GRIPORA_SET_FBUS_MUX_OVERRIDE payload; timeout 0 ends the override. */
 export function buildMuxOverridePayload(timeoutMs, modes = []) {
     const payload = [timeoutMs & 0xff, (timeoutMs >> 8) & 0xff];
     if (timeoutMs) payload.push(modes.length, ...modes);

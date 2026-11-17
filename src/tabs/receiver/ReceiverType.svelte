@@ -59,7 +59,7 @@
     wizardInstance = mount(RxWiringDetectWizard, {
       target: document.body,
       props: {
-        mspCode: MSPCodes.MSP2_WING_RX_SERIAL_TRIAL,
+        mspCode: MSPCodes.MSP2_GRIPORA_RX_SERIAL_TRIAL,
         onDetected: (inverted, halfDuplex, pinSwap) => {
           applied = true;
           FC.RX_CONFIG.serialrx_inverted = inverted;

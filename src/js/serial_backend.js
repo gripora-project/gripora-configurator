@@ -815,7 +815,7 @@ async function processName() {
 // save and reboot, which reconnects, so reading it once here keeps it current.
 async function processFbusMux() {
     FC.FBUS_MUX = null;
-    await MSP.promise(MSPCodes.MSP2_WING_FBUS_MUX_CONFIG, false);
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_FBUS_MUX_CONFIG, false);
 }
 
 async function setRtc() {

@@ -153,7 +153,7 @@
   }
 
   async function refreshSensors() {
-    const response = await MSP.promise(MSPCodes.MSP2_WING_FBUS_SENSORS);
+    const response = await MSP.promise(MSPCodes.MSP2_GRIPORA_FBUS_SENSORS);
     // Older firmware without this command simply won't populate any data.
     if (!response || response.length === 0) {
       supported = false;
@@ -164,7 +164,9 @@
     if (!statusSupported) {
       return;
     }
-    const response = await MSP.promise(MSPCodes.MSP2_WING_FBUS_SENSORS_STATUS);
+    const response = await MSP.promise(
+      MSPCodes.MSP2_GRIPORA_FBUS_SENSORS_STATUS,
+    );
     // Firmware without decoded readings: show the sensor list only.
     if (!response || response.length === 0) {
       statusSupported = false;
@@ -176,13 +178,13 @@
   }
 
   async function refreshForwardConfig() {
-    await MSP.promise(MSPCodes.MSP2_WING_FBUS_MASTER_CONFIG);
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_FBUS_MASTER_CONFIG);
   }
 
   async function onClickClear() {
     clearing = true;
     try {
-      await MSP.promise(MSPCodes.MSP2_WING_CLEAR_FBUS_SENSORS);
+      await MSP.promise(MSPCodes.MSP2_GRIPORA_CLEAR_FBUS_SENSORS);
       await refresh();
     } finally {
       clearing = false;
@@ -218,8 +220,8 @@
     try {
       FC.FBUS_MASTER_CONFIG.forwardedSensors = slots;
       await MSP.promise(
-        MSPCodes.MSP2_WING_SET_FBUS_MASTER_CONFIG,
-        mspHelper.crunch(MSPCodes.MSP2_WING_SET_FBUS_MASTER_CONFIG),
+        MSPCodes.MSP2_GRIPORA_SET_FBUS_MASTER_CONFIG,
+        mspHelper.crunch(MSPCodes.MSP2_GRIPORA_SET_FBUS_MASTER_CONFIG),
       );
       await MSP.promise(MSPCodes.MSP_EEPROM_WRITE);
       await Promise.all([refresh(), refreshForwardConfig()]);

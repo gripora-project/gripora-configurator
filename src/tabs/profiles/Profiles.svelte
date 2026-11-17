@@ -73,7 +73,9 @@
       return;
     }
 
-    const response = await MSP.promise(MSPCodes.MSP2_WING_EFFECTIVE_PID_GAINS);
+    const response = await MSP.promise(
+      MSPCodes.MSP2_GRIPORA_EFFECTIVE_PID_GAINS,
+    );
     if (!response || response.length === 0) {
       runtimeGainsSupported = false;
       FC.PID_RUNTIME_GAINS = null;

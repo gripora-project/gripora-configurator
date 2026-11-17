@@ -83,7 +83,7 @@
       if (stopped) return;
       await MSP.promise(MSPCodes.MSP_RX_CHANNELS);
       orderDetectTick();
-      await MSP.promise(MSPCodes.MSP2_WING_RX_INPUT_BACKUP_STATUS);
+      await MSP.promise(MSPCodes.MSP2_GRIPORA_RX_INPUT_BACKUP_STATUS);
       if (!stopped) pollTimer = setTimeout(poll, POLL_MS);
     }
     poll();
@@ -200,7 +200,7 @@
     detectInstance = mount(RxWiringDetectWizard, {
       target: document.body,
       props: {
-        mspCode: MSPCodes.MSP2_WING_RX_SERIAL_TRIAL,
+        mspCode: MSPCodes.MSP2_GRIPORA_RX_SERIAL_TRIAL,
         onDetected: (inverted, halfDuplex, pinSwap) => {
           applied = true;
           FC.RX_CONFIG.serialrx_inverted = inverted;

@@ -4,8 +4,8 @@
   import { i18n } from "@/js/i18n.js";
   import { MSP } from "@/js/msp.svelte.js";
 
-  // mspCode: which trial command to drive - MSPCodes.MSP2_WING_RX_SERIAL_TRIAL
-  // for the main RX, MSPCodes.MSP2_WING_RX_INPUT_BACKUP_TRIAL for a backup
+  // mspCode: which trial command to drive - MSPCodes.MSP2_GRIPORA_RX_SERIAL_TRIAL
+  // for the main RX, MSPCodes.MSP2_GRIPORA_RX_INPUT_BACKUP_TRIAL for a backup
   // port. Both share the exact same start/poll/stop wire shape; the backup
   // variant takes the backup's index (0 = backup 1) as a second request byte,
   // passed in as trialIndex. onDetected is

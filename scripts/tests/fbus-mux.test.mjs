@@ -31,7 +31,7 @@ function reader(bytes) {
     };
 }
 
-// MSP2_WING_FBUS_MUX_CONFIG as read from an RF007 V3 with ch2-4 on FBUS
+// MSP2_GRIPORA_FBUS_MUX_CONFIG as read from an RF007 V3 with ch2-4 on FBUS
 const RF007V3_REPLY = [1, 5, 0x18, 6, 4, 0x01, 0x01, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0];
 
 test('decodes the mux config reply', () => {

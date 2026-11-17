@@ -288,7 +288,7 @@ class FlightController {
       esc:                        null,
       servo:                      null,
     };
-    // MSP2_WING_SERIAL_STATUS, null until read or on firmware without it
+    // MSP2_GRIPORA_SERIAL_STATUS, null until read or on firmware without it
     this.SERIAL_STATUS = null;
     this.FBUS_MASTER_CONFIG = {
       forwardedSensors:            [],
@@ -296,7 +296,7 @@ class FlightController {
       pinSwap:                     null,
       inverted:                    null,
     };
-    // MSP2_WING_SRXL2_ESC_CONFIG: throttle_rate_hz, telem_interval_frames, motor2_channel.
+    // MSP2_GRIPORA_SRXL2_ESC_CONFIG: throttle_rate_hz, telem_interval_frames, motor2_channel.
     // Null until read, and on firmware without the message.
     this.SRXL2_ESC_CONFIG = null;
     // MSP2_GRIPORA_DRIVE_CONFIG (src/js/Drive.js), firmware defaults until read.

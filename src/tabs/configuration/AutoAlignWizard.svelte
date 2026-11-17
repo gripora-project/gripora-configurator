@@ -51,7 +51,7 @@
 
       timeout = setTimeout(() => finish(null), 1000);
       MSP.send_message(
-        MSPCodes.MSP2_WING_BOARD_AUTO_ALIGN,
+        MSPCodes.MSP2_GRIPORA_BOARD_AUTO_ALIGN,
         payload,
         false,
         finish,

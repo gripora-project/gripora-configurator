@@ -45,7 +45,7 @@
   let online = $state(navigator.onLine);
   let gpsWasFixed = $state(false);
 
-  // Serial diagnostics (MSP2_WING_SERIAL_STATUS), null on firmware without it
+  // Serial diagnostics (MSP2_GRIPORA_SERIAL_STATUS), null on firmware without it
   let diagInterval;
   let diagSupported = $state(true);
   const GPS_FUNCTION_MASK = 2;
@@ -139,7 +139,7 @@
       return;
     }
     const response = await MSP.promise(
-      MSPCodes.MSP2_WING_SERIAL_STATUS,
+      MSPCodes.MSP2_GRIPORA_SERIAL_STATUS,
       gpsPortId == null ? [] : [gpsPortId],
     );
     // Firmware without the message answers with nothing

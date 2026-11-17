@@ -1,5 +1,5 @@
 // Servo names (gripora-firmware pg/servo_name.h): a short label per servo,
-// read with MSP2_WING_SERVO_NAMES and set with MSP2_WING_SET_SERVO_NAME.
+// read with MSP2_GRIPORA_SERVO_NAMES and set with MSP2_GRIPORA_SET_SERVO_NAME.
 
 import { FC } from "@/js/fc.svelte.js";
 import { MSPCodes } from "@/js/msp/MSPCodes.js";
@@ -22,7 +22,7 @@ export function cleanServoName(name) {
 // unsupported, which leaves it null, and every label then shows no name.
 export async function loadServoNames() {
   FC.SERVO_NAMES = null;
-  await MSP.promise(MSPCodes.MSP2_WING_SERVO_NAMES);
+  await MSP.promise(MSPCodes.MSP2_GRIPORA_SERVO_NAMES);
 }
 
 // Name of 0-based servo `index`, or "" when it has none

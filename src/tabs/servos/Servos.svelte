@@ -136,7 +136,7 @@
   let busActive = $derived(hasFbusOrSbus);
 
   // Servos with a PWM output on this board, servo 1 up to this: the count in
-  // MSP2_WING_SERVO_TIMING.
+  // MSP2_GRIPORA_SERVO_TIMING.
   let pwmServoCount = $derived((FC.SERVO_TIMING ?? []).length);
 
   // The lists are read one after another, so while the number of servos in
@@ -239,11 +239,11 @@
     // Firmware without it answers "unsupported" and leaves this null; the
     // rates are then shown as set, with no timer grouping.
     FC.SERVO_TIMING = null;
-    await MSP.promise(MSPCodes.MSP2_WING_SERVO_TIMING);
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_SERVO_TIMING);
     // Likewise: without servo names FC.SERVO_NAMES stays null and the Name
     // column is hidden.
     FC.SERVO_NAMES = null;
-    await MSP.promise(MSPCodes.MSP2_WING_SERVO_NAMES);
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_SERVO_NAMES);
     await pollRuntimeTrim();
     // For the balance curve badge in ServoConfigTable and the Balance
     // section. Not guaranteed populated otherwise if this tab is visited

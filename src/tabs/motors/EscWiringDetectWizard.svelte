@@ -69,7 +69,7 @@
 
       timeout = setTimeout(() => finish(null), 1000);
       MSP.send_message(
-        MSPCodes.MSP2_WING_ESC_SENSOR_TRIAL,
+        MSPCodes.MSP2_GRIPORA_ESC_SENSOR_TRIAL,
         payload,
         false,
         finish,

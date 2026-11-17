@@ -51,7 +51,7 @@
 
       timeout = setTimeout(() => finish(null), 1000);
       MSP.send_message(
-        MSPCodes.MSP2_WING_BOARD_MOUNT_TRIM_AUTO,
+        MSPCodes.MSP2_GRIPORA_BOARD_MOUNT_TRIM_AUTO,
         payload,
         false,
         finish,

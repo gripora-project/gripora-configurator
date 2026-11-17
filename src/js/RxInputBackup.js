@@ -45,7 +45,7 @@ export function hasRxInputBackupPort(ports, index) {
   return !!mask && (ports ?? []).some((port) => port.functionMask & mask);
 }
 
-// Decoder for MSP2_WING_RX_INPUT_BACKUP_STATUS. Wire layout (firmware msp.c):
+// Decoder for MSP2_GRIPORA_RX_INPUT_BACKUP_STATUS. Wire layout (firmware msp.c):
 //   U8 payloadVersion
 //   U8 enabled (backup 1)
 //   [v3+] U8 mainLinkUp
@@ -103,7 +103,7 @@ export function readRxInputBackupStatus(data) {
   };
 }
 
-// Decoder for MSP2_WING_RX_INPUT_BACKUP_CONFIG:
+// Decoder for MSP2_GRIPORA_RX_INPUT_BACKUP_CONFIG:
 //   U8 payloadVersion, 4 x U8 (provider, inverted, halfDuplex, pinSwap) for
 //   backup 1, [v2+] U8 portCount then the same 4 bytes per further backup.
 export function readRxInputBackupConfig(data) {
@@ -132,7 +132,7 @@ export function readRxInputBackupConfig(data) {
   return { ports };
 }
 
-// Encoder for MSP2_WING_SET_RX_INPUT_BACKUP_CONFIG (payload version 2). A
+// Encoder for MSP2_GRIPORA_SET_RX_INPUT_BACKUP_CONFIG (payload version 2). A
 // version-1 firmware reads the first five bytes and ignores the rest.
 export function writeRxInputBackupConfig(buffer, config) {
   const ports = config.ports;
