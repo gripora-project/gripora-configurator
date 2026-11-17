@@ -4,76 +4,30 @@
   import { Mixer } from "@/js/Mixer.js";
   import { assignServoNames } from "@/js/ServoNames.js";
   import WarningNote from "@/components/notes/WarningNote.svelte";
+  import CarOptionsForm from "./CarOptionsForm.svelte";
   import ServoOutputMeter from "./ServoOutputMeter.svelte";
-  import { isCrsfReceiver } from "@/tabs/receiver/protocols.js";
 
-  // modelType is passed to open() rather than taken as a prop -- callers
-  // that let the user pick *which* type to configure (ModelTypePicker,
-  // switching between named types) need it fixed for the lifetime of one
-  // open/close cycle, decided at the moment of the click rather than
-  // tracking whatever the caller's own reactive state happens to be later.
+  // The car setup: steering and ESC, with optional rear steering and a
+  // second ESC. Applying rewrites the rules from these choices (staged in
+  // FC, sent on Save like any other edit).
   let { onApply, onCancel } = $props();
 
   let dialogEl;
-  // Never actually shown before open() runs (dialog starts closed) -- just
-  // needs to be a non-null MODEL_TYPES-shaped default so the template can
-  // read activeType.* unconditionally.
-  let activeType = $state(Mixer.MODEL_TYPES[0]);
   let applied = false;
 
-  let ailerons = $state("independent");
-  let tailControl = $state("elevatorRudder");
-  let wingYaw = $state("rudder");
-  let flaps = $state(false);
-  // 1 or 2 flap servos, or 0 for flaperons (the ailerons droop instead).
-  let flapServos = $state(1);
-  // Two flap servos that also move with roll (a 4-servo wing).
-  let flapsFollowAilerons = $state(false);
-  let motors = $state(1);
-  let diffThrustYaw = $state(false);
+  let options = $state({ ...Mixer.CAR_DEFAULT_OPTIONS });
 
-  // Flaperons need a separate servo on each aileron.
-  let canFlaperon = $derived(
-    (activeType.ailerons?.fixed ?? ailerons) === "independent",
-  );
-
-  $effect(() => {
-    if (!canFlaperon && flapServos === 0) flapServos = 1;
-  });
-
-  export function open(modelType) {
-    activeType = modelType;
+  // modelType is passed for the callers' sake (ModelTypePicker opens this
+  // for the type being switched to); CAR is the only type with options.
+  export function open() {
     applied = false;
-
-    // Always reset to this type's defaults on open -- never tries to infer
-    // the choices back out of whatever rules happen to be loaded already.
-    ailerons =
-      activeType.ailerons?.default ?? activeType.ailerons?.fixed ?? "none";
-    tailControl =
-      activeType.tailControl?.default ??
-      activeType.tailControl?.fixed ??
-      "elevatorRudder";
-    wingYaw = activeType.wingYaw?.default ?? "none";
-    flaps = false;
-    flapServos = 1;
-    flapsFollowAilerons = false;
-    motors = 1;
-    diffThrustYaw = false;
-
+    // Start from what the loaded rules already are, when they're a car
+    // preset; otherwise the defaults.
+    options = Mixer.carOptionsFromRules(FC.MIXER_RULES) ?? {
+      ...Mixer.CAR_DEFAULT_OPTIONS,
+    };
     dialogEl.showModal();
   }
-
-  let options = $derived({
-    layout: activeType.layout,
-    ailerons: activeType.ailerons?.fixed ?? ailerons,
-    tailControl: activeType.tailControl?.fixed ?? tailControl,
-    wingYaw,
-    flaps,
-    flapServos,
-    flapsFollowAilerons,
-    motors,
-    diffThrustYaw,
-  });
 
   // Servo outputs these choices need that the board doesn't have, warned
   // about here while they can still be changed.
@@ -81,6 +35,8 @@
 
   function apply() {
     FC.MIXER_RULES = Mixer.buildRuleTableFromOptions(options, FC.MIXER_RULES);
+    // Brake and reverse live below neutral: never leave throttle clamped.
+    Mixer.ensureSignedThrottle(FC.MIXER_INPUTS);
     assignServoNames(FC.MIXER_RULES);
 
     applied = true;
@@ -112,137 +68,11 @@
       })}
     </WarningNote>
   {/if}
-  <div class="wizardBody">
-    {#if activeType.ailerons?.options}
-      <div class="wizardSection">
-        <div class="wizardSectionTitle">
-          {$i18n.t("mixerWizardAileronsTitle")}
-        </div>
-        {#each activeType.ailerons.options as value (value)}
-          <label class="wizardOption">
-            <input type="radio" bind:group={ailerons} {value} />
-            <span>
-              {$i18n.t(
-                {
-                  none: "mixerWizardAileronsNone",
-                  single: "mixerWizardAileronsSingle",
-                  independent: "mixerWizardAileronsIndependent",
-                }[value],
-              )}
-            </span>
-          </label>
-        {/each}
-      </div>
-    {/if}
 
-    {#if activeType.tailControl?.options}
-      <div class="wizardSection">
-        <div class="wizardSectionTitle">{$i18n.t("mixerWizardTailTitle")}</div>
-        {#each activeType.tailControl.options as value (value)}
-          <label class="wizardOption">
-            <input type="radio" bind:group={tailControl} {value} />
-            <span>
-              {$i18n.t(
-                {
-                  elevatorOnly: "mixerWizardTailElevatorOnly",
-                  elevatorRudder: "mixerWizardTailElevatorRudder",
-                }[value],
-              )}
-            </span>
-          </label>
-        {/each}
-      </div>
-    {/if}
+  <CarOptionsForm bind:options />
 
-    {#if activeType.wingYaw?.options}
-      <div class="wizardSection">
-        <div class="wizardSectionTitle">
-          {$i18n.t("mixerWizardWingYawTitle")}
-        </div>
-        {#each activeType.wingYaw.options as value (value)}
-          <label class="wizardOption">
-            <input type="radio" bind:group={wingYaw} {value} />
-            <span>
-              {$i18n.t(
-                {
-                  none: "mixerWizardWingYawNone",
-                  rudder: "mixerWizardWingYawRudder",
-                }[value],
-              )}
-            </span>
-          </label>
-        {/each}
-      </div>
-    {/if}
-
-    <div class="wizardSection">
-      <div class="wizardSectionTitle">{$i18n.t("mixerWizardFlapsTitle")}</div>
-      <label class="wizardOption">
-        <input type="checkbox" bind:checked={flaps} />
-        <span>{$i18n.t("mixerWizardFlapsEnable")}</span>
-      </label>
-      {#if flaps}
-        <label class="wizardOption">
-          <input type="radio" bind:group={flapServos} value={1} />
-          <span>{$i18n.t("mixerWizardFlapServos1")}</span>
-        </label>
-        <label class="wizardOption">
-          <input type="radio" bind:group={flapServos} value={2} />
-          <span>{$i18n.t("mixerWizardFlapServos2")}</span>
-        </label>
-        {#if canFlaperon && flapServos === 2}
-          <label class="wizardOption wizardSubOption">
-            <input type="checkbox" bind:checked={flapsFollowAilerons} />
-            <span>{$i18n.t("mixerWizardFlapsFollowAilerons")}</span>
-          </label>
-        {/if}
-        {#if canFlaperon}
-          <label class="wizardOption">
-            <input type="radio" bind:group={flapServos} value={0} />
-            <span>{$i18n.t("mixerWizardFlaperons")}</span>
-          </label>
-        {/if}
-        <div class="wizardHint">
-          {$i18n.t("mixerWizardFlapsCompensationHint")}
-        </div>
-        <div class="wizardHint">
-          {$i18n.t("mixerWizardFlapsChannelHint")}
-        </div>
-        {#if isCrsfReceiver()}
-          <WarningNote message="mixerWizardFlapsElrsWarning" />
-        {/if}
-      {/if}
-    </div>
-
-    <div class="wizardSection">
-      <div class="wizardSectionTitle">{$i18n.t("mixerWizardMotorsTitle")}</div>
-      <label class="wizardOption">
-        <input type="radio" bind:group={motors} value={0} />
-        <span>{$i18n.t("mixerWizardMotors0")}</span>
-      </label>
-      <label class="wizardOption">
-        <input type="radio" bind:group={motors} value={1} />
-        <span>{$i18n.t("mixerWizardMotors1")}</span>
-      </label>
-      <label class="wizardOption">
-        <input type="radio" bind:group={motors} value={2} />
-        <span>{$i18n.t("mixerWizardMotors2")}</span>
-      </label>
-    </div>
-
-    {#if motors === 2}
-      <div class="wizardSection">
-        <label class="wizardOption">
-          <input type="checkbox" bind:checked={diffThrustYaw} />
-          <span>{$i18n.t("mixerWizardDiffThrust")}</span>
-        </label>
-        <div class="wizardHint">{$i18n.t("mixerWizardDiffThrustHint")}</div>
-      </div>
-    {/if}
-
-    <div class="note">
-      <p>{$i18n.t("mixerWizardOverwriteWarning")}</p>
-    </div>
+  <div class="note">
+    <p>{$i18n.t("mixerWizardOverwriteWarning")}</p>
   </div>
 
   <div class="buttons">
@@ -257,50 +87,13 @@
 
 <style lang="scss">
   dialog {
-    width: 36em;
+    width: 44em;
     max-width: calc(100vw - 2em);
     border-radius: var(--radius-lg);
   }
 
   h3 {
     margin-bottom: 0.5em;
-  }
-
-  .wizardSection {
-    margin-bottom: 12px;
-    padding: 10px 12px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    background: var(--color-surface-float, var(--color-surface));
-  }
-
-  .wizardSectionTitle {
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  .wizardOption {
-    display: block;
-    margin: 4px 0;
-    font-weight: normal;
-
-    input {
-      display: inline-block;
-      width: auto;
-      margin-right: 6px;
-      vertical-align: middle;
-    }
-  }
-
-  // Depends on the option above it.
-  .wizardSubOption {
-    margin-left: 1.6em;
-  }
-
-  .wizardHint {
-    color: var(--color-text-soft);
-    font-size: 0.7rem;
-    margin-top: 4px;
   }
 
   .buttons {

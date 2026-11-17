@@ -1,7 +1,7 @@
 <script>
   // How to move the model for one gyro check (grey arrow) and how the
   // surfaces should answer (red). Roll seen from behind, pitch from the
-  // side (nose right), yaw from above (nose up). Decorative; the check's
+  // side (nose right), yaw from above (a car, nose up). Decorative; the check's
   // text says the same.
   let { axis } = $props();
 </script>
@@ -31,14 +31,30 @@
     <path class="move" d="M112 58 A40 40 0 0 0 114 28" />
     <path class="move-head" d="M109.5 30 L114.5 22 L118.5 30.5 Z" />
   {:else}
+    <!-- A car from above, nose up, turned clockwise by hand: the front
+         wheels (red) steer left against it. -->
     <g transform="rotate(16 60 40)">
-      <line class="wing" x1="22" y1="30" x2="98" y2="30" />
-      <line class="wing" x1="47" y1="61" x2="73" y2="61" />
-      <path
-        class="body"
-        d="M60 6 C64 9 64 14 63 20 L61.5 64 L58.5 64 L57 20 C56 14 56 9 60 6 Z"
+      <rect class="body" x="47" y="8" width="26" height="64" rx="9" />
+      <rect class="tyre" x="39" y="54" width="6" height="14" rx="2" />
+      <rect class="tyre" x="75" y="54" width="6" height="14" rx="2" />
+      <rect
+        class="tyre react-fill"
+        x="39"
+        y="13"
+        width="6"
+        height="14"
+        rx="2"
+        transform="rotate(-22 42 20)"
       />
-      <line class="react" x1="60" y1="64" x2="54" y2="73" />
+      <rect
+        class="tyre react-fill"
+        x="75"
+        y="13"
+        width="6"
+        height="14"
+        rx="2"
+        transform="rotate(-22 78 20)"
+      />
     </g>
     <path class="move" d="M42 6 A40 40 0 0 1 82 3" />
     <path class="move-head" d="M80 -1 L88 5 L79 8 Z" />
@@ -72,6 +88,14 @@
     stroke: currentColor;
     stroke-width: 3;
     stroke-linecap: round;
+  }
+
+  .tyre {
+    fill: currentColor;
+  }
+
+  .react-fill {
+    fill: var(--color-accent-500);
   }
 
   .react {

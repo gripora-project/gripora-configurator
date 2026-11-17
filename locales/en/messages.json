@@ -96,7 +96,7 @@
         "message": "This operation is not supported by your hardware."
     },
     "storageDeviceNotReady": {
-        "message": "The storage device is not ready. In the case of a microSD card, make sure it is properly recognised by your flight controller."
+        "message": "The storage device is not ready. In the case of a microSD card, make sure it is properly recognised by your controller."
     },
     "connect": {
         "message": "Connect"
@@ -498,16 +498,16 @@
         "message": "ESC Programming"
     },
     "escProgrammingWarningTitle": {
-        "message": "Remove propellers / rotor blades"
+        "message": "Lift the wheels off the ground"
     },
     "escProgrammingWarningBody": {
-        "message": "Programming an ESC can cause the motor to spin unexpectedly. Remove all propellers or rotor blades before continuing."
+        "message": "Programming an ESC can cause the motor to spin unexpectedly. Put the car on a stand with the wheels off the ground before continuing."
     },
     "escProgrammingWarningAcknowledge": {
-        "message": "I have removed the propellers/blades"
+        "message": "The wheels are off the ground"
     },
     "escProgrammingArmedWarning": {
-        "message": "Disarm the aircraft to program ESCs."
+        "message": "Disarm the car to program ESCs."
     },
     "tabXactServoProgramming": {
         "message": "XACT Servo Programming"
@@ -714,7 +714,7 @@
         "message": "Channel"
     },
     "xactServoChannelHelp": {
-        "message": "Which control channel (CH1-CH24) the servo listens to for its position command. Matches the channel numbering used elsewhere in the flight controller's mixer/output setup."
+        "message": "Which control channel (CH1-CH24) the servo listens to for its position command. Matches the channel numbering used elsewhere in the controller's mixer/output setup."
     },
     "xactServoCenter": {
         "message": "Center"
@@ -849,7 +849,7 @@
         "message": "Outputs"
     },
     "tabGroupFlightTuning": {
-        "message": "Flight Tuning"
+        "message": "Tuning"
     },
     "tabGroupModesLogic": {
         "message": "Modes & Logic"
@@ -1176,7 +1176,7 @@
         "message": "<span class=\"message-negative\">Could not open the serial port</span> - it is most likely in use by another program or browser tab (another configurator, a serial monitor, etc.). Close it, then try again."
     },
     "serialPortOpenFailNotFound": {
-        "message": "<span class=\"message-negative\">Serial port not found</span> - check the flight controller is still plugged in, then try again."
+        "message": "<span class=\"message-negative\">Serial port not found</span> - check the controller is still plugged in, then try again."
     },
     "serialPortClosedOk": {
         "message": "Serial port <span class=\"message-positive\">successfully</span> closed"
@@ -1290,7 +1290,7 @@
         "message": "Unprotect successful."
     },
     "stm32UnprotectUnplug": {
-        "message": "ACTION REQUIRED: Unplug and re-connect flight controller in DFU mode to try flashing again!"
+        "message": "ACTION REQUIRED: Unplug and re-connect the controller in DFU mode to try flashing again!"
     },
     "stm32UnprotectFailed": {
         "message": "Failed to unprotect board"
@@ -1320,7 +1320,7 @@
         "message": "The following <strong>problems with your configuration</strong> were detected:"
     },
     "reportProblemsDialogFooter": {
-        "message": "Please <strong>fix these problems before attempting to fly your craft</strong>."
+        "message": "Please <strong>fix these problems before attempting to drive your car</strong>."
     },
     "reportProblemsDialogAPI_VERSION_MAX_SUPPORTED": {
         "message": "<strong>the version of configurator that you are using ($3) is older than the firmware you are using ($4)</strong>.<br>$t(configuratorUpdateHelp.message)"
@@ -1332,7 +1332,7 @@
         "message": "<strong>there is no motor output protocol selected</strong>.<br>Please select a motor output protocol appropriate for your ESCs in '$t(configurationEscFeatures.message)' on the '$t(tabMotors.message)' tab.<br>$t(escProtocolDisabledMessage.message)"
     },
     "reportProblemsDialogACC_NEEDS_CALIBRATION": {
-        "message": "<strong>the accelerometer is enabled but it is not calibrated</strong>.<br>If you plan to use the accelerometer, please follow the instructions for '$t(initialSetupButtonCalibrateAccel.message)' on the '$t(tabSetup.message)' tab. If any function that requires the accelerometer (auto level modes, GPS rescue, ...) is enabled, arming of the craft will be disabled until the accelerometer has been calibrated.<br>If you are not planning on using the accelerometer it is recommended that you disable it in '$t(configurationSystem.message)' on the '$t(tabConfiguration.message)' tab."
+        "message": "<strong>the accelerometer is enabled but it is not calibrated</strong>.<br>If you plan to use the accelerometer, please follow the instructions for '$t(initialSetupButtonCalibrateAccel.message)' on the '$t(tabSetup.message)' tab. If any function that requires the accelerometer is enabled, arming of the car will be disabled until the accelerometer has been calibrated.<br>If you are not planning on using the accelerometer it is recommended that you disable it in '$t(configurationSystem.message)' on the '$t(tabConfiguration.message)' tab."
     },
     "infoVersions": {
         "message": "Running - OS: <strong>{{operatingSystem}}</strong>, Configurator: <strong>{{configuratorVersion}}</strong>",
@@ -1471,7 +1471,7 @@
         "message": "<a href=\"https://discord.gg/aEyyAJTXRw/\" target=\"_blank\" rel=\"noopener noreferrer\">Discord</a> is the official place for online support and discussions."
     },
     "defaultFacebookText": {
-        "message": "<a href=\"https://www.facebook.com/groups/wingflight/\" target=\"_blank\" rel=\"noopener noreferrer\">Facebook Group</a> is a good place for hanging out with other Gripora pilots."
+        "message": "<a href=\"https://www.facebook.com/groups/wingflight/\" target=\"_blank\" rel=\"noopener noreferrer\">Facebook Group</a> is a good place for hanging out with other Gripora drivers."
     },
     "defaultContributingHead": {
         "message": "Contributing"
@@ -1558,10 +1558,10 @@
         "message": "Firmware:"
     },
     "statusFlightCount": {
-        "message": "Flight Count:"
+        "message": "Run Count:"
     },
     "statusFlightTime": {
-        "message": "Flight Time:"
+        "message": "Run Time:"
     },
     "statusArmingDisableFlags": {
         "message": "Arming Disable Flags:"
@@ -1608,7 +1608,7 @@
         "description": "Message that pops up to describe the THROTTLE arming disable flag"
     },
     "statusArmingDisableFlagsTooltipANGLE": {
-        "message": "Craft is not level (enough)",
+        "message": "Car is not level (enough)",
         "description": "Message that pops up to describe the ANGLE arming disable flag"
     },
     "statusArmingDisableFlagsTooltipBOOT_GRACE_TIME": {
@@ -1620,7 +1620,7 @@
         "description": "Message that pops up to describe the NOPREARM arming disable flag"
     },
     "statusArmingDisableFlagsTooltipLOAD": {
-        "message": "System load is too high for safe flight",
+        "message": "System load is too high for safe driving",
         "description": "Message that pops up to describe the LOAD arming disable flag"
     },
     "statusArmingDisableFlagsTooltipCALIBRATING": {
@@ -1664,7 +1664,7 @@
         "description": "Message that pops up to describe the REBOOT_REQ arming disable flag"
     },
     "statusArmingDisableFlagsTooltipDSHOT_BITBANG": {
-        "message": "Bitbanged DSHOT is not working properly and the motors can't be controlled. Likely caused by a timer conflict with other features enabled on the flight controller.",
+        "message": "Bitbanged DSHOT is not working properly and the motors can't be controlled. Likely caused by a timer conflict with other features enabled on the controller.",
         "description": "Message that pops up to describe the DSHOT_BITBANG arming disable flag"
     },
     "statusArmingDisableFlagsTooltipACC_CALIB": {
@@ -1690,7 +1690,7 @@
         "message": "Arming"
     },
     "statusArmingDanger": {
-        "message": "<strong class=\"message-negative\">WARNING!</strong> <strong>ARMING is ENABLED.</strong> Never fly the craft with the Configurator connected!"
+        "message": "<strong class=\"message-negative\">WARNING!</strong> <strong>ARMING is ENABLED.</strong> Never drive the car with the Configurator connected!"
     },
     "statusEnableArming": {
         "message": "Enable Arming:"
@@ -1720,7 +1720,7 @@
         "message": "Calibrate Magnetometer"
     },
     "initialSetupCalibrateMagText": {
-        "message": "Move the aircraft at least <strong>360</strong> degrees on all axes of rotation, you have 30 seconds to perform this task"
+        "message": "Move the car at least <strong>360</strong> degrees on all axes of rotation, you have 30 seconds to perform this task"
     },
     "initialSetupButtonCalibratingText": {
         "message": "Calibrating..."
@@ -1768,10 +1768,10 @@
         "message": "Remote support"
     },
     "defaultRemoteSupportText": {
-        "message": "Stuck, or can't connect to your flight controller? Someone can help you over the internet: you share your flight controller and give them a session code, and they work on it from their own configurator. Helping someone? Join their session here."
+        "message": "Stuck, or can't connect to your controller? Someone can help you over the internet: you share your controller and give them a session code, and they work on it from their own configurator. Helping someone? Join their session here."
     },
     "initialSetupRemoteSupportText": {
-        "message": "Let someone help you over the internet. They see and change your flight controller's settings from their own configurator while you watch their screen. You give them a session code to join."
+        "message": "Let someone help you over the internet. They see and change your controller's settings from their own configurator while you watch their screen. You give them a session code to join."
     },
     "initialSetupBackupSuccess": {
         "message": "Backup saved <span class=\"message-positive\">successfully</span>"
@@ -1801,7 +1801,7 @@
         "message": "All settings saved in EEPROM."
     },
     "initialSetupDangerText": {
-        "message": "<strong>Note:</strong> In order to prevent injury <strong>remove ALL rotor blades</strong> before enabling any arming features.<strong class=\"message-negative\"><br/>NEVER FLY YOUR CRAFT WITH THE CONFIGURATOR CONNECTED!</strong>"
+        "message": "<strong>Note:</strong> In order to prevent injury <strong>lift the wheels off the ground</strong> before enabling any arming features.<strong class=\"message-negative\"><br/>NEVER DRIVE YOUR CAR WITH THE CONFIGURATOR CONNECTED!</strong>"
     },
     "initialSetupDangerTitle": {
         "message": "Arming and Override"
@@ -1828,13 +1828,13 @@
         "message": "<strong>Enable Mixer Override</strong>"
     },
     "initialSetupEnableMixerOverrideText": {
-        "message": "Enable the mixer input override feature in the Mixers tab. Using mixer override WILL force the flight controls to arbitrary positions."
+        "message": "Enable the mixer input override feature in the Mixers tab. Using mixer override WILL force the steering and throttle to arbitrary positions."
     },
     "feature_RX_PPM": {
         "message": "PPM RX input"
     },
     "feature_INFLIGHT_ACC_CAL": {
-        "message": "In-flight level calibration"
+        "message": "While-driving level calibration"
     },
     "feature_RX_SERIAL": {
         "message": "Serial RX input"
@@ -1903,13 +1903,13 @@
         "message": "RSSI (Signal Strength)"
     },
     "configurationRSSIHelp": {
-        "message": "RSSI is a measurement of signal strength and is very handy so you know when your aircraft is going out of range or if it is suffering RF interference."
+        "message": "RSSI is a measurement of signal strength and is very handy so you know when your car is going out of range or if it is suffering RF interference."
     },
     "configurationEscFeatures": {
         "message": "ESC/Motor Features"
     },
     "configurationFeaturesHelp": {
-        "message": "<strong>Note:</strong> Not all features are supported by all flight controllers. If you enable a specific feature, and it is disabled after you hit 'Save and Reboot', it means that this feature is not supported."
+        "message": "<strong>Note:</strong> Not all features are supported by all controllers. If you enable a specific feature, and it is disabled after you hit 'Save and Reboot', it means that this feature is not supported."
     },
     "configurationBoardAlignment": {
         "message": "Board and Sensor Alignment"
@@ -1930,7 +1930,7 @@
         "message": "Board Alignment"
     },
     "configurationBoardAlignmentSectionHelp": {
-        "message": "Coarse correction for how the FC is physically mounted on the airframe, typically in 90° steps. Auto-Align FC can detect this automatically."
+        "message": "Coarse correction for how the controller is physically mounted in the car, typically in 90° steps. Auto-Align FC can detect this automatically."
     },
     "configurationBoardMountTrim": {
         "message": "Mounting Trim"
@@ -1954,16 +1954,16 @@
         "message": "Reset Trim"
     },
     "configurationBoardMountTrimAutoHelp": {
-        "message": "Automatically detects roll and pitch mounting trim (yaw can't be measured from a resting accelerometer, and stays manual). Place the aircraft level and disarmed, then press Start and don't touch it."
+        "message": "Automatically detects roll and pitch mounting trim (yaw can't be measured from a resting accelerometer, and stays manual). Place the car level and disarmed, then press Start and don't touch it."
     },
     "configurationBoardMountTrimAutoIdle": {
-        "message": "Place aircraft level and disarmed, then press Start."
+        "message": "Place car level and disarmed, then press Start."
     },
     "configurationBoardMountTrimAutoStarting": {
-        "message": "Procedure started. Hold the aircraft still and level."
+        "message": "Procedure started. Hold the car still and level."
     },
     "configurationBoardMountTrimAutoSampling": {
-        "message": "Sampling — keep the aircraft still…"
+        "message": "Sampling — keep the car still…"
     },
     "configurationBoardMountTrimAutoSuccessCountdown": {
         "message": "Detected mounting trim: roll $1°, pitch $2°. Closing wizard in $3s."
@@ -1975,7 +1975,7 @@
         "message": "Accelerometer has not been calibrated on this board yet. Auto-detect needs a calibrated accelerometer to give a reliable result — calibrate now, then try again."
     },
     "configurationBoardMountTrimAutoTimeout": {
-        "message": "Timed out waiting for a stable reading. Rest the aircraft on a level surface without touching it, then try again."
+        "message": "Timed out waiting for a stable reading. Rest the car on a level surface without touching it, then try again."
     },
     "configurationBoardMountTrimAutoOutOfRange": {
         "message": "Residual tilt is too large for a mounting trim (over 30°). This usually means the Board Alignment above is wrong — try Auto-Align FC first, then retry this."
@@ -1984,7 +1984,7 @@
         "message": "Auto-detect command not supported by this firmware build."
     },
     "configurationBoardMountTrimAutoCalibrating": {
-        "message": "Calibrating accelerometer — keep the aircraft level and still…"
+        "message": "Calibrating accelerometer — keep the car level and still…"
     },
     "configurationBoardMountTrimAutoWizardTitle": {
         "message": "Mounting Trim Auto-Detect"
@@ -1996,22 +1996,22 @@
         "message": "Step 2 of 2: Result"
     },
     "configurationBoardMountTrimAutoWizardDetailStart": {
-        "message": "Place the aircraft level on a stable surface. Keep it disarmed, then press Start."
+        "message": "Place the car level on a stable surface. Keep it disarmed, then press Start."
     },
     "configurationBoardAutoAlignStart": {
         "message": "Auto-Align FC"
     },
     "configurationBoardAutoAlignHelp": {
-        "message": "Automatically detects the flight controller mounting orientation. Place the aircraft flat, press Start, then briefly lift the tail by at least 20°."
+        "message": "Automatically detects the controller mounting orientation. Place the car flat, press Start, then briefly lift the rear by at least 20°."
     },
     "configurationBoardAutoAlignIdle": {
-        "message": "Place aircraft flat and disarmed, then press Start."
+        "message": "Place car flat and disarmed, then press Start."
     },
     "configurationBoardAutoAlignStarting": {
-        "message": "Procedure started. Lift the tail by at least 20° and hold briefly."
+        "message": "Procedure started. Lift the rear by at least 20° and hold briefly."
     },
     "configurationBoardAutoAlignWaiting": {
-        "message": "Waiting for tail-up movement (>= 20°)."
+        "message": "Waiting for rear-up movement (>= 20°)."
     },
     "configurationBoardAutoAlignSuccess": {
         "message": "Detected board alignment: roll $1°, pitch $2°, yaw $3°. Save and reboot to persist."
@@ -2020,10 +2020,10 @@
         "message": "Auto-align is only allowed while disarmed."
     },
     "configurationBoardAutoAlignTimeout": {
-        "message": "Auto-align timed out. Start again and lift the tail within 15 seconds."
+        "message": "Auto-align timed out. Start again and lift the rear within 15 seconds."
     },
     "configurationBoardAutoAlignNoMatch": {
-        "message": "No valid 90° alignment found yet. Hold the aircraft steady before start, then lift mainly the tail."
+        "message": "No valid 90° alignment found yet. Hold the car steady before start, then lift mainly the rear."
     },
     "configurationBoardAutoAlignUnsupported": {
         "message": "Auto-align command not supported by this firmware build."
@@ -2032,7 +2032,7 @@
         "message": "Accelerometer has not been calibrated on this board yet. Auto-align needs a calibrated accelerometer to give a reliable result — calibrate now, then try again."
     },
     "configurationBoardAutoAlignCalibrating": {
-        "message": "Calibrating accelerometer — keep the aircraft level and still…"
+        "message": "Calibrating accelerometer — keep the car level and still…"
     },
     "configurationBoardAutoAlignWizardTitle": {
         "message": "Board Auto-Align"
@@ -2041,13 +2041,13 @@
         "message": "Step 1 of 3: Start"
     },
     "configurationBoardAutoAlignWizardStep2": {
-        "message": "Step 2 of 3: Lift Tail"
+        "message": "Step 2 of 3: Lift Rear"
     },
     "configurationBoardAutoAlignWizardStep3": {
         "message": "Step 3 of 3: Result"
     },
     "configurationBoardAutoAlignWizardDetailStart": {
-        "message": "Place the aircraft level on a stable surface. Keep it disarmed, then press Start."
+        "message": "Place the car level on a stable surface. Keep it disarmed, then press Start."
     },
     "configurationBoardAutoAlignSuccessCountdown": {
         "message": "Detected board alignment: roll $1°, pitch $2°, yaw $3°. Closing wizard in $4s."
@@ -2113,7 +2113,7 @@
         "message": "Increase the value to correct drift to the rear. Decrease the value (or use negative values) to correct drift to the front."
     },
     "escProtocolDisabledMessage": {
-        "message": "<strong>Caution:</strong> Selecting a motor output protocol that is not supported by your ESCs can lead to the <strong>ESCs spinning up as soon as a battery is connected</strong>. For this reason, <strong>always make sure to remove the props before connecting a battery for the first time after changing the motor output protocol</strong>."
+        "message": "<strong>Caution:</strong> Selecting a motor output protocol that is not supported by your ESCs can lead to the <strong>ESCs spinning up as soon as a battery is connected</strong>. For this reason, <strong>always make sure the wheels are off the ground before connecting a battery for the first time after changing the motor output protocol</strong>."
     },
     "configurationDshotBeeper": {
         "message": "ESC Beacon Configuration"
@@ -2134,25 +2134,25 @@
         "message": "Model Id"
     },
     "configuration.flight_stats.heading": {
-        "message": "Flight Statistics"
+        "message": "Run Statistics"
     },
     "configuration.flight_stats.enable.label": {
-        "message": "Record Flight Statistics"
+        "message": "Record Run Statistics"
     },
     "configuration.flight_stats.reset.label": {
         "message": "Reset"
     },
     "configuration.flight_stats.min_armed_time.label": {
-        "message": "Minimum flight time"
+        "message": "Minimum run time"
     },
     "configuration.flight_stats.min_armed_time.help": {
-        "message": "Minimum duration the flight controller must be armed for the flights statistics to be counted towards the total."
+        "message": "Minimum duration the controller must be armed for the run statistics to be counted towards the total."
     },
     "configuration.flight_stats.flight_count.label": {
-        "message": "Flight Count"
+        "message": "Run Count"
     },
     "configuration.flight_stats.flight_time.label": {
-        "message": "Flight Time"
+        "message": "Run Time"
     },
     "configuration.flight_stats.distance.label": {
         "message": "Distance"
@@ -2212,7 +2212,7 @@
         "message": "Initialisation beeps when board is powered on"
     },
     "beeper_USB": {
-        "message": "Beep when flight controller is powered from USB. Turn this off if you don't want the beeper to be on when on the workbench"
+        "message": "Beep when the controller is powered from USB. Turn this off if you don't want the beeper to be on when on the workbench"
     },
     "beeper_BLACKBOX_ERASE": {
         "message": "Beep when blackbox erase completes"
@@ -2230,7 +2230,7 @@
         "message": "System configuration"
     },
     "configurationLoopTime": {
-        "message": "Flight Controller Loop Time"
+        "message": "Controller Loop Time"
     },
     "configurationSpeedGyroNoGyro": {
         "message": "No gyro",
@@ -2275,7 +2275,7 @@
         "description": "Option to set the Home Point with the first arm only, not with each arm in the GPS Configuration"
     },
     "configurationGPSHomeOnceHelp": {
-        "message": "When enabled, only the first arm after the battery is connected will be used as home point. If not enabled, every time the aircraft is armed, the home point will be updated.",
+        "message": "When enabled, only the first arm after the battery is connected will be used as home point. If not enabled, every time the car is armed, the home point will be updated.",
         "description": "Help text for the option to set the Home Point with the first arm only, not with each arm in the GPS Configuration"
     },
     "configurationEepromSaved": {
@@ -2285,7 +2285,7 @@
         "message": "Dynamic Notch values change"
     },
     "dialogDynFiltersChangeNote": {
-        "message": "<span class=\"message-negative\"><b>WARNING: Some dynamic notch values have been changed to default values</b></span> because the RPM filtering has been activated/deactivated.<br> Please, check before flying."
+        "message": "<span class=\"message-negative\"><b>WARNING: Some dynamic notch values have been changed to default values</b></span> because the RPM filtering has been activated/deactivated.<br> Please, check before driving."
     },
     "dialogDynFiltersConfirm": {
         "message": "OK"
@@ -2309,7 +2309,7 @@
         "message": "Peripherals"
     },
     "portsHelp": {
-        "message": "<strong>Note:</strong> not all combinations are valid.  When the flight controller firmware detects this the serial port configuration will be reset."
+        "message": "<strong>Note:</strong> not all combinations are valid.  When the controller firmware detects this the serial port configuration will be reset."
     },
     "portsMSPHelp": {
         "message": "<strong>Note:</strong> Do <span class=\"message-negative\">NOT</span> disable MSP on the first serial port unless you know what you are doing.  You may have to reflash and erase your configuration if you do."
@@ -2486,35 +2486,35 @@
         "message": "Proportional"
     },
     "profilesProportionalHelp": {
-        "message": "Controls the strength of how tightly the machine tracks the sticks (the Setpoint) and corrects for external influences. Higher value (gains) provide tighter tracking, but can cause overshoot if too high in proportion to the derivative (D-gain). Think of the P-term as the spring on a car.",
+        "message": "Controls how tightly the car tracks the steering stick (the yaw-rate Setpoint) and corrects for external influences such as bumps or grip changes. Higher values (gains) provide tighter tracking, but can cause overshoot or steering oscillation if too high in proportion to the derivative (D-gain). Think of the P-term as the spring in a suspension.",
         "description": "Proportional Term helpicon message on PID table titlebar"
     },
     "profilesIntegral": {
         "message": "Integral"
     },
     "profilesIntegralHelp": {
-        "message": "Controls the strength of how tightly the machine holds the overall rotation rate setpoint. Similar to Proportional, but for longer biases on the craft from the rotation rate setpoint, as well as persistent outside influence, for example steady wind or CG offsets. Higher gains provide tighter tracking of the setpoint (i.e. in constant flips and rolls), but can lead to the craft now being able to follow the setpoint on extremely quick inputs, which can lead to it continuing to rotate after the stick is released. If extremely high in proportion to the D-term, can cause oscillations.",
+        "message": "Controls how tightly the car holds the yaw rate setpoint over time. Similar to Proportional, but for longer-lasting yaw errors and persistent outside influences, for example a camber or crosswind, uneven grip or a car that pulls to one side. Higher gains hold the setpoint more firmly (i.e. through long sweeping corners), but can make the car keep rotating after a quick steering input is released. If extremely high in proportion to the D-term, can cause oscillations.",
         "description": "Integral Term helpicon message on PID table titlebar"
     },
     "profilesDerivative": {
         "message": "Derivative"
     },
     "profilesDerivativeHelp": {
-        "message": "Controls the strength of damping ANY angular acceleration of the craft, whether from stick inputs or external influences. For stick inputs, the D-term damps the movement to prevent overshooting. For an outside influence (vorticity or wind gust) the D-term damps the disturbance. Higher gains provide more damping and reduce possible overshoot from high P-terms. However, the D-term is VERY sensitive to high frequency gyro vibrations (noise | magnifies by 10x to 100x). High frequency noise in the control loop can cause excessive servo heat and burn out servos if the gyro noise is not filtered properly (see Gyro tab). Think of the D-term as the shock absorber on your car, but with the inherent negative property of magnifying high frequency gyro noise.",
+        "message": "Controls the strength of damping ANY yaw acceleration of the car, whether from steering inputs or external influences. For steering inputs, the D-term damps the movement to prevent overshooting. For an outside influence (a bump or sudden grip change) the D-term damps the disturbance. Higher gains provide more damping and reduce possible overshoot from high P-terms. However, the D-term is VERY sensitive to high frequency gyro vibrations (noise | magnifies by 10x to 100x). High frequency noise in the control loop can cause excessive servo heat and burn out servos if the gyro noise is not filtered properly (see Gyro tab). Think of the D-term as the shock absorber on your car, but with the inherent negative property of magnifying high frequency gyro noise.",
         "description": "Derivative Term helpicon message on PID table titlebar"
     },
     "profilesFeedforward": {
         "message": "Feedforward"
     },
     "profilesFeedforwardHelp": {
-        "message": "This is an additional pushing term based on stick input. FF helps the P-term push the craft for commanded stick moves, does not react to any aircraft movements though. The FF-term pushes based on the difference between the commanded Setpoint (deg/sec). Higher values (gains) will result in a sharper response to stick input. Too high of values may result in overshoot, as well as strikeback at the end of control inputs. Too low or zero (0) values will result in a slow and delayed response to stick inputs, as well as continued rotation after the stick is released.",
+        "message": "This is an additional pushing term based on steering input. FF helps the P-term turn the car for commanded steering moves, but does not react to any car movement. The FF-term pushes based on the commanded Setpoint (deg/sec). Higher values (gains) will result in a sharper response to steering input. Too high of values may result in overshoot, as well as a kick-back at the end of steering inputs. Too low or zero (0) values will result in a slow and delayed response to steering inputs, as well as continued rotation after the stick is released.",
         "description": "Feedforward Term helpicon message on PID table titlebar"
     },
     "profilesBoost": {
         "message": "Boost"
     },
     "profilesBoostHelp": {
-        "message": "This is an additional boost on the feedforward, based on the derivative of the setpoint. An increase of Boost can make the model's reaction sharper, without the drawbacks of high Proportional or Feedforward gains."
+        "message": "This is an additional boost on the feedforward, based on the derivative of the setpoint. An increase of Boost can make the car's steering response sharper, without the drawbacks of high Proportional or Feedforward gains."
     },
     "profilesCopyProfile": {
         "message": "Copy profile"
@@ -2571,10 +2571,10 @@
         "message": "Detect Wiring"
     },
     "receiverWiringDetectHelp": {
-        "message": "<p>Tries every combination of Inverted / Half-Duplex / Pin Swap for the selected protocol and stops as soon as one produces signal. Nothing is saved until you press Save on this tab.</p><p><strong>Note:</strong> requires no unsaved changes first - it tests whatever protocol/provider is currently saved on the flight controller, not a pending selection.</p><p>Your transmitter must be powered on and bound to the receiver - detection can't find a wiring combination if the receiver has no signal to give it in the first place.</p><p>Only available while disarmed - it cycles the receiver wiring live and could interrupt control input.</p>"
+        "message": "<p>Tries every combination of Inverted / Half-Duplex / Pin Swap for the selected protocol and stops as soon as one produces signal. Nothing is saved until you press Save on this tab.</p><p><strong>Note:</strong> requires no unsaved changes first - it tests whatever protocol/provider is currently saved on the controller, not a pending selection.</p><p>Your transmitter must be powered on and bound to the receiver - detection can't find a wiring combination if the receiver has no signal to give it in the first place.</p><p>Only available while disarmed - it cycles the receiver wiring live and could interrupt control input.</p>"
     },
     "receiverWiringDetectSaveFirst": {
-        "message": "Save your changes first - this tests whatever is currently saved on the flight controller, not a pending selection."
+        "message": "Save your changes first - this tests whatever is currently saved on the controller, not a pending selection."
     },
     "receiverWiringDetectArmedFirst": {
         "message": "Disarm first - wiring detection cycles the receiver connection live and can't run while armed."
@@ -2601,7 +2601,7 @@
         "message": "No signal found on any wiring combination for this protocol. Make sure the transmitter is powered on and bound to the receiver, check the protocol selection and connections, then try again."
     },
     "receiverWiringDetectRejected": {
-        "message": "Wiring detection was rejected - it needs a serial receiver protocol with an assigned UART, and the aircraft must be disarmed."
+        "message": "Wiring detection was rejected - it needs a serial receiver protocol with an assigned UART, and the car must be disarmed."
     },
     "receiverWiringDetectUnsupported": {
         "message": "Wiring detection is not supported by this firmware build."
@@ -2628,7 +2628,7 @@
         "message": "Arm Limit"
     },
     "receiverHelpArmingThrottle": {
-        "message": "The flight controller can only be armed while the the throttle channel is below this value."
+        "message": "The controller can only be armed while the throttle channel is below this value."
     },
     "receiverZeroThrottle": {
         "message": "Min Throttle - 0%"
@@ -2697,7 +2697,7 @@
         "message": "Telemetry Packet Ratio"
     },
     "receiverHelpCrsfTelemetryMode": {
-        "message": "Enables the Custom Gripora telemetry with ELRS. Requires a Lua script in the Tx for decoding the sensors. Custom telemetry provides a plethora of sensors for your aircraft."
+        "message": "Enables the Custom Gripora telemetry with ELRS. Requires a Lua script in the Tx for decoding the sensors. Custom telemetry provides a plethora of sensors for your car."
     },
     "receiverHelpCrsfTelemetryRate": {
         "message": "Radio link packet rate for telemetry. Set this to the same value as the ELRS packet rate in the Tx."
@@ -3102,7 +3102,7 @@
         "message": "Bind Receiver"
     },
     "receiverButtonBindMessage": {
-        "message": "Bind request sent to the flight controller."
+        "message": "Bind request sent to the controller."
     },
     "receiverButtonSticks": {
         "message": "Control sticks"
@@ -3111,7 +3111,7 @@
         "message": "Preview"
     },
     "receiverMspWarningText": {
-        "message": "These sticks allow Gripora to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and rotor blades must not be attached.</strong><br /><br />This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if rotor blades are left on.</strong>"
+        "message": "These sticks allow Gripora to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for driving and the wheels must be off the ground.</strong><br /><br />This feature does not guarantee reliable control of your car. <strong>Serious injury is likely to result if the wheels are left on the ground.</strong>"
     },
     "receiverMspEnableButton": {
         "message": "Enable controls"
@@ -3196,7 +3196,7 @@
         "message": "AND"
     },
     "adjustmentsHelp": {
-        "message": "Configure adjustment switches. See the 'in-flight adjustments' section of the manual for details. The changes that adjustment functions make are not saved automatically."
+        "message": "Configure adjustment switches. See the 'while-driving adjustments' section of the manual for details. The changes that adjustment functions make are not saved automatically."
     },
     "adjustmentSlotsHelp": {
         "message": "There are 4 slots. Each switch used to concurrently make adjustments requires exclusive use of a slot."
@@ -3289,7 +3289,7 @@
         "message": "Remove adjustment"
     },
     "adjustmentsEmptyState": {
-        "message": "No adjustments configured yet. Click \"Add Adjustment\" to set up a switch that changes a value in flight."
+        "message": "No adjustments configured yet. Click \"Add Adjustment\" to set up a switch that changes a value while driving."
     },
     "adjustmentsMin": {
         "message": "Min"
@@ -3310,10 +3310,10 @@
         "message": "Scale"
     },
     "adjustmentsFunctionHelpRateProfile": {
-        "message": "Switches the active rate profile, for example to change stick feel between flights or manoeuvres."
+        "message": "Switches the active rate profile, for example to change steering feel between runs or tracks."
     },
     "adjustmentsFunctionHelpPIDProfile": {
-        "message": "Switches the active PID profile, so you can swap between complete tunes in flight."
+        "message": "Switches the active PID profile, so you can swap between complete tunes while driving."
     },
     "adjustmentsFunctionHelpLEDProfile": {
         "message": "Switches the LED strip profile."
@@ -3325,7 +3325,7 @@
         "message": "Switches the active thrust vector profile."
     },
     "adjustmentsFunctionHelpAngleLevelGain": {
-        "message": "How strongly Angle mode pulls the model back to level."
+        "message": "How strongly Angle mode pulls the car back to level."
     },
     "adjustmentsFunctionHelpAcroTrainerGain": {
         "message": "How strongly Trainer corrects back toward the pitch/bank limit when it's exceeded. Trainer doesn't self-level."
@@ -3394,7 +3394,7 @@
         "message": "Scales roll P, I, D and F together, live, without changing the stored gains. 100% is the tune as configured."
     },
     "adjustmentsFunctionHelpItermDecayTimeRoll": {
-        "message": "How long the roll axis holds a correction after a gust or bump before letting it go. Longer feels more locked in."
+        "message": "How long the roll axis holds a correction after a bump before letting it go. Longer feels more locked in."
     },
     "adjustmentsFunctionHelpBouncebackRoll": {
         "message": "How strongly the roll axis stops a fast manoeuvre bouncing back when you centre the stick. Higher means less bounce-back."
@@ -3463,7 +3463,7 @@
         "message": "Scales pitch P, I, D and F together, live, without changing the stored gains. 100% is the tune as configured."
     },
     "adjustmentsFunctionHelpItermDecayTimePitch": {
-        "message": "How long the pitch axis holds a correction after a gust or bump before letting it go. Longer feels more locked in."
+        "message": "How long the pitch axis holds a correction after a bump before letting it go. Longer feels more locked in."
     },
     "adjustmentsFunctionHelpBouncebackPitch": {
         "message": "How strongly the pitch axis stops a fast manoeuvre bouncing back when you centre the stick. Higher means less bounce-back."
@@ -3532,10 +3532,10 @@
         "message": "Scales yaw P, I, D and F together, live, without changing the stored gains. 100% is the tune as configured."
     },
     "adjustmentsFunctionHelpItermDecayTimeYaw": {
-        "message": "How long the yaw axis holds a correction after a gust or bump before letting it go. Longer feels more locked in."
+        "message": "How long the yaw axis holds a correction after a bump or grip change before letting it go. Longer feels more locked in."
     },
     "adjustmentsFunctionHelpBouncebackYaw": {
-        "message": "How strongly the yaw axis stops a fast manoeuvre bouncing back when you centre the stick. Higher means less bounce-back."
+        "message": "How strongly the yaw axis stops the car bouncing back the other way after a fast steering input when you centre the stick. Higher means less bounce-back."
     },
     "adjustmentsFunctionHelpServoTrimYaw": {
         "message": "Trim in µs for servos on the yaw axis, added on top of the servo Center (never changing it). Mapped: follows the channel, is not saved and starts from zero after a reboot. Stepped: each press of the switch moves the trim one step, holding it repeats; saved on disarm."
@@ -3592,7 +3592,7 @@
         "message": "Stability"
     },
     "adjustmentsGroupMasterGains": {
-        "message": "Flight Feel"
+        "message": "Driving Feel"
     },
     "adjustmentsGroupAccTrim": {
         "message": "Accelerometer Trim"
@@ -3982,7 +3982,7 @@
         "message": "Governor Yaw F-gain"
     },
     "servoHelp": {
-        "message": "Servo 101<ul><li>First check the servo directions. Check cyclic servos by giving some collective, for example. Reverse servos if needed.</li><li>Level the servo arms by enabling <i> Servo Override</i> and adjusting <i>Center</i>. The servo arm should be perpendicular to the main shaft in this position.</li><li>Adjust <i>Scale</i> so that servo angles are correct. Specify an angle of 30&deg; for a servo under <i>Servo Override</i>. The servo should now move to 30&deg;. If it's less, increase the <i>Scale</i> for that servo. If it's more, decrease it.</li><li>You can limit or extend the servo movement range by adjusting <i>Min</i> or <i>Max</i>. Do this only if there's a mechanical issue, like servo binding. Use the mixer to limit roll/pitch/collective.</li></ul>"
+        "message": "Servo 101<ul><li>First check the servo direction. Check the steering servo by moving the steering stick: the wheels should turn the same way. Reverse the servo if needed.</li><li>Centre the servo arm by enabling <i> Servo Override</i> and adjusting <i>Center</i>. The wheels should point straight ahead in this position.</li><li>Adjust <i>Scale</i> so that servo angles are correct. Specify an angle of 30&deg; for a servo under <i>Servo Override</i>. The servo should now move to 30&deg;. If it's less, increase the <i>Scale</i> for that servo. If it's more, decrease it.</li><li>You can limit or extend the servo movement range by adjusting <i>Min</i> or <i>Max</i>. Do this only if there's a mechanical issue, like servo or steering binding. Use the mixer to limit steering throw.</li></ul>"
     },
     "servoConfiguration": {
         "message": "Servo Configuration"
@@ -4006,7 +4006,7 @@
         "message": "Name"
     },
     "servoNameHelp": {
-        "message": "A short name for this servo, up to 8 characters, such as “L AIL” or “ELEV”. For reference only: the flight controller stores it but nothing in flight uses it."
+        "message": "A short name for this servo, up to 8 characters, such as “STEER” or “STEER R”. For reference only: the controller stores it but nothing uses it while driving."
     },
     "servoMid": {
         "message": "Center"
@@ -4081,7 +4081,7 @@
         "message": "Source"
     },
     "servoSourceHelp": {
-        "message": "Source of the servo signal. <b>Mixer</b>: servo is controlled by the flight controller mixer. <b>RX</b>: servo receives direct pass-through from the receiver channel."
+        "message": "Source of the servo signal. <b>Mixer</b>: servo is controlled by the controller mixer. <b>RX</b>: servo receives direct pass-through from the receiver channel."
     },
     "servoSpeed": {
         "message": "Speed [ms]"
@@ -4414,16 +4414,16 @@
         "message": "Motor #4"
     },
     "mixerOverrideTitle": {
-        "message": "Control Surface Override"
+        "message": "Steering Override"
     },
     "mixerOverrideHelp": {
-        "message": "Forces a fixed value into a stabilized axis (Roll/Pitch/Yaw) so you can measure the resulting control surface throw without touching the sticks. Only takes effect while disarmed. Use it together with Axis Throw above: enable an axis, command a known % (e.g. 100%), measure the surface with a protractor, then adjust that axis's throw until the measured angle matches what you want."
+        "message": "Forces a fixed value into a stabilized axis (Roll/Pitch/Yaw) so you can measure the resulting steering throw without touching the sticks. Only takes effect while disarmed. Use it together with Axis Throw above: enable an axis, command a known % (e.g. 100%), measure the steering angle at the wheels, then adjust that axis's throw until the measured angle matches what you want."
     },
     "mixerEnableOverrideLabel": {
-        "message": "<strong>Enable control surface override</strong>"
+        "message": "<strong>Enable steering override</strong>"
     },
     "mixerEnableOverrideText": {
-        "message": " <i>Control surface override</i> forces stabilized axes to a fixed value for setup purposes. Only active while disarmed -- override values are not saved, and will be reset after a reboot."
+        "message": " <i>Steering override</i> forces stabilized axes to a fixed value for setup purposes. Only active while disarmed -- override values are not saved, and will be reset after a reboot."
     },
     "mixerOverrideAxis": {
         "message": "Axis"
@@ -4435,31 +4435,34 @@
         "message": "Value (%)"
     },
     "mixerAxisGainTitle": {
-        "message": "Axis Throw"
+        "message": "Steering Throw"
     },
     "mixerAxisGainHelp": {
-        "message": "Scales every rule reading this stabilized axis by a single percentage -- raise or lower the combined throw of all surfaces assigned to an axis (e.g. two aileron servos) without re-balancing each rule's weight individually. 100% is the servo's normal travel. Pair this with Control Surface Override below to calibrate a target throw: enable the override, command a known %, measure the surface, and adjust this throw until the measured angle matches what you want."
-    },
-    "mixerAxisGainRoll": {
-        "message": "Roll"
-    },
-    "mixerAxisGainPitch": {
-        "message": "Pitch"
+        "message": "Scales every rule reading this stabilized axis by a single percentage -- raise or lower the combined throw of all outputs assigned to an axis (e.g. two steering servos) without re-balancing each rule's weight individually. 100% is the servo's normal travel. Pair this with Steering Override below to calibrate a target throw: enable the override, command a known %, measure the steering angle, and adjust this throw until the measured angle matches what you want."
     },
     "mixerAxisGainYaw": {
-        "message": "Yaw"
+        "message": "Steering"
     },
     "mixerAxisInvertTitle": {
-        "message": "Axis Invert"
+        "message": "Steering Invert"
     },
     "mixerAxisInvertHelp": {
-        "message": "Flips the direction of every rule reading that axis at once, handy when setting up a new model without editing each rule's Reverse checkbox individually."
+        "message": "Flips the direction of every rule reading the steering (stabilized yaw) at once: the stick and the gyro correction together. To reverse only the gyro, use Gyro Direction instead."
     },
     "mixerAxisInvertNormal": {
         "message": "Normal"
     },
     "mixerAxisInvertInverted": {
         "message": "Inverted"
+    },
+    "mixerGyroReverseTitle": {
+        "message": "Gyro Direction"
+    },
+    "mixerGyroReverseLabel": {
+        "message": "Reverse gyro (steering)"
+    },
+    "mixerGyroReverseHelp": {
+        "message": "If the steering corrects the wrong way when you turn the car by hand, switch this on. Don't use servo reverse for this — it also reverses your steering."
     },
     "mixerRulesTitle": {
         "message": "Mixer Rules"
@@ -4510,19 +4513,19 @@
         "message": "Servo"
     },
     "curveCategoryHelpMixer": {
-        "message": "Mixer curves reshape a mixer rule's input before it's weighted onto an output - useful for a non-linear throttle-to-motor response, asymmetric control surface deflection, and similar shaping. Assign one to a rule on the Mixer tab."
+        "message": "Mixer curves reshape a mixer rule's input before it's weighted onto an output - useful for a non-linear throttle-to-motor response, asymmetric steering throw, and similar shaping. Assign one to a rule on the Mixer tab."
     },
     "curveCategoryHelpGain": {
-        "message": "Gain curves scale a profile axis's Master Gain (Flight Feel on the Profiles tab) by stick deflection (0-100%, same in both directions) - useful for tapering stabilization gain in or out as the stick moves away from center. Assign one to Roll/Pitch/Yaw on the Profiles tab."
+        "message": "Gain curves scale a profile axis's Master Gain (Driving Feel on the Profiles tab) by stick deflection (0-100%, same in both directions) - useful for tapering stabilization gain in or out as the stick moves away from center. Assign one to Roll/Pitch/Yaw on the Profiles tab."
     },
     "curveCategoryHelpServo": {
-        "message": "Servo curves add a small corrective delta to a single servo's own output after mixing (and after geometry correction, if enabled) - use this to match the physical travel of two or more servos driving the same control surface (e.g. dual ailerons) so they don't fight each other at the extremes."
+        "message": "Servo curves add a small corrective delta to a single servo's own output after mixing (and after geometry correction, if enabled) - use this to match the physical travel of two or more servos driving the same steering (e.g. dual steering servos) so they don't fight each other at the extremes."
     },
     "curveExplainMixer": {
         "message": "X axis: this rule's input value.\nY axis: the value used in its place once weighted onto the output.\n\nBoth axes share the rule's own -1000..1000 scale. The default diagonal line passes the input straight through - reshape it for a non-linear response, e.g. more resolution near center or a dead zone."
     },
     "curveExplainGain": {
-        "message": "X axis: stick deflection, 0% (centered) to 100% (full throw) - the same curve applies in both directions.\nY axis: gain multiplier, 0-500%. 100% = no change.\n\nFinal gain = Master Gain (set per axis in Flight Feel on the Profiles tab) x this curve's value at the current stick position. A flat line at 100% has no effect - drag a point below 100 to soften gain there, above 100 to sharpen it."
+        "message": "X axis: stick deflection, 0% (centered) to 100% (full throw) - the same curve applies in both directions.\nY axis: gain multiplier, 0-500%. 100% = no change.\n\nFinal gain = Master Gain (set per axis in Driving Feel on the Profiles tab) x this curve's value at the current stick position. A flat line at 100% has no effect - drag a point below 100 to soften gain there, above 100 to sharpen it."
     },
     "curveExplainServo": {
         "message": "X axis: this servo's own output, -100% to +100%.\nY axis: a correction added on top of it at that point, -10% to +10%.\n\nThe default flat line at 0 adds no correction. Nudge it up or down to trim one servo's travel relative to its paired servo, especially near full deflection."
@@ -4758,23 +4761,59 @@
     "mixerChangeModelType": {
         "message": "Change Model Type"
     },
-    "mixerModelTypeRegularAirplane": {
-        "message": "Regular Airplane"
-    },
-    "mixerModelTypeFlyingWing": {
-        "message": "Flying Wing"
-    },
-    "mixerModelTypeVTailAirplane": {
-        "message": "V-Tail Airplane"
-    },
-    "mixerModelTypeDeltaWing": {
-        "message": "Delta Wing"
-    },
-    "mixerModelTypeRudderElevatorTrainer": {
-        "message": "Rudder/Elevator Trainer"
-    },
     "mixerModelTypeCustom": {
         "message": "Custom"
+    },
+    "mixerModelTypeCar": {
+        "message": "Car"
+    },
+    "mixerCarAlwaysTitle": {
+        "message": "Always"
+    },
+    "mixerCarSteering": {
+        "message": "Steering servo (front wheels), on the steering stick"
+    },
+    "mixerCarEsc": {
+        "message": "ESC (reversible: forward, brake and reverse)"
+    },
+    "mixerCarDirectionHint": {
+        "message": "If the wheels steer or drive the wrong way, reverse the servo on the Servos tab or the motor direction in the ESC. The mix stays as it is."
+    },
+    "mixerCarRearSteering": {
+        "message": "Rear steering (4-wheel steering)"
+    },
+    "mixerCarRearOpposite": {
+        "message": "Opposite to the front wheels: tighter turns"
+    },
+    "mixerCarRearSame": {
+        "message": "Same direction as the front wheels: crab steering"
+    },
+    "mixerCarRearAmount": {
+        "message": "Amount"
+    },
+    "mixerCarRearHint": {
+        "message": "How far the rear wheels turn compared with the front ones."
+    },
+    "mixerCarSecondEsc": {
+        "message": "Second ESC (dual motor, or front and rear motors)"
+    },
+    "mixerCarSecondEscHint": {
+        "message": "Gets the same throttle as M1, forward, brake and reverse."
+    },
+    "mixerCarSummaryBase": {
+        "message": "Steering on S1, ESC on M1"
+    },
+    "mixerCarSummaryRearOpposite": {
+        "message": "Rear steering on S2, $1% opposite to the front"
+    },
+    "mixerCarSummaryRearSame": {
+        "message": "Rear steering on S2, $1% in the same direction as the front"
+    },
+    "mixerCarSummarySecondEsc": {
+        "message": "Second ESC on M2"
+    },
+    "mixerCarSummaryEdited": {
+        "message": "The rules have been changed by hand and no longer match a car setup. Edit Configuration rebuilds them."
     },
     "mixerEditConfiguration": {
         "message": "Edit Configuration"
@@ -4783,7 +4822,7 @@
         "message": "Edit Mixer Configuration"
     },
     "mixerChannelSummaryEmpty": {
-        "message": "No mixer rules generated yet for this model type. Use Edit Configuration to generate a starting mix."
+        "message": "No mixer rules yet. Use Edit Configuration to set up the car."
     },
     "mixerChannelSummaryOutput": {
         "message": "Output"
@@ -4816,76 +4855,7 @@
         "message": "Overwrites earlier rule(s) for this output - did you mean Add?"
     },
     "mixerWizardTitle": {
-        "message": "Mixer Setup Wizard"
-    },
-    "mixerWizardLayoutTitle": {
-        "message": "Wing / Tail Layout"
-    },
-    "mixerWizardLayoutConventional": {
-        "message": "Conventional (separate ailerons and tail)"
-    },
-    "mixerWizardLayoutFlyingWing": {
-        "message": "Flying Wing (elevons, no separate tail)"
-    },
-    "mixerWizardAileronsTitle": {
-        "message": "Ailerons"
-    },
-    "mixerWizardAileronsNone": {
-        "message": "None (e.g. rudder and dihedral glider)"
-    },
-    "mixerWizardAileronsSingle": {
-        "message": "Single servo (shared Y-cable channel)"
-    },
-    "mixerWizardAileronsIndependent": {
-        "message": "Independent left and right servos"
-    },
-    "mixerWizardTailTitle": {
-        "message": "Tail Control"
-    },
-    "mixerWizardTailElevatorOnly": {
-        "message": "Elevator only (no rudder)"
-    },
-    "mixerWizardTailElevatorRudder": {
-        "message": "Elevator and Rudder (conventional or T-tail)"
-    },
-    "mixerWizardTailVTail": {
-        "message": "V-Tail (2 servos, combined pitch and yaw)"
-    },
-    "mixerWizardWingYawTitle": {
-        "message": "Yaw Control"
-    },
-    "mixerWizardWingYawNone": {
-        "message": "None"
-    },
-    "mixerWizardWingYawRudder": {
-        "message": "Rudder (single fin servo)"
-    },
-    "mixerWizardFlapsTitle": {
-        "message": "Flaps"
-    },
-    "mixerWizardFlapsEnable": {
-        "message": "Add flaps (driven by an aux channel)"
-    },
-    "mixerWizardFlapServos1": {
-        "message": "1 servo (shared Y-cable channel)"
-    },
-    "mixerWizardFlapServos2": {
-        "message": "2 independent servos"
-    },
-    "mixerWizardFlapsFollowAilerons": {
-        "message": "Flaps also move with the ailerons (4-servo wing)"
-    },
-    "mixerWizardFlapsElrsWarning": {
-        "message": "Flaps are driven by channel 5 (AUX1). With ExpressLRS, set the switch mode to <b>Full Res 16ch Rate/2</b>: in the other modes channel 5 is only a two-position arm switch, and the flaps can't be set in between."
-    },
-    "mixerWizardFlaperons": {
-        "message": "No flap servos -- the ailerons droop as flaps (flaperons)"
-    },
-    "mixerWizardFlapsCompensationHint": {
-        "message": "Also adds a Flap Compensation rule onto the elevator/pitch surface(s), starting at zero weight -- flaps often cause a pitching moment as they deploy, tune this in the rule table once you see how yours behaves."
-    },
-    "mixerWizardFlapsChannelHint": {
-        "message": "Set the flap channel on your radio so flaps up is at centre (0) and full flap is +100."
+        "message": "Start From the Car Setup"
     },
     "mixerWizardServoOutputs": {
         "message": "Servo outputs"
@@ -4897,28 +4867,10 @@
         "message": "$1 needed, $2 available"
     },
     "mixerWizardNotEnoughServos": {
-        "message": "This setup needs $1 servo outputs, but this flight controller only has $2, so the surfaces on servo $3 won't move. Assign more servo outputs on the Remap FC tab, or use fewer servos: one flap servo on a Y-cable, flaperons instead of flap servos, or a single aileron servo."
-    },
-    "mixerWizardMotorsTitle": {
-        "message": "Motors"
-    },
-    "mixerWizardMotors0": {
-        "message": "0 (pure glider)"
-    },
-    "mixerWizardMotors1": {
-        "message": "1"
-    },
-    "mixerWizardMotors2": {
-        "message": "2"
-    },
-    "mixerWizardDiffThrust": {
-        "message": "Use differential thrust for yaw"
-    },
-    "mixerWizardDiffThrustHint": {
-        "message": "Adds extra yaw authority by speeding up one motor and slowing the other, on top of normal throttle."
+        "message": "This setup needs $1 servo outputs, but this controller only has $2, so the servo on output $3 won't move. Assign more servo outputs on the Remap FC tab, or turn rear steering off."
     },
     "mixerWizardOverwriteWarning": {
-        "message": "Applying the wizard replaces all current mixer rules."
+        "message": "Applying replaces all current mixer rules."
     },
     "mixerWizardCancel": {
         "message": "Cancel"
@@ -5170,10 +5122,10 @@
         "message": "Detect Wiring"
     },
     "motorsEscWiringDetectHelp": {
-        "message": "<p>Tries every combination of Half-Duplex / Pin Swap for the selected telemetry protocol and stops as soon as one produces a valid frame. Nothing is saved until you press Save on this tab.</p><p><strong>Note:</strong> requires no unsaved changes first - it tests whatever protocol is currently saved on the flight controller, not a pending selection.</p><p>The ESC(s) must be powered and outputting telemetry - detection can't find a wiring combination if nothing is being sent in the first place.</p><p>Only available while disarmed - it cycles the ESC telemetry wiring live while motors could be spinning.</p>"
+        "message": "<p>Tries every combination of Half-Duplex / Pin Swap for the selected telemetry protocol and stops as soon as one produces a valid frame. Nothing is saved until you press Save on this tab.</p><p><strong>Note:</strong> requires no unsaved changes first - it tests whatever protocol is currently saved on the controller, not a pending selection.</p><p>The ESC(s) must be powered and outputting telemetry - detection can't find a wiring combination if nothing is being sent in the first place.</p><p>Only available while disarmed - it cycles the ESC telemetry wiring live while motors could be spinning.</p>"
     },
     "motorsEscWiringDetectSaveFirst": {
-        "message": "Save your changes first - this tests whatever is currently saved on the flight controller, not a pending selection."
+        "message": "Save your changes first - this tests whatever is currently saved on the controller, not a pending selection."
     },
     "motorsEscWiringDetectArmedFirst": {
         "message": "Disarm first - wiring detection cycles the ESC telemetry connection live and can't run while armed."
@@ -5197,7 +5149,7 @@
         "message": "No valid frame found on any wiring combination for this protocol. Make sure the ESC(s) are powered and outputting telemetry, check the protocol selection and connections, then try again."
     },
     "motorsEscWiringDetectRejected": {
-        "message": "Wiring detection was rejected - either it isn't available for this telemetry protocol (Castle Link, F.BUS and SRXL2 ESC telemetry each use their own dedicated connection, not a generic UART), no port is assigned, or the aircraft became armed."
+        "message": "Wiring detection was rejected - either it isn't available for this telemetry protocol (Castle Link, F.BUS and SRXL2 ESC telemetry each use their own dedicated connection, not a generic UART), no port is assigned, or the car became armed."
     },
     "motorsEscWiringDetectUnsupported": {
         "message": "Wiring detection is not supported by this firmware build."
@@ -5251,7 +5203,7 @@
         "message": "Throttle Range"
     },
     "motorsThrottleEndpointsWarning": {
-        "message": "Incorrectly configuring the throttle range parameters can cause the motor to run even when the throttle is off and the flight controller is disarmed."
+        "message": "Incorrectly configuring the throttle range parameters can cause the motor to run even when the throttle is at neutral and the controller is disarmed."
     },
     "motorsThrottleEndpointRealtime": {
         "message": "Live Update"
@@ -5488,10 +5440,10 @@
         "message": "Automatically loaded previous log file: <strong>$1</strong>"
     },
     "blackboxNotSupported": {
-        "message": "Your flight controller's firmware does not support Blackbox logging."
+        "message": "Your controller's firmware does not support Blackbox logging."
     },
     "blackboxMaybeSupported": {
-        "message": "Your flight controller's firmware is too old to support this tab, or the Blackbox feature is disabled on the Configuration tab."
+        "message": "Your controller's firmware is too old to support this tab, or the Blackbox feature is disabled on the Configuration tab."
     },
     "blackboxConfiguration": {
         "message": "Blackbox configuration"
@@ -5584,7 +5536,7 @@
         "message": "You can log to an external logging device (such as an OpenLager) by using a serial port. Configure the port on the Ports tab."
     },
     "sdcardNote": {
-        "message": "Flight logs can be recorded to your flight controller's onboard SD card slot."
+        "message": "Logs can be recorded to your controller's onboard SD card slot."
     },
     "dataflashUsedSpace": {
         "message": "Used space"
@@ -5599,10 +5551,10 @@
         "message": "Free space for logs"
     },
     "dataflashNote": {
-        "message": "Flight logs can be recorded to your flight controller's onboard dataflash chip."
+        "message": "Logs can be recorded to your controller's onboard dataflash chip."
     },
     "dataflashNotPresentNote": {
-        "message": "Your flight controller does not have a compatible dataflash chip available."
+        "message": "Your controller does not have a compatible dataflash chip available."
     },
     "dataflashFirmwareUpgradeRequired": {
         "message": "Dataflash requires firmware &gt;= 1.8.0."
@@ -5614,7 +5566,7 @@
         "message": "Directly saving flash to file is slow and inherently prone to error / file corruption.<br>In some cases it will work for small files, but this is not supported and support requests for it will be closed without comment - use Mass Storage mode instead."
     },
     "dataflashSaveFileDepreciationHint": {
-        "message": "This method is slow, because the MSP connection itself has fundamental limitations for file transfer. The recommended method is to use '<b>$t(blackboxRebootMscText.message)</b>' (below) to activate the Mass Storage Mode, and access your flight controller as a storage device to download the log files."
+        "message": "This method is slow, because the MSP connection itself has fundamental limitations for file transfer. The recommended method is to use '<b>$t(blackboxRebootMscText.message)</b>' (below) to activate the Mass Storage Mode, and access your controller as a storage device to download the log files."
     },
     "dataflashButtonErase": {
         "message": "Erase"
@@ -5773,7 +5725,7 @@
         "message": "Back Up Configuration"
     },
     "firmwareFlasherWizardConnecting": {
-        "message": "Connecting to flight controller..."
+        "message": "Connecting to controller..."
     },
     "firmwareFlasherWizardBackupRunning": {
         "message": "Running {{command}}..."
@@ -5788,7 +5740,7 @@
         "message": "Saved"
     },
     "firmwareFlasherWizardBackupFailed": {
-        "message": "Could not connect to the flight controller to run the backup."
+        "message": "Could not connect to the controller to run the backup."
     },
     "firmwareFlasherWizardSaveBackupFile": {
         "message": "Save Backup File..."
@@ -5815,13 +5767,13 @@
         "message": "Configuration has not been restored"
     },
     "firmwareFlasherRestoreExitUnsaved": {
-        "message": "Your previous settings have not been restored to the flight controller. Leaving will discard the backup held in this page. Restore them now or save a backup file before leaving."
+        "message": "Your previous settings have not been restored to the controller. Leaving will discard the backup held in this page. Restore them now or save a backup file before leaving."
     },
     "firmwareFlasherRestoreExitSaved": {
-        "message": "Your previous settings have not been restored to the flight controller. You have saved a backup file, so you can restore them later. Leave without restoring?"
+        "message": "Your previous settings have not been restored to the controller. You have saved a backup file, so you can restore them later. Leave without restoring?"
     },
     "firmwareFlasherRestoreExitSaveFailed": {
-        "message": "The backup was not saved. Stay here to retry or restore it to the flight controller."
+        "message": "The backup was not saved. Stay here to retry or restore it to the controller."
     },
     "firmwareFlasherRestoreExitStay": {
         "message": "Stay on this page"
@@ -6140,7 +6092,7 @@
         "message": "Detected: <strong>$1</strong> - triggering flash on connect"
     },
     "unstableFirmwareAcknoledgementDialog": {
-        "message": "You are about to flash a <strong>development build of the firmware</strong>. These builds are a work-in-progress, and any of the following can be the case:<strong><ul><li>the firmware does not work at all;</li><li>the firmware is not flyable;</li><li>there are safety issues with the firmware, for example flyaways</li><li>the firmware can cause the flight controller to become unresponsive, or damaged</li></ul></strong>If you proceed with flashing this firmware, <strong>you are assuming full responsibility for the risk of any of the above happening</strong>. Furthermore you acknowledge that it is necessary to perform <strong>thorough bench tests with rotor blades removed</strong> before any attempts to fly this firmware."
+        "message": "You are about to flash a <strong>development build of the firmware</strong>. These builds are a work-in-progress, and any of the following can be the case:<strong><ul><li>the firmware does not work at all;</li><li>the firmware is not drivable;</li><li>there are safety issues with the firmware, for example runaways</li><li>the firmware can cause the controller to become unresponsive, or damaged</li></ul></strong>If you proceed with flashing this firmware, <strong>you are assuming full responsibility for the risk of any of the above happening</strong>. Furthermore you acknowledge that it is necessary to perform <strong>thorough bench tests with the wheels off the ground</strong> before any attempts to drive with this firmware."
     },
     "unstableFirmwareAcknoledgementAcknowledge": {
         "message": "I have read the above and <strong>I assume full responsibility</strong> for flashing unstable firmware"
@@ -6227,7 +6179,7 @@
         "message": "Acknowledge"
     },
     "ledStripHelp": {
-        "message": "The flight controller can control colors and effects of individual LEDs on a strip.<br />Configure LEDs on the grid, configure wiring order then attach LEDs on your aircraft according to grid positions. LEDs without wire ordering number will not be saved.<br />Double-click on a color to edit the HSV values."
+        "message": "The controller can control colors and effects of individual LEDs on a strip.<br />Configure LEDs on the grid, configure wiring order then attach LEDs on your car according to grid positions. LEDs without wire ordering number will not be saved.<br />Double-click on a color to edit the HSV values."
     },
     "ledStripColorSetupTitle": {
         "message": "Color setup",
@@ -6619,19 +6571,19 @@
         "message": "Throttle: scales Yaw P, D, F and B with throttle: set a percentage, and optionally a curve (evaluated on throttle, 0-100%). 100% with no curve means no change. Throttle and GPS Speed together never go below 25%, and GYRO OFF mode is not affected."
     },
     "profilesFwSpaHelp": {
-        "message": "GPS Speed: scales Roll, Pitch and Yaw P, D, F and B with GPS speed, on top of Throttle. Surfaces get more effective as speed rises, so this is used to reduce gain when fast, for example in a dive with the throttle closed. Set a percentage and a curve (evaluated on GPS speed, 0 to the speed at the curve's right edge, set in Gain Curves). It needs a GPS with a fix and does nothing without a curve. If the fix is lost it holds for 3 s, then eases back to 100%. GPS speed is not airspeed: wind shifts it."
+        "message": "GPS Speed: scales Yaw P, D, F and B with GPS speed, on top of Throttle. Steering gets more effective as speed rises, so this is used to reduce gain when fast, for example on a long straight. Set a percentage and a curve (evaluated on GPS speed, 0 to the speed at the curve's right edge, set in Gain Curves). It needs a GPS with a fix and does nothing without a curve. If the fix is lost it holds for 3 s, then eases back to 100%."
     },
     "profilesFwSpaCurveTooltip": {
-        "message": "GPS Speed: the curve shapes the Speed gain by GPS speed. Left: the speed at the curve's right edge (10-600 km/h); faster than that uses the curve's last point. Right: the curve, edited on the Curves tab. \"-\" turns GPS Speed off, so its Flight Feel percentage has no effect. Needs a GPS with a fix."
+        "message": "GPS Speed: the curve shapes the Speed gain by GPS speed. Left: the speed at the curve's right edge (10-600 km/h); faster than that uses the curve's last point. Right: the curve, edited on the Curves tab. \"-\" turns GPS Speed off, so its Driving Feel percentage has no effect. Needs a GPS with a fix."
     },
     "profilesMasterGainGroup": {
-        "message": "Flight Feel"
+        "message": "Driving Feel"
     },
     "profilesMasterGainColumn": {
         "message": "Master Gain [%]"
     },
     "profilesMasterGainHelp": {
-        "message": "How hard this axis pushes back against a disturbance. Scales the axis's P, I, D and FF together, live, so you can find the right overall gain (for example on an Adjustments knob) without editing each term. 100% is your tune as configured; it does not change the stored P/I/D/F values."
+        "message": "How hard the gyro corrects unwanted yaw. Raise it if the car twitches out of line on bumps or under power; lower it if the steering oscillates or wobbles at speed. Scales the axis's P, I, D and FF together, live (for example on an Adjustments knob). 100% is your tune as configured; it does not change the stored P/I/D/F values."
     },
     "profilesGainCurveColumn": {
         "message": "Curve"
@@ -6640,7 +6592,7 @@
         "message": "Gain Curves"
     },
     "profilesGainCurveHelp": {
-        "message": "Optionally shapes each axis's Master Gain with a curve from the Curves tab: by stick deflection on Roll, Pitch and Yaw (the same both ways), by throttle on the Throttle row, by GPS speed on the Speed row (0 to the speed curve range, in km/h). \"-\" means no curve, so Master Gain applies as set. Flight Feel shows a CURVE badge on any Master Gain a curve is shaping."
+        "message": "Optionally shapes each axis's Master Gain with a curve from the Curves tab: by stick deflection on Roll, Pitch and Yaw (the same both ways), by throttle on the Throttle row, by GPS speed on the Speed row (0 to the speed curve range, in km/h). \"-\" means no curve, so Master Gain applies as set. Driving Feel shows a CURVE badge on any Master Gain a curve is shaping."
     },
     "profilesGainCurveBadge": {
         "message": "CURVE"
@@ -6658,7 +6610,7 @@
         "message": "I-Term Decay [s]"
     },
     "profilesItermDecayTimeHelp": {
-        "message": "I-Term Decay: how long this axis holds on to a correction after a gust or bump before letting it go. Longer feels more locked in; shorter feels freer and suits 3D flying. Master Gain sets how hard the axis pushes back, I-Term Decay sets for how long. Default 0.60 s, range 0.01-1.00 s."
+        "message": "I-Term Decay: how long this axis holds on to a correction after a bump or grip change before letting it go. Longer feels more locked in; shorter feels freer and suits drifting. Master Gain sets how hard the axis pushes back, I-Term Decay sets for how long. Default 0.60 s, range 0.01-1.00 s."
     },
     "profilesItermDecayLimit": {
         "message": "I-Term Decay Max Rate [&deg;/s]"
@@ -6688,25 +6640,25 @@
         "message": "I-Term Relax"
     },
     "profilesBouncebackHelp": {
-        "message": "I-Term Relax, 1-10: how strongly this axis stops a fast roll, loop or snap from bouncing back when you centre the stick. Higher = more relax, so less bounce-back; lower keeps more hold through long, sustained rolls and loops. Default 5; most airframes end up between 5 and 9. If the model bounces back at the end of a manoeuvre, raise it a step at a time."
+        "message": "I-Term Relax, 1-10: how strongly this axis stops a fast steering input or slide from bouncing back when you centre the stick. Higher = more relax, so less bounce-back; lower keeps more hold through long, sustained turns. Default 5; most cars end up between 5 and 9. If the car kicks back the other way at the end of a turn, raise it a step at a time."
     },
     "profilesFlightFeelGuideTitle": {
         "message": "What these do"
     },
     "profilesFlightFeelGuideGain": {
-        "message": "How hard the model fights a gust. Raise it if the model wanders or feels soft; lower it if it wobbles or buzzes."
+        "message": "How hard the car fights unwanted yaw. Raise it if the car wanders or feels soft; lower it if the steering wobbles or buzzes."
     },
     "profilesFlightFeelGuideDecay": {
-        "message": "How long it holds its line after a gust. Longer feels more locked in; shorter feels freer and suits 3D."
+        "message": "How long it holds its line after a bump. Longer feels more locked in; shorter feels freer and suits drifting."
     },
     "profilesFlightFeelGuideRelax": {
-        "message": "How firmly it stops at the end of a roll or loop. Raise it if the model bounces back; lower it if long rolls lose rate."
+        "message": "How firmly it stops at the end of a fast turn or slide. Raise it if the car kicks back; lower it if long turns lose rate."
     },
     "profilesFlightFeelGuideThrottle": {
-        "message": "Changes Master Gain with throttle, usually to reduce it at high throttle where surfaces in prop wash gain authority."
+        "message": "Changes Master Gain with throttle, for example to reduce it at high throttle if the steering wobbles at speed."
     },
     "profilesFlightFeelGuideSpeed": {
-        "message": "Lowers gain as GPS speed rises, so a tune that is right at cruise does not wobble in a dive. This percentage does nothing on its own: assign a Speed curve and set its speed range in Gain Curves (Advanced). Needs a GPS with a fix."
+        "message": "Lowers gain as GPS speed rises, so a tune that is right at low speed does not wobble on a fast straight. This percentage does nothing on its own: assign a Speed curve and set its speed range in Gain Curves (Advanced). Needs a GPS with a fix."
     },
     "profilesItermRelaxLevelGroup": {
         "message": "I-Term Relax Level"
@@ -6715,7 +6667,7 @@
         "message": "Level for Yaw [°/s]"
     },
     "profilesItermRelaxLevelHelp": {
-        "message": "Stick movement, in °/s, at which I-term build-up is fully suppressed during a fast move. Lower values suppress more strongly. The main setting is I-Term Relax in the Flight Feel panel; leave level at the default (22) unless that is not enough."
+        "message": "Stick movement, in °/s, at which I-term build-up is fully suppressed during a fast move. Lower values suppress more strongly. The main setting is I-Term Relax in the Driving Feel panel; leave level at the default (22) unless that is not enough."
     },
     "profilesPidBandwidth": {
         "message": "PID Controller Bandwidth"
@@ -6907,7 +6859,7 @@
         "message": "Notch Q"
     },
     "gyroDynamicNotchQHelp": {
-        "message": "The Q factor adjusts how wide the dynamic notch filters are. A higher value makes it narrower and more selective, and a lower value makes it wider and broader. Values between 2.0 and 4.0 are recommended. A value lower than 2.0 will greatly increase filter delay and may degrade flight performance."
+        "message": "The Q factor adjusts how wide the dynamic notch filters are. A higher value makes it narrower and more selective, and a lower value makes it wider and broader. Values between 2.0 and 4.0 are recommended. A value lower than 2.0 will greatly increase filter delay and may degrade performance."
     },
     "gyroDynamicNotchMinHz": {
         "message": "Notch Minimum Frequency"
@@ -6919,7 +6871,7 @@
         "message": "Notch Maximum Frequency"
     },
     "gyroDynamicNotchMaxHzHelp": {
-        "message": "Set this to the highest incoming noise frequency that is needed to be filtered. Should be 10-20% higher than the max propeller/motor noise frequency, but no higher than 250Hz, if filter rate is 1k. If filter rate is 2k or higher, then 330-500 Hz can be used, especially for smaller aircraft (higher range means less precision and lower performance)."
+        "message": "Set this to the highest incoming noise frequency that is needed to be filtered. Should be 10-20% higher than the max motor noise frequency, but no higher than 250Hz, if filter rate is 1k. If filter rate is 2k or higher, then 330-500 Hz can be used, especially for smaller cars (higher range means less precision and lower performance)."
     },
     "gyroDTermLowpassFiltersGroup": {
         "message": "D Term Lowpass Filters"
@@ -6994,13 +6946,13 @@
         "message": "Minimum Frequency"
     },
     "gyroRpmFilterMinFreqHelp": {
-        "message": "Set slightly below the frequency of the main rotor at the lowest flying RPM."
+        "message": "Set slightly below the motor frequency at the lowest running RPM."
     },
     "gyroRpmFilterMinRPMGroup": {
         "message": "Minimum RPM"
     },
     "gyroRpmFilterMinRPMGroupHelp": {
-        "message": "Set slightly below the lowest flying RPM."
+        "message": "Set slightly below the lowest running RPM."
     },
     "gyroRpmFilterMainRotorMinRPM": {
         "message": "Main Rotor"
@@ -7018,7 +6970,7 @@
         "message": "RPM Filter Notches"
     },
     "gyroRpmFilterHelp": {
-        "message": "Every rotating part on an aircraft generates vibrations, which can significantly affect the performance of the flight control loops. The <i>RPM Filter</i> utilizes the motor's RPM signal and the model's gear ratios to precisely eliminate these vibrations from the gyro's output, enabling the control loops to operate on the true motion of the aircraft. This method introduces substantially less delay than traditional vibration filtering, enhancing overall flight performance."
+        "message": "Every rotating part on a car generates vibrations, which can significantly affect the performance of the control loops. The <i>RPM Filter</i> utilizes the motor's RPM signal and the car's gear ratios to precisely eliminate these vibrations from the gyro's output, enabling the control loops to operate on the true motion of the car. This method introduces substantially less delay than traditional vibration filtering, enhancing overall performance."
     },
     "gyroRpmFilterMotor1Group": {
         "message": "Motor 1"
@@ -7174,7 +7126,7 @@
         "message": "Delay for turning off the Motors during Failsafe [s]"
     },
     "failsafeOffDelayHelp": {
-        "message": "Time to stay in landing mode until the motors are turned off and the craft is disarmed"
+        "message": "Time to stay in the Stop stage until the motor is turned off and the car is disarmed"
     },
     "failsafeRecoveryDelayItem": {
         "message": "Failsafe Recovery Delay [s]"
@@ -7186,7 +7138,7 @@
         "message": "Procedure"
     },
     "failsafeProcedureItemSelect1": {
-        "message": "Land"
+        "message": "Stop"
     },
     "failsafeProcedureItemSelect2": {
         "message": "Drop"
@@ -7360,7 +7312,7 @@
         "message": "Smart Fuel Alert Level"
     },
     "powerSmartFuelAlertPercentHelp": {
-        "message": "<p>The charge, in percent, you want left in the pack when you land.</p><p>The Gripora radio suite scales its fuel gauge to this reserve: a full pack reads 100% and the reserve reads 0%, so the gauge shows only the charge you can still use. For example, with a 30% reserve, a pack at 65% shows 50% fuel.</p><p>The flight controller's own low fuel warning is off by default. To use it, enter <code>set use_cbat_alerts = ON</code> in the CLI.</p>"
+        "message": "<p>The charge, in percent, you want left in the pack at the end of a run.</p><p>The Gripora radio suite scales its fuel gauge to this reserve: a full pack reads 100% and the reserve reads 0%, so the gauge shows only the charge you can still use. For example, with a 30% reserve, a pack at 65% shows 50% fuel.</p><p>The controller's own low fuel warning is off by default. To use it, enter <code>set use_cbat_alerts = ON</code> in the CLI.</p>"
     },
     "powerBatteryMinimumCellVoltage": {
         "message": "Minimum Cell Voltage"
@@ -7612,25 +7564,25 @@
         "message": "Accelerometer"
     },
     "configurationAccHardwareHelp": {
-        "message": "Enables the Accelerometer. This is required for all stabilisation modes: Angle, Acro Trainer and Rescue."
+        "message": "Enables the Accelerometer. It is used for board orientation and level."
     },
     "configurationBaroHardware": {
         "message": "Barometer"
     },
     "configurationBaroHardwareHelp": {
-        "message": "Enables the Barometer (if available). Altitude is currently not used in Flight Control. It is informative only, available via the Telemetry."
+        "message": "Enables the Barometer (if available). Altitude is currently not used by the control loops. It is informative only, available via the Telemetry."
     },
     "configurationMagHardware": {
         "message": "Magnetometer"
     },
     "configurationMagHardwareHelp": {
-        "message": "Enables the Magnetometer (if available). Compass direction is currently not used in Flight Control. It is informative only, available via the Telemetry."
+        "message": "Enables the Magnetometer (if available). Compass direction is currently not used by the control loops. It is informative only, available via the Telemetry."
     },
     "configurationWiggleReady": {
-        "message": "Ready-to-arm surface wiggle"
+        "message": "Ready-to-arm steering wiggle"
     },
     "configurationWiggleReadyHelp": {
-        "message": "Moves the control surfaces briefly once the aircraft becomes ready to arm (normally right after gyro calibration finishes), as a visual confirmation. Disable if this is not wanted."
+        "message": "Moves the steering briefly once the car becomes ready to arm (normally right after gyro calibration finishes), as a visual confirmation. Disable if this is not wanted."
     },
     "configurationPersonalization": {
         "message": "Personalization"
@@ -7720,7 +7672,7 @@
         "message": "Mass Storage Mode"
     },
     "blackboxMscNote": {
-        "message": "Reboot into <strong>mass storage device (MSC)</strong> mode. Once activated, the onboard flash or SD card on your flight controller will be recognised as a storage device by your computer, and allow you to download your log files. Eject and power cycle your flight controller to leave mass storage device mode."
+        "message": "Reboot into <strong>mass storage device (MSC)</strong> mode. Once activated, the onboard flash or SD card on your controller will be recognised as a storage device by your computer, and allow you to download your log files. Eject and power cycle your controller to leave mass storage device mode."
     },
     "blackboxRebootMscText": {
         "message": "Activate Mass Storage Device Mode"
@@ -7768,7 +7720,7 @@
         "message": "BEEPER"
     },
     "modeHelp BEEPER": {
-        "message": "Sounds the buzzer on demand to help locate the aircraft."
+        "message": "Sounds the buzzer on demand to help locate the car."
     },
     "mode LEDLOW": {
         "message": "LEDLOW"
@@ -8090,15 +8042,15 @@
         "description": "Button to load backup from a file"
     },
     "backupWaitDialogTitleSavingDiffAll": {
-        "message": "Saving diff all from the flight controller",
+        "message": "Saving diff all from the controller",
         "description": "Title for the waiting dialog when saving diff all into a file"
     },
     "backupWaitDialogTitleSavingDumpAll": {
-        "message": "Saving dump all from the flight controller",
+        "message": "Saving dump all from the controller",
         "description": "Title for the waiting dialog when saving dump all into a file"
     },
     "backupWaitDialogTitleLoadBackup": {
-        "message": "Loading backup onto the flight controller",
+        "message": "Loading backup onto the controller",
         "description": "Title for the waiting dialog when loading dump all into a file"
     },
     "backupWaitDialogMessageErrorSavingBackup": {
@@ -8169,7 +8121,7 @@
         "description": "Warning message that shows up at the top of the presets tab"
     },
     "presets_sources_dialog_warning": {
-        "message": "<span class=\"message-negative\">WARNING!</span> Using third party preset sources could be dangerous.<br/>Make sure you add and use only trusted sources. Malicious or bad preset sources can break your aircraft configuration and potentially harm your devices.",
+        "message": "<span class=\"message-negative\">WARNING!</span> Using third party preset sources could be dangerous.<br/>Make sure you add and use only trusted sources. Malicious or bad preset sources can break your car configuration and potentially harm your devices.",
         "description": "Warning message that shows up at the top of the preset sources dialog"
     },
     "presetsWarningWrongVersionConfirmation": {
@@ -8224,7 +8176,7 @@
         "message": "What this does"
     },
     "remapFcIntroDescription": {
-        "message": "Remap FC lets you change servos, motors, and other functions that can connect to your flight controller. Add another motor, extra Aileron servo, Flaps or onboard glow system -- all without touching a soldering iron."
+        "message": "Remap FC lets you change servos, motors, and other functions that can connect to your controller. Add another motor, an extra servo or an onboard glow system -- all without touching a soldering iron."
     },
     "remapFcRunning": {
         "message": "Reading FC"
@@ -8239,10 +8191,10 @@
         "message": "Error reading FC"
     },
     "remapFcSaveNoReboot": {
-        "message": "Flight controller did not reboot after Save -- the change may not have been applied. Check the connection and try again."
+        "message": "Controller did not reboot after Save -- the change may not have been applied. Check the connection and try again."
     },
     "remapFcCliEntryTimeout": {
-        "message": "Flight controller did not respond to enter CLI mode. Check the connection and try again."
+        "message": "Controller did not respond to enter CLI mode. Check the connection and try again."
     },
     "remapFcTableOption": {
         "message": "FC Label"
@@ -8317,19 +8269,19 @@
         "message": "Connect your tail motor's ESC to this port -- for a motorised (direct-drive) tail."
     },
     "remapFcPurposeS1": {
-        "message": "Servo 1. Commonly this is the left side Aileron servo."
+        "message": "Servo 1. This is the Steering servo."
     },
     "remapFcPurposeS2": {
-        "message": "Servo 2. Commonly this is the right side Aileron servo."
+        "message": "Servo 2. Spare; set up what drives it using Custom Mixer Rules on the Mixer tab."
     },
     "remapFcPurposeS3": {
-        "message": "Servo 3. Commonly this is the Elevator servo."
+        "message": "Servo 3. Spare; set up what drives it using Custom Mixer Rules on the Mixer tab."
     },
     "remapFcPurposeS4": {
-        "message": "Commonly this is used for the Rudder servo."
+        "message": "Spare; set up what drives it using Custom Mixer Rules on the Mixer tab."
     },
     "remapFcPurposeServoExtra": {
-        "message": "Extra servos can be used for functions such as landing gear, or other PWM devices such as remote glow and battery backups. Set up the channel you wish to control it from using Custom Mixer Rules on the Mixer tab."
+        "message": "Extra servos can be used for other functions, or other PWM devices such as remote glow and battery backups. Set up the channel you wish to control it from using Custom Mixer Rules on the Mixer tab."
     },
     "remapFcLoadChangesBlocked": {
         "message": "Resolve the pin conflict below before sending changes"
@@ -8362,7 +8314,7 @@
         "message": "Gap in motor/servo numbering"
     },
     "remapFcSequenceGapWarning": {
-        "message": "Nothing is assigned to {{missing}}, which strands {{stranded}}. The flight controller stops at the first unassigned output rather than skipping it, so {{stranded}} would be silently dropped - and a dropped output still reports its centre value, so mixer rules using it look correct while doing nothing. Assign {{missing}}, or move the higher outputs down to close the gap."
+        "message": "Nothing is assigned to {{missing}}, which strands {{stranded}}. The controller stops at the first unassigned output rather than skipping it, so {{stranded}} would be silently dropped - and a dropped output still reports its centre value, so mixer rules using it look correct while doing nothing. Assign {{missing}}, or move the higher outputs down to close the gap."
     },
     "remapFcMuxHeading": {
         "message": "FBUS mux"
@@ -8383,7 +8335,7 @@
         "message": "DShot (bidirectional)"
     },
     "remapFcMuxModeInUse": {
-        "message": "The flight controller runs this output as {{mode}} at the moment, because the selected mode's requirements were not met when it started."
+        "message": "The controller runs this output as {{mode}} at the moment, because the selected mode's requirements were not met when it started."
     },
     "remapFcMuxIssue_fbusNeedsMasterPort": {
         "message": "FBUS needs a serial port set to F.BUS on the Ports tab. Without one, this output stays on PWM."
@@ -8467,7 +8419,7 @@
         "message": "Receiver"
     },
     "setupWizardReceiverIntro": {
-        "message": "Tell the flight controller where the receiver is plugged in and how it talks, then check every stick reaches it the right way round. Turn the radio on."
+        "message": "Tell the controller where the receiver is plugged in and how it talks, then check every stick reaches it the right way round. Turn the radio on."
     },
     "setupWizardReceiverPortTitle": {
         "message": "Port the receiver is plugged into"
@@ -8542,7 +8494,7 @@
         "message": "Move pitch (elevator)"
     },
     "setupWizardReceiverDetect_yaw": {
-        "message": "Move yaw (rudder)"
+        "message": "Move steering (yaw)"
     },
     "setupWizardReceiverDetect_throttle": {
         "message": "Move throttle"
@@ -8557,7 +8509,7 @@
         "message": "Put both sticks in the bottom-left corner"
     },
     "setupWizardReceiverCheckText": {
-        "message": "Throttle and elevator down, aileron and rudder left. Every bar below should go to the left."
+        "message": "Throttle and pitch down, roll and steering left. Every bar below should go to the left."
     },
     "setupWizardReceiverChannel": {
         "message": "Ch $1"
@@ -8575,7 +8527,7 @@
         "message": "Open the Receiver tab"
     },
     "setupWizardTrimGainIntro": {
-        "message": "Two things you'll want in the air on the first flights: a way to trim, and a knob to turn the stabilizer gain up or down."
+        "message": "Two things you'll want on the first runs: a way to trim the steering, and a knob to turn the stabilizer gain up or down."
     },
     "setupWizardTrimGainFull": {
         "message": "Every adjustment slot is in use. Free one on the Adjustments tab."
@@ -8620,16 +8572,16 @@
         "message": "Trim buttons on one channel"
     },
     "setupWizardTrimRadioHelp_buttons": {
-        "message": "All the trim buttons on one spare channel. The flight controller keeps the trim and saves it when you disarm."
+        "message": "All the trim buttons on one spare channel. The controller keeps the trim and saves it when you disarm."
     },
     "setupWizardTrimButtonsIntro": {
-        "message": "Each trim button puts its own value on one spare channel. A press moves the flight controller's trim by $1 µs; hold the button to repeat. The steps below use Ethos as the example; on other radios (EdgeTX, OpenTX, Jeti and so on) set up the same mix and weights, with each trim button as the switch for its mix line."
+        "message": "Each trim button puts its own value on one spare channel. A press moves the controller's trim by $1 µs; hold the button to repeat. The steps below use Ethos as the example; on other radios (EdgeTX, OpenTX, Jeti and so on) set up the same mix and weights, with each trim button as the switch for its mix line."
     },
     "setupWizardTrimButtonsStep1": {
-        "message": "<b>Model → Trims</b>: leave the aileron, elevator and rudder trims enabled, with <b>Audio</b> on so each press clicks."
+        "message": "<b>Model → Trims</b>: leave the steering (rudder) trim enabled, with <b>Audio</b> on so each press clicks."
     },
     "setupWizardTrimButtonsStep2": {
-        "message": "<b>Model → Mixes</b>: in the Ailerons, Elevator and Rudder mixes, turn <b>Trim</b> OFF. The trim buttons then only drive the TRIM mix below. A trim left on a stick is read as a small stick input, which the stabilizer holds against."
+        "message": "<b>Model → Mixes</b>: in the steering (Rudder) mix, turn <b>Trim</b> OFF. The trim buttons then only drive the TRIM mix below. A trim left on a stick is read as a small stick input, which the stabilizer holds against."
     },
     "setupWizardTrimButtonsStep3": {
         "message": "Add a <b>Free mix</b> named TRIM: <b>Active condition</b> Always on, <b>Source</b> Maximum, <b>Operation</b> Add, <b>Output</b> a spare channel (CH8 here). Then <b>Add a new action</b> for each trim button, with these weights:"
@@ -8638,7 +8590,7 @@
         "message": "Click Detect and press any trim button."
     },
     "setupWizardTrimButtonsLayout": {
-        "message": "T1, T2 and T4 are the aileron, elevator and rudder trims on this radio. If yours differ, use your own aileron, elevator and rudder trims with the weights shown."
+        "message": "T4 is the steering (rudder) trim on this radio. If yours differs, use your own steering trim with the weights shown. Only steering trim matters on a car."
     },
     "setupWizardTrimButtonsButton": {
         "message": "Trim button"
@@ -8653,7 +8605,7 @@
         "message": "Ethos Trims page: Trim Rudder with Audio on"
     },
     "setupWizardTrimButtonsImage2": {
-        "message": "Ethos Ailerons mix with Trim off"
+        "message": "Ethos Rudder mix with Trim off"
     },
     "setupWizardTrimButtonsImage3": {
         "message": "Ethos TRIM free mix: source Maximum, operation Add, an action per trim button, output CH8"
@@ -8680,19 +8632,19 @@
         "message": "No trim channels: trim with the Auto trim switch. For radios that can't send their trims."
     },
     "setupWizardTrimProgrammable": {
-        "message": "The flight controller needs one spare channel for each trim, moved by the aileron, elevator and rudder trim buttons. The radio keeps the trim. The steps below use Ethos as the example; on other radios (EdgeTX, OpenTX, Jeti and so on) set up the same mixes, with each trim as the source of its own channel."
+        "message": "The controller needs one spare channel for the steering trim, moved by the steering (rudder) trim buttons. The radio keeps the trim. The steps below use Ethos as the example; on other radios (EdgeTX, OpenTX, Jeti and so on) set up the same mix, with the trim as the source of its own channel."
     },
     "setupWizardTrimChannelsStep1": {
-        "message": "<b>Model → Trims</b>: for the aileron, elevator and rudder trims set <b>Step</b> to Coarse, so each press moves the trim noticeably. Leave <b>Range</b> at 25%."
+        "message": "<b>Model → Trims</b>: for the steering (rudder) trim set <b>Step</b> to Coarse, so each press moves the trim noticeably. Leave <b>Range</b> at 25%."
     },
     "setupWizardTrimChannelsStep2": {
-        "message": "<b>Model → Mixes</b>: in the Ailerons, Elevators and Rudders mixes, turn <b>Trim</b> OFF. The trims then only drive the trim channels below. A trim left on a stick is read as a small stick input, which the stabilizer holds against."
+        "message": "<b>Model → Mixes</b>: in the steering (Rudders) mix, turn <b>Trim</b> OFF. The trim then only drives the trim channel below. A trim left on a stick is read as a small stick input, which the stabilizer holds against."
     },
     "setupWizardTrimChannelsStep3": {
-        "message": "Add a <b>Free mix</b> named ROLL TRIM: <b>Active condition</b> Always on, <b>Source</b> Trims → Trim Aileron, <b>Operation</b> Add, <b>Weight</b> 100%, <b>Output</b> a spare channel (CH9 here)."
+        "message": "Add a <b>Free mix</b> named YAW TRIM: <b>Active condition</b> Always on, <b>Source</b> Trims → Trim Rudder, <b>Operation</b> Add, <b>Weight</b> 100%, <b>Output</b> a spare channel (CH9 here)."
     },
     "setupWizardTrimChannelsStep4": {
-        "message": "Add PITCH TRIM (source Trim Elevator) and YAW TRIM (source Trim Rudder) the same way, each on its own spare channel (CH10 and CH11 here)."
+        "message": "That is the only trim channel a car needs: no ROLL TRIM or PITCH TRIM mix is required."
     },
     "setupWizardTrimChannelsStep5": {
         "message": "Click Detect next to each trim below and press that trim."
@@ -8713,7 +8665,7 @@
         "message": "Press and hold the $1 trim…"
     },
     "setupWizardTrimAuto": {
-        "message": "Use Auto trim: you'll give it a switch on the next step. Fly straight and level with it on for a few seconds, then land and disarm to keep the trim."
+        "message": "Use Auto trim: you'll give it a switch on the next step. Drive straight with it on for a few seconds, then stop and disarm to keep the trim."
     },
     "setupWizardTrimAutoEveryone": {
         "message": "Auto trim is on the next step for any radio, to make a trim permanent."
@@ -8785,13 +8737,13 @@
         "message": "On other radios (EdgeTX, OpenTX, Jeti and so on) do the same: one mix per control, with the control as its source and a spare channel as its output."
     },
     "setupWizardGainText": {
-        "message": "A knob or slider to turn the stabilizer up or down in flight: up if the model wanders, down if it wobbles. Fully down turns the stabilizer off, center is 75% and fully up is 150%."
+        "message": "A knob or slider to turn the stabilizer up or down while driving: up if the car wanders, down if it wobbles. Fully down turns the stabilizer off, center is 75% and fully up is 150%."
     },
     "setupWizardGainMode_single": {
         "message": "One knob"
     },
     "setupWizardGainModeHelp_single": {
-        "message": "Roll, pitch and yaw together. Simplest for first flights."
+        "message": "One gain for every axis. Simplest for first runs."
     },
     "setupWizardGainMode_separate": {
         "message": "One per axis"
@@ -8803,7 +8755,7 @@
         "message": "None"
     },
     "setupWizardGainModeHelp_none": {
-        "message": "No in-flight gain adjustment."
+        "message": "No gain adjustment while driving."
     },
     "setupWizardGainAllAxes": {
         "message": "Roll, pitch and yaw"
@@ -8812,13 +8764,13 @@
         "message": "Turn the knob or slider…"
     },
     "setupWizardGainCentre": {
-        "message": "Fly the first flight with the knob at center (75%)."
+        "message": "Do the first run with the knob at center (75%)."
     },
     "setupWizardOpenAdjustments": {
         "message": "Open the Adjustments tab"
     },
     "setupWizardStep_airframe": {
-        "message": "Airframe"
+        "message": "Model"
     },
     "setupWizardStep_busOutput": {
         "message": "Servo bus"
@@ -8902,7 +8854,7 @@
         "message": "Nothing answered on any wiring. Check the bus has power and is plugged into this port."
     },
     "setupWizardBusDetect_rejected": {
-        "message": "The flight controller can't test the wiring now: the model is armed, or this board switches F.Bus through its output mux."
+        "message": "The controller can't test the wiring now: the car is armed, or this board switches F.Bus through its output mux."
     },
     "setupWizardBusOpenServos": {
         "message": "Open the Servos tab"
@@ -8911,25 +8863,28 @@
         "message": "Servo type"
     },
     "setupWizardStep_motor": {
-        "message": "Motor"
+        "message": "ESC"
     },
     "setupWizardStep_centre": {
         "message": "Center"
     },
     "setupWizardStep_direction": {
-        "message": "Direction"
+        "message": "Steering direction"
     },
     "setupWizardStep_limits": {
         "message": "Binding limits"
     },
-    "setupWizardStep_throws": {
-        "message": "Throws"
-    },
-    "setupWizardStep_travel": {
-        "message": "Travel check"
-    },
     "setupWizardStep_gyro": {
         "message": "Gyro direction"
+    },
+    "setupWizardTravelNeg": {
+        "message": "− side"
+    },
+    "setupWizardTravelPos": {
+        "message": "+ side"
+    },
+    "setupWizardTravelValue": {
+        "message": "$1% ($2 of $3 µs)"
     },
     "setupWizardStep_trimGain": {
         "message": "Trim and gain"
@@ -8938,7 +8893,7 @@
         "message": "Mode switches"
     },
     "setupWizardStep_style": {
-        "message": "Flying style"
+        "message": "Driving style"
     },
     "setupWizardStep_finish": {
         "message": "Finish"
@@ -8964,9 +8919,6 @@
     "setupWizardDone": {
         "message": "Done"
     },
-    "setupWizardYes": {
-        "message": "Yes"
-    },
     "setupWizardNo": {
         "message": "No"
     },
@@ -8974,13 +8926,13 @@
         "message": "Identify"
     },
     "setupWizardArmedWarning": {
-        "message": "The model is armed. The wizard can only move the surfaces while it is disarmed."
+        "message": "The car is armed. The wizard can only move the steering while it is disarmed."
     },
     "setupWizardNoServos": {
         "message": "No servos found. Check that the board has servo outputs, or that an SBUS or F.Bus output is set up."
     },
     "setupWizardServosPastCount": {
-        "message": "The mixer uses servo outputs $1, but this flight controller only has $2. Those surfaces won't move, and the wizard can't set them up. Assign more servo outputs on the Remap FC tab, or move those surfaces to servo outputs the board has."
+        "message": "The mixer uses servo outputs $1, but this controller only has $2. Those servos won't move, and the wizard can't set them up. Assign more servo outputs on the Remap FC tab, or move those servos to outputs the board has."
     },
     "setupWizardRebootNeeded": {
         "message": "These settings take effect after a reboot. Open the Setup Wizard again afterwards to carry on from the next step."
@@ -8998,7 +8950,7 @@
         "message": "Elevator"
     },
     "setupWizardSurface_rudder": {
-        "message": "Rudder"
+        "message": "Steering"
     },
     "setupWizardSurface_elevon": {
         "message": "Elevon"
@@ -9022,28 +8974,22 @@
         "message": "Yaw"
     },
     "setupWizardSensorsIntro": {
-        "message": "The flight controller needs to know how it is mounted and which way is level. Power on with the model still: the gyro calibrates itself at power-up."
+        "message": "The controller needs to know how it is mounted and which way is level. Power on with the car still: the gyro calibrates itself at power-up."
     },
     "setupWizardSensorsNoAcc": {
         "message": "No accelerometer found, so the board orientation and level can't be set here."
-    },
-    "setupWizardSensorsTailWheelQuestion": {
-        "message": "Does the model sit on a tail wheel or tail skid?"
-    },
-    "setupWizardSensorsTailWheelNote": {
-        "message": "Prop the tail up until the fuselage is level, as it is in flight, for the accelerometer calibration and the level step. Resting on its tail wheel the model is 10–15° nose-up, and ANGLE, Attitude Hold and failsafe would all level to that."
     },
     "setupWizardSensorsAccTitle": {
         "message": "Calibrate the accelerometer"
     },
     "setupWizardSensorsAccText": {
-        "message": "Hold the model level and still."
+        "message": "Hold the car level and still."
     },
     "setupWizardSensorsAlignTitle": {
         "message": "Find the board orientation"
     },
     "setupWizardSensorsAlignText": {
-        "message": "Place the model flat, press the button, then lift the tail by at least 20°."
+        "message": "Place the car flat, press the button, then lift the rear by at least 20°."
     },
     "setupWizardSensorsAlignValues": {
         "message": "Now: roll $1°, pitch $2°, yaw $3°"
@@ -9052,34 +8998,34 @@
         "message": "Set level"
     },
     "setupWizardSensorsLevelText": {
-        "message": "Hold the model in its flying attitude and keep it still while it measures."
+        "message": "Set the car on its wheels on a level surface and keep it still while it measures."
     },
     "setupWizardSensorsLevelValues": {
         "message": "Mounting trim now: roll $1°, pitch $2°"
     },
     "setupWizardAirframeIntro": {
-        "message": "Choose the model type and its options. This decides which servo drives which surface."
+        "message": "Choose Car for a car with steering and an ESC, with optional rear steering and a second ESC. Choose Custom to keep a mix built by hand on the Mixer tab."
     },
     "setupWizardAirframeCurrent": {
-        "message": "$1: ailerons, tail, flaps and motors are set in its options."
+        "message": "$1: steering on S1 and ESC on M1."
     },
     "setupWizardAirframeOptions": {
         "message": "Change options"
     },
     "setupWizardAirframeCustomNow": {
-        "message": "This model uses a custom mix from the Mixer tab. Choose a type above to replace it, or keep it and carry on."
+        "message": "This car uses a custom mix from the Mixer tab. Choose Car above to replace it, or keep it and carry on."
     },
     "setupWizardAirframeSurfaces": {
-        "message": "Control surfaces found:"
+        "message": "Outputs found:"
     },
     "setupWizardAirframeNoSurfaces": {
-        "message": "None yet. Choose a model type."
+        "message": "None yet. Choose Car."
     },
     "setupWizardAirframeCustomNote": {
-        "message": "The wizard sets up the servos driven by roll, pitch, yaw and the flap channel."
+        "message": "The wizard sets up the servos driven by steering (yaw) and the ESCs driven by throttle."
     },
     "setupWizardServoTypeIntro": {
-        "message": "What kind of servos drive the control surfaces?"
+        "message": "What kind of servo drives the steering?"
     },
     "setupWizardServoType_analog": {
         "message": "Analog"
@@ -9097,7 +9043,7 @@
         "message": "Applies to every servo on a PWM output."
     },
     "setupWizardMotorIntro": {
-        "message": "Choose how the flight controller talks to the ESC, then check the motor runs. ESC telemetry is the next step; throttle range and other settings are on the Motors tab."
+        "message": "Choose how the controller talks to the ESC, then check neutral and the motor direction. ESC telemetry is the next step; throttle range and other settings are on the Motors tab."
     },
     "setupWizardMotorProtocolTitle": {
         "message": "ESC protocol"
@@ -9106,7 +9052,7 @@
         "message": "Standard PWM"
     },
     "setupWizardMotorHelp_pwm": {
-        "message": "Works with any ESC. Calibrate, below, teaches the ESC the throttle range."
+        "message": "Works with any car ESC. The ESC learns neutral and the throttle range in its own calibration."
     },
     "setupWizardMotor_dshot150": {
         "message": "DShot150"
@@ -9124,7 +9070,7 @@
         "message": "No motor"
     },
     "setupWizardMotorHelp_none": {
-        "message": "Gliders, or a motor not driven by the flight controller."
+        "message": "No ESC driven by the controller."
     },
     "setupWizardMotorDshot150NoRpm": {
         "message": "DShot150 can't report motor RPM. For anything that needs motor RPM, use DShot300 with bidirectional DShot, or an RPM sensor or ESC telemetry."
@@ -9133,91 +9079,52 @@
         "message": "Other"
     },
     "setupWizardMotorTestTitle": {
-        "message": "Check the motor"
+        "message": "Check the direction"
     },
     "setupWizardMotorPropOff": {
-        "message": "The propeller is removed"
+        "message": "The car's wheels are off the ground"
     },
     "setupWizardMotorTestThrottle": {
         "message": "Throttle"
     },
-    "setupWizardMotorHoldToSpin": {
-        "message": "Hold to spin"
-    },
     "setupWizardMotorSpinning": {
-        "message": "Spinning (release to stop)"
+        "message": "Running (release to stop)"
     },
     "setupWizardMotorTestCheck": {
-        "message": "The motor runs only while you hold the button, and stops within a second if the connection drops. Check it starts smoothly and turns the right way for your propeller. If it turns the wrong way, swap any two of the three motor wires, or reverse it in the ESC's settings."
-    },
-    "setupWizardMotorCalTitle": {
-        "message": "Calibrate the ESC"
-    },
-    "setupWizardMotorCalBatteryOut": {
-        "message": "The battery is unplugged"
-    },
-    "setupWizardMotorCalFull": {
-        "message": "Set full throttle"
-    },
-    "setupWizardMotorCalRamping": {
-        "message": "Going to full throttle: $1 s"
-    },
-    "setupWizardMotorCalLow": {
-        "message": "Set zero throttle"
-    },
-    "setupWizardMotorCalCancel": {
-        "message": "Cancel"
-    },
-    "setupWizardMotorHoldMotor": {
-        "message": "Hold to spin motor $1"
+        "message": "The motor runs only while you hold a button, and stops within a second if the connection drops. Forward must turn the wheels forward and reverse backward (many ESCs brake first: let go and hold reverse again). If they turn the wrong way, reverse the motor direction in the ESC's settings, or swap the two wires of a brushed motor."
     },
     "setupWizardMotorTestCheckTwin": {
-        "message": "Each motor runs only while you hold its button, and stops within a second if the connection drops. Check which motor is which, that each starts smoothly, and that it turns the right way for its propeller."
+        "message": "Each motor runs only while you hold its button, and stops within a second if the connection drops. Check which ESC is which, and that forward turns its wheels forward and reverse backward (many ESCs brake first: let go and hold reverse again). If one turns the wrong way, reverse it in that ESC's settings."
+    },
+    "setupWizardMotorNeutralTitle": {
+        "message": "Check neutral"
+    },
+    "setupWizardMotorNeutralCentred": {
+        "message": "Centred"
+    },
+    "setupWizardMotorNeutralIntro": {
+        "message": "The controller sends neutral to the ESC as $1 µs. Calibrate the ESC with its neutral at $1 µs (follow the throttle calibration in its manual, with the throttle stick centred), or the car creeps or brakes with the stick at centre."
+    },
+    "setupWizardMotorNeutralStick": {
+        "message": "Throttle stick"
+    },
+    "setupWizardMotorNeutralReading": {
+        "message": "$1 µs (centre $2 µs)"
+    },
+    "setupWizardMotorNeutralNoSignal": {
+        "message": "No signal from the radio"
+    },
+    "setupWizardMotorNeutralCheck": {
+        "message": "With the throttle stick at centre the wheels must not turn. The car only arms with the throttle at neutral."
+    },
+    "setupWizardMotorHoldForward": {
+        "message": "Hold: forward"
+    },
+    "setupWizardMotorHoldReverse": {
+        "message": "Hold: reverse"
     },
     "setupWizardMotorPropHelp": {
-        "message": "Nothing below runs the motor until this is ticked."
-    },
-    "setupWizardMotorCalDone": {
-        "message": "Done"
-    },
-    "setupWizardMotorCalIntro": {
-        "message": "A PWM ESC has to learn where full and zero throttle are. Do this once. Skip it if the ESC is already calibrated to this flight controller."
-    },
-    "setupWizardMotorCalStage1": {
-        "message": "Unplug the battery"
-    },
-    "setupWizardMotorCalStage1Help": {
-        "message": "Start with the flight battery unplugged from the ESC."
-    },
-    "setupWizardMotorCalStage2": {
-        "message": "Set full throttle"
-    },
-    "setupWizardMotorCalStage2Help": {
-        "message": "The throttle output goes to full and stays there."
-    },
-    "setupWizardMotorCalFullSet": {
-        "message": "Full throttle is set."
-    },
-    "setupWizardMotorCalStage3": {
-        "message": "Plug in the battery"
-    },
-    "setupWizardMotorCalStage3Help": {
-        "message": "Wait for the ESC's beeps, usually about two seconds."
-    },
-    "setupWizardMotorCalStage4": {
-        "message": "Set zero throttle"
-    },
-    "setupWizardMotorCalStage4Help": {
-        "message": "The ESC beeps again to confirm."
-    },
-    "setupWizardMotorCalZeroSet": {
-        "message": "Zero throttle is set. If the ESC did not confirm, unplug the battery and calibrate again."
-    },
-    "setupWizardMotorCalCancelHelp": {
-        "message": "Cancel takes the throttle back to zero."
-    },
-    "setupWizardMotorCalAgain": {
-        "message": "Calibrate again"
+        "message": "Put the car on a stand. Nothing below runs the motor until this is ticked."
     },
     "setupWizardMotorSerialPortTitle": {
         "message": "Port the $1 ESC is plugged into"
@@ -9232,7 +9139,7 @@
         "message": "The wire goes on the port's TX pin. If the connector only has an RX pin, turn on Pin Swap under ESC Telemetry on the Motors tab."
     },
     "setupWizardMotorCastle": {
-        "message": "Castle Link is wired like Standard PWM: the ESC's signal wire goes to the motor (ESC) output. The flight controller reads the ESC's telemetry on that same wire, so no serial port is needed. Choosing it turns ESC telemetry on."
+        "message": "Castle Link is wired like Standard PWM: the ESC's signal wire goes to the motor (ESC) output. The controller reads the ESC's telemetry on that same wire, so no serial port is needed. Choosing it turns ESC telemetry on."
     },
     "setupWizardOpenMotors": {
         "message": "Open the Motors tab"
@@ -9241,7 +9148,7 @@
         "message": "ESC telemetry"
     },
     "setupWizardEscIntro": {
-        "message": "Optional. If your ESC sends telemetry, the flight controller can read the battery voltage, current and motor RPM from it. If it doesn't, or you don't want to use it, press Next."
+        "message": "Optional. If your ESC sends telemetry, the controller can read the battery voltage, current and motor RPM from it. If it doesn't, or you don't want to use it, press Next."
     },
     "setupWizardEscNoMotor": {
         "message": "No motor is set up on the Motor step, so there is no ESC telemetry to set up. Press Next."
@@ -9280,7 +9187,7 @@
         "message": "Nothing received"
     },
     "setupWizardEscSignalText": {
-        "message": "Plug in the flight battery. The ESC's voltage and temperature should appear below within a few seconds."
+        "message": "Plug in the drive battery. The ESC's voltage and temperature should appear below within a few seconds."
     },
     "setupWizardEscDetectHelp": {
         "message": "If nothing arrives, Detect wiring tries the half duplex and pin swap settings for you."
@@ -9319,13 +9226,13 @@
         "message": "Motor RPM"
     },
     "setupWizardEscRpmText": {
-        "message": "Motor RPM comes from the ESC's RPM wire plugged into the flight controller's RPM pin. With DShot, bidirectional DShot can send it on the throttle wire instead. The pole count turns the electrical RPM into motor RPM."
+        "message": "Motor RPM comes from the ESC's RPM wire plugged into the controller's RPM pin. With DShot, bidirectional DShot can send it on the throttle wire instead. The pole count turns the electrical RPM into motor RPM."
     },
     "setupWizardEscPoles": {
         "message": "Motor $1 poles"
     },
     "setupWizardEscPolesHelp": {
-        "message": "The pole count is the number of magnets in the motor bell, not the stator windings. The motor's manual usually gives it. With the propeller off, check the RPM shown matches the motor."
+        "message": "The pole count is the number of magnets in the motor rotor, not the stator windings. The motor's manual usually gives it. With the wheels off the ground, check the RPM shown matches the motor."
     },
     "setupWizardEscRpmNow": {
         "message": "$1 rpm"
@@ -9358,13 +9265,13 @@
         "message": "Off"
     },
     "setupWizardCentreIntro": {
-        "message": "The surfaces are held at center. First set each horn and linkage so the surface is close to neutral, then fine-tune the center here."
+        "message": "The steering is held at center. First set the servo horn and linkage so the wheels point close to straight ahead, then fine-tune the center here."
     },
     "setupWizardCentreTipHorn": {
         "message": "Servo horn square to the pushrod"
     },
     "setupWizardCentreTipSurface": {
-        "message": "Surface in line with the wing or tail"
+        "message": "Wheels pointing straight ahead"
     },
     "setupWizardCentreFlapHint": {
         "message": "Flaps are held at flaps up: set them in line with the wing."
@@ -9382,13 +9289,13 @@
         "message": "Far from the servo's normal center. Move the horn instead, or this side loses travel."
     },
     "setupWizardDirectionIntro": {
-        "message": "The wizard moves one axis at a time. Start small and increase the movement only if you need more travel to see the direction. Identify wiggles one servo so you can see which surface a row is about."
+        "message": "The wizard turns the steering itself. Start small, and increase the movement only if you need more to see the direction. Identify wiggles one servo so you can see which one a row is about."
     },
     "setupWizardDirectionNoRadio": {
-        "message": "Hands off the radio. On this step the wizard moves the surfaces itself, and your sticks do nothing. Press a button below and watch the model."
+        "message": "Hands off the radio. On this step the wizard moves the steering itself, and your sticks do nothing. Press the button below and watch the wheels."
     },
     "setupWizardDirectionHolding": {
-        "message": "Wizard is holding the surfaces here"
+        "message": "The wizard is holding the steering here"
     },
     "setupWizardDirectionStop": {
         "message": "Stop"
@@ -9408,29 +9315,11 @@
     "setupWizardDirectionDeflectionHalf": {
         "message": "Half stick (50%)"
     },
-    "setupWizardDirectionMove_pitch": {
-        "message": "Move pitch up"
-    },
-    "setupWizardDirectionExpect_pitch": {
-        "message": "Elevator, elevons and V-tail: trailing edges go up."
-    },
-    "setupWizardDirectionMove_roll": {
-        "message": "Move roll right"
-    },
-    "setupWizardDirectionExpect_roll": {
-        "message": "The right aileron or elevon goes up and the left one goes down."
-    },
     "setupWizardDirectionMove_yaw": {
-        "message": "Move yaw right"
+        "message": "Steer right"
     },
     "setupWizardDirectionExpect_yaw": {
-        "message": "Rudder and V-tail: trailing edges move to the right, seen from behind."
-    },
-    "setupWizardDirectionMove_flap": {
-        "message": "Move flaps down"
-    },
-    "setupWizardDirectionExpect_flap": {
-        "message": "Flaps: both trailing edges go down."
+        "message": "The front wheels steer right. With rear steering, the rear wheels steer left when set to opposite, or right when set to the same direction."
     },
     "setupWizardDirectionCorrect": {
         "message": "Correct"
@@ -9441,38 +9330,26 @@
     "setupWizardDirectionReversed": {
         "message": "Reversed"
     },
-    "setupWizardDirectionFlapFollowHint": {
-        "message": "The flap check sets this flap's direction. If it moves the wrong way here, reverse its roll rule on the Mixer tab."
-    },
     "setupWizardDirectionMixedHint": {
-        "message": "This surface also works another axis, so reversing its servo would break that one. If both surfaces are wrong here, invert the axis below. If only one is, change its mix on the Mixer tab."
+        "message": "This servo also works another axis, so reversing it would break that one. If every servo is wrong here, invert the steering below. If only one is, change its mix on the Mixer tab."
     },
     "setupWizardDirectionAllWrong": {
-        "message": "Every surface on this axis moved the wrong way?"
-    },
-    "setupWizardDirectionInvert_pitch": {
-        "message": "Invert pitch"
-    },
-    "setupWizardDirectionInvert_roll": {
-        "message": "Invert roll"
+        "message": "Every steering servo moved the wrong way?"
     },
     "setupWizardDirectionInvert_yaw": {
-        "message": "Invert yaw"
-    },
-    "setupWizardDirectionFlapRadio": {
-        "message": "This makes a positive flap channel move the flaps down. If your flap switch works the wrong way round afterwards, reverse the flap channel on your radio."
+        "message": "Invert steering"
     },
     "setupWizardLimitsIntro": {
-        "message": "Find how far each servo can move before the surface or linkage binds."
+        "message": "Find how far each servo can move before the steering or linkage binds."
     },
     "setupWizardLimitsHardStop": {
-        "message": "These limits are hard stops that protect the servo. Don't use them to set throw: a surface at its limit leaves the stabilizer nothing to work with. Throw is set in a later step."
+        "message": "These limits are hard stops that protect the servo. Don't use them to set throw: steering at its limit leaves the stabilizer nothing to work with. Throw is set in a later step."
     },
     "setupWizardLimitsStart": {
         "message": "Find limits"
     },
     "setupWizardLimitsBothSides": {
-        "message": "Every servo has two limits, one each way. Find limits on each surface and set both Min and Max before pressing Done."
+        "message": "Every servo has two limits, one each way. Find limits on each servo and set both Min and Max before pressing Done."
     },
     "setupWizardLimits_min": {
         "message": "Min $1 µs"
@@ -9487,10 +9364,10 @@
         "message": "Max"
     },
     "setupWizardLimitsTodo_min": {
-        "message": "1 of 2: press the − buttons until the surface binds, back off one step, then press Set Min here."
+        "message": "1 of 2: press the − buttons until the steering binds, back off one step, then press Set Min here."
     },
     "setupWizardLimitsTodo_max": {
-        "message": "2 of 2: now the other way. Press the + buttons until the surface binds, back off one step, then press Set Max here."
+        "message": "2 of 2: now the other way. Press the + buttons until the steering binds, back off one step, then press Set Max here."
     },
     "setupWizardLimitsBothDone": {
         "message": "Both sides set. Press Done."
@@ -9510,155 +9387,41 @@
     "setupWizardLimitsFlapNote": {
         "message": "These are the flap end points: Max is full flap and Min is as far up as the flap may go. The wizard sets the flap travel so the ends of the flap channel land on them."
     },
-    "setupWizardPassthroughTitle": {
-        "message": "GYRO OFF mode"
-    },
-    "setupWizardPassthroughOn": {
-        "message": "GYRO OFF mode is on. The sticks move the surfaces directly, at full travel, with no gyro."
-    },
-    "setupWizardPassthroughForced": {
-        "message": "GYRO OFF mode is on for this step: the sticks move the surfaces directly, at full travel, with no gyro. The wizard switches it off again when you leave the step. Keep your radio on."
-    },
-    "setupWizardPassthroughWaiting": {
-        "message": "Switching to GYRO OFF mode… Check your radio is on."
-    },
-    "setupWizardPassthroughOff": {
-        "message": "The wizard couldn't switch GYRO OFF mode on (this firmware can't, or the model is armed). Switch your radio to GYRO OFF mode to carry on."
-    },
-    "setupWizardPassthroughNotAssigned": {
-        "message": "The wizard couldn't switch GYRO OFF mode on (this firmware can't, or the model is armed), and GYRO OFF isn't on a switch. Update the firmware or assign GYRO OFF on the Modes tab, then come back to this step."
-    },
     "setupWizardBypassTurnOff": {
-        "message": "Switch $1 mode off for this step: in $1 mode the sticks drive the surfaces directly and the flight controller may not be able to move them."
-    },
-    "setupWizardThrowsIntro": {
-        "message": "Set how far each surface moves at full stick, using the throws from your model's setup guide. You need your radio and a throw meter or ruler on the surface. The wizard puts the model in GYRO OFF mode for this step."
-    },
-    "setupWizardThrowsHowTitle": {
-        "message": "How to do it:"
-    },
-    "setupWizardThrowsHow_1": {
-        "message": "Check the GYRO OFF mode box above is green with a tick. That means your sticks now move the surfaces directly. If it stays yellow, check your radio is on."
-    },
-    "setupWizardThrowsHow_2": {
-        "message": "Hold one stick at full deflection, for example full right aileron, and watch one of its surfaces on the meter."
-    },
-    "setupWizardThrowsHow_3": {
-        "message": "Press − or + on that axis's Throw until the surface reaches the throw you want, then check the other direction. If one surface or one direction comes out different, for example for aileron differential, correct just that one under Fine-tune."
-    },
-    "setupWizardThrowsHow_4": {
-        "message": "Repeat for each axis."
-    },
-    "setupWizardThrowsThrow": {
-        "message": "Throw"
-    },
-    "setupWizardThrowsThrowHelp": {
-        "message": "Every surface on this axis, both directions."
-    },
-    "setupWizardThrowsFineTitle": {
-        "message": "Fine-tune one surface"
-    },
-    "setupWizardThrowsFineHint": {
-        "message": "Optional: only if one surface, or one direction, doesn't match."
-    },
-    "setupWizardThrowsFineWhy": {
-        "message": "Why: Throw above moves every surface on this axis by the same amount, both ways. Fine-tune changes one surface in one direction only. Use it for aileron differential (less down than up, as in the picture), or when two halves of a surface don't move the same."
-    },
-    "setupWizardThrowsFineHow": {
-        "message": "How: hold the stick the way the row shows, measure that one surface, and press − or + until it reads what you want. 100% is the servo's normal travel."
-    },
-    "setupWizardThrowsNow": {
-        "message": "Now:"
-    },
-    "setupWizardThrowsMixedNote": {
-        "message": "This servo also works another axis (an elevon does pitch and roll). Each row sets one side of the servo's travel, so it also changes that other axis whenever the servo moves to the same side."
-    },
-    "setupWizardThrowsSideAtLimit": {
-        "message": "Full stick reaches the binding limit on this side."
-    },
-    "setupWizardThrowsDir_rollRight": {
-        "message": "Full right roll"
-    },
-    "setupWizardThrowsDir_rollLeft": {
-        "message": "Full left roll"
-    },
-    "setupWizardThrowsDir_pitchBack": {
-        "message": "Full stick back"
-    },
-    "setupWizardThrowsDir_pitchForward": {
-        "message": "Full stick forward"
-    },
-    "setupWizardThrowsDir_yawRight": {
-        "message": "Full right yaw"
-    },
-    "setupWizardThrowsDir_yawLeft": {
-        "message": "Full left yaw"
-    },
-    "setupWizardThrowsAtLimit": {
-        "message": "$1 reaches its binding limit before full stick at this throw. Lower the throw, or allow more travel in the Binding limits step."
-    },
-    "setupWizardThrowsRepeat": {
-        "message": "Throw is a percentage of the servo's normal travel (Axis Throw on the Mixer tab), shared by every surface on the axis. Fine-tune changes one servo's scale on one side (Servos tab)."
-    },
-    "setupWizardTravelIntro": {
-        "message": "How far each surface goes with full stick on every axis that drives it at once, compared with its limits. Above 100% the surface reaches its limit before full stick, and the stabilizer has no travel left on that side. The model is in GYRO OFF mode, so you can move the sticks into the corners and watch the live positions."
-    },
-    "setupWizardTravelCorners": {
-        "message": "Try every corner: full stick on two axes at once is where a surface that works both (an elevon, a V-tail) runs out of travel first."
-    },
-    "setupWizardTravelKeyLimit": {
-        "message": "Binding limit"
-    },
-    "setupWizardTravelKeyReach": {
-        "message": "Full stick"
-    },
-    "setupWizardTravelKeyOver": {
-        "message": "Past the limit"
-    },
-    "setupWizardTravelKeyNow": {
-        "message": "Now"
-    },
-    "setupWizardTravelFlagOk": {
-        "message": "Inside its limits"
-    },
-    "setupWizardTravelFlagClips": {
-        "message": "Reaches its limit"
-    },
-    "setupWizardTravelNeg": {
-        "message": "− side"
-    },
-    "setupWizardTravelPos": {
-        "message": "+ side"
-    },
-    "setupWizardTravelValue": {
-        "message": "$1% ($2 of $3 µs)"
-    },
-    "setupWizardTravelClipping": {
-        "message": "Some surfaces reach their limit. Lower the throw on the axes that share them in the Throws step, or accept it knowingly: full roll with full pitch on elevons is the usual case."
-    },
-    "setupWizardTravelOk": {
-        "message": "Every surface stays inside its limits."
+        "message": "Switch $1 mode off for this step: in $1 mode the sticks drive the servos directly and the controller may not be able to move them."
     },
     "setupWizardGyroIntro": {
-        "message": "Overrides are off now, so the stabilizer drives the outputs. Turn the model by hand around its yaw axis and check the steering pushes against the movement."
-    },
-    "setupWizardGyroCheck_roll": {
-        "message": "Roll the model so the right wing drops: the right aileron or elevon goes down and the left one goes up."
-    },
-    "setupWizardGyroCheck_pitch": {
-        "message": "Lift the nose: elevator, elevons and V-tail trailing edges go down."
+        "message": "Overrides are off now, so the gyro drives the steering. With the wheels off the ground, turn the car by hand around its vertical axis and check the steering pushes against the movement."
     },
     "setupWizardGyroCheck_yaw": {
-        "message": "Swing the nose to the right: the rudder trailing edge moves to the left."
+        "message": "Turn the car clockwise (nose to the right, seen from above): the front wheels steer left, against the turn."
     },
     "setupWizardGyroWrong": {
-        "message": "If a surface was right in the Direction step but is wrong here, the board orientation doesn't match how the board is mounted. Go back to step 1 and run the orientation check again. Don't reverse servos to fix this."
+        "message": "If the steering was right in the Steering direction step but corrects the wrong way here, the gyro reads yaw backwards for this mounting. Reverse the gyro below. Don't reverse the servo: that would reverse the steering stick too."
+    },
+    "setupWizardGyroWrongOldFirmware": {
+        "message": "If the steering was right in the Steering direction step but corrects the wrong way here, the gyro reads yaw backwards for this mounting. This firmware can't reverse the gyro on its own: update the firmware, then reverse it here. Don't reverse the servo, as that would reverse the steering stick too."
+    },
+    "setupWizardGyroReverseOn": {
+        "message": "Reverse the gyro"
+    },
+    "setupWizardGyroReverseOff": {
+        "message": "Set the gyro back to normal"
+    },
+    "setupWizardGyroReversedNow": {
+        "message": "Gyro reversed"
+    },
+    "setupWizardGyroNormalNow": {
+        "message": "Gyro normal"
+    },
+    "setupWizardGyroCheckAgain": {
+        "message": "This works straight away. Turn the car by hand again and answer the check above."
     },
     "setupWizardGyroLegendMove": {
-        "message": "How you move the model"
+        "message": "How you turn the car"
     },
     "setupWizardGyroLegendReact": {
-        "message": "How the surfaces should answer"
+        "message": "How the wheels should answer"
     },
     "setupWizardGyroLive": {
         "message": "Live servo outputs"
@@ -9682,7 +9445,7 @@
         "message": "Add GYRO OFF if you want a switch that turns the gyro off."
     },
     "setupWizardModesArmMissing": {
-        "message": "ARM isn't on a switch yet. Without it the motor can't be armed and the model can't fly."
+        "message": "ARM isn't on a switch yet. Without it the motor can't be armed and the car can't drive."
     },
     "setupWizardModes_arm": {
         "message": "ARM"
@@ -9729,29 +9492,26 @@
     "setupWizardModesArmOn": {
         "message": "The ARM switch is in its on position. The configurator may still block actual arming over MSP, but switch ARM off before you carry on."
     },
-    "setupWizardOpenModes": {
-        "message": "Open the Modes tab"
-    },
     "setupWizardStyleIntro": {
-        "message": "Choose the style closest to how you fly. It sets how fast the model rotates at full stick, and how the stabilizer's I-term behaves while you move the sticks. These are starting points to tune from."
+        "message": "Choose the style closest to how you drive. It sets how fast the car turns at full steering, and how the stabilizer's I-term behaves while you steer. These are starting points to tune from."
     },
     "setupWizardStyle_trainer": {
-        "message": "Trainer"
+        "message": "Beginner"
     },
     "setupWizardStyleHelp_trainer": {
-        "message": "Trainers, scale models and first flights."
+        "message": "Beginners, scale cars and first runs."
     },
     "setupWizardStyle_sport": {
         "message": "Sport"
     },
     "setupWizardStyleHelp_sport": {
-        "message": "General sport flying and aerobatics."
+        "message": "General bashing and sport driving."
     },
     "setupWizardStyle_3d": {
-        "message": "3D"
+        "message": "Drift"
     },
     "setupWizardStyleHelp_3d": {
-        "message": "Hovering, harriers, snaps and tumbles."
+        "message": "Drifting, slides and aggressive steering."
     },
     "setupWizardStyleRates": {
         "message": "$1 °/s, $2% expo"
@@ -9787,28 +9547,25 @@
         "message": "Model"
     },
     "setupWizardFinishSurfaces": {
-        "message": "Control surfaces"
+        "message": "Steering servos"
     },
     "setupWizardFinishEsc": {
         "message": "ESC protocol"
     },
-    "setupWizardFinishThrows": {
-        "message": "Throw"
-    },
     "setupWizardFinishStyle": {
-        "message": "Flying style"
+        "message": "Driving style"
     },
     "setupWizardFinishStyleCustom": {
         "message": "Custom"
     },
     "setupWizardFinishBeforeTitle": {
-        "message": "Before the first flight:"
+        "message": "Before the first run:"
     },
     "setupWizardFinishBefore_1": {
-        "message": "Fit the propeller and check it is the right way round and tight."
+        "message": "With the wheels off the ground, check that forward throttle drives the wheels forward and the wheels are tight."
     },
     "setupWizardFinishBefore_2": {
-        "message": "With GYRO OFF mode off, move the sticks and move the model by hand once more: the surfaces follow the sticks and push against the movement. With the gyro on, a stick held off centre makes the surfaces creep to full throw, because the model cannot turn at the rate the stick asks for. This is normal on the bench: let go and they drift back to centre. Check throws in GYRO OFF, not here."
+        "message": "With GYRO OFF mode off, steer and turn the car by hand once more: the wheels follow the steering and steer against the movement. With the gyro on, steering held off centre makes the wheels creep to full lock, because the car cannot turn at the rate the stick asks for. This is normal on the bench: let go and they drift back to centre. Check throws in GYRO OFF, not here."
     },
     "setupWizardFinishBefore_3": {
         "message": "Do a range check with your radio."
@@ -9817,10 +9574,7 @@
         "message": "Finish"
     },
     "setupWizardFinishDone": {
-        "message": "Setup saved. The model is ready for its first flight."
-    },
-    "setupWizardFinishThrowsTune": {
-        "message": "The stabilizer's output is a share of the throws you set. If you change the throws later, the tune changes with them, so set throws first and tune afterwards."
+        "message": "Setup saved. The car is ready for its first run."
     },
     "remoteSupportTitle": {
         "message": "Remote support"
@@ -9829,18 +9583,18 @@
         "message": "I need help"
     },
     "remoteSupportShareChoice": {
-        "message": "Share your flight controller with someone who helps you.",
+        "message": "Share your controller with someone who helps you.",
         "description": "Subtitle of the 'I need help' choice in the remote support panel"
     },
     "remoteSupportJoinChoice": {
-        "message": "Join a session with the code the pilot gives you.",
+        "message": "Join a session with the code the driver gives you.",
         "description": "Subtitle of the 'I'm helping someone' choice in the remote support panel"
     },
     "remoteSupportShareStep1": {
-        "message": "This configurator lets go of the flight controller, and the supporter uses it from theirs."
+        "message": "This configurator lets go of the controller, and the supporter uses it from theirs."
     },
     "remoteSupportShareStep2": {
-        "message": "You watch the supporter's screen. To use the flight controller yourself for a while, e.g. to calibrate something, take control, and give it back when you are done. While you have control, the supporter sees your screen."
+        "message": "You watch the supporter's screen. To use the controller yourself for a while, e.g. to calibrate something, take control, and give it back when you are done. While you have control, the supporter sees your screen."
     },
     "remoteSupportBeforeShare": {
         "message": "Before you share",
@@ -9851,7 +9605,7 @@
         "description": "Heading of the safety note shown to the supporter"
     },
     "remoteSupportShare": {
-        "message": "Share my flight controller"
+        "message": "Share my controller"
     },
     "remoteSupportJoinTitle": {
         "message": "I'm helping someone"
@@ -9872,16 +9626,16 @@
         "message": "The supporter is connected."
     },
     "remoteSupportConnectedPilot": {
-        "message": "Connected to the pilot's computer. Choose the remote port in the port list and connect."
+        "message": "Connected to the driver's computer. Choose the remote port in the port list and connect."
     },
     "remoteSupportDevice": {
         "message": "Device in use: $1"
     },
     "remoteSupportBeingWatched": {
-        "message": "The pilot is watching your screen."
+        "message": "The driver is watching your screen."
     },
     "remoteSupportNotWatched": {
-        "message": "The pilot is not watching your screen. Nothing is sent unless they do."
+        "message": "The driver is not watching your screen. Nothing is sent unless they do."
     },
     "remoteSupportWatching": {
         "message": "Supporter's screen (read-only)"
@@ -9898,7 +9652,7 @@
         "description": "Banner on the frame around the pilot's window while a supporter is connected"
     },
     "remoteSupportSafetyPilot1": {
-        "message": "Remove the propellers and secure the model.",
+        "message": "Lift the wheels off the ground and secure the car.",
         "description": "Safety note shown to the pilot before sharing their flight controller, first point"
     },
     "remoteSupportSafetyPilot2": {
@@ -9915,16 +9669,16 @@
         "message": "Never spin up motors."
     },
     "remoteSupportSafetySupporter3": {
-        "message": "Move actuators only after the pilot has confirmed it is safe."
+        "message": "Move actuators only after the driver has confirmed it is safe."
     },
     "remoteSupportSafetySupporter4": {
-        "message": "Start an audio call with the pilot and keep it open the whole time, so they can report any unexpected movement or danger right away."
+        "message": "Start an audio call with the driver and keep it open the whole time, so they can report any unexpected movement or danger right away."
     },
     "remoteSupportSafetyAck": {
         "message": "I have read this and will follow it"
     },
     "remoteSupportSafetyReminder": {
-        "message": "Never spin up motors. Keep the audio call with the pilot open.",
+        "message": "Never spin up motors. Keep the audio call with the driver open.",
         "description": "Reminder shown to the supporter during a session"
     },
     "remoteSupportSafetyReminderPilot": {
@@ -9938,7 +9692,7 @@
         "message": "Kill connection"
     },
     "remoteSupportShareUnsupported": {
-        "message": "Needs Chrome, Edge or the desktop configurator; this browser can't reach the flight controller.",
+        "message": "Needs Chrome, Edge or the desktop configurator; this browser can't reach the controller.",
         "description": "Subtitle of the disabled 'I need help' choice in browsers without Web Serial or WebUSB"
     },
     "remoteSupportWebShareHint": {
@@ -9961,7 +9715,7 @@
         "message": "None yet. The browser asks for one when you share."
     },
     "remoteSupportFrameJoined": {
-        "message": "Remote support: working on the pilot's flight controller",
+        "message": "Remote support: working on the driver's controller",
         "description": "Banner on the frame around the supporter's window while joined to a session"
     },
     "remoteSupportTakeControl": {
@@ -9969,18 +9723,18 @@
         "description": "Button for the pilot to take the flight controller back from the supporter for a while, e.g. to calibrate something"
     },
     "remoteSupportTakeControlTitle": {
-        "message": "Make the flight controller safe, take it from the supporter and use it from here, e.g. to calibrate something. The supporter sees your screen meanwhile. Give control back when you are done."
+        "message": "Make the controller safe, take it from the supporter and use it from here, e.g. to calibrate something. The supporter sees your screen meanwhile. Give control back when you are done."
     },
     "remoteSupportGiveControl": {
         "message": "Give control back",
         "description": "Button for the pilot to hand the flight controller back to the supporter"
     },
     "remoteSupportHandOver": {
-        "message": "Hand control to pilot",
+        "message": "Hand control to driver",
         "description": "Button for the supporter to let the pilot use the flight controller from their own configurator"
     },
     "remoteSupportHandOverTitle": {
-        "message": "Disconnect from the pilot's flight controller so they can use it from their own configurator, e.g. to calibrate something. You see their screen meanwhile, and they give control back when they are done."
+        "message": "Disconnect from the driver's controller so they can use it from their own configurator, e.g. to calibrate something. You see their screen meanwhile, and they give control back when they are done."
     },
     "remoteSupportAskControl": {
         "message": "Ask for control back",
@@ -9994,26 +9748,26 @@
         "description": "Shown to the pilot while they have control"
     },
     "remoteSupportFramePilotControl": {
-        "message": "Remote support: you have control of your flight controller",
+        "message": "Remote support: you have control of your controller",
         "description": "Banner on the frame around the pilot's window while the pilot has taken control"
     },
     "remoteSupportBeingWatchedPilot": {
         "message": "The supporter is watching your screen."
     },
     "remoteSupportWatchingPilot": {
-        "message": "Pilot's screen (read-only): the pilot has control"
+        "message": "Driver's screen (read-only): the driver has control"
     },
     "remoteSupportWatchWaitingPilot": {
-        "message": "The pilot has control. Waiting for their screen..."
+        "message": "The driver has control. Waiting for their screen..."
     },
     "remoteSupportYouHaveControl": {
-        "message": "You have control of your flight controller: connect and use it as usual. Give control back when you are done."
+        "message": "You have control of your controller: connect and use it as usual. Give control back when you are done."
     },
     "remoteSupportPilotHasControl": {
-        "message": "The pilot has control of their flight controller."
+        "message": "The driver has control of their controller."
     },
     "remoteSupportControlDisconnectFailed": {
-        "message": "Could not disconnect from the flight controller, so control was not handed over. Disconnect and try again."
+        "message": "Could not disconnect from the controller, so control was not handed over. Disconnect and try again."
     },
     "remoteSupportControlFlashing": {
         "message": "The supporter is using a board in bootloader (DFU) mode and may be flashing firmware. Wait until they are done, or use Kill connection."
@@ -10026,7 +9780,7 @@
         "message": "Dismiss"
     },
     "remoteSupportAllowPortRequest": {
-        "message": "The supporter needs access to your flight controller's port. Click \"Allow a port...\" and pick it in the browser's list.",
+        "message": "The supporter needs access to your controller's port. Click \"Allow a port...\" and pick it in the browser's list.",
         "description": "Request shown to a pilot sharing from the web configurator"
     },
     "remoteSupportAllowDfuRequest": {
@@ -10034,35 +9788,35 @@
         "description": "Request shown to a pilot sharing from the web configurator, e.g. while the supporter flashes firmware"
     },
     "remoteSupportAllowPromptTitle": {
-        "message": "Let the supporter reach your flight controller",
+        "message": "Let the supporter reach your controller",
         "description": "Large prompt shown to a pilot sharing from the web configurator while no port is shared"
     },
     "remoteSupportAllowPromptText": {
-        "message": "Your browser only shares the ports you allow. Click the button, pick your flight controller in the list and confirm."
+        "message": "Your browser only shares the ports you allow. Click the button, pick your controller in the list and confirm."
     },
     "remoteSupportAllowPromptDfu": {
         "message": "Board in bootloader (DFU) mode?"
     },
     "remoteSupportControlDeclined": {
-        "message": "The pilot isn't ready to give control back yet.",
+        "message": "The driver isn't ready to give control back yet.",
         "description": "Shown to the supporter when the pilot answers \"Not now\""
     },
     "remoteSupportAskAllowPort": {
-        "message": "Ask pilot to allow the port",
+        "message": "Ask driver to allow the port",
         "description": "Supporter's button; the pilot's browser only shares the ports they allowed"
     },
     "remoteSupportAskAllowDfu": {
-        "message": "Ask pilot to allow the DFU device",
+        "message": "Ask driver to allow the DFU device",
         "description": "Supporter's button for a board in bootloader mode on the pilot's side"
     },
     "remoteSupportAllowPortAskSent": {
-        "message": "Asked the pilot to allow their port. Waiting for them..."
+        "message": "Asked the driver to allow their port. Waiting for them..."
     },
     "remoteSupportAllowDfuAskSent": {
-        "message": "Asked the pilot to allow the board in bootloader (DFU) mode. Waiting for them..."
+        "message": "Asked the driver to allow the board in bootloader (DFU) mode. Waiting for them..."
     },
     "remoteSupportDfuAskedPilot": {
-        "message": "Remote support: asked the pilot to allow the board in bootloader (DFU) mode. Waiting for them...",
+        "message": "Remote support: asked the driver to allow the board in bootloader (DFU) mode. Waiting for them...",
         "description": "Log line while flashing a board shared from the pilot's browser"
     },
     "remoteSupportSoundOn": {
@@ -10076,19 +9830,19 @@
         "description": "Flashing window title when the pilot has to do something"
     },
     "remoteSupportPilotShares": {
-        "message": "The pilot shares $1 port(s) and $2 bootloader (DFU) device(s)."
+        "message": "The driver shares $1 port(s) and $2 bootloader (DFU) device(s)."
     },
     "remoteSupportPilotMustAllow": {
-        "message": "The pilot shares from a browser, which only shares what they allow. Ask them for more if you need it."
+        "message": "The driver shares from a browser, which only shares what they allow. Ask them for more if you need it."
     },
     "servoBalanceTitle": {
         "message": "Balance servos"
     },
     "servoBalanceHelp": {
-        "message": "When two servos move one control surface, small mechanical differences make one push against the other at some points of the travel. A servo that fights another draws high current, gets hot and can fail in flight. The balanced servo's balance curve adds a small offset at each point, so it can be matched to the other servo along the whole travel."
+        "message": "When two servos move the same steering linkage, small mechanical differences make one push against the other at some points of the travel. A servo that fights another draws high current, gets hot and can fail while driving. The balanced servo's balance curve adds a small offset at each point, so it can be matched to the other servo along the whole travel."
     },
     "servoBalanceIntro": {
-        "message": "Add the servos that move one surface, up to four. Each has a graph of its balance curve: the servo's travel across, the offset the curve adds up and down. Pick a point to hold every servo in the group there, then move each servo's point until the servos sit together and none of them strains or buzzes."
+        "message": "Add the servos that move one linkage, up to four. Each has a graph of its balance curve: the servo's travel across, the offset the curve adds up and down. Pick a point to hold every servo in the group there, then move each servo's point until the servos sit together and none of them strains or buzzes."
     },
     "servoBalanceServo": {
         "message": "Servo $1"
@@ -10097,10 +9851,10 @@
         "message": "Servo $1 (same mix)"
     },
     "servoBalanceNoSameMix": {
-        "message": "No other servo is mixed the same way as servo $1. Check the two servos really move the same surface."
+        "message": "No other servo is mixed the same way as servo $1. Check the two servos really move the same linkage."
     },
     "servoBalanceNoSharedInput": {
-        "message": "Servo $1 shares no mixer input with servo $2, so it is held the same way. Check they move the surface the same way before holding them away from center."
+        "message": "Servo $1 shares no mixer input with servo $2, so it is held the same way. Check they move the linkage the same way before holding them away from center."
     },
     "servoBalancePointCount": {
         "message": "Curve points"
@@ -10118,7 +9872,7 @@
         "message": "Near the limit of the balance curve. Adjust the linkage instead."
     },
     "servoBalanceGroup": {
-        "message": "Servos on this surface"
+        "message": "Servos on this linkage"
     },
     "servoBalanceAdd": {
         "message": "Add a servo"
@@ -10127,7 +9881,7 @@
         "message": "Remove servo $1"
     },
     "servoBalanceAddSuggested": {
-        "message": "Add the other servos on this surface. Mixed the same way: servo $1."
+        "message": "Add the other servos on this linkage. Mixed the same way: servo $1."
     },
     "servoBalanceLock": {
         "message": "Hold"

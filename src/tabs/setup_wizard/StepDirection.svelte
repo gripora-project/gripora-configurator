@@ -10,18 +10,10 @@
 
   const wiz = getContext("setupWizard");
 
-  // Signs follow the stabilized inputs: roll + is right roll, pitch + is
-  // stick forward (nose down), and yaw + is yaw left, since RC yaw is negated
-  // once in the firmware's setpoint.c. The flap check moves the flap
-  // channel instead, positive being flaps down (FLAP_INPUT in surfaces.js).
-  // It comes first: flaps that follow the ailerons get their roll direction
-  // from their flap direction.
-  const CHECKS = [
-    { axis: "flap", sign: 1, key: "flap" },
-    { axis: "pitch", sign: -1, key: "pitch" },
-    { axis: "roll", sign: 1, key: "roll" },
-    { axis: "yaw", sign: -1, key: "yaw" },
-  ];
+  // Only steering (stabilized yaw) on a car. Yaw + is a left turn, since RC
+  // yaw is negated once in the firmware's setpoint.c, so steering right is
+  // -1.
+  const CHECKS = [{ axis: "yaw", sign: -1, key: "yaw" }];
 
   const DEFLECTION_OPTIONS = [
     { value: 0.15, label: "setupWizardDirectionDeflectionSmall" },
@@ -36,13 +28,8 @@
   let answers = $state({});
   let wiggleTimer;
 
-  // Whether this check moves the surface. The flap check leaves out pitch
-  // surfaces carrying a Flap Compensation rule: that mix is tuned, not
-  // checked here.
+  // Whether this check moves the servo.
   function movedBy(surface, check) {
-    if (check.axis === "flap") {
-      return surface.kind === "flap" || surface.kind === "flaperon";
-    }
     return !!surface.axes[check.axis];
   }
 
@@ -57,8 +44,6 @@
       roll: 0,
       pitch: 0,
       yaw: 0,
-      // Flaps up for the other checks, so a flap mix doesn't hide them.
-      flap: 0,
       [check.axis]: check.sign * deflection,
     });
   }
@@ -93,8 +78,8 @@
     }
   }
 
-  // Moves one servo back and forth a few times so the pilot can see which
-  // surface the row is about.
+  // Moves one servo back and forth a few times so the driver can see which
+  // servo the row is about.
   function identify(servo) {
     clearInterval(wiggleTimer);
     let count = 0;
@@ -205,11 +190,7 @@
                   >
                 {:else if !ownAxis}
                   <span class="muted"
-                    >{$i18n.t(
-                      surface.kind === "flap"
-                        ? "setupWizardDirectionFlapFollowHint"
-                        : "setupWizardDirectionMixedHint",
-                    )}</span
+                    >{$i18n.t("setupWizardDirectionMixedHint")}</span
                   >
                 {/if}
               </td>
@@ -217,16 +198,12 @@
           {/each}
         </tbody>
       </table>
-      {#if check.axis === "flap"}
-        <span class="muted">{$i18n.t("setupWizardDirectionFlapRadio")}</span>
-      {:else}
-        <div class="invert">
-          <span class="muted">{$i18n.t("setupWizardDirectionAllWrong")}</span>
-          <button class="btn" onclick={() => invertAxis(check)}>
-            {$i18n.t(`setupWizardDirectionInvert_${check.key}`)}
-          </button>
-        </div>
-      {/if}
+      <div class="invert">
+        <span class="muted">{$i18n.t("setupWizardDirectionAllWrong")}</span>
+        <button class="btn" onclick={() => invertAxis(check)}>
+          {$i18n.t(`setupWizardDirectionInvert_${check.key}`)}
+        </button>
+      </div>
     {/if}
   </section>
 {/each}

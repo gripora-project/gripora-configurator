@@ -3,6 +3,8 @@
   import { i18n } from "@/js/i18n.js";
   import { Mixer } from "@/js/Mixer.js";
 
+  import CarDiagram from "./CarDiagram.svelte";
+
   let { onSelect } = $props();
 
   let dialogEl;
@@ -31,14 +33,9 @@
         onclick={() => pick(type)}
       >
         <span class="thumb">
-          {#each type.images as name (name)}
-            <img
-              src="/images/aircraft_shapes/{name}.svg"
-              alt=""
-              aria-hidden="true"
-            />
-          {/each}
-          {#if type.images.length === 0}
+          {#if type.car}
+            <CarDiagram size={64} />
+          {:else}
             <span class="customIcon" aria-hidden="true">&#9881;</span>
           {/if}
         </span>
@@ -88,17 +85,25 @@
   }
 
   .thumb {
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    aspect-ratio: 103.58047 / 48.517796;
+    height: 64px;
+  }
 
-    img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
+  // On the active (accent) tile the car is drawn in the tile's text colour,
+  // and its output tags swap to text-coloured chips with accent lettering.
+  .tile.active .thumb :global(.car) {
+    color: inherit;
+  }
+
+  .tile.active .thumb :global(.tag) {
+    fill: currentColor;
+  }
+
+  .tile.active .thumb :global(.tag-text) {
+    fill: var(--color-accent-500);
   }
 
   .customIcon {

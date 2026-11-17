@@ -1,7 +1,7 @@
 <script>
   import { onMount, onDestroy } from "svelte";
   import * as THREE from "three";
-  import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+  import { createCarModel } from "@/js/car_model.js";
 
   let container;
   let canvas;
@@ -50,7 +50,7 @@
     o.scene.add(o.camera);
     o.scene.add(o.modelWrapper);
 
-    o.model = await loadGLTF("model");
+    o.model = createCarModel();
     o.model.scale.set(15, 15, 15);
     o.modelWrapper.add(o.model);
     o.scene.add(o.modelWrapper);
@@ -65,15 +65,6 @@
     renderer.forceContextLoss();
     renderer.dispose();
   });
-
-  function loadGLTF(modelName) {
-    const loader = new GLTFLoader();
-    return new Promise((resolve) => {
-      loader.load(`/resources/models/${modelName}.gltf`, (gltf) =>
-        resolve(gltf.scene),
-      );
-    });
-  }
 
   function render() {
     if (!o.model) {
@@ -156,7 +147,9 @@
   bind:clientWidth={width}
   bind:clientHeight={height}
 >
-  <canvas bind:this={canvas} {width} {height}></canvas>
+  <!-- The renderer sizes the canvas (renderer.setSize() in resize(), at its
+       pixel ratio); binding width/height here would undo that. -->
+  <canvas bind:this={canvas}></canvas>
   {#if error}
     <div class="webgl-error">WebGL Context Error</div>
   {/if}

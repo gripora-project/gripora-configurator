@@ -1140,6 +1140,9 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 if (data.byteLength >= 7) {
                     FC.MIXER_CONFIG.servo_pwm_rate = data.readU16();
                 }
+                // Next API version: reverse the yaw gyro for the steering
+                // loop. Detected by the reply's length, not a version number.
+                FC.MIXER_CONFIG.yaw_gyro_reverse = data.byteLength >= 8 ? data.readU8() : null;
                 break;
             }
 
@@ -2256,6 +2259,12 @@ MspHelper.prototype.crunch = function(code) {
                 buffer.push8(FC.MIXER_CONFIG.sbus_out_channels);
                 buffer.push8(FC.MIXER_CONFIG.fbus_master_channels);
                 buffer.push16(FC.MIXER_CONFIG.servo_pwm_rate);
+                // Read positionally after the fields above. Sent only when
+                // the firmware reported it, and always as read, so saving
+                // never clears it.
+                if (FC.MIXER_CONFIG.yaw_gyro_reverse != null) {
+                    buffer.push8(FC.MIXER_CONFIG.yaw_gyro_reverse ? 1 : 0);
+                }
             }
             break;
         }

@@ -6,40 +6,30 @@
   import { Mixer } from "@/js/Mixer.js";
   import { sendChangedServoNames, servoName } from "@/js/ServoNames.js";
 
+  import CarDiagram from "@/tabs/mixer/CarDiagram.svelte";
   import ModelSetupDialog from "@/tabs/mixer/ModelSetupDialog.svelte";
-
-  import AxisIcon from "./AxisIcon.svelte";
-  import { AXES } from "./surfaces.js";
 
   const wiz = getContext("setupWizard");
 
-  // Custom is left to the Mixer tab: the wizard only sets up the named
-  // types, whose rules it can generate.
-  const TYPES = Mixer.MODEL_TYPES.filter(
-    (t) => t.value !== Mixer.MODEL_TYPE_CUSTOM,
-  );
-
-  // The setup dialog edits FC.MIXER_RULES in place without sending them, the
-  // same as on the Mixer tab. Compare against what was loaded so Save knows
-  // whether there is anything to send.
-  const initial = JSON.stringify(
-    $state.snapshot({
+  // The setup dialog edits FC.MIXER_RULES (and, if throttle was clamped,
+  // FC.MIXER_INPUTS) in place without sending them, the same as on the Mixer
+  // tab. Compare against what was loaded so Save knows what to send.
+  function snapshot() {
+    return $state.snapshot({
       type: FC.MIXER_CONFIG.model_type,
       rules: FC.MIXER_RULES,
-    }),
-  );
+    });
+  }
+  const initial = JSON.stringify(snapshot());
+  const initialInputs = JSON.stringify($state.snapshot(FC.MIXER_INPUTS));
 
-  let changed = $derived(
-    JSON.stringify(
-      $state.snapshot({
-        type: FC.MIXER_CONFIG.model_type,
-        rules: FC.MIXER_RULES,
-      }),
-    ) !== initial,
+  let changed = $derived(JSON.stringify(snapshot()) !== initial);
+  let inputsChanged = $derived(
+    JSON.stringify($state.snapshot(FC.MIXER_INPUTS)) !== initialInputs,
   );
 
   $effect(() => {
-    if (changed) wiz.markChanged();
+    if (changed || inputsChanged) wiz.markChanged();
   });
 
   // The setup dialog names the servos it assigns (assignServoNames()); they
@@ -49,70 +39,119 @@
     : null;
 
   wiz.setCommit(async () => {
+    if (inputsChanged) {
+      await new Promise((resolve) => mspHelper.sendMixerInputs(resolve));
+    }
     if (!changed) return;
     await new Promise((resolve) => mspHelper.sendMixerConfig(resolve));
     await new Promise((resolve) => mspHelper.sendMixerRules(resolve));
     await sendChangedServoNames(initialNames);
   });
 
-  let current = $derived(FC.MIXER_CONFIG.model_type);
-  let currentType = $derived(TYPES.find((t) => t.value === current) ?? null);
+  let isCar = $derived(FC.MIXER_CONFIG.model_type === Mixer.MODEL_TYPE_CAR);
+  // What the rules set up, or null when they aren't the car preset.
+  let carOptions = $derived(Mixer.carOptionsFromRules(FC.MIXER_RULES));
 
   // The type only changes once the setup dialog is applied, so cancelling
   // leaves the mix as it was.
   let setupDialogRef;
-  let pending = null;
+  let pending = false;
 
-  function configure(type) {
-    pending = type;
-    setupDialogRef.open(type);
+  function chooseCar() {
+    pending = true;
+    setupDialogRef.open();
   }
 
   function onApplied() {
-    if (pending) FC.MIXER_CONFIG.model_type = pending.value;
-    pending = null;
+    if (pending) FC.MIXER_CONFIG.model_type = Mixer.MODEL_TYPE_CAR;
+    pending = false;
   }
+
+  // Custom keeps the rules as they are: they're edited on the Mixer tab.
+  function chooseCustom() {
+    FC.MIXER_CONFIG.model_type = Mixer.MODEL_TYPE_CUSTOM;
+  }
+
+  // ESC outputs the rules drive from throttle (M1, M2, ...).
+  let escOutputs = $derived(
+    [
+      ...new Set(
+        FC.MIXER_RULES.filter(
+          (rule) =>
+            rule.oper !== Mixer.OP_NUL &&
+            rule.src === 4 &&
+            Mixer.isMotorOutput(rule.dst),
+        ).map((rule) => rule.dst - Mixer.MOTOR_OUTPUT_OFFSET + 1),
+      ),
+    ].sort((a, b) => a - b),
+  );
+
+  let summary = $derived.by(() => {
+    if (!carOptions) return null;
+    const parts = [];
+    if (carOptions.rearSteering) {
+      parts.push(
+        $i18n.t(
+          carOptions.rearMode === "same"
+            ? "mixerCarSummaryRearSame"
+            : "mixerCarSummaryRearOpposite",
+          { 1: carOptions.rearPercent },
+        ),
+      );
+    }
+    if (carOptions.secondEsc) parts.push($i18n.t("mixerCarSummarySecondEsc"));
+    return parts;
+  });
 </script>
 
 <p>{$i18n.t("setupWizardAirframeIntro")}</p>
 
 <div class="types" role="radiogroup">
-  {#each TYPES as type (type.value)}
-    {@const active = current === type.value}
-    <button
-      type="button"
-      role="radio"
-      aria-checked={active}
-      class={["type", active && "selected"]}
-      onclick={() => configure(type)}
-    >
-      <span class="thumb">
-        {#each type.images as name (name)}
-          <img
-            src="/images/aircraft_shapes/{name}.svg"
-            alt=""
-            aria-hidden="true"
-          />
-        {/each}
-      </span>
-      <span class="type-name">
-        {$i18n.t(type.labelKey)}
-        {#if active}
-          <i class="fas fa-check-circle" aria-hidden="true"></i>
-        {/if}
-      </span>
-    </button>
-  {/each}
+  <button
+    type="button"
+    role="radio"
+    aria-checked={isCar}
+    class={["type", isCar && "selected"]}
+    onclick={chooseCar}
+  >
+    <CarDiagram options={isCar ? carOptions : null} size={110} />
+    <span class="type-name">
+      {$i18n.t("mixerModelTypeCar")}
+      {#if isCar}
+        <i class="fas fa-check-circle" aria-hidden="true"></i>
+      {/if}
+    </span>
+  </button>
+  <button
+    type="button"
+    role="radio"
+    aria-checked={!isCar}
+    class={["type", !isCar && "selected"]}
+    onclick={chooseCustom}
+  >
+    <span class="custom-icon" aria-hidden="true">&#9881;</span>
+    <span class="type-name">
+      {$i18n.t("mixerModelTypeCustom")}
+      {#if !isCar}
+        <i class="fas fa-check-circle" aria-hidden="true"></i>
+      {/if}
+    </span>
+  </button>
 </div>
 
-{#if currentType}
+{#if isCar}
   <div class="current">
     <span>
       {$i18n.t("setupWizardAirframeCurrent", {
-        1: $i18n.t(currentType.labelKey),
+        1: $i18n.t("mixerModelTypeCar"),
       })}
+      {#if summary?.length}
+        {summary.join(", ")}.
+      {:else if !carOptions}
+        {$i18n.t("mixerCarSummaryEdited")}
+      {/if}
     </span>
-    <button class="btn" onclick={() => configure(currentType)}>
+    <button class="btn" onclick={chooseCar}>
       {$i18n.t("setupWizardAirframeOptions")}
     </button>
   </div>
@@ -125,28 +164,28 @@
 
 <section class="found">
   <strong>{$i18n.t("setupWizardAirframeSurfaces")}</strong>
-  {#if wiz.surfaces.length === 0}
+  {#if wiz.surfaces.length === 0 && escOutputs.length === 0}
     <span class="muted">{$i18n.t("setupWizardAirframeNoSurfaces")}</span>
   {:else}
-    <ul class="surfaces">
+    <ul class="outputs">
       {#each wiz.surfaces as surface (surface.servo)}
-        <li class="surface">
-          <span class="servo">{surface.servo + 1}</span>
-          <span class="surface-text">
+        <li class="output">
+          <span class="tag">S{surface.servo + 1}</span>
+          <span class="output-text">
             <span class="kind"
               >{$i18n.t(`setupWizardSurface_${surface.kind}`)}</span
             >
             {#if servoName(surface.servo)}
-              <span class="servo-name">{servoName(surface.servo)}</span>
+              <span class="muted">{servoName(surface.servo)}</span>
             {/if}
-            <span class="axes">
-              {#each AXES.filter((a) => surface.axes[a.key]) as axis (axis.key)}
-                <span class="axis">
-                  <AxisIcon axis={axis.key} size={18} />
-                  {$i18n.t(`setupWizardAxis_${axis.key}`)}
-                </span>
-              {/each}
-            </span>
+          </span>
+        </li>
+      {/each}
+      {#each escOutputs as motor (motor)}
+        <li class="output">
+          <span class="tag">M{motor}</span>
+          <span class="output-text">
+            <span class="kind">{$i18n.t("mixerCarEsc")}</span>
           </span>
         </li>
       {/each}
@@ -158,7 +197,7 @@
 <ModelSetupDialog
   bind:this={setupDialogRef}
   onApply={onApplied}
-  onCancel={() => (pending = null)}
+  onCancel={() => (pending = false)}
 />
 
 <style lang="scss">
@@ -177,12 +216,14 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
     gap: 12px;
+    max-width: 420px;
   }
 
   .type {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-end;
     gap: 10px;
     padding: 14px 12px 12px;
     border: 1px solid var(--color-border-soft);
@@ -212,19 +253,12 @@
     }
   }
 
-  .thumb {
-    position: relative;
-    width: 100%;
-    max-width: 140px;
-    aspect-ratio: 103.58047 / 48.517796;
-
-    img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
+  .custom-icon {
+    display: grid;
+    place-items: center;
+    height: 110px;
+    font-size: 3rem;
+    color: var(--color-text-soft);
   }
 
   .type-name {
@@ -261,7 +295,7 @@
     }
   }
 
-  //// Surfaces the mix drives, one chip per servo.
+  //// Outputs the mix drives, one chip each.
 
   .found {
     display: flex;
@@ -269,7 +303,7 @@
     gap: 8px;
   }
 
-  .surfaces {
+  .outputs {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 8px;
@@ -278,7 +312,7 @@
     list-style: none;
   }
 
-  .surface {
+  .output {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -288,18 +322,13 @@
     background-color: var(--color-surface);
   }
 
-  // Servo output number.
-  .servo-name {
-    font-size: 0.8rem;
-    color: var(--color-text-soft);
-  }
-
-  .servo {
+  .tag {
     display: grid;
     place-items: center;
     flex: none;
-    width: 30px;
+    min-width: 34px;
     height: 30px;
+    padding: 0 4px;
     border-radius: var(--radius-sm);
     background-color: var(--color-accent-500);
     color: var(--color-accent-fg);
@@ -307,7 +336,7 @@
     font-variant-numeric: tabular-nums;
   }
 
-  .surface-text {
+  .output-text {
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -316,20 +345,6 @@
 
   .kind {
     font-weight: 600;
-  }
-
-  .axes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2px 10px;
-  }
-
-  .axis {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--color-text-soft);
-    font-size: 0.85em;
   }
 
   .muted {

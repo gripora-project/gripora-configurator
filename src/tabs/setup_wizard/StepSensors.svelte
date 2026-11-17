@@ -9,11 +9,10 @@
   import AutoAlignWizard from "@/tabs/configuration/AutoAlignWizard.svelte";
   import MountTrimAutoWizard from "@/tabs/configuration/MountTrimAutoWizard.svelte";
 
-  import PlaneSide from "./PlaneSide.svelte";
+  import CarSide from "./CarSide.svelte";
 
   const wiz = getContext("setupWizard");
 
-  let tailWheel = $state(null);
   let calibrating = $state(false);
   let calibrated = $state(false);
   let alignmentDirty = $state(false);
@@ -85,31 +84,9 @@
   <div class="note">{$i18n.t("setupWizardSensorsNoAcc")}</div>
 {/if}
 
-<fieldset class="question">
-  <legend>{$i18n.t("setupWizardSensorsTailWheelQuestion")}</legend>
-  <div class="choices">
-    {#each [{ value: true, scene: "taildragger", label: "setupWizardYes" }, { value: false, scene: "tricycle", label: "setupWizardNo" }] as choice (choice.value)}
-      <label class={["choice", tailWheel === choice.value && "selected"]}>
-        <input
-          type="radio"
-          name="tail-wheel"
-          value={choice.value}
-          bind:group={tailWheel}
-        />
-        <PlaneSide scene={choice.scene} />
-        <span class="choice-label">{$i18n.t(choice.label)}</span>
-      </label>
-    {/each}
-  </div>
-</fieldset>
-
-{#if tailWheel}
-  <div class="note">{$i18n.t("setupWizardSensorsTailWheelNote")}</div>
-{/if}
-
 <ol class="tasks">
   <li class={["task", calibrated && "complete"]}>
-    <div class="art"><PlaneSide scene="level" /></div>
+    <div class="art"><CarSide scene="level" /></div>
     <div class="task-text">
       <span class="task-title">
         {$i18n.t("setupWizardSensorsAccTitle")}
@@ -133,7 +110,7 @@
     </button>
   </li>
   <li class="task">
-    <div class="art"><PlaneSide scene="tailLift" /></div>
+    <div class="art"><CarSide scene="tailLift" /></div>
     <div class="task-text">
       <span class="task-title">{$i18n.t("setupWizardSensorsAlignTitle")}</span>
       <span>{$i18n.t("setupWizardSensorsAlignText")}</span>
@@ -154,7 +131,7 @@
     </button>
   </li>
   <li class="task">
-    <div class="art"><PlaneSide scene="flying" /></div>
+    <div class="art"><CarSide scene="driving" /></div>
     <div class="task-text">
       <span class="task-title">{$i18n.t("setupWizardSensorsLevelTitle")}</span>
       <span>{$i18n.t("setupWizardSensorsLevelText")}</span>
@@ -211,70 +188,6 @@
     background-color: var(--color-surface-sunken);
     border-radius: var(--radius-xs);
     max-width: 70ch;
-  }
-
-  //// Tail wheel question: two picture tiles.
-
-  .question {
-    border: none;
-    padding: 0;
-    margin: 0;
-    min-width: 0;
-
-    legend {
-      padding: 0;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-  }
-
-  .choices {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .choice {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    width: 180px;
-    padding: 12px 14px 10px;
-    border: 1px solid var(--color-border-soft);
-    border-radius: var(--radius-md);
-    background-color: var(--color-surface-sunken);
-    cursor: pointer;
-    transition:
-      border-color var(--animation-speed),
-      background-color var(--animation-speed),
-      box-shadow var(--animation-speed);
-
-    &:hover {
-      border-color: var(--color-border);
-    }
-
-    &:has(input:focus-visible) {
-      box-shadow: 0 0 0 3px var(--color-focus-ring);
-    }
-
-    &.selected {
-      border-color: var(--color-accent-500);
-      background-color: var(--color-accent-soft);
-      box-shadow: inset 0 0 0 1px var(--color-accent-500);
-    }
-
-    // Kept for keyboard and screen readers; the tile is the visible control.
-    input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-  }
-
-  .choice-label {
-    font-weight: 600;
   }
 
   //// Tasks: one card each, picture / text / button.

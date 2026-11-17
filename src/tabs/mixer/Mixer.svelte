@@ -155,6 +155,7 @@
 
   function onWizardApply(options) {
     FC.MIXER_RULES = Mixer.buildRuleTableFromOptions(options, FC.MIXER_RULES);
+    Mixer.ensureSignedThrottle(FC.MIXER_INPUTS);
     assignServoNames(FC.MIXER_RULES);
   }
 

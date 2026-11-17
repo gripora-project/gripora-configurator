@@ -2,8 +2,22 @@ import semver from "semver";
 import { API_VERSION_22_5 } from "@/js/configurator.svelte.js";
 import { FC } from "@/js/fc.svelte.js";
 import { withServoName } from "@/js/ServoNames.js";
+import {
+    CAR_DEFAULT_OPTIONS,
+    buildCarRules,
+    carOptionsFromRules,
+    ensureSignedThrottle,
+} from "@/js/carMixer.js";
 
 export const Mixer = {
+
+    // Firmware whose MSP_MIXER_CONFIG carries yaw_gyro_reverse (it reverses
+    // the yaw gyro for the steering loop only; board orientation and the
+    // attitude estimate are untouched). Detected by the field being present
+    // in the reply rather than by version. The Virtual FC has it too.
+    hasYawGyroReverse: function () {
+        return FC.MIXER_CONFIG.yaw_gyro_reverse != null;
+    },
 
     // API 22.5: 24 RC channels, where older firmware has 18.
     has24Channels: function () {
@@ -170,8 +184,8 @@ export const Mixer = {
         return Math.max(0, Math.min(this.SERVO_OUTPUT_COUNT, reported));
     },
 
-    // Servo outputs a model setup would use that aren't sent anywhere, so
-    // the surfaces on them would never move. buildWizardRules() numbers
+    // Servo outputs a car setup would use that aren't sent anywhere, so
+    // the steering on them would never move. buildWizardRules() numbers
     // servos from 1, so it's every one past servoCount(). Returns
     // { needed, available, missing }, or null while the count is unknown.
     missingServoOutputs: function (options)
@@ -329,74 +343,25 @@ export const Mixer = {
     //// Model types
     //
     // Mirrors mixerConfig_t.model_type in firmware (pg/mixer.h) -- purely
-    // descriptive there, but here it also drives which simplified sub-options
-    // the Mixer tab shows and what those sub-options mean in terms of
-    // buildWizardRules' {layout, ailerons, tailControl, wingYaw} option
-    // shape. Every type but CUSTOM exposes flaps/motors/diffThrustYaw
-    // identically (see SimplifiedMixerForm.svelte), so those aren't modeled
-    // here. Each of ailerons/tailControl/wingYaw is either omitted (not
-    // applicable to this layout), `{ fixed }` (forced, no control shown), or
-    // `{ options, default }` (user picks from a Select).
+    // descriptive there. Here it picks the Mixer tab's view: CAR shows the
+    // simplified car setup (steering, ESC, optional rear steering and second
+    // ESC, see carMixer.js), CUSTOM the raw rule editor.
 
-    MODEL_TYPE_REGULAR_AIRPLANE: 0,
-    MODEL_TYPE_FLYING_WING: 1,
-    MODEL_TYPE_V_TAIL_AIRPLANE: 2,
-    MODEL_TYPE_DELTA_WING: 3,
-    MODEL_TYPE_RUDDER_ELEVATOR_TRAINER: 4,
-    MODEL_TYPE_CUSTOM: 5,
+    MODEL_TYPE_CAR: 0,
+    MODEL_TYPE_CUSTOM: 1,
 
     MODEL_TYPES: [
         {
             value: 0,
-            key: 'REGULAR_AIRPLANE',
-            labelKey: 'mixerModelTypeRegularAirplane',
-            images: ['conventional_shape', 'conventional_aileron', 'conventional_normal_tail'],
-            layout: 'conventional',
-            ailerons: { options: ['none', 'single', 'independent'], default: 'independent' },
-            tailControl: { options: ['elevatorOnly', 'elevatorRudder'], default: 'elevatorRudder' },
+            key: 'CAR',
+            labelKey: 'mixerModelTypeCar',
+            car: true,
         },
         {
             value: 1,
-            key: 'FLYING_WING',
-            labelKey: 'mixerModelTypeFlyingWing',
-            images: ['flying_wing_shape', 'flying_wing_aileron'],
-            layout: 'flyingWing',
-            wingYaw: { options: ['none', 'rudder'], default: 'rudder' },
-        },
-        {
-            value: 2,
-            key: 'V_TAIL_AIRPLANE',
-            labelKey: 'mixerModelTypeVTailAirplane',
-            images: ['conventional_shape', 'conventional_aileron', 'conventional_v_tail'],
-            layout: 'conventional',
-            ailerons: { options: ['none', 'single', 'independent'], default: 'independent' },
-            tailControl: { fixed: 'vtail' },
-        },
-        {
-            value: 3,
-            key: 'DELTA_WING',
-            labelKey: 'mixerModelTypeDeltaWing',
-            // No distinct delta-wing silhouette asset exists yet -- reuses
-            // flying-wing art (the elevon rule generation is identical).
-            // Cosmetic approximation until dedicated art is added.
-            images: ['flying_wing_shape', 'flying_wing_aileron'],
-            layout: 'flyingWing',
-            wingYaw: { options: ['none', 'rudder'], default: 'rudder' },
-        },
-        {
-            value: 4,
-            key: 'RUDDER_ELEVATOR_TRAINER',
-            labelKey: 'mixerModelTypeRudderElevatorTrainer',
-            images: ['conventional_shape', 'conventional_normal_tail'],
-            layout: 'conventional',
-            ailerons: { fixed: 'none' },
-            tailControl: { fixed: 'elevatorRudder' },
-        },
-        {
-            value: 5,
             key: 'CUSTOM',
             labelKey: 'mixerModelTypeCustom',
-            images: [],
+            car: false,
         },
     ],
 
@@ -405,9 +370,9 @@ export const Mixer = {
         return Mixer.MODEL_TYPES.find((t) => t.value === value) || Mixer.MODEL_TYPES[0];
     },
 
-    // Shared by the Custom-mode wizard dialog and the named-model-type
-    // simplified form -- both stage a freshly generated rule set into a
-    // rule table padded/truncated to match the currently loaded rule count.
+    // Shared by the Custom-mode preset dialog and the car setup dialog --
+    // both stage a freshly generated rule set into a rule table padded/
+    // truncated to match the currently loaded rule count.
     buildRuleTableFromOptions: function (options, currentRules)
     {
         const generatedRules = Mixer.buildWizardRules(options);
@@ -423,157 +388,30 @@ export const Mixer = {
         return nextRules;
     },
 
-    //// Mixer setup wizard
+    //// Car setup
     //
-    // Composes a starting rule set from a handful of orthogonal airframe
-    // choices, rather than picking from a flat list of named presets. The
-    // result is a starting point loaded into the editable rule table — not
-    // applied directly. Servo/motor numbers and directions are typically
-    // still adjusted by the user afterwards to match their airframe.
+    // Options: { rearSteering, rearMode: 'opposite' | 'same', rearPercent,
+    // secondEsc } (CAR_DEFAULT_OPTIONS). The result is loaded into the
+    // editable rule table, not sent; servo directions are set afterwards
+    // with servo reverse.
+
+    CAR_DEFAULT_OPTIONS,
 
     buildWizardRules : function (options)
     {
-        const rules = [];
-        let nextServo = 1;
-        let nextMotor = Mixer.MOTOR_OUTPUT_OFFSET;
-        // Every output that ends up carrying pitch, across whichever layout
-        // ran below -- the flap compensation rule(s) further down ADD onto
-        // all of these, since a flap-induced pitching moment shows up on
-        // every pitch-controlling surface (both v-tail halves, both
-        // elevons, ...), not just a single named "elevator" servo.
-        const pitchOutputs = [];
-        // Independent aileron outputs, which flaperons drive as flaps.
-        const aileronOutputs = [];
+        return buildCarRules(options);
+    },
 
-        function rule(oper, src, dst, weight, reverse, role)
-        {
-            const w = reverse ? -weight : weight;
-            return { oper, src, dst, offset: 0, weight: w, weightNeg: w, speed: 0, curve: 0, condition: 0, role: role || 0 };
-        }
+    // The car options that produced `rules`, or null if they aren't a car
+    // preset (hand-edited, or from Custom).
+    carOptionsFromRules : function (rules)
+    {
+        return carOptionsFromRules(rules);
+    },
 
-        const OP_SET = Mixer.OP_SET, OP_ADD = Mixer.OP_ADD;
-        const ROLL = 1, PITCH = 2, YAW = 3, THROTTLE = 4, RC_AUX1 = 13;
-        // MIXER_IN_STABILIZED_TV_ROLL/PITCH/YAW -- appended at the tail of
-        // firmware's MIXER_IN_* enum (pg/mixer.h), after RC_CHANNEL_18.
-        const TV_ROLL = 27, TV_PITCH = 28, TV_YAW = 29;
-
-        if (options.layout === 'conventional') {
-            if (options.ailerons === 'single') {
-                rules.push(rule(OP_SET, ROLL, nextServo++, 1000));
-            } else if (options.ailerons === 'independent') {
-                const leftAileron = nextServo++, rightAileron = nextServo++;
-                rules.push(rule(OP_SET, ROLL, leftAileron, 1000));
-                rules.push(rule(OP_SET, ROLL, rightAileron, 1000, true));
-                aileronOutputs.push(leftAileron, rightAileron);
-            }
-
-            if (options.tailControl === 'elevatorOnly') {
-                const elevator = nextServo++;
-                rules.push(rule(OP_SET, PITCH, elevator, 1000));
-                pitchOutputs.push(elevator);
-            } else if (options.tailControl === 'elevatorRudder') {
-                const elevator = nextServo++;
-                rules.push(rule(OP_SET, PITCH, elevator, 1000));
-                pitchOutputs.push(elevator);
-                rules.push(rule(OP_SET, YAW,   nextServo++, 1000));
-            } else if (options.tailControl === 'vtail') {
-                const rightTail = nextServo++, leftTail = nextServo++;
-                rules.push(rule(OP_SET, YAW,   rightTail, 1000));
-                rules.push(rule(OP_ADD, PITCH, rightTail, 1000));
-                rules.push(rule(OP_SET, YAW,   leftTail, 1000, true));
-                rules.push(rule(OP_ADD, PITCH, leftTail, 1000));
-                pitchOutputs.push(rightTail, leftTail);
-            }
-        } else if (options.layout === 'flyingWing') {
-            const leftElevon = nextServo++, rightElevon = nextServo++;
-            rules.push(rule(OP_SET, PITCH, leftElevon, 1000));
-            rules.push(rule(OP_ADD, ROLL,  leftElevon, 1000));
-            rules.push(rule(OP_SET, PITCH, rightElevon, 1000));
-            rules.push(rule(OP_ADD, ROLL,  rightElevon, 1000, true));
-            pitchOutputs.push(leftElevon, rightElevon);
-
-            if (options.wingYaw === 'rudder') {
-                rules.push(rule(OP_SET, YAW, nextServo++, 1000));
-            }
-        }
-
-        // flapServos 0 means flaperons: no flap servos, the ailerons droop
-        // on the flap channel instead. Only possible with independent
-        // ailerons, so it falls back to no flaps without them.
-        const flaperons = options.flaps && options.flapServos === 0;
-        const flaps = flaperons ? aileronOutputs.length === 2 : options.flaps;
-
-        if (flaps) {
-            if (flaperons) {
-                // Same channel and shape as a flap servo, ADDed onto the
-                // roll mix at half weight so full flap still leaves roll
-                // travel. Same sign on both sides: roll drives the two
-                // ailerons with opposite weights, so once their directions
-                // are set a positive output moves either trailing edge down.
-                aileronOutputs.forEach((output) => {
-                    rules.push(rule(OP_ADD, RC_AUX1, output, 500));
-                });
-            } else if (options.flapServos >= 2) {
-                const leftFlap = nextServo++, rightFlap = nextServo++;
-                rules.push(rule(OP_SET, RC_AUX1, leftFlap, 1000));
-                rules.push(rule(OP_SET, RC_AUX1, rightFlap, 1000));
-
-                // Flaps that follow the ailerons (a 4-servo wing): roll
-                // ADDed at half weight on top of the flap position, with
-                // the same left/right signs as the aileron rules. The flap
-                // channel's sign already makes a positive output move each
-                // flap down, so the roll mix comes out right once the flap
-                // directions are set. Needs independent ailerons to have a
-                // left and right side to follow.
-                if (options.flapsFollowAilerons && aileronOutputs.length === 2) {
-                    rules.push(rule(OP_ADD, ROLL, leftFlap, 500));
-                    rules.push(rule(OP_ADD, ROLL, rightFlap, 500, true));
-                }
-            } else {
-                rules.push(rule(OP_SET, RC_AUX1, nextServo++, 1000));
-            }
-
-            // Flap-induced pitching moment otherwise gets silently absorbed
-            // by the rate loop's I-term until it saturates at low airspeed
-            // during the flare -- see the flap-compensation writeup. Starts
-            // at zero weight (a placeholder to tune in, not a guessed
-            // default) and is tagged so it stays findable regardless of
-            // where it ends up in the table.
-            pitchOutputs.forEach((output) => {
-                rules.push(rule(OP_ADD, RC_AUX1, output, 0, false, Mixer.ROLE_FLAP_COMPENSATION));
-            });
-        }
-
-        let motor1;
-        if (options.motors >= 1) {
-            motor1 = nextMotor++;
-            rules.push(rule(OP_SET, THROTTLE, motor1, 1000));
-        }
-        if (options.motors >= 2) {
-            const motor2 = nextMotor;
-            rules.push(rule(OP_SET, THROTTLE, motor2, 1000));
-
-            if (options.diffThrustYaw) {
-                rules.push(rule(OP_ADD, YAW, motor1, 500, false, Mixer.ROLE_DIFFERENTIAL_THRUST_YAW));
-                rules.push(rule(OP_ADD, YAW, motor2, 500, true,  Mixer.ROLE_DIFFERENTIAL_THRUST_YAW));
-            }
-        }
-
-        // Thrust vectoring mounts vary -- 2-axis gimbals (commonly pitch+yaw,
-        // but roll+yaw and others exist too), single-axis, or full 3-axis --
-        // so each axis is wired independently rather than assuming a fixed
-        // combination.
-        if (options.thrustVectorRoll) {
-            rules.push(rule(OP_SET, TV_ROLL, nextServo++, 1000));
-        }
-        if (options.thrustVectorPitch) {
-            rules.push(rule(OP_SET, TV_PITCH, nextServo++, 1000));
-        }
-        if (options.thrustVectorYaw) {
-            rules.push(rule(OP_SET, TV_YAW, nextServo, 1000));
-        }
-
-        return rules;
+    ensureSignedThrottle : function (mixerInputs)
+    {
+        return ensureSignedThrottle(mixerInputs);
     },
 
     isNullRule : function (a) {

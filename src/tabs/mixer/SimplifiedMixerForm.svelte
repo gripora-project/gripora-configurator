@@ -3,6 +3,7 @@
   import { i18n } from "@/js/i18n.js";
   import { Mixer } from "@/js/Mixer.js";
 
+  import CarDiagram from "./CarDiagram.svelte";
   import ModelSetupDialog from "./ModelSetupDialog.svelte";
   import { clampInt } from "./util.js";
   import {
@@ -13,6 +14,29 @@
   } from "@/tabs/adjustments/adjustmentState.js";
 
   let modelType = $derived(Mixer.modelTypeInfo(FC.MIXER_CONFIG.model_type));
+
+  // The car options the loaded rules match, or null when they've been
+  // changed by hand (left over from Custom, say).
+  let carOptions = $derived(Mixer.carOptionsFromRules(FC.MIXER_RULES));
+
+  let carSummary = $derived.by(() => {
+    if (!carOptions) return [];
+    const lines = [$i18n.t("mixerCarSummaryBase")];
+    if (carOptions.rearSteering) {
+      lines.push(
+        $i18n.t(
+          carOptions.rearMode === "same"
+            ? "mixerCarSummaryRearSame"
+            : "mixerCarSummaryRearOpposite",
+          { 1: carOptions.rearPercent },
+        ),
+      );
+    }
+    if (carOptions.secondEsc) {
+      lines.push($i18n.t("mixerCarSummarySecondEsc"));
+    }
+    return lines;
+  });
 
   let dialogRef;
 
@@ -82,22 +106,37 @@
   });
 </script>
 
-{#if channelRows.length === 0}
-  <div class="empty">{$i18n.t("mixerChannelSummaryEmpty")}</div>
-{:else}
-  <div class="channelTable">
-    <div class="header-row">
-      <span>{$i18n.t("mixerChannelSummaryOutput")}</span>
-      <span>{$i18n.t("mixerChannelSummaryInput")}</span>
-    </div>
-    {#each channelRows as row (row.dst)}
-      <div class="row">
-        <span class="output">{row.outputLabel}</span>
-        <span class="input">{row.inputsText}</span>
+<div class="carRow">
+  <CarDiagram options={carOptions} size={150} />
+  <div class="carText">
+    {#if carOptions}
+      <ul class="carSummary">
+        {#each carSummary as line (line)}
+          <li>{line}</li>
+        {/each}
+      </ul>
+    {:else}
+      <p class="carEdited">{$i18n.t("mixerCarSummaryEdited")}</p>
+    {/if}
+
+    {#if channelRows.length === 0}
+      <div class="empty">{$i18n.t("mixerChannelSummaryEmpty")}</div>
+    {:else}
+      <div class="channelTable">
+        <div class="header-row">
+          <span>{$i18n.t("mixerChannelSummaryOutput")}</span>
+          <span>{$i18n.t("mixerChannelSummaryInput")}</span>
+        </div>
+        {#each channelRows as row (row.dst)}
+          <div class="row">
+            <span class="output">{row.outputLabel}</span>
+            <span class="input">{row.inputsText}</span>
+          </div>
+        {/each}
       </div>
-    {/each}
+    {/if}
   </div>
-{/if}
+</div>
 
 {#if compensationRules.length > 0}
   <div class="compensationTable">
@@ -149,6 +188,39 @@
 <ModelSetupDialog bind:this={dialogRef} />
 
 <style lang="scss">
+  .carRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .carText {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .carSummary {
+    margin: 0 0 12px;
+    padding-left: 1.2em;
+    font-size: 0.85rem;
+
+    li {
+      margin: 2px 0;
+    }
+  }
+
+  .carEdited {
+    margin: 0 0 12px;
+    color: var(--color-text-soft);
+    font-size: 0.85rem;
+  }
+
+  @media only screen and (max-width: 575px) {
+    .carRow {
+      flex-direction: column;
+    }
+  }
+
   .empty {
     padding: 16px 8px;
     color: var(--color-text-soft);

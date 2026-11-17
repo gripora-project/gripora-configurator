@@ -311,7 +311,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each [...TRIM_BUTTONS].reverse() as b (b.button)}
+      {#each TRIM_BUTTONS.filter( (b) => AXES.includes(b.axis), ).reverse() as b (b.button)}
         <tr>
           <td>{b.button}</td>
           <td>{b.weight}%</td>
@@ -487,7 +487,7 @@
     {#if buttonsChannel !== null}
       <p class="muted">{$i18n.t("setupWizardTrimButtonsCheck")}</p>
       <div class="buttons-check">
-        {#each [...TRIM_BUTTONS].reverse() as b (b.button)}
+        {#each TRIM_BUTTONS.filter( (b) => AXES.includes(b.axis), ).reverse() as b (b.button)}
           <span class={["button-chip", pressed === b && "lit"]}>
             <span class="chip-button">{b.button}</span>
             <span class="chip-trim">{buttonLabel(b)}</span>

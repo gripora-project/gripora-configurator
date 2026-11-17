@@ -6,6 +6,8 @@
   import HelpIcon from "@/components/HelpIcon.svelte";
   import NumberInput from "@/components/NumberInput.svelte";
   import Select from "@/components/Select.svelte";
+  import Switch from "@/components/Switch.svelte";
+  import { Mixer } from "@/js/Mixer.js";
 
   import {
     rateToPercent,
@@ -14,13 +16,15 @@
     AXIS_GAIN_MAX,
   } from "./util.js";
 
-  // Indices into FC.MIXER_INPUTS for the three stabilized axes -- matches the
-  // firmware's MIXER_IN_STABILIZED_ROLL/PITCH/YAW wire order (Mixer.inputNames).
-  const AXES = [
-    { key: "roll", index: 1, labelKey: "mixerAxisGainRoll" },
-    { key: "pitch", index: 2, labelKey: "mixerAxisGainPitch" },
-    { key: "yaw", index: 3, labelKey: "mixerAxisGainYaw" },
-  ];
+  // Index into FC.MIXER_INPUTS of the stabilized axis shown -- the
+  // firmware's MIXER_IN_STABILIZED_YAW (Mixer.inputNames). A car only
+  // stabilises yaw (steering), so roll and pitch (inputs 1 and 2) aren't
+  // shown; their rates are left as loaded and sent back unchanged.
+  const AXES = [{ key: "yaw", index: 3, labelKey: "mixerAxisGainYaw" }];
+
+  // Steering loop's yaw gyro reversed (firmware yaw_gyro_reverse, when reported;
+  // in MSP_MIXER_CONFIG). Saved with the tab like model_type.
+  let canReverseGyro = $derived(Mixer.hasYawGyroReverse());
 
   function gain(index) {
     return rateToPercent(FC.MIXER_INPUTS[index]?.rate ?? 0);
@@ -53,6 +57,14 @@
     <span class="title">{$i18n.t("mixerAxisGainTitle")}</span>
     <div class="grow"></div>
     <HelpIcon>{$i18n.t("mixerAxisGainHelp")}</HelpIcon>
+  </div>
+{/snippet}
+
+{#snippet gyroHeader()}
+  <div class="header">
+    <span class="title">{$i18n.t("mixerGyroReverseTitle")}</span>
+    <div class="grow"></div>
+    <HelpIcon>{$i18n.t("mixerGyroReverseHelp")}</HelpIcon>
   </div>
 {/snippet}
 
@@ -107,6 +119,22 @@
       </tbody>
     </table>
   </Section>
+
+  {#if canReverseGyro}
+    <Section header={gyroHeader}>
+      <div class="gyro-row">
+        <Switch
+          id="yaw-gyro-reverse"
+          bind:checked={
+            () => !!FC.MIXER_CONFIG.yaw_gyro_reverse,
+            (v) => (FC.MIXER_CONFIG.yaw_gyro_reverse = v ? 1 : 0)
+          }
+        />
+        <label for="yaw-gyro-reverse">{$i18n.t("mixerGyroReverseLabel")}</label>
+      </div>
+      <p class="gyro-help">{$i18n.t("mixerGyroReverseHelp")}</p>
+    </Section>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -139,8 +167,27 @@
 
     td:first-child {
       padding-right: 12px;
-      width: 60px;
+      width: 70px;
     }
+  }
+
+  .gyro-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+
+    label {
+      font-weight: 600;
+    }
+  }
+
+  // Only the top margin: Section spaces its children with margin-bottom.
+  .gyro-help {
+    margin-top: 0;
+    padding: 0 4px;
+    color: var(--color-text-soft);
+    font-size: 0.8rem;
   }
 
   .unit {

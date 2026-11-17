@@ -2,92 +2,21 @@
   import { i18n } from "@/js/i18n.js";
   import { Mixer } from "@/js/Mixer.js";
   import WarningNote from "@/components/notes/WarningNote.svelte";
+  import CarOptionsForm from "./CarOptionsForm.svelte";
   import ServoOutputMeter from "./ServoOutputMeter.svelte";
-  import { isCrsfReceiver } from "@/tabs/receiver/protocols.js";
 
+  // Custom mode's "start from a preset": the car setup's rules, loaded into
+  // the rule table to edit from there.
   let { onApply } = $props();
 
   let dialogEl;
 
-  let layout = $state("conventional");
-  let ailerons = $state("independent");
-  let tailControl = $state("elevatorRudder");
-  let wingYaw = $state("rudder");
-  let flaps = $state(false);
-  // 1 or 2 flap servos, or 0 for flaperons (the ailerons droop instead).
-  let flapServos = $state(1);
-  // Two flap servos that also move with roll (a 4-servo wing).
-  let flapsFollowAilerons = $state(false);
-  let motors = $state(1);
-  let diffThrustYaw = $state(false);
-  // Flaperons need a separate servo on each aileron.
-  let canFlaperon = $derived(
-    layout === "conventional" && ailerons === "independent",
-  );
-
-  $effect(() => {
-    if (!canFlaperon && flapServos === 0) flapServos = 1;
-  });
-
-  function reset() {
-    layout = "conventional";
-    ailerons = "independent";
-    tailControl = "elevatorRudder";
-    wingYaw = "rudder";
-    flaps = false;
-    flapServos = 1;
-    flapsFollowAilerons = false;
-    motors = 1;
-    diffThrustYaw = false;
-  }
+  let options = $state({ ...Mixer.CAR_DEFAULT_OPTIONS });
 
   export function open() {
-    reset();
+    options = { ...Mixer.CAR_DEFAULT_OPTIONS };
     dialogEl.showModal();
   }
-
-  // All aircraft_shapes SVGs share the same viewBox and are layered in
-  // z-order -- shape first, then control surfaces on top.
-  let previewLayers = $derived.by(() => {
-    const layers = [];
-
-    if (layout === "flyingWing") {
-      layers.push("flying_wing_shape");
-      layers.push("flying_wing_aileron");
-
-      if (wingYaw === "rudder") layers.push("flying_wing_rudder");
-      if (flaps) layers.push("flying_wing_flaps");
-      if (motors === 1) layers.push("flying_wing_one_motor");
-      else if (motors === 2) layers.push("flying_wing_two_motor");
-    } else {
-      layers.push("conventional_shape");
-
-      if (ailerons !== "none") layers.push("conventional_aileron");
-      if (tailControl === "elevatorOnly")
-        layers.push("conventional_normal_tail_no_rudder");
-      else if (tailControl === "elevatorRudder")
-        layers.push("conventional_normal_tail");
-      else if (tailControl === "vtail") layers.push("conventional_v_tail");
-
-      if (flaps && flapServos !== 0) layers.push("conventional_flaps");
-      if (motors === 1) layers.push("conventional_one_motor");
-      else if (motors === 2) layers.push("conventional_dual_motor");
-    }
-
-    return layers;
-  });
-
-  let options = $derived({
-    layout,
-    ailerons,
-    tailControl,
-    wingYaw,
-    flaps,
-    flapServos,
-    flapsFollowAilerons,
-    motors,
-    diffThrustYaw,
-  });
 
   // Servo outputs these choices need that the board doesn't have, warned
   // about here while they can still be changed.
@@ -113,165 +42,11 @@
       })}
     </WarningNote>
   {/if}
-  <div class="wizardBody">
-    <div class="content">
-      <div class="wizardSection">
-        <div class="wizardSectionTitle">
-          {$i18n.t("mixerWizardLayoutTitle")}
-        </div>
-        <label class="wizardOption">
-          <input type="radio" bind:group={layout} value="conventional" />
-          <span>{$i18n.t("mixerWizardLayoutConventional")}</span>
-        </label>
-        <label class="wizardOption">
-          <input type="radio" bind:group={layout} value="flyingWing" />
-          <span>{$i18n.t("mixerWizardLayoutFlyingWing")}</span>
-        </label>
-      </div>
 
-      {#if layout === "conventional"}
-        <div class="wizardSection">
-          <div class="wizardSectionTitle">
-            {$i18n.t("mixerWizardAileronsTitle")}
-          </div>
-          <label class="wizardOption">
-            <input type="radio" bind:group={ailerons} value="none" />
-            <span>{$i18n.t("mixerWizardAileronsNone")}</span>
-          </label>
-          <label class="wizardOption">
-            <input type="radio" bind:group={ailerons} value="single" />
-            <span>{$i18n.t("mixerWizardAileronsSingle")}</span>
-          </label>
-          <label class="wizardOption">
-            <input type="radio" bind:group={ailerons} value="independent" />
-            <span>{$i18n.t("mixerWizardAileronsIndependent")}</span>
-          </label>
-        </div>
+  <CarOptionsForm bind:options />
 
-        <div class="wizardSection">
-          <div class="wizardSectionTitle">
-            {$i18n.t("mixerWizardTailTitle")}
-          </div>
-          <label class="wizardOption">
-            <input type="radio" bind:group={tailControl} value="elevatorOnly" />
-            <span>{$i18n.t("mixerWizardTailElevatorOnly")}</span>
-          </label>
-          <label class="wizardOption">
-            <input
-              type="radio"
-              bind:group={tailControl}
-              value="elevatorRudder"
-            />
-            <span>{$i18n.t("mixerWizardTailElevatorRudder")}</span>
-          </label>
-          <label class="wizardOption">
-            <input type="radio" bind:group={tailControl} value="vtail" />
-            <span>{$i18n.t("mixerWizardTailVTail")}</span>
-          </label>
-        </div>
-      {/if}
-
-      {#if layout === "flyingWing"}
-        <div class="wizardSection">
-          <div class="wizardSectionTitle">
-            {$i18n.t("mixerWizardWingYawTitle")}
-          </div>
-          <label class="wizardOption">
-            <input type="radio" bind:group={wingYaw} value="none" />
-            <span>{$i18n.t("mixerWizardWingYawNone")}</span>
-          </label>
-          <label class="wizardOption">
-            <input type="radio" bind:group={wingYaw} value="rudder" />
-            <span>{$i18n.t("mixerWizardWingYawRudder")}</span>
-          </label>
-        </div>
-      {/if}
-
-      <div class="wizardSection">
-        <div class="wizardSectionTitle">
-          {$i18n.t("mixerWizardFlapsTitle")}
-        </div>
-        <label class="wizardOption">
-          <input type="checkbox" bind:checked={flaps} />
-          <span>{$i18n.t("mixerWizardFlapsEnable")}</span>
-        </label>
-        {#if flaps}
-          <label class="wizardOption">
-            <input type="radio" bind:group={flapServos} value={1} />
-            <span>{$i18n.t("mixerWizardFlapServos1")}</span>
-          </label>
-          <label class="wizardOption">
-            <input type="radio" bind:group={flapServos} value={2} />
-            <span>{$i18n.t("mixerWizardFlapServos2")}</span>
-          </label>
-          {#if canFlaperon && flapServos === 2}
-            <label class="wizardOption wizardSubOption">
-              <input type="checkbox" bind:checked={flapsFollowAilerons} />
-              <span>{$i18n.t("mixerWizardFlapsFollowAilerons")}</span>
-            </label>
-          {/if}
-          {#if canFlaperon}
-            <label class="wizardOption">
-              <input type="radio" bind:group={flapServos} value={0} />
-              <span>{$i18n.t("mixerWizardFlaperons")}</span>
-            </label>
-          {/if}
-          <div class="wizardHint">
-            {$i18n.t("mixerWizardFlapsCompensationHint")}
-          </div>
-          <div class="wizardHint">
-            {$i18n.t("mixerWizardFlapsChannelHint")}
-          </div>
-          {#if isCrsfReceiver()}
-            <WarningNote message="mixerWizardFlapsElrsWarning" />
-          {/if}
-        {/if}
-      </div>
-
-      <div class="wizardSection">
-        <div class="wizardSectionTitle">
-          {$i18n.t("mixerWizardMotorsTitle")}
-        </div>
-        <label class="wizardOption">
-          <input type="radio" bind:group={motors} value={0} />
-          <span>{$i18n.t("mixerWizardMotors0")}</span>
-        </label>
-        <label class="wizardOption">
-          <input type="radio" bind:group={motors} value={1} />
-          <span>{$i18n.t("mixerWizardMotors1")}</span>
-        </label>
-        <label class="wizardOption">
-          <input type="radio" bind:group={motors} value={2} />
-          <span>{$i18n.t("mixerWizardMotors2")}</span>
-        </label>
-      </div>
-
-      {#if motors === 2}
-        <div class="wizardSection">
-          <label class="wizardOption">
-            <input type="checkbox" bind:checked={diffThrustYaw} />
-            <span>{$i18n.t("mixerWizardDiffThrust")}</span>
-          </label>
-          <div class="wizardHint">{$i18n.t("mixerWizardDiffThrustHint")}</div>
-        </div>
-      {/if}
-
-      <div class="note">
-        <p>{$i18n.t("mixerWizardOverwriteWarning")}</p>
-      </div>
-    </div>
-
-    <div class="wizardPreview">
-      <div class="wizardPreviewLayers">
-        {#each previewLayers as name (name)}
-          <img
-            src="/images/aircraft_shapes/{name}.svg"
-            alt=""
-            aria-hidden="true"
-          />
-        {/each}
-      </div>
-    </div>
+  <div class="note">
+    <p>{$i18n.t("mixerWizardOverwriteWarning")}</p>
   </div>
 
   <div class="buttons">
@@ -286,88 +61,13 @@
 
 <style lang="scss">
   dialog {
-    width: 54em;
+    width: 44em;
     max-width: calc(100vw - 2em);
     border-radius: var(--radius-lg);
   }
 
   h3 {
     margin-bottom: 0.5em;
-  }
-
-  .wizardBody {
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-  }
-
-  .content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .wizardSection {
-    margin-bottom: 12px;
-    padding: 10px 12px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    background: var(--color-surface-float, var(--color-surface));
-  }
-
-  .wizardSectionTitle {
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  .wizardOption {
-    display: block;
-    margin: 4px 0;
-    font-weight: normal;
-
-    input {
-      display: inline-block;
-      width: auto;
-      margin-right: 6px;
-      vertical-align: middle;
-    }
-  }
-
-  // Depends on the option above it.
-  .wizardSubOption {
-    margin-left: 1.6em;
-  }
-
-  .wizardHint {
-    color: var(--color-text-soft);
-    font-size: 0.7rem;
-    margin-top: 4px;
-  }
-
-  .wizardPreview {
-    width: 340px;
-    flex-shrink: 0;
-  }
-
-  // All aircraft_shapes SVGs share the same viewBox (103.58 x 48.52 mm)
-  .wizardPreviewLayers {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 103.58047 / 48.517796;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    padding: 10px;
-    box-sizing: border-box;
-    background: var(--color-surface-float, var(--color-surface));
-
-    img {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      width: calc(100% - 20px);
-      height: calc(100% - 20px);
-      display: block;
-    }
   }
 
   .buttons {
@@ -384,14 +84,6 @@
   @media only screen and (max-width: 575px) {
     dialog {
       width: calc(100% - 2em);
-    }
-
-    .wizardBody {
-      flex-direction: column;
-    }
-
-    .wizardPreview {
-      width: 100%;
     }
   }
 </style>

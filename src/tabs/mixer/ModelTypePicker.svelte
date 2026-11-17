@@ -3,6 +3,7 @@
   import { i18n } from "@/js/i18n.js";
   import { Mixer } from "@/js/Mixer.js";
 
+  import CarDiagram from "./CarDiagram.svelte";
   import ModelTypeDialog from "./ModelTypeDialog.svelte";
   import ModelSetupDialog from "./ModelSetupDialog.svelte";
 
@@ -16,6 +17,8 @@
   let pendingValue = $state(null);
 
   let currentType = $derived(Mixer.modelTypeInfo(FC.MIXER_CONFIG.model_type));
+  // What the loaded rules set up, for the thumbnail (null: not a car preset).
+  let carOptions = $derived(Mixer.carOptionsFromRules(FC.MIXER_RULES));
 
   function onTypeSelected(type) {
     if (type.value === FC.MIXER_CONFIG.model_type) return;
@@ -27,10 +30,10 @@
       return;
     }
 
-    // Switching between named types (or from Custom into one) can leave the
-    // mix misaligned with the newly selected type unless rules are
-    // regenerated for it, so route through the same dialog used for
-    // "Edit Configuration" and only commit the type change if applied.
+    // Switching from Custom to Car can leave the mix misaligned with the car
+    // setup unless rules are regenerated for it, so route through the same
+    // dialog used for "Edit Configuration" and only commit the type change
+    // if applied.
     pendingValue = type.value;
     setupDialogRef.open(type);
   }
@@ -47,10 +50,9 @@
 
 <div class="current">
   <span class="thumb">
-    {#each currentType.images as name (name)}
-      <img src="/images/aircraft_shapes/{name}.svg" alt="" aria-hidden="true" />
-    {/each}
-    {#if currentType.images.length === 0}
+    {#if currentType.car}
+      <CarDiagram options={carOptions} size={56} />
+    {:else}
       <span class="customIcon" aria-hidden="true">&#9881;</span>
     {/if}
   </span>
@@ -77,18 +79,12 @@
   }
 
   .thumb {
-    position: relative;
-    width: 76px;
-    aspect-ratio: 103.58047 / 48.517796;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
     flex-shrink: 0;
-
-    img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
   }
 
   .customIcon {
@@ -106,7 +102,7 @@
   }
 
   // Deliberately understated -- this is a rarely-used action (changing the
-  // whole airframe type), not a primary control, so it shouldn't compete
+  // whole model type), not a primary control, so it shouldn't compete
   // visually with the actual mixer content below it.
   .changeBtn {
     background: none;

@@ -7,7 +7,6 @@
 
   import motorState from "@/tabs/motors/state.svelte.js";
 
-  import { AXES } from "./surfaces.js";
   import { matchingStyle } from "./styles.js";
 
   const wiz = getContext("setupWizard");
@@ -40,15 +39,6 @@
       : $i18n.t("setupWizardFinishEscTelemetryOff"),
   );
 
-  let throws = $derived(
-    AXES.filter((a) => wiz.surfaces.some((s) => s.axes[a.key]))
-      .map(
-        (a) =>
-          `${$i18n.t(`setupWizardAxis_${a.key}`)} ${wiz.axisGainPercent(a.key)}%`,
-      )
-      .join(", "),
-  );
-
   let style = $derived(matchingStyle(FC.RC_TUNING, FC.PID_PROFILE));
 
   let armAssigned = $derived(
@@ -78,9 +68,6 @@
   <dt>{$i18n.t("setupWizardFinishEscTelemetry")}</dt>
   <dd>{escTelemetry}</dd>
 
-  <dt>{$i18n.t("setupWizardFinishThrows")}</dt>
-  <dd>{throws || "–"}</dd>
-
   <dt>{$i18n.t("setupWizardFinishStyle")}</dt>
   <dd>
     {style
@@ -95,8 +82,6 @@
       : $i18n.t("setupWizardModesNotAssigned")}
   </dd>
 </dl>
-
-<div class="note">{$i18n.t("setupWizardFinishThrowsTune")}</div>
 
 <div class="before">
   <strong>{$i18n.t("setupWizardFinishBeforeTitle")}</strong>
@@ -146,14 +131,6 @@
       margin: 0;
       font-weight: 600;
     }
-  }
-
-  .note {
-    padding: 8px 12px;
-    border-left: 3px solid var(--color-yellow-500);
-    background-color: var(--color-surface);
-    border-radius: var(--radius-xs);
-    max-width: 70ch;
   }
 
   .before {

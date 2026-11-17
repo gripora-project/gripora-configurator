@@ -251,12 +251,12 @@ function encodeServoTrim() {
 }
 
 // Servo names (pg/servo_name.h), kept here rather than in FC: the Servos tab
-// clears FC.SERVO_NAMES before asking for them. Named like the default mixer's
-// four surfaces; a real FC starts with none.
+// clears FC.SERVO_NAMES before asking for them. Named like the default car's
+// steering servo; a real FC starts with none.
 const VIRTUAL_SERVO_COUNT = 24;
 const SERVO_NAME_BYTES = 8;
-const virtualServoNames = ["L AIL", "R AIL", "ELEV", "RUDDER"].concat(
-  Array(VIRTUAL_SERVO_COUNT - 4).fill(""),
+const virtualServoNames = ["STEER"].concat(
+  Array(VIRTUAL_SERVO_COUNT - 1).fill(""),
 );
 
 // MSP2_WING_SERVO_NAMES: count, name length, then each name zero-padded
@@ -1036,9 +1036,10 @@ export function applyVirtualConfig() {
     GainCurve.nullCurve(),
   );
 
-  // Mixer: pg/mixer.c defaults - regular airplane, 2 ailerons + elevator +
-  // rudder on S1-S4 and throttle on M1
-  FC.MIXER_CONFIG.model_type = 0;
+  // Mixer: pg/mixer.c defaults - a car, steering on S1 and a reversible ESC
+  // on M1
+  FC.MIXER_CONFIG.model_type = 0; // MODEL_TYPE_CAR
+  FC.MIXER_CONFIG.yaw_gyro_reverse = 0; // pidConfig_t.yaw_gyro_reverse
 
   FC.MIXER_INPUTS = Array.from({ length: 35 }, (_, i) => {
     if (i === 0) return { rate: 0, min: 0, max: 0 }; // MIXER_IN_NONE
@@ -1061,11 +1062,8 @@ export function applyVirtualConfig() {
     role: 0,
   });
   FC.MIXER_RULES = [
-    mixerRule(1, SERVO_OUTPUT + 0, 1000), // left aileron
-    mixerRule(1, SERVO_OUTPUT + 1, -1000), // right aileron
-    mixerRule(2, SERVO_OUTPUT + 2, 1000), // elevator
-    mixerRule(3, SERVO_OUTPUT + 3, 1000), // rudder
-    mixerRule(4, MOTOR_OUTPUT + 0, 1000), // motor
+    mixerRule(3, SERVO_OUTPUT + 0, 1000), // steering: stabilized yaw
+    mixerRule(4, MOTOR_OUTPUT + 0, 1000), // ESC: stabilized throttle, signed
   ];
   while (FC.MIXER_RULES.length < 32) {
     FC.MIXER_RULES.push({ ...mixerRule(0, 0, 0), oper: 0 });

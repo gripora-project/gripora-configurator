@@ -31,8 +31,6 @@
   import StepCentre from "./StepCentre.svelte";
   import StepDirection from "./StepDirection.svelte";
   import StepLimits from "./StepLimits.svelte";
-  import StepThrows from "./StepThrows.svelte";
-  import StepTravel from "./StepTravel.svelte";
   import StepGyro from "./StepGyro.svelte";
   import StepTrimGain from "./StepTrimGain.svelte";
   import StepModes from "./StepModes.svelte";
@@ -40,14 +38,14 @@
   import StepFinish from "./StepFinish.svelte";
 
   // Order is the procedure: each step relies on the ones before it (the
-  // airframe says which servo is which surface, limits come before throws,
-  // throws before the tune). See the "Set Up Your Aircraft" docs page.
+  // model step says which servo steers and which output is the ESC, the
+  // steering direction comes before the gyro check).
   const STEPS = [
     { key: "sensors", component: StepSensors },
     // Before anything that uses the sticks or the PASSTHROUGH switch.
     { key: "receiver", component: StepReceiver },
-    // Optional. Before the airframe, because a bus output is what gives the
-    // model more servos than the board has pins for.
+    // Optional. Before the model step, because a bus output is what gives
+    // the car more servos than the board has pins for.
     { key: "busOutput", component: StepBusOutput },
     { key: "airframe", component: StepAirframe },
     { key: "servoType", component: StepServoType },
@@ -57,8 +55,6 @@
     { key: "centre", component: StepCentre },
     { key: "direction", component: StepDirection },
     { key: "limits", component: StepLimits },
-    { key: "throws", component: StepThrows },
-    { key: "travel", component: StepTravel },
     { key: "gyro", component: StepGyro },
     { key: "trimGain", component: StepTrimGain },
     { key: "modes", component: StepModes },

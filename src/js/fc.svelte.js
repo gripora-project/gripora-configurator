@@ -227,6 +227,9 @@ class FlightController {
       bus_servo_output_count:     0,
       // Update rate of every PWM servo output, Hz (servo_pwm_rate)
       servo_pwm_rate:             50,
+      // Steering loop uses the yaw gyro rate negated (0/1); null when the
+      // firmware's MSP_MIXER_CONFIG doesn't carry it (detected by length)
+      yaw_gyro_reverse:           null,
     };
 
     this.MIXER_INPUTS =             [];

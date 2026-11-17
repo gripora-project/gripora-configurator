@@ -1,7 +1,9 @@
 <script>
   import { getContext } from "svelte";
 
+  import { FC } from "@/js/fc.svelte.js";
   import { i18n } from "@/js/i18n.js";
+  import { Mixer } from "@/js/Mixer.js";
 
   import LivePulse from "./LivePulse.svelte";
   import GyroCheckArt from "./GyroCheckArt.svelte";
@@ -18,6 +20,29 @@
   let checks = $derived(
     CHECKS.filter((axis) => wiz.surfaces.some((s) => s.axes[axis])),
   );
+
+  //// Gyro the wrong way round. With the steering direction already right
+  //// (Direction step), the gyro can only correct the wrong way if its yaw
+  //// is reversed for the steering loop. yaw_gyro_reverse (firmware
+  //// pidConfig_t, sent in MSP_SET_MIXER_CONFIG) negates the yaw rate the
+  //// steering PID uses and nothing else: board orientation and the attitude
+  //// estimate stay as they are. It works at once, so the check is simply
+  //// done again; Save writes it to EEPROM. Servo reverse or the steering
+  //// Invert would also reverse the stick, so neither can fix this.
+
+  let canReverse = $derived(Mixer.hasYawGyroReverse());
+  let reversed = $derived(!!FC.MIXER_CONFIG.yaw_gyro_reverse);
+  // Toggled on this visit: shows the "check again" note.
+  let toggled = $state(false);
+
+  function toggleGyroReverse() {
+    FC.MIXER_CONFIG.yaw_gyro_reverse = reversed ? 0 : 1;
+    mspHelper.sendMixerConfig();
+    wiz.markChanged();
+    toggled = true;
+    // Check again with the new direction.
+    delete results.yaw;
+  }
 </script>
 
 <p>{$i18n.t("setupWizardGyroIntro")}</p>
@@ -68,8 +93,31 @@
   {/each}
 </ol>
 
-{#if Object.values(results).includes("wrong")}
-  <div class="note">{$i18n.t("setupWizardGyroWrong")}</div>
+{#if Object.values(results).includes("wrong") || toggled || reversed}
+  <div class="note">
+    <span>
+      {$i18n.t(
+        canReverse ? "setupWizardGyroWrong" : "setupWizardGyroWrongOldFirmware",
+      )}
+    </span>
+    {#if canReverse}
+      <div class="flip">
+        <button class="btn" onclick={toggleGyroReverse}>
+          {reversed
+            ? $i18n.t("setupWizardGyroReverseOff")
+            : $i18n.t("setupWizardGyroReverseOn")}
+        </button>
+        <span class={["muted", reversed && "on"]}>
+          {reversed
+            ? $i18n.t("setupWizardGyroReversedNow")
+            : $i18n.t("setupWizardGyroNormalNow")}
+        </span>
+      </div>
+      {#if toggled}
+        <span class="muted">{$i18n.t("setupWizardGyroCheckAgain")}</span>
+      {/if}
+    {/if}
+  </div>
 {/if}
 
 <div class="live">
@@ -205,7 +253,28 @@
     font-size: 0.85em;
   }
 
+  .flip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin-top: 10px;
+  }
+
+  .muted {
+    color: var(--color-text-soft);
+    font-size: 0.9em;
+
+    &.on {
+      color: var(--color-accent-500);
+      font-weight: 600;
+    }
+  }
+
   .note {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     padding: 10px 14px;
     border-left: 4px solid var(--color-status-bad);
     background-color: var(--color-surface-sunken);
