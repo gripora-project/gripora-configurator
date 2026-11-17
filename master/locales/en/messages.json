@@ -470,9 +470,6 @@
     "tabProfiles": {
         "message": "Profiles"
     },
-    "tabThrustVector": {
-        "message": "Thrust Vector"
-    },
     "tabRates": {
         "message": "Rates"
     },
@@ -844,9 +841,6 @@
     },
     "tabAuxiliary": {
         "message": "Modes"
-    },
-    "tabGpsNav": {
-        "message": "GPS Navigation"
     },
     "tabGroupSetup": {
         "message": "Setup"
@@ -1610,7 +1604,7 @@
         "description": "Message that pops up to describe the CRASH arming disable flag"
     },
     "statusArmingDisableFlagsTooltipTHROTTLE": {
-        "message": "Throttle channel is too high",
+        "message": "Throttle is not at neutral. Centre the throttle stick to arm",
         "description": "Message that pops up to describe the THROTTLE arming disable flag"
     },
     "statusArmingDisableFlagsTooltipANGLE": {
@@ -2425,9 +2419,6 @@
     "dialogCopyRateProfileText": {
         "message": "Copy values from the current rateprofile to"
     },
-    "dialogCopyTvProfileText": {
-        "message": "Copy values from the current TV profile to"
-    },
     "dialogCopyProfileTitle": {
         "message": "Copy Profile Values"
     },
@@ -2646,7 +2637,7 @@
         "message": "The throttle channel value where throttle is considered 0%."
     },
     "receiverHelpZeroThrottle2": {
-        "message": "<p>The throttle channel value where throttle is considered 0%.</p><p><strong>Note:</strong> The throttle channel must be able to move at least 10µs below this value to signal throttle off and allow arming.</p>"
+        "message": "<p>The throttle channel value where throttle is considered 0%.</p><p><strong>Note:</strong> Throttle is signed around the stick centre: forward above it, brake/reverse below it. To arm, the throttle stick must be at neutral (centre).</p>"
     },
     "receiverFullThrottle": {
         "message": "Max Throttle - 100%"
@@ -3156,16 +3147,10 @@
         "message": "Arming & Safety"
     },
     "auxiliaryGroupFlight": {
-        "message": "Flight Modes"
-    },
-    "auxiliaryGroupThrustVector": {
-        "message": "Thrust Vectoring"
+        "message": "Gyro"
     },
     "auxiliaryGroupGps": {
-        "message": "GPS & Navigation"
-    },
-    "auxiliaryGroupPower": {
-        "message": "Power"
+        "message": "GPS"
     },
     "auxiliaryGroupAlerts": {
         "message": "Beeper & Lights"
@@ -3614,9 +3599,6 @@
     },
     "adjustmentsGroupServoTrims": {
         "message": "Servo Trims"
-    },
-    "adjustmentsGroupThrustVector": {
-        "message": "Thrust Vector"
     },
     "adjustmentsGroupSetpointBoost": {
         "message": "Setpoint Boost"
@@ -4935,21 +4917,6 @@
     "mixerWizardDiffThrustHint": {
         "message": "Adds extra yaw authority by speeding up one motor and slowing the other, on top of normal throttle."
     },
-    "mixerWizardThrustVectorTitle": {
-        "message": "Thrust Vectoring"
-    },
-    "mixerWizardThrustVectorRoll": {
-        "message": "Roll"
-    },
-    "mixerWizardThrustVectorPitch": {
-        "message": "Pitch"
-    },
-    "mixerWizardThrustVectorYaw": {
-        "message": "Yaw"
-    },
-    "mixerWizardThrustVectorHint": {
-        "message": "Check whichever axes your vectored mount can actually drive -- adds a Stabilized TV servo rule for each one checked. These are driven by a second PID loop, tuned independently from the main Roll/Pitch/Yaw loop on the Thrust Vector tab, while the THRUST VECTOR mode is active."
-    },
     "mixerWizardOverwriteWarning": {
         "message": "Applying the wizard replaces all current mixer rules."
     },
@@ -5279,84 +5246,6 @@
     },
     "motorsMotorPolesHelp": {
         "message": "The <i>pole count</i> is the number of magnets on the motor bell. The manual should give this number. Or you can count the magnets. Do NOT count the stators with the copper wire windings."
-    },
-    "motorsSectionLabelGovernor": {
-        "message": "Governor"
-    },
-    "motorsGovernorModeNote": {
-        "message": "These values have no effect on their own. Assign the <i>GOVERNOR</i> switch to a channel in the <i>Modes</i> tab &mdash; engaging it is what actually holds the idle output or governs RPM, depending on the mode below."
-    },
-    "motorsGovernorMode": {
-        "message": "Mode"
-    },
-    "motorsGovernorModeHelp": {
-        "message": "<p><b>Off:</b> disables the governor entirely.</p><p><b>RPM Idle/Max:</b> holds the target idle RPM below handover throttle using motor RPM feedback, starting from the idle throttle floor so the ESC is not commanded to zero during a rapid throttle chop. Above handover, the optional max RPM limit can prevent overspeed.</p><p><b>Throttle Idle:</b> holds a fixed throttle percentage at idle. No RPM source is needed, but it will not correct for load or battery sag.</p><p><b>RPM Range:</b> maps the throttle stick to a target RPM range, from Min RPM at 0% to Max RPM at 100%, for governing engine speed through the whole flight.</p><p><b>RPM source:</b> RPM modes require bidirectional DShot telemetry, ESC telemetry, or a frequency sensor.</p>"
-    },
-    "motorsGovernorModeOff": {
-        "message": "Off"
-    },
-    "motorsGovernorModeRpm": {
-        "message": "RPM Idle/Max"
-    },
-    "motorsGovernorModeThrottle": {
-        "message": "Throttle Idle"
-    },
-    "motorsGovernorModeRpmRange": {
-        "message": "RPM Range"
-    },
-    "motorsGovernorRpm": {
-        "message": "Idle RPM"
-    },
-    "motorsGovernorRpmHelp": {
-        "message": "Target RPM to hold at idle. Set to 0 to disable while in RPM mode.<br>Engaging also requires the <i>GOVERNOR</i> switch (assign it in the Modes tab) and a valid RPM source."
-    },
-    "motorsGovernorRpmMin": {
-        "message": "Min RPM"
-    },
-    "motorsGovernorRpmMinHelp": {
-        "message": "Target RPM at 0% throttle stick."
-    },
-    "motorsGovernorRpmMax": {
-        "message": "Max RPM"
-    },
-    "motorsGovernorRpmMaxHelp": {
-        "message": "Target RPM at 100% throttle stick. Set to 0 to disable RPM Range mode entirely."
-    },
-    "motorsGovernorRpmMaxLimit": {
-        "message": "Max RPM limit"
-    },
-    "motorsGovernorRpmMaxLimitHelp": {
-        "message": "Optional maximum RPM limit used above the handover throttle while in RPM Idle/Max mode. Set to 0 to disable max RPM limiting."
-    },
-    "motorsGovernorGain": {
-        "message": "P Gain"
-    },
-    "motorsGovernorGainHelp": {
-        "message": "Proportional gain used to correct RPM error while the governor is holding the target RPM. The RPM error is filtered before this gain is applied for stability. A propeller at idle needs very little correction to hold RPM, especially electric setups, so keep this low &mdash; start around 20 and increase only if the motor is slow to react, decrease if it oscillates. A P gain alone will always settle a bit below the target RPM &mdash; that remaining gap is closed by the I Gain below, not this one."
-    },
-    "motorsGovernorIGain": {
-        "message": "I Gain"
-    },
-    "motorsGovernorIGainHelp": {
-        "message": "Integral gain that slowly closes the remaining gap between the target RPM and where the P gain alone settles. Start around 30; increase if the motor takes too long to reach the exact target RPM, decrease if the RPM slowly drifts past the target and back (a slow oscillation, distinct from the fast one P gain controls)."
-    },
-    "motorsGovernorThrottle": {
-        "message": "Idle Throttle Floor"
-    },
-    "motorsGovernorThrottleHelp": {
-        "message": "Minimum powered idle output used by RPM Idle/Max mode, and the fixed idle output used by Throttle Idle mode. Set this high enough to keep the motor spinning reliably below the handover throttle; it is still limited by the governor ceiling."
-    },
-    "motorsGovernorHandover": {
-        "message": "Handover Throttle"
-    },
-    "motorsGovernorHandoverHelp": {
-        "message": "Throttle stick position, as a percentage, below which the governor takes over. Above this point the pilot has normal direct throttle control. Not used in RPM Range mode, which spans the entire stick."
-    },
-    "motorsGovernorCeiling": {
-        "message": "Throttle Ceiling"
-    },
-    "motorsGovernorCeilingHelp": {
-        "message": "Safety limit on the maximum throttle percentage the governor is allowed to command, regardless of RPM error."
     },
     "motorsThrottleEndpoints": {
         "message": "Throttle Range"
@@ -6717,62 +6606,17 @@
     "profilesPidSettings": {
         "message": "PID Controller Settings"
     },
-    "thrustVectorPidGains": {
-        "message": "Thrust Vector PID Gains"
-    },
-    "thrustVectorEffectivePidGainsHelp": {
-        "message": "Read-only preview of the gains the thrust vector loop actually uses, following live adjustments from your transmitter. Calculation: Effective P/I/D/F = Base P/I/D/F * Axis Master Gain / 100 * Gain Curve. Boost (B) is shown unchanged because Master Gain does not scale it. Unlike the main loop, throttle (TPA) and GPS speed attenuation do not apply here."
-    },
-    "thrustVectorMasterGainGroup": {
-        "message": "Flight Feel"
-    },
-    "thrustVectorPidSettings": {
-        "message": "Thrust Vector PID Settings"
-    },
-    "thrustVectorIntroNote": {
-        "message": "This is a second, independent PID loop for thrust-vectoring actuators -- it targets the same stick setpoint as the main Roll/Pitch/Yaw loop but is tuned separately. Its output only reaches your aircraft once you assign the <strong>Stabilized TV Roll/Pitch/Yaw</strong> mixer input sources to an output on the <i>Mixer</i> tab, and only while the <strong>THRUST VECTOR</strong> mode is active (<i>Modes</i> tab)."
-    },
-    "thrustVectorHoldGroup": {
-        "message": "Attitude / Heading Hold"
-    },
-    "thrustVectorHoldIntroNote": {
-        "message": "Engaged by its own switch (<strong>THRUST VECTOR ATTITUDE HOLD</strong>), independent of the main Angle/Auto Hover/Attitude Hold modes -- this lets the thrust-vectoring actuators hold heading/attitude on their own while your control surfaces stay in plain rate/acro under the stick. Only takes effect while <strong>THRUST VECTOR</strong> is also engaged. Axes with no <strong>Stabilized TV</strong> mixer rule are left free: on a pitch/yaw nozzle the hold keeps the direction the thrust points, and torque roll in a hang no longer upsets it."
-    },
-    "thrustVectorHoldGain": {
-        "message": "Hold gain"
-    },
-    "thrustVectorHoldGainHelp": {
-        "message": "Correction strength back to the held attitude once the sticks are centred and TV Hold has frozen its target. Higher values return to the held attitude more aggressively."
-    },
-    "thrustVectorHoldDeadband": {
-        "message": "Hold deadband"
-    },
-    "thrustVectorHoldDeadbandHelp": {
-        "message": "Percent stick deflection, on any of roll/pitch/yaw, above which TV Hold gives full unmodified stick authority and continuously re-captures its held attitude (so a future freeze is seamless); below this on all three sticks, the target freezes and the thrust-vector output is corrected back to it. Same track/freeze behaviour as Attitude Hold, but as an independent instance for this loop only."
-    },
-    "thrustVectorHoldMaxRate": {
-        "message": "Hold max rate"
-    },
-    "thrustVectorHoldMaxRateHelp": {
-        "message": "Safety clamp (deg/s) on how fast TV Hold may drive the thrust-vector output back toward the frozen attitude once the sticks return inside the deadband."
-    },
     "profilesErrorLimit": {
         "message": "Cumulative Error Limits"
     },
     "profilesErrorLimitHelp": {
         "message": "Hard limit for the angle error in the PID loop. The absolute error and thus the I-term will never go above these limits."
     },
-    "profilesErrorLimitRoll": {
-        "message": "Error Limit for Roll Axis [&deg;]"
-    },
-    "profilesErrorLimitPitch": {
-        "message": "Error Limit for Pitch Axis [&deg;]"
-    },
     "profilesErrorLimitYaw": {
         "message": "Error Limit for Yaw Axis [&deg;]"
     },
     "profilesFwTpaHelp": {
-        "message": "Throttle: scales Roll, Pitch and Yaw P, D, F and B with throttle. Surfaces in prop wash gain authority as throttle rises, so this is usually used to reduce gain at high throttle and keep roll and pitch rates the same at any throttle: set a percentage, and optionally a curve (evaluated on throttle, 0-100%). 100% with no curve means no change. Throttle and GPS Speed together never go below 25%, and MANUAL mode is not affected."
+        "message": "Throttle: scales Yaw P, D, F and B with throttle: set a percentage, and optionally a curve (evaluated on throttle, 0-100%). 100% with no curve means no change. Throttle and GPS Speed together never go below 25%, and GYRO OFF mode is not affected."
     },
     "profilesFwSpaHelp": {
         "message": "GPS Speed: scales Roll, Pitch and Yaw P, D, F and B with GPS speed, on top of Throttle. Surfaces get more effective as speed rises, so this is used to reduce gain when fast, for example in a dive with the throttle closed. Set a percentage and a curve (evaluated on GPS speed, 0 to the speed at the curve's right edge, set in Gain Curves). It needs a GPS with a fix and does nothing without a curve. If the fix is lost it holds for 3 s, then eases back to 100%. GPS speed is not airspeed: wind shifts it."
@@ -6806,81 +6650,6 @@
     },
     "profilesEffectivePidGainsHelp": {
         "message": "Read-only preview of the PID gains that are actually used after Master Gain scaling. This helps you see the effective tune while adjusting Master Gain without changing the stored base PID values. Calculation: Effective P/I/D/F = Base P/I/D/F * Axis Master Gain / 100. Boost (B) is shown unchanged because Master Gain does not scale it."
-    },
-    "profilesCrossAxisRelaxGroup": {
-        "message": "Cross-axis Relax"
-    },
-    "profilesCrossAxisRelaxStrength": {
-        "message": "Cross-axis Relax Roll Strength [%]"
-    },
-    "profilesCrossAxisRelaxHelp": {
-        "message": "Maximum roll feedback reduction applied during yaw/rudder stick activity. Use this to let rudder-induced roll coupling feel more natural without reducing normal roll stabilization everywhere."
-    },
-    "profilesCrossAxisRelaxPitchStrength": {
-        "message": "Cross-axis Relax Pitch Strength [%]"
-    },
-    "profilesCrossAxisRelaxPitchHelp": {
-        "message": "Maximum pitch feedback reduction applied during yaw/rudder stick activity. Use this only if rudder-to-elevator coupling feels artificially held."
-    },
-    "profilesCrossAxisRelaxLevel": {
-        "message": "Cross-axis Relax Level"
-    },
-    "profilesCrossAxisRelaxLevelHelp": {
-        "message": "Yaw setpoint level that reaches the configured maximum cross-axis relax strength."
-    },
-    "profilesCrossAxisRelaxCutoff": {
-        "message": "Cross-axis Relax Cutoff [Hz]"
-    },
-    "profilesCrossAxisRelaxCutoffHelp": {
-        "message": "Smoothing cutoff frequency for the yaw setpoint detector used by cross-axis relax."
-    },
-    "profilesSnapRelaxGroup": {
-        "message": "Snap relax"
-    },
-    "profilesSnapRelaxStrength": {
-        "message": "Strength"
-    },
-    "profilesSnapRelaxStrengthHelp": {
-        "message": "How much roll, pitch and yaw feedback is taken off when it pushes against a pop top, pinwheel or snap. These start with roll, pitch and yaw slammed in together, and the airframe then rotates faster than the stick asks for, so the gyro would reverse the surfaces against the stick. Feedback that helps the rotation is not touched; yaw usually lags the stick, so the rudder is only relaxed if the airframe yaws faster than asked. 0 turns it off"
-    },
-    "profilesSnapRelaxThreshold": {
-        "message": "Stick threshold"
-    },
-    "profilesSnapRelaxThresholdHelp": {
-        "message": "Stick deflection that roll, pitch and yaw must all reach to count as a snap"
-    },
-    "profilesSnapRelaxWindow": {
-        "message": "Entry window"
-    },
-    "profilesSnapRelaxWindowHelp": {
-        "message": "All three sticks must pass the threshold within this time of each other. A slower build-up of the same inputs, such as a rolling harrier, does not count as a snap"
-    },
-    "profilesSnapRelaxHold": {
-        "message": "Fade-out"
-    },
-    "profilesSnapRelaxHoldHelp": {
-        "message": "Time over which full feedback returns after any of the three sticks drops below the threshold. Reversing the stick against the snap brings full feedback back at once"
-    },
-    "profilesPropHangGroup": {
-        "message": "Prop-hang relax"
-    },
-    "profilesPropHangStrength": {
-        "message": "Strength"
-    },
-    "profilesPropHangStrengthHelp": {
-        "message": "How much the roll I-term is held back in a prop hang, so the prop torque can roll the model instead of the gyro holding it still. P and the stick still work, so you can stop the roll or correct a gust. Roll only. Needs an altitude estimate (a barometer) to tell a hang from an up-line. 0 turns it off"
-    },
-    "profilesPropHangAngle": {
-        "message": "Angle"
-    },
-    "profilesPropHangAngleHelp": {
-        "message": "How far the nose can be from straight up and still count as a hang. The model must also be neither climbing nor sinking faster than 2 m/s, for half a second"
-    },
-    "profilesPropHangFade": {
-        "message": "Fade-out"
-    },
-    "profilesPropHangFadeHelp": {
-        "message": "Time over which the roll I-term comes back after the hang ends"
     },
     "profilesItermDecayGroup": {
         "message": "I-Term Decay"
@@ -6942,12 +6711,6 @@
     "profilesItermRelaxLevelGroup": {
         "message": "I-Term Relax Level"
     },
-    "profilesItermRelaxLevelRoll": {
-        "message": "Level for Roll [°/s]"
-    },
-    "profilesItermRelaxLevelPitch": {
-        "message": "Level for Pitch [°/s]"
-    },
     "profilesItermRelaxLevelYaw": {
         "message": "Level for Yaw [°/s]"
     },
@@ -6963,12 +6726,6 @@
     "profilesGyroCutoffHelp": {
         "message": "PID Loop overall bandwidth in Hz"
     },
-    "profilesGyroCutoffRoll": {
-        "message": "Roll Bandwidth"
-    },
-    "profilesGyroCutoffPitch": {
-        "message": "Pitch Bandwidth"
-    },
     "profilesGyroCutoffYaw": {
         "message": "Yaw Bandwidth"
     },
@@ -6977,12 +6734,6 @@
     },
     "profilesDtermCutoffHelp": {
         "message": "D-term Cutoff Frequency in Hz"
-    },
-    "profilesDtermCutoffRoll": {
-        "message": "Roll D-term Cutoff"
-    },
-    "profilesDtermCutoffPitch": {
-        "message": "Pitch D-term Cutoff"
     },
     "profilesDtermCutoffYaw": {
         "message": "Yaw D-term Cutoff"
@@ -6993,80 +6744,11 @@
     "profilesBtermCutoffHelp": {
         "message": "B-term Cutoff Frequency in Hz"
     },
-    "profilesBtermCutoffRoll": {
-        "message": "Roll B-term Cutoff"
-    },
-    "profilesBtermCutoffPitch": {
-        "message": "Pitch B-term Cutoff"
-    },
     "profilesBtermCutoffYaw": {
         "message": "Yaw B-term Cutoff"
     },
     "profilesLevelingSettings": {
         "message": "Auto-leveling Settings"
-    },
-    "profilesRollAngleLimit": {
-        "message": "Bank angle limit (°)"
-    },
-    "profilesPitchAngleLimit": {
-        "message": "Pitch angle limit (°)"
-    },
-    "profilesAcroTrainerGroup": {
-        "message": "Trainer (angle limits)"
-    },
-    "profilesAttHoldGroup": {
-        "message": "Attitude Hold"
-    },
-    "profilesAcroTrainerGain": {
-        "message": "Acro Trainer gain"
-    },
-    "profilesAcroTrainerGainHelp": {
-        "message": "Trainer does not self-level. Gain controls how strongly it corrects back toward the pitch/bank limit when that limit is exceeded."
-    },
-    "profilesAcroTrainerLimit": {
-        "message": "Acro Trainer angle limit"
-    },
-    "profilesAcroTrainerLimitHelp": {
-        "message": "The same angle limit applies to positive and negative pitch and roll. Inside the limit, Trainer uses normal rate control without self-leveling. Actual attitude can overshoot; this is not stall protection."
-    },
-    "profilesAngleGroup": {
-        "message": "Angle"
-    },
-    "profilesAngleModeGain": {
-        "message": "Angle Mode leveling gain"
-    },
-    "profilesAngleModeGainHelp": {
-        "message": "Angle Mode leveling gain. This determines how aggressively the aircraft tilts back to level while in Angle Mode"
-    },
-    "profilesAngleModeDamping": {
-        "message": "Angle Mode damping"
-    },
-    "profilesAngleModeDampingHelp": {
-        "message": "Percent of the measured roll and pitch rate taken off the leveling command. It damps the return to the target angle through the rate PID's feedforward, so it scales with the airframe's tune. Higher values settle with less overshoot but level more slowly. 0 turns it off"
-    },
-    "profilesAngleModeLimit": {
-        "message": "Angle Mode maximum angle"
-    },
-    "profilesAngleModeLimitHelp": {
-        "message": "Angle Mode maximum angle. The aircraft is limited to this angle when in Angle mode"
-    },
-    "profilesAttHoldGain": {
-        "message": "Attitude Hold gain"
-    },
-    "profilesAttHoldGainHelp": {
-        "message": "Correction strength back to the held attitude once the sticks are centred and Attitude Hold has frozen its target. Higher values return to the held attitude more aggressively."
-    },
-    "profilesAttHoldDeadband": {
-        "message": "Attitude Hold deadband"
-    },
-    "profilesAttHoldDeadbandHelp": {
-        "message": "Percent stick deflection, on any of roll/pitch/yaw, above which Attitude Hold gives full unmodified stick authority and continuously re-captures its held attitude (so a future freeze is seamless); below this on all three sticks, the target freezes and the aircraft is corrected back to it. Unlike Auto Hover, Attitude Hold does not bound stick authority -- it holds whatever attitude the aircraft was in the instant every stick returned inside this deadband, at any orientation, not just vertical or level."
-    },
-    "profilesAttHoldMaxRate": {
-        "message": "Attitude Hold max rate"
-    },
-    "profilesAttHoldMaxRateHelp": {
-        "message": "Safety clamp (deg/s) on how fast Attitude Hold may rotate the aircraft back toward the frozen attitude once the sticks return inside the deadband."
     },
     "rateSetupCopyRateProfile": {
         "message": "Copy rateprofile"
@@ -7456,7 +7138,7 @@
         "message": "Configure the failsafe behavior of each channel.<br><strong>Auto:</strong> Sets channel to a safe value. Center for Roll, Pitch, Yaw, Collective. Low for Throttle.<br><strong>Hold:</strong> Holds channel at the last known position.<br><strong>Set:</strong> Sets channel to the specified value [μs]."
     },
     "failsafeChannelFallbackSettingsAuto": {
-        "message": "<strong>Auto</strong> means Roll, Pitch and Yaw to center and Throttle low. <strong>Hold</strong> means maintain the last good value received"
+        "message": "<strong>Auto</strong> means Roll, Pitch and Yaw to center and Throttle to neutral (center). <strong>Hold</strong> means maintain the last good value received"
     },
     "failsafeChannelFallbackSettingsHold": {
         "message": "<strong>Hold</strong> means maintain the last good value received. <strong>Set</strong> means the value given here will be used"
@@ -7483,10 +7165,10 @@
         "message": "Failsafe Throttle Low Delay [s]"
     },
     "failsafeThrottleLowHelp": {
-        "message": "Just disarm the craft instead of executing the selected failsafe procedure when the throttle was low for this amount of time"
+        "message": "Just disarm instead of executing the selected failsafe procedure when the throttle was at neutral (centre) for this amount of time"
     },
     "failsafeThrottleItem": {
-        "message": "Throttle value used while landing"
+        "message": "Failsafe throttle (1500 = neutral)"
     },
     "failsafeOffDelayItem": {
         "message": "Delay for turning off the Motors during Failsafe [s]"
@@ -7511,79 +7193,6 @@
     },
     "failsafeProcedureItemSelect4": {
         "message": "GPS Rescue"
-    },
-    "failsafeGpsRescueNavNote": {
-        "message": "GPS Rescue flies home and orbits using the aircraft's GPS Navigation settings, including Nav Throttle, on the GPS Navigation tab. The throttle value below is used only while landing."
-    },
-    "gpsNavProviderUnsupportedNote": {
-        "message": "GPS navigation (Loiter, RTH and GPS Rescue) needs a u-blox GPS. With the {{provider}} GPS provider these modes will not engage; the GPS is used for position display and telemetry only.",
-        "description": "Warning on the GPS and GPS Navigation tabs when the GPS provider is NMEA, FBUS or CRSF"
-    },
-    "gpsNavSectionTitle": {
-        "message": "GPS Navigation (RTH / Loiter)"
-    },
-    "gpsNavSectionHelp": {
-        "message": "Tuning for GPS RTH (Return To Home) and Loiter, used by the <strong>GPS RTH</strong> / <strong>GPS Loiter</strong> switches and by the Failsafe Procedure's GPS Rescue option above."
-    },
-    "gpsNavLoiterRadiusItem": {
-        "message": "Loiter Radius"
-    },
-    "gpsNavLoiterDirectionItem": {
-        "message": "Loiter Direction"
-    },
-    "gpsNavLoiterDirectionCw": {
-        "message": "CW"
-    },
-    "gpsNavLoiterDirectionCcw": {
-        "message": "CCW"
-    },
-    "gpsNavRthAltitudeItem": {
-        "message": "RTH Altitude"
-    },
-    "gpsNavMinSatsItem": {
-        "message": "Minimum Satellites"
-    },
-    "gpsNavMaxBankAngleItem": {
-        "message": "Max Bank Angle"
-    },
-    "gpsNavMaxPitchAngleItem": {
-        "message": "Max Pitch Angle"
-    },
-    "gpsNavBearingKpItem": {
-        "message": "Bearing Gain"
-    },
-    "gpsNavBearingKpHelp": {
-        "message": "Bank angle commanded per degree of track error, in hundredths of a degree of bank per degree of error (200 = 2.0° bank per ° of error)."
-    },
-    "gpsNavAltitudeKpItem": {
-        "message": "Altitude Gain"
-    },
-    "gpsNavAltitudeKpHelp": {
-        "message": "Pitch angle commanded per meter of altitude error, in hundredths of a degree of pitch per meter of error (100 = 1.0° pitch per meter of error)."
-    },
-    "gpsNavAltitudeKdItem": {
-        "message": "Altitude Damping"
-    },
-    "gpsNavAltitudeKdHelp": {
-        "message": "Reduces the altitude correction while the aircraft is already climbing or descending toward the target, so it doesn't overshoot. In hundredths of a degree of pitch per m/s of climb rate (200 = 2.0° pitch per m/s)."
-    },
-    "gpsNavThrottleItem": {
-        "message": "Nav Throttle"
-    },
-    "gpsNavThrottleHelp": {
-        "message": "Throttle used while GPS Loiter or GPS RTH is on, and while the GPS Rescue failsafe flies home. It takes over from the throttle stick once the aircraft is flying."
-    },
-    "gpsNavAllowArmingWithoutFixItem": {
-        "message": "Allow arming without GPS fix"
-    },
-    "gpsNavAllowArmingWithoutFixHelp": {
-        "message": "When the GPS Rescue failsafe or a <strong>GPS RTH</strong> switch is set up, the first arm after power-up needs a GPS fix. Turn this on to arm without one, for example when no lock can be had at the field.<br><br><span class=\"message-negative\">Without a fix at arming no home point is recorded for that flight: a failsafe glides down with the motor off instead of flying home, and the GPS RTH switch flies level without turning home.</span>"
-    },
-    "gpsNavTurnCoordinationItem": {
-        "message": "Turn Coordination"
-    },
-    "gpsNavTurnCoordinationHelp": {
-        "message": "Adds rudder into navigation turns so the aircraft turns without skidding. 100% is a fully coordinated turn, 0% turns it off."
     },
     "failsafeGpsRescueItemAngle": {
         "message": "Angle"
@@ -8147,55 +7756,13 @@
         "message": "ARM"
     },
     "modeHelp ARM": {
-        "message": "Arms the motors and control surfaces for flight. Arming can be blocked while any arming-disable condition (calibration, failsafe, PREARM, etc.) is active."
-    },
-    "mode ANGLE": {
-        "message": "ANGLE"
-    },
-    "modeHelp ANGLE": {
-        "message": "Stick position commands a bank/pitch angle within the configured limit. Centering the sticks commands level flight; holding aileron commands a banked attitude."
-    },
-    "mode ATT HOLD": {
-        "message": "ATTITUDE HOLD"
-    },
-    "modeHelp ATT HOLD": {
-        "message": "Holds whatever attitude the aircraft is in when the sticks are centered, even upside down or on its side."
-    },
-    "mode SETUP": {
-        "message": "PASSTHROUGH"
-    },
-    "modeHelp SETUP": {
-        "message": "Sends raw stick input straight to the control surfaces with no stabilization, rates, or expo. Full stick is full servo travel, the limit every mode works within, so use this mode to set and measure surface throws on the bench. Also a raw bail-out in flight."
-    },
-    "mode PASSTHROUGH": {
-        "message": "PASSTHROUGH"
-    },
-    "modeHelp PASSTHROUGH": {
-        "message": "Sends raw stick input straight to the control surfaces with no stabilization, rates, or expo. Full stick is full servo travel, the limit every mode works within, so use this mode to set and measure surface throws on the bench. Also a raw bail-out in flight."
+        "message": "Arms the motors and servos. Arming can be blocked while any arming-disable condition (calibration, failsafe, PREARM, throttle not at neutral, etc.) is active."
     },
     "mode GYRO OFF": {
-        "message": "MANUAL"
+        "message": "GYRO OFF"
     },
     "modeHelp GYRO OFF": {
-        "message": "Turns stabilization off but keeps your rates and expo. Full-stick throw follows the F gain and rates, so it is less than full travel; set throws in PASSTHROUGH mode instead."
-    },
-    "mode MANUAL": {
-        "message": "MANUAL"
-    },
-    "modeHelp MANUAL": {
-        "message": "Turns stabilization off but keeps your rates and expo. Full-stick throw follows the F gain and rates, so it is less than full travel; set throws in PASSTHROUGH mode instead."
-    },
-    "mode TRADITIONAL": {
-        "message": "TRADITIONAL"
-    },
-    "modeHelp TRADITIONAL": {
-        "message": "Stabilizes rate like normal flight, but feels more like a traditional gyro - the servo snaps back immediately on stick release instead of holding position."
-    },
-    "mode AUTO TRIM": {
-        "message": "AUTO TRIM"
-    },
-    "modeHelp AUTO TRIM": {
-        "message": "While armed, records the current control-surface trim over a couple of seconds and saves it as the servo trim. The servo centers don't change. Switching off before disarming cancels the change."
+        "message": "Turns the gyro off: steering and throttle pass straight from the transmitter, with no gyro correction."
     },
     "mode BEEPER": {
         "message": "BEEPER"
@@ -8242,24 +7809,6 @@
     "modeHelp PREARM": {
         "message": "A safety switch that must be enabled before you can arm, to prevent accidental arming."
     },
-    "mode GPS LOITER": {
-        "message": "GPS LOITER"
-    },
-    "modeHelp GPS LOITER": {
-        "message": "Holds position and altitude in a circle around the point where the switch was activated, using GPS. Does not fly toward home."
-    },
-    "mode GPS RTH": {
-        "message": "GPS RTH"
-    },
-    "modeHelp GPS RTH": {
-        "message": "Automatically flies the aircraft back toward, and loiters above, its recorded home position using GPS."
-    },
-    "mode TRAINER": {
-        "message": "TRAINER"
-    },
-    "modeHelp TRAINER": {
-        "message": "Rate control with pitch and bank limits. Centering the sticks does not command level flight. Opposite stick rolls out of a turn; outward commands are limited near the configured angle limit."
-    },
     "mode MSP OVERRIDE": {
         "message": "MSP OVERRIDE"
     },
@@ -8271,12 +7820,6 @@
     },
     "modeHelp GPS BEEP SATELLITE COUNT": {
         "message": "Beeps out the current number of GPS satellites in view while active."
-    },
-    "mode GOVERNOR": {
-        "message": "GOVERNOR"
-    },
-    "modeHelp GOVERNOR": {
-        "message": "Enables the throttle governor, which regulates motor RPM (or holds a fixed idle throttle) instead of passing the throttle stick straight through."
     },
     "mode RESCUE": {
         "message": "RESCUE"
@@ -9968,34 +9511,34 @@
         "message": "These are the flap end points: Max is full flap and Min is as far up as the flap may go. The wizard sets the flap travel so the ends of the flap channel land on them."
     },
     "setupWizardPassthroughTitle": {
-        "message": "PASSTHROUGH mode"
+        "message": "GYRO OFF mode"
     },
     "setupWizardPassthroughOn": {
-        "message": "PASSTHROUGH mode is on. The sticks move the surfaces directly, at full travel, with no gyro."
+        "message": "GYRO OFF mode is on. The sticks move the surfaces directly, at full travel, with no gyro."
     },
     "setupWizardPassthroughForced": {
-        "message": "PASSTHROUGH mode is on for this step: the sticks move the surfaces directly, at full travel, with no gyro. The wizard switches it off again when you leave the step. Keep your radio on."
+        "message": "GYRO OFF mode is on for this step: the sticks move the surfaces directly, at full travel, with no gyro. The wizard switches it off again when you leave the step. Keep your radio on."
     },
     "setupWizardPassthroughWaiting": {
-        "message": "Switching to PASSTHROUGH mode… Check your radio is on."
+        "message": "Switching to GYRO OFF mode… Check your radio is on."
     },
     "setupWizardPassthroughOff": {
-        "message": "The wizard couldn't switch PASSTHROUGH mode on (this firmware can't, or the model is armed). Switch your radio to PASSTHROUGH mode to carry on."
+        "message": "The wizard couldn't switch GYRO OFF mode on (this firmware can't, or the model is armed). Switch your radio to GYRO OFF mode to carry on."
     },
     "setupWizardPassthroughNotAssigned": {
-        "message": "The wizard couldn't switch PASSTHROUGH mode on (this firmware can't, or the model is armed), and PASSTHROUGH isn't on a switch. Update the firmware or assign PASSTHROUGH on the Modes tab, then come back to this step."
+        "message": "The wizard couldn't switch GYRO OFF mode on (this firmware can't, or the model is armed), and GYRO OFF isn't on a switch. Update the firmware or assign GYRO OFF on the Modes tab, then come back to this step."
     },
     "setupWizardBypassTurnOff": {
         "message": "Switch $1 mode off for this step: in $1 mode the sticks drive the surfaces directly and the flight controller may not be able to move them."
     },
     "setupWizardThrowsIntro": {
-        "message": "Set how far each surface moves at full stick, using the throws from your model's setup guide. You need your radio and a throw meter or ruler on the surface. The wizard puts the model in PASSTHROUGH mode for this step."
+        "message": "Set how far each surface moves at full stick, using the throws from your model's setup guide. You need your radio and a throw meter or ruler on the surface. The wizard puts the model in GYRO OFF mode for this step."
     },
     "setupWizardThrowsHowTitle": {
         "message": "How to do it:"
     },
     "setupWizardThrowsHow_1": {
-        "message": "Check the PASSTHROUGH mode box above is green with a tick. That means your sticks now move the surfaces directly. If it stays yellow, check your radio is on."
+        "message": "Check the GYRO OFF mode box above is green with a tick. That means your sticks now move the surfaces directly. If it stays yellow, check your radio is on."
     },
     "setupWizardThrowsHow_2": {
         "message": "Hold one stick at full deflection, for example full right aileron, and watch one of its surfaces on the meter."
@@ -10058,7 +9601,7 @@
         "message": "Throw is a percentage of the servo's normal travel (Axis Throw on the Mixer tab), shared by every surface on the axis. Fine-tune changes one servo's scale on one side (Servos tab)."
     },
     "setupWizardTravelIntro": {
-        "message": "How far each surface goes with full stick on every axis that drives it at once, compared with its limits. Above 100% the surface reaches its limit before full stick, and the stabilizer has no travel left on that side. The model is in PASSTHROUGH mode, so you can move the sticks into the corners and watch the live positions."
+        "message": "How far each surface goes with full stick on every axis that drives it at once, compared with its limits. Above 100% the surface reaches its limit before full stick, and the stabilizer has no travel left on that side. The model is in GYRO OFF mode, so you can move the sticks into the corners and watch the live positions."
     },
     "setupWizardTravelCorners": {
         "message": "Try every corner: full stick on two axes at once is where a surface that works both (an elevon, a V-tail) runs out of travel first."
@@ -10097,19 +9640,7 @@
         "message": "Every surface stays inside its limits."
     },
     "setupWizardGyroIntro": {
-        "message": "Overrides are off now, so the stabilizer drives the surfaces. The wizard uses ANGLE mode when it can: tilt the model by hand and hold it there, and the surfaces should keep pushing back toward level."
-    },
-    "setupWizardGyroAngleForced": {
-        "message": "ANGLE mode is on for this step. The wizard switches it off again when you leave."
-    },
-    "setupWizardGyroAngleOn": {
-        "message": "ANGLE mode is on. Tilt the model and hold it there to check the correction direction."
-    },
-    "setupWizardGyroAngleWaiting": {
-        "message": "Switching to ANGLE mode… Check your radio is on."
-    },
-    "setupWizardGyroAngleFailed": {
-        "message": "The wizard couldn't switch ANGLE mode on. You can still check gyro direction by moving the model, but the surfaces may only react while it is moving."
+        "message": "Overrides are off now, so the stabilizer drives the outputs. Turn the model by hand around its yaw axis and check the steering pushes against the movement."
     },
     "setupWizardGyroCheck_roll": {
         "message": "Roll the model so the right wing drops: the right aileron or elevon goes down and the left one goes up."
@@ -10148,7 +9679,7 @@
         "message": "Optional"
     },
     "setupWizardModesOptionalHint": {
-        "message": "Add the ones you want. A 3-position switch works well for off / TRAINER / ATT HOLD; if both are on, ATT HOLD wins."
+        "message": "Add GYRO OFF if you want a switch that turns the gyro off."
     },
     "setupWizardModesArmMissing": {
         "message": "ARM isn't on a switch yet. Without it the motor can't be armed and the model can't fly."
@@ -10159,35 +9690,11 @@
     "setupWizardModesHelp_arm": {
         "message": "Arms the motor. Nothing else works without it."
     },
-    "setupWizardModes_passthrough": {
-        "message": "PASSTHROUGH"
+    "setupWizardModes_gyroOff": {
+        "message": "GYRO OFF"
     },
-    "setupWizardModesHelp_passthrough": {
-        "message": "A bench tool, not a flight mode: sticks straight to the surfaces at full travel, with no gyro, rates or expo. Use it to check throws without a laptop. Put it on a switch you won't hit in flight."
-    },
-    "setupWizardModes_manual": {
-        "message": "MANUAL"
-    },
-    "setupWizardModesHelp_manual": {
-        "message": "Stabilization off, with your rates kept. A good bail-out if the stabilizer misbehaves."
-    },
-    "setupWizardModes_attHold": {
-        "message": "ATT HOLD"
-    },
-    "setupWizardModesHelp_attHold": {
-        "message": "Attitude hold: let go of a stick and the model holds the attitude it is in on that axis, at any orientation."
-    },
-    "setupWizardModes_trainer": {
-        "message": "TRAINER"
-    },
-    "setupWizardModesHelp_trainer": {
-        "message": "Normal rate flying inside bank and pitch limits: the stabilizer stops the model rolling or pitching past them. It doesn't level the wings for you."
-    },
-    "setupWizardModes_autoTrim": {
-        "message": "AUTO TRIM"
-    },
-    "setupWizardModesHelp_autoTrim": {
-        "message": "Fly straight and level with it on for a few seconds, then land and disarm: the trim is saved as the servo trim (see the Servos tab). The servo centers don't change. Switch it off before disarming to cancel."
+    "setupWizardModesHelp_gyroOff": {
+        "message": "Turns the gyro off: steering and throttle pass straight from the transmitter, with no gyro correction. Put it on a switch you can reach while driving."
     },
     "setupWizardModesAssigned": {
         "message": "On a switch"
@@ -10301,7 +9808,7 @@
         "message": "Fit the propeller and check it is the right way round and tight."
     },
     "setupWizardFinishBefore_2": {
-        "message": "With PASSTHROUGH mode off, move the sticks and move the model by hand once more: the surfaces follow the sticks and push against the movement. With the gyro on, a stick held off centre makes the surfaces creep to full throw, because the model cannot turn at the rate the stick asks for. This is normal on the bench: let go and they drift back to centre. Check throws in PASSTHROUGH or MANUAL, not here."
+        "message": "With GYRO OFF mode off, move the sticks and move the model by hand once more: the surfaces follow the sticks and push against the movement. With the gyro on, a stick held off centre makes the surfaces creep to full throw, because the model cannot turn at the rate the stick asks for. This is normal on the bench: let go and they drift back to centre. Check throws in GYRO OFF, not here."
     },
     "setupWizardFinishBefore_3": {
         "message": "Do a range check with your radio."
