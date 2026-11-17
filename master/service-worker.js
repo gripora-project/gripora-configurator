@@ -10,7 +10,7 @@
 // only ever reads from its own cache.
 
 const CACHE_PREFIX = `gripora-configurator@${self.registration.scope}@`;
-const CACHE_VERSION = `${CACHE_PREFIX}0.0.0-f2988caa`;
+const CACHE_VERSION = `${CACHE_PREFIX}0.0.0-57754978`;
 const APP_SHELL = [
   "./",
   "./index.html",

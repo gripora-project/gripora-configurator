@@ -1,7 +1,7 @@
 {
   "name": "Gripora Configurator (dev)",
   "short_name": "Gripora dev",
-  "description": "Configure Gripora flight controllers from the browser.",
+  "description": "Set up and tune Gripora, stability control for RC cars, from the browser.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
