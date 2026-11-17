@@ -3,6 +3,11 @@
   import { i18n } from "@/js/i18n.js";
 
   import Select from "@/components/Select.svelte";
+  import {
+    isParkedFunction,
+    rcDataLabel,
+    shownRcDataIndexes,
+  } from "@/js/rcChannels.js";
   import Switch from "@/components/Switch.svelte";
 
   import { BASE_FUNCS, FUNCTION_COLORS, FUNCTION_LABELS } from "./constants.js";
@@ -27,20 +32,11 @@
   const AUX_MODE = 7;
   const AUX_DIR = 0;
 
-  const AUX_CHANNEL_OPTIONS = [
-    "controlAxisRoll",
-    "controlAxisPitch",
-    "controlAxisYaw",
-    "controlAxisThrottle",
-    "controlAxisAux1",
-    "controlAxisAux2",
-    "controlAxisAux3",
-    "controlAxisAux4",
-    "controlAxisAux5",
-    "controlAxisAux6",
-    "controlAxisAux7",
-    "controlAxisAux8",
-  ];
+  // The Aux color modifier follows one rcData channel (ledstrip_aux_channel):
+  // roll, pitch, steering (yaw), throttle, then aux. Roll and pitch are
+  // parked on channels a car does not use, so they are only listed when
+  // already selected.
+  const AUX_CHANNEL_COUNT = 12;
 
   const DIRECTION_BUTTONS = [
     { letter: "n", label: "ledStripDirN" },
@@ -65,6 +61,16 @@
     );
     return mc ? mc.color : 0;
   });
+
+  let auxChannelOptions = $derived(
+    [
+      ...(isParkedFunction(auxChannel) ? [auxChannel] : []),
+      ...shownRcDataIndexes(AUX_CHANNEL_COUNT),
+    ].map((value) => ({
+      value,
+      label: rcDataLabel(value, FC.RC_MAP, (key) => $i18n.t(key)),
+    })),
+  );
 
   function setAuxChannel(value) {
     const mc = FC.LED_MODE_COLORS.find(
@@ -123,10 +129,7 @@
       />
       <Select
         value={auxChannel}
-        options={AUX_CHANNEL_OPTIONS.map((label, value) => ({
-          value,
-          label: $i18n.t(label),
-        }))}
+        options={auxChannelOptions}
         onchange={(e) => setAuxChannel(e.target.value)}
       />
     </label>

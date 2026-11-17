@@ -1,115 +1,94 @@
 <script>
   import { FC } from "@/js/fc.svelte.js";
   import { i18n } from "@/js/i18n.js";
+  import {
+    CHANNEL_ORDER_PRESETS,
+    RC_FUNCTION,
+    assignFunction,
+    auxChannelLabel,
+    carOrderLabel,
+    isParkedFunction,
+    matchPreset,
+    parseCarOrder,
+  } from "@/js/rcChannels.js";
 
   import ChannelBar from "./ChannelBar.svelte";
   import Field from "@/components/Field.svelte";
   import Meter from "@/components/Meter.svelte";
   import Section from "@/components/Section.svelte";
   import SubSection from "@/components/SubSection.svelte";
+  import Tooltip from "@/components/Tooltip.svelte";
 
-  const channelNames = [
-    "controlAxisRoll",
-    "controlAxisPitch",
-    "controlAxisYaw",
-    "controlAxisThrottle",
-    "controlAxisAux1",
-    "controlAxisAux2",
-    "controlAxisAux3",
-    "controlAxisAux4",
-    "controlAxisAux5",
-    "controlAxisAux6",
-    "controlAxisAux7",
-    "controlAxisAux8",
-    "controlAxisAux9",
-    "controlAxisAux10",
-    "controlAxisAux11",
-    "controlAxisAux12",
-    "controlAxisAux13",
-    "controlAxisAux14",
-    "controlAxisAux15",
-    "controlAxisAux16",
-    "controlAxisAux17",
-    "controlAxisAux18",
-    "controlAxisAux19",
-    "controlAxisAux20",
-    "controlAxisAux21",
-    "controlAxisAux22",
-    "controlAxisAux23",
-    "controlAxisAux24",
-    "controlAxisAux25",
-    "controlAxisAux26",
-    "controlAxisAux27",
-  ];
+  // A car only drives steering (yaw) and throttle; roll and pitch are parked
+  // on channels nothing else uses (see rcChannels.js) and never shown.
+  const NOT_USED = -1;
 
-  const rssiOptions = [
-    { value: 0, text: "rssiOptionAUTO" },
-    { value: 1, text: "rssiOptionADC" },
-    { value: 5, text: "controlAxisAux1" },
-    { value: 6, text: "controlAxisAux2" },
-    { value: 7, text: "controlAxisAux3" },
-    { value: 8, text: "controlAxisAux4" },
-    { value: 9, text: "controlAxisAux5" },
-    { value: 10, text: "controlAxisAux6" },
-    { value: 11, text: "controlAxisAux7" },
-    { value: 12, text: "controlAxisAux8" },
-    { value: 13, text: "controlAxisAux9" },
-    { value: 14, text: "controlAxisAux10" },
-    { value: 15, text: "controlAxisAux11" },
-    { value: 16, text: "controlAxisAux12" },
-    { value: 17, text: "controlAxisAux13" },
-    { value: 18, text: "controlAxisAux14" },
-    { value: 19, text: "controlAxisAux15" },
-    { value: 20, text: "controlAxisAux16" },
-    { value: 21, text: "controlAxisAux17" },
-    { value: 22, text: "controlAxisAux18" },
-    { value: 23, text: "controlAxisAux19" },
-    { value: 24, text: "controlAxisAux20" },
-    { value: 25, text: "controlAxisAux21" },
-    { value: 26, text: "controlAxisAux22" },
-    { value: 27, text: "controlAxisAux23" },
-    { value: 28, text: "controlAxisAux24" },
-    { value: 29, text: "controlAxisAux25" },
-    { value: 30, text: "controlAxisAux26" },
-    { value: 31, text: "controlAxisAux27" },
-  ];
-
-  const presets = [
-    { label: "ELRS", map: [0, 1, 3, 2, 4, 5, 6, 7] }, // AETR1234
-    { label: "FrSky", map: [0, 1, 3, 2, 4, 5, 6, 7] }, // AETR1234
-    { label: "Futaba / Hitec", map: [0, 1, 3, 2, 4, 5, 6, 7] }, // AETR1234
-    { label: "Spektrum / Graupner / JR", map: [1, 2, 3, 0, 4, 5, 6, 7] }, // TAER1234
-  ];
-
-  let selectedPreset = $derived.by(() => {
-    // check if FC.RC_MAP matches a preset map
-    outer: for (let i = 0; i < presets.length; i++) {
-      const preset = presets[i];
-      for (let j = 0; j < preset.map.length; j++) {
-        if (preset.map[j] !== FC.RC_MAP[j]) {
-          continue outer;
-        }
-      }
-
-      return i;
-    }
-
-    return "";
-  });
-
-  function applyPreset(e) {
-    const preset = presets[Number(e.target.value)];
-    FC.RC_MAP = [...preset.map];
+  function functionLabel(fn) {
+    if (fn === RC_FUNCTION.STEERING) return $i18n.t("controlAxisYaw");
+    if (fn === RC_FUNCTION.THROTTLE) return $i18n.t("controlAxisThrottle");
+    return $i18n.t("receiverChannelAux", { 1: fn - RC_FUNCTION.AUX1 + 1 });
   }
 
-  function swapAssignment(channel, channelFunction) {
-    // RC_MAP is transposed
+  let functionOptions = $derived(
+    Array.from({ length: FC.RC_MAP.length }, (_, fn) => fn)
+      .filter((fn) => !isParkedFunction(fn))
+      .map((fn) => ({ value: fn, label: functionLabel(fn) })),
+  );
 
-    const oldChannelFunction = FC.RC_MAP.indexOf(channel);
-    const swapChannel = FC.RC_MAP[channelFunction];
+  // RSSI from a channel reads rcData[rssi_channel - 1] (firmware rx.c), so
+  // 5 and up are AUX 1 and up, wherever the map puts them.
+  let rssiOptions = $derived([
+    { value: 0, label: $i18n.t("rssiOptionAUTO") },
+    { value: 1, label: $i18n.t("rssiOptionADC") },
+    ...Array.from(
+      { length: Math.max(0, Math.min(FC.RC.active_channels, 31) - 4) },
+      (_, i) => ({ value: i + 5, label: auxChannelLabel(i, FC.RC_MAP) }),
+    ),
+  ]);
 
-    FC.RC_MAP[channelFunction] = channel;
-    FC.RC_MAP[oldChannelFunction] = swapChannel;
+  const PRESET_LABELS = {
+    car: "receiverChannelOrderPresetCar",
+  };
+  const CUSTOM = "custom";
+
+  let customChosen = $state(false);
+  let preset = $derived(matchPreset(FC.RC_MAP));
+  let selectedPreset = $derived(preset && !customChosen ? preset : CUSTOM);
+
+  function applyPreset(e) {
+    const key = e.target.value;
+    if (key === CUSTOM) {
+      customChosen = true;
+      return;
+    }
+    customChosen = false;
+    const found = CHANNEL_ORDER_PRESETS.find((p) => p.key === key);
+    if (found) {
+      FC.RC_MAP = [...found.map];
+    }
+  }
+
+  let orderText = $derived(carOrderLabel(FC.RC_MAP));
+  let orderInvalid = $state(false);
+
+  function applyCustomOrder(e) {
+    const map = parseCarOrder(e.target.value, FC.RC_MAP.length);
+    orderInvalid = !map;
+    if (map) {
+      FC.RC_MAP = map;
+    }
+    // Show the order as it now is, also after an invalid entry.
+    e.target.value = carOrderLabel(FC.RC_MAP);
+  }
+
+  function channelFunction(channel) {
+    const fn = FC.RC_MAP.indexOf(channel);
+    return fn < 0 || isParkedFunction(fn) ? NOT_USED : fn;
+  }
+
+  function setChannelFunction(channel, fn) {
+    if (fn === NOT_USED) return;
+    FC.RC_MAP = assignFunction($state.snapshot(FC.RC_MAP), channel, fn);
   }
 
   let selectedRssiSource = $derived.by(() => {
@@ -130,19 +109,46 @@
 <Section label="receiverBars">
   <SubSection>
     <Field id="receiver-channel-order-preset" label="receiverChannelOrder">
+      {#snippet tooltip()}
+        <Tooltip help="receiverChannelOrderHelp" />
+      {/snippet}
       <select
         id="receiver-channel-order-preset"
         onchange={applyPreset}
         value={selectedPreset}
       >
-        <option value="" disabled selected>
-          {$i18n.t("receiverChannelOrderPresetPlaceholder")}
-        </option>
-        {#each presets as preset, i (preset.label)}
-          <option value={i}>{preset.label}</option>
+        {#each CHANNEL_ORDER_PRESETS as p (p.key)}
+          <option value={p.key}>{$i18n.t(PRESET_LABELS[p.key])}</option>
         {/each}
+        <option value={CUSTOM}>
+          {$i18n.t("receiverChannelOrderPresetCustom")}
+        </option>
       </select>
     </Field>
+    {#if selectedPreset === CUSTOM}
+      <Field
+        id="receiver-channel-order-custom"
+        label="receiverChannelOrderCustom"
+      >
+        {#snippet tooltip()}
+          <Tooltip help="receiverChannelOrderCustomHelp" />
+        {/snippet}
+        <input
+          id="receiver-channel-order-custom"
+          class="order-input"
+          class:invalid={orderInvalid}
+          type="text"
+          spellcheck="false"
+          autocomplete="off"
+          maxlength={FC.RC_MAP.length}
+          value={orderText}
+          onchange={applyCustomOrder}
+        />
+      </Field>
+      {#if orderInvalid}
+        <p class="order-error">{$i18n.t("receiverChannelOrderInvalid")}</p>
+      {/if}
+    {/if}
   </SubSection>
 
   <div class="divider"></div>
@@ -150,12 +156,20 @@
   <SubSection>
     <div class="channel-group">
       {#each { length: FC.RC_MAP.length } as _, i (i)}
+        {@const fn = channelFunction(i)}
         <span class="channel-index">{i + 1}</span>
         <select
-          bind:value={() => FC.RC_MAP.indexOf(i), (x) => swapAssignment(i, x)}
+          class:not-used={fn === NOT_USED}
+          value={fn}
+          onchange={(e) => setChannelFunction(i, Number(e.target.value))}
         >
-          {#each channelNames.slice(0, FC.RC_MAP.length) as channel, i (i)}
-            <option value={i}>{$i18n.t(channel)}</option>
+          {#if fn === NOT_USED}
+            <option value={NOT_USED} disabled>
+              {$i18n.t("receiverChannelNotUsed")}
+            </option>
+          {/if}
+          {#each functionOptions as option (option.value)}
+            <option value={option.value}>{option.label}</option>
           {/each}
         </select>
         <ChannelBar channel={i} />
@@ -163,7 +177,9 @@
       {#each { length: Math.min(FC.RC.active_channels, 24) - FC.RC_MAP.length } as _, i (i)}
         {@const channel = i + FC.RC_MAP.length}
         <span class="channel-index">{channel + 1}</span>
-        <span class="channel-assignment">{$i18n.t(channelNames[channel])}</span>
+        <span class="channel-assignment">
+          {$i18n.t("receiverChannelAux", { 1: channel - RC_FUNCTION.AUX1 + 1 })}
+        </span>
         <ChannelBar {channel} />
       {/each}
       <div class="rssi-group">
@@ -177,8 +193,8 @@
             }
           }
         >
-          {#each rssiOptions.slice(0, FC.RC.active_channels - 2) as rssiOpt (rssiOpt.value)}
-            <option value={rssiOpt.value}>{$i18n.t(rssiOpt.text)}</option>
+          {#each rssiOptions as rssiOpt (rssiOpt.value)}
+            <option value={rssiOpt.value}>{rssiOpt.label}</option>
           {/each}
         </select>
         <Meter
@@ -209,6 +225,10 @@
     > .channel-index {
       align-self: start;
     }
+
+    > select.not-used {
+      color: var(--color-text-muted);
+    }
   }
 
   .channel-index {
@@ -217,6 +237,23 @@
 
   .channel-assignment {
     padding-left: 8px;
+  }
+
+  .order-input {
+    width: 8em;
+    font-family: monospace;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+
+    &.invalid {
+      border-color: var(--color-status-bad);
+    }
+  }
+
+  .order-error {
+    margin: 0 8px 4px;
+    font-size: 0.85rem;
+    color: var(--color-status-bad);
   }
 
   .rssi-group {

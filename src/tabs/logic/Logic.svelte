@@ -5,6 +5,7 @@
   import { FC } from "@/js/fc.svelte.js";
   import { i18n } from "@/js/i18n.js";
   import { MSPCodes } from "@/js/msp/MSPCodes.js";
+  import { auxChannelLabel } from "@/js/rcChannels.js";
   import { getTabHelpURL } from "@/js/help";
   import { LogicCondition } from "@/js/LogicCondition.js";
   import { CONFIGURATOR } from "@/js/configurator.svelte.js";
@@ -47,6 +48,9 @@
     ),
   );
 
+  // RC_CHANNEL operands index rcData: roll, pitch, steering (yaw),
+  // throttle, then aux. Roll and pitch are parked on channels a car does not
+  // use; ConditionRow lists them only when a condition already uses them.
   let channelOptions = $derived([
     { value: 0, label: $i18n.t("logicChannelRoll") },
     { value: 1, label: $i18n.t("logicChannelPitch") },
@@ -61,7 +65,7 @@
       },
       (_, i) => ({
         value: PRIMARY_CHANNEL_COUNT + i,
-        label: `CH #${i + 5}`,
+        label: auxChannelLabel(i, FC.RC_MAP),
       }),
     ),
   ]);
@@ -117,6 +121,7 @@
 
   onMount(async () => {
     await MSP.promise(MSPCodes.MSP_RC);
+    await MSP.promise(MSPCodes.MSP_RX_MAP);
     await MSP.promise(MSPCodes.MSP_BOXIDS);
     await MSP.promise(MSPCodes.MSP_BOXNAMES);
     await MSP.promise(MSPCodes.MSP_LOGIC_CONDITIONS);

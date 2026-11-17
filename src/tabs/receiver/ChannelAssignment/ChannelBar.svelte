@@ -18,12 +18,10 @@
     ((100 * (FC.RX_CHANNELS[channel] - min)) / (max - min)).clamp(0, 100),
   );
 
+  // Steering and throttle only: roll and pitch are parked on a channel a car
+  // does not use, so there is no command to show for them.
   let percent = $derived.by(() => {
     switch (axis) {
-      case CHANNELS.ROLL:
-        return RC_COMMAND.roll?.percent ?? 0;
-      case CHANNELS.PITCH:
-        return RC_COMMAND.pitch?.percent ?? 0;
       case CHANNELS.YAW:
         return RC_COMMAND.yaw?.percent ?? 0;
       case CHANNELS.THROTTLE:

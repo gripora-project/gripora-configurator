@@ -6,6 +6,7 @@
   import { FC } from "@/js/fc.svelte.js";
   import { i18n } from "@/js/i18n.js";
   import { MSPCodes } from "@/js/msp/MSPCodes.js";
+  import { auxChannelLabel } from "@/js/rcChannels.js";
   import { getTabHelpURL } from "@/js/help";
   import {
     UNUSED_MODES,
@@ -140,7 +141,9 @@
     { value: -1, label: $i18n.t("auxiliaryAutoChannelSelect") },
     ...Array.from({ length: auxChannelCount }, (_, i) => ({
       value: i,
-      label: `CH #${i + 5}`,
+      // AUX 1 is rcData[4]; the channel map says which receiver channel
+      // that is (CH3 with the car order).
+      label: auxChannelLabel(i, FC.RC_MAP),
     })),
   ]);
 
@@ -256,6 +259,7 @@
   onMount(async () => {
     await MSP.promise(MSPCodes.MSP_STATUS);
     await MSP.promise(MSPCodes.MSP_RC);
+    await MSP.promise(MSPCodes.MSP_RX_MAP);
     await MSP.promise(MSPCodes.MSP_BOXIDS);
     await MSP.promise(MSPCodes.MSP_BOXNAMES);
     await MSP.promise(MSPCodes.MSP_RSSI_CONFIG);

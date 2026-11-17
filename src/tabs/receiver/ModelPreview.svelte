@@ -7,7 +7,15 @@
 
   import Model from "@/components/Model.svelte";
 
-  import { Setpoint } from "./setpoint.svelte.js";
+  import { RC_COMMAND } from "./rc_command.svelte.js";
+
+  // A car only has steering and throttle: the preview turns the car with the
+  // steering channel (a turn rate, like a car driving in a circle) and shows
+  // both commands as bars. Roll and pitch are not used.
+  const TURN_RATE = 180; // deg/s at full steering
+
+  let steering = $derived(RC_COMMAND.yaw?.percent ?? 0);
+  let throttle = $derived(RC_COMMAND.throttle?.percent ?? 0);
 
   let model;
   let clock = new Clock();
@@ -19,11 +27,8 @@
     }
 
     const delta = clock.getDelta();
-    model?.rotateBy(
-      -degToRad(delta * Setpoint.pitch),
-      -degToRad(delta * Setpoint.yaw),
-      -degToRad(delta * Setpoint.roll),
-    );
+    const yaw = (RC_COMMAND.yaw?.percent ?? 0) * TURN_RATE;
+    model?.rotateBy(0, -degToRad(delta * yaw), 0);
 
     globalThis.requestAnimationFrame(updateModelPreview);
   }
@@ -46,6 +51,22 @@
     <div class="header">{$i18n.t("receiverModelPreview")}</div>
     <div class="content">
       <Model bind:this={model} />
+      <div class="commands">
+        {#each [{ label: "controlAxisYaw", value: steering }, { label: "controlAxisThrottle", value: throttle }] as command (command.label)}
+          <span class="command-name">{$i18n.t(command.label)}</span>
+          <span class="command-track" aria-hidden="true">
+            <span class="command-centre"></span>
+            <span
+              class="command-fill"
+              style:left={command.value >= 0
+                ? "50%"
+                : `${50 + command.value * 50}%`}
+              style:width="{Math.abs(command.value) * 50}%"
+            ></span>
+          </span>
+          <span class="command-value">{(command.value * 100).toFixed(0)}%</span>
+        {/each}
+      </div>
       <button class="reset-btn" onclick={handleReset}
         >{$i18n.t("resetModelPreviewOrientation")}</button
       >
@@ -108,6 +129,57 @@
         background-color: var(--color-neutral-700);
       }
     }
+  }
+
+  .commands {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    display: grid;
+    grid-template-columns: auto 1fr 3.5em;
+    align-items: center;
+    gap: 6px 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    color: var(--color-text);
+    background-color: color-mix(in srgb, var(--color-surface) 85%, transparent);
+    border: 1px solid var(--color-border-soft);
+  }
+
+  .command-name {
+    font-weight: 600;
+  }
+
+  .command-value {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .command-track {
+    position: relative;
+    height: 8px;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-meter-bg);
+    border: 1px solid var(--color-meter-border);
+  }
+
+  .command-centre {
+    position: absolute;
+    left: 50%;
+    top: -3px;
+    bottom: -3px;
+    width: 1px;
+    background-color: var(--color-text-muted);
+  }
+
+  .command-fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-border-accent);
   }
 
   @media only screen and (max-width: 480px) {

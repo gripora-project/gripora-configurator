@@ -13,40 +13,7 @@
   import Switch from "@/components/Switch.svelte";
   import Meter from "@/components/Meter.svelte";
   import Model from "@/components/Model.svelte";
-
-  const AXIS_NAMES = [
-    "controlAxisRoll",
-    "controlAxisPitch",
-    "controlAxisYaw",
-    "controlAxisThrottle",
-    "controlAxisAux1",
-    "controlAxisAux2",
-    "controlAxisAux3",
-    "controlAxisAux4",
-    "controlAxisAux5",
-    "controlAxisAux6",
-    "controlAxisAux7",
-    "controlAxisAux8",
-    "controlAxisAux9",
-    "controlAxisAux10",
-    "controlAxisAux11",
-    "controlAxisAux12",
-    "controlAxisAux13",
-    "controlAxisAux14",
-    "controlAxisAux15",
-    "controlAxisAux16",
-    "controlAxisAux17",
-    "controlAxisAux18",
-    "controlAxisAux19",
-    "controlAxisAux20",
-    "controlAxisAux21",
-    "controlAxisAux22",
-    "controlAxisAux23",
-    "controlAxisAux24",
-    "controlAxisAux25",
-    "controlAxisAux26",
-    "controlAxisAux27",
-  ];
+  import { rcDataLabel, shownRcDataIndexes } from "@/js/rcChannels.js";
 
   const BAR_SCALE_MIN = 750;
   const BAR_SCALE_MAX = 2250;
@@ -100,6 +67,9 @@
 
   let numChs = $derived(Math.min(FC.RC.active_channels ?? 0, 24));
   let numBars = $derived(Math.max(numChs, 8));
+  // MSP_RC is rcData (after the channel map): steering, throttle and aux.
+  // Roll and pitch are parked on unused channels and not shown.
+  let shownBars = $derived(shownRcDataIndexes(numBars));
 
   function channelWidth(i) {
     return (
@@ -188,6 +158,7 @@
     await MSP.promise(MSPCodes.MSP_NAME);
     await MSP.promise(MSPCodes.MSP_FLIGHT_STATS);
     await MSP.promise(MSPCodes.MSP_RC);
+    await MSP.promise(MSPCodes.MSP_RX_MAP);
 
     updateArming(FC.CONFIG.enableArmingFlag);
     loading = false;
@@ -419,10 +390,10 @@
 
     <Section label="statusReceiverHead">
       <div class="bars">
-        {#each Array.from({ length: numBars }) as _, i (i)}
+        {#each shownBars as i (i)}
           <Meter
             --fill-hue={i * 20}
-            title={$i18n.t(AXIS_NAMES[i])}
+            title={rcDataLabel(i, FC.RC_MAP, (key) => $i18n.t(key))}
             leftLabel={(FC.RC.channels[i] ?? 0).toFixed(0)}
             rightLabel={channelLabel2(i)}
             value={channelWidth(i)}

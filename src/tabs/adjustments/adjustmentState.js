@@ -6,6 +6,7 @@ import {
 
 import { FC } from "@/js/fc.svelte.js";
 import { Mixer } from "@/js/Mixer.js";
+import { auxChannelLabel } from "@/js/rcChannels.js";
 
 export const PID_ADJUSTMENT_FUNCTIONS = [
   [18, 19, 20, 21, 57], // Roll P/I/D/F/B
@@ -73,7 +74,7 @@ export function getAdjustmentState(adjFunction) {
   return states.find((state) => state.active) ?? states[0];
 }
 
-// Mirrors the `CH #${n+5}` convention used by the channel dropdowns in the
+// Mirrors the auxChannelLabel() names used by the channel dropdowns in the
 // Adjustments tab (see adjChannelOptions in Adjustments.svelte) so the label
 // shown here matches what the user picked there.
 export function adjustmentChannelLabel(adjustment) {
@@ -81,7 +82,9 @@ export function adjustmentChannelLabel(adjustment) {
     return undefined;
   }
 
-  return adjustment.channel === -1 ? "AUTO" : `CH #${adjustment.channel + 5}`;
+  return adjustment.channel === -1
+    ? "AUTO"
+    : auxChannelLabel(adjustment.channel, FC.RC_MAP);
 }
 
 export function adjustmentTitle(adjustment) {

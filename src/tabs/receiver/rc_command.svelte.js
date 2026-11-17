@@ -15,6 +15,9 @@ export const CHANNELS = {
 
 const MAX_AUX_COUNT = 27;
 
+// Firmware fc/rc.c RC_THROTTLE_NEUTRAL_DEADBAND (us around rc_center).
+export const THROTTLE_NEUTRAL_DEADBAND = 10;
+
 function applyDeadband(deflection, deadband) {
   if (deflection > deadband) {
     return deflection - deadband;
@@ -68,18 +71,17 @@ export const RC_COMMAND = {
       FC.RC_CONFIG.rc_deflection,
     );
   },
+  // A car's throttle is signed around rc_center like steering: forward
+  // above it, brake/reverse below it, with the firmware's fixed neutral
+  // deadband (RC_THROTTLE_NEUTRAL_DEADBAND, fc/rc.c). rc_min_throttle and
+  // rc_max_throttle no longer scale it.
   get throttle() {
-    let min = FC.RC_CONFIG.rc_min_throttle;
-    if (min === 0) {
-      min = FC.RC_CONFIG.rc_center - FC.RC_CONFIG.rc_deflection * 0.9;
-    }
-
-    let max = FC.RC_CONFIG.rc_max_throttle;
-    if (max === 0) {
-      max = FC.RC_CONFIG.rc_center + FC.RC_CONFIG.rc_deflection * 0.9;
-    }
-
-    return getProportional(CHANNELS.THROTTLE, 0, min, max - min);
+    return getProportional(
+      CHANNELS.THROTTLE,
+      THROTTLE_NEUTRAL_DEADBAND,
+      FC.RC_CONFIG.rc_center,
+      FC.RC_CONFIG.rc_deflection,
+    );
   },
 
   aux: [],

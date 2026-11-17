@@ -7,6 +7,7 @@
   import { FC } from "@/js/fc.svelte.js";
   import { reinitialiseConnection } from "@/js/serial_backend";
   import { MSPCodes } from "@/js/msp/MSPCodes.js";
+  import { isParkedFunction, rcDataLabel } from "@/js/rcChannels.js";
 
   import Expert from "@/components/Expert.svelte";
   import Field from "@/components/Field.svelte";
@@ -38,12 +39,10 @@
   });
   let showToolbar = $derived(!loading && changes.length > 0);
 
-  const channelNames = [
-    "controlAxisRoll",
-    "controlAxisPitch",
-    "controlAxisYaw",
-    "controlAxisThrottle",
-  ];
+  // RXFAIL_CONFIG is per rcData channel: roll, pitch, steering (yaw),
+  // throttle, then aux. Roll and pitch are parked on channels a car does not
+  // use, so they are not shown (their settings still round-trip).
+  const CONTROL_CHANNEL_COUNT = 4;
 
   // failsafe_procedure values match TABLE_FAILSAFE in src/main/cli/settings.c
   // (AUTO-LAND, DROP, GPS-RESCUE), 0-indexed. Key numbering (1, 2, 4) is
@@ -68,6 +67,7 @@
   onMount(async () => {
     await MSP.promise(MSPCodes.MSP_FEATURE_CONFIG);
     await MSP.promise(MSPCodes.MSP_RXFAIL_CONFIG);
+    await MSP.promise(MSPCodes.MSP_RX_MAP);
     await MSP.promise(MSPCodes.MSP_RX_CONFIG);
     await MSP.promise(MSPCodes.MSP_FAILSAFE_CONFIG);
 
@@ -174,40 +174,43 @@
       >
         <SubSection>
           {#each { length: FC.RXFAIL_CONFIG?.length ?? 0 } as _, i (i)}
-            <Field
-              id={`fallback-${i}`}
-              label={channelNames[i] ??
-                `controlAxisAux${i - channelNames.length + 1}`}
-            >
-              <div class="fallback-group">
-                {#if FC.RXFAIL_CONFIG[i].mode === 2}
-                  <NumberInput
-                    id={`set-${i}`}
-                    min="875"
-                    max="2125"
-                    step="5"
-                    bind:value={FC.RXFAIL_CONFIG[i].value}
-                  />
-                {/if}
-                <select
-                  class="switchMode"
-                  id={`fallback-${i}`}
-                  bind:value={FC.RXFAIL_CONFIG[i].mode}
-                >
-                  {#if i < channelNames.length}
-                    <option value={0}>
-                      {$i18n.t("failsafeChannelFallbackOptionAuto")}
-                    </option>
+            {#if !isParkedFunction(i)}
+              {#snippet fallbackLabel()}
+                <span class="field-label">
+                  {rcDataLabel(i, FC.RC_MAP, (key) => $i18n.t(key))}
+                </span>
+              {/snippet}
+              <Field id={`fallback-${i}`} label={fallbackLabel}>
+                <div class="fallback-group">
+                  {#if FC.RXFAIL_CONFIG[i].mode === 2}
+                    <NumberInput
+                      id={`set-${i}`}
+                      min="875"
+                      max="2125"
+                      step="5"
+                      bind:value={FC.RXFAIL_CONFIG[i].value}
+                    />
                   {/if}
-                  <option value={1}>
-                    {$i18n.t("failsafeChannelFallbackOptionHold")}
-                  </option>
-                  <option value={2}>
-                    {$i18n.t("failsafeChannelFallbackOptionSet")}
-                  </option>
-                </select>
-              </div>
-            </Field>
+                  <select
+                    class="switchMode"
+                    id={`fallback-${i}`}
+                    bind:value={FC.RXFAIL_CONFIG[i].mode}
+                  >
+                    {#if i < CONTROL_CHANNEL_COUNT}
+                      <option value={0}>
+                        {$i18n.t("failsafeChannelFallbackOptionAuto")}
+                      </option>
+                    {/if}
+                    <option value={1}>
+                      {$i18n.t("failsafeChannelFallbackOptionHold")}
+                    </option>
+                    <option value={2}>
+                      {$i18n.t("failsafeChannelFallbackOptionSet")}
+                    </option>
+                  </select>
+                </div>
+              </Field>
+            {/if}
           {/each}
         </SubSection>
       </Section>
@@ -315,6 +318,11 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     column-gap: var(--section-gap);
+  }
+
+  // Same as Field's own label text (a snippet label is styled here).
+  .field-label {
+    font-weight: 600;
   }
 
   .fallback-group {

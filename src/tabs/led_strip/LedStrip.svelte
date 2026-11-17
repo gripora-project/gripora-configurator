@@ -44,6 +44,7 @@
     await MSP.promise(MSPCodes.MSP_LED_STRIP_MODECOLOR);
     await MSP.promise(MSPCodes.MSP_LED_COLORS);
     await MSP.promise(MSPCodes.MSP_LED_STRIP_SETTINGS);
+    await MSP.promise(MSPCodes.MSP_RX_MAP);
 
     initFromFC();
     initialState = snapshotState();

@@ -2,6 +2,7 @@ import semver from "semver";
 import { API_VERSION_22_5 } from "@/js/configurator.svelte.js";
 import { FC } from "@/js/fc.svelte.js";
 import { withServoName } from "@/js/ServoNames.js";
+import { RC_FUNCTION, RC_MAP_LENGTH, isParkedFunction } from "@/js/rcChannels.js";
 import {
     CAR_DEFAULT_OPTIONS,
     buildCarRules,
@@ -85,25 +86,33 @@ export const Mixer = {
         'controlAxisThrottle',
     ],
 
-    // Label for an inputNames[] entry, resolving the RC Roll/Pitch/Yaw/
-    // Throttle bypass inputs to the pilot's actual physical channel (e.g.
-    // "CH #3 (Roll)") when rcMap (FC.RC_MAP, from MSP_RX_MAP) is available.
-    // Falls back to the plain function name otherwise.
+    // Label for an inputNames[] entry, resolving the RC channel inputs that
+    // go through the firmware's rcmap (bypass Roll/Pitch/Yaw/Throttle and
+    // CH #5-#8, which are rcCommand[4..7] = AUX 1-4) to the pilot's actual
+    // physical channel (e.g. "CH #1 (Steering)", "CH #3 (AUX 1)") when rcMap
+    // (FC.RC_MAP, from MSP_RX_MAP) is available. A car parks roll and pitch
+    // on channels it does not otherwise use, so those read as the plain
+    // channel ("CH #7"). Falls back to the plain input name otherwise.
     inputLabel: function (index, i18n, rcMap) {
-        const roleIndex = index - this.RC_CHANNEL_BYPASS_FIRST;
-        if (roleIndex >= 0 && roleIndex < this.RC_CHANNEL_BYPASS_ROLES.length &&
-            rcMap && rcMap.length > roleIndex) {
-            const channel = rcMap[roleIndex] + 1;
-            const role = i18n.getMessage(this.RC_CHANNEL_BYPASS_ROLES[roleIndex]);
+        const fn = index - this.RC_CHANNEL_BYPASS_FIRST;
+        if (fn >= 0 && fn < RC_MAP_LENGTH && rcMap && rcMap.length > fn) {
+            const channel = rcMap[fn] + 1;
+            if (isParkedFunction(fn)) {
+                return `CH #${channel}`;
+            }
+            const role = fn < this.RC_CHANNEL_BYPASS_ROLES.length
+                ? i18n.getMessage(this.RC_CHANNEL_BYPASS_ROLES[fn])
+                : `AUX ${fn - RC_FUNCTION.AUX1 + 1}`;
             return `CH #${channel} (${role})`;
         }
 
         return i18n.getMessage(this.inputNames[index]);
     },
 
-    // Last index of the "raw numbered channel" run -- inputNames[13..26]
-    // are CH #5..#18 (channel = index - 8), immediately after the bypass
-    // Roll/Pitch/Yaw/Throttle run (9-12) resolved above.
+    // Last index of the "numbered channel" run -- inputNames[13..26] are
+    // rcCommand[4..17], immediately after the bypass Roll/Pitch/Yaw/Throttle
+    // run (9-12). 13-16 (AUX 1-4) still go through the rcmap, so their
+    // physical channel comes from rcMap; 17-26 are CH #9..#18 as numbered.
     RC_CHANNEL_RANGE_LAST: 26,
 
     // CH #19..#24 (API 22.5) are inputNames[30..35], after the thrust-vector
@@ -112,15 +121,15 @@ export const Mixer = {
     RC_CHANNEL_HIGH_FIRST_NUMBER: 19,
 
     // Physical channel number (1-based) for an inputNames[] index in the
-    // combined bypass-Roll/Pitch/Yaw/Throttle + raw-CH#5-18 run, or
-    // undefined if it can't be determined (a bypass index without a loaded
+    // combined bypass-Roll/Pitch/Yaw/Throttle + CH#5-18 run, or undefined if
+    // it can't be determined (an rcmap-routed index, 9-16, without a loaded
     // rcMap, or an index outside that run entirely).
     rcChannelNumber: function (index, rcMap) {
-        const roleIndex = index - this.RC_CHANNEL_BYPASS_FIRST;
-        if (roleIndex >= 0 && roleIndex < this.RC_CHANNEL_BYPASS_ROLES.length) {
-            return rcMap && rcMap.length > roleIndex ? rcMap[roleIndex] + 1 : undefined;
+        const fn = index - this.RC_CHANNEL_BYPASS_FIRST;
+        if (fn >= 0 && fn < RC_MAP_LENGTH) {
+            return rcMap && rcMap.length > fn ? rcMap[fn] + 1 : undefined;
         }
-        if (index > this.RC_CHANNEL_BYPASS_FIRST + this.RC_CHANNEL_BYPASS_ROLES.length - 1 &&
+        if (index > this.RC_CHANNEL_BYPASS_FIRST + RC_MAP_LENGTH - 1 &&
             index <= this.RC_CHANNEL_RANGE_LAST) {
             return index - 8;
         }

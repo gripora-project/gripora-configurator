@@ -1,94 +1,38 @@
 <script>
-  import { slide } from "svelte/transition";
-
   import { FC } from "@/js/fc.svelte.js";
+  import { i18n } from "@/js/i18n.js";
   import Field from "@/components/Field.svelte";
   import NumberInput from "@/components/NumberInput.svelte";
   import Tooltip from "@/components/Tooltip.svelte";
   import Section from "@/components/Section.svelte";
   import SubSection from "@/components/SubSection.svelte";
-  import Switch from "@/components/Switch.svelte";
 
-  let initial_rc_min_throttle = FC.RC_CONFIG.rc_min_throttle;
-  let initial_rc_max_throttle = FC.RC_CONFIG.rc_max_throttle;
+  import { THROTTLE_NEUTRAL_DEADBAND } from "./rc_command.svelte.js";
 
-  let autoThrottleRange = $derived(
-    FC.RC_CONFIG.rc_min_throttle === 0 && FC.RC_CONFIG.rc_max_throttle === 0,
-  );
+  // A car's throttle is signed around Channel Center (forward above it,
+  // brake/reverse below it) with a fixed neutral deadband, so there is no
+  // min/max throttle to set. rc_min_throttle/rc_max_throttle and the roll
+  // and pitch deadbands are not shown but still round-trip over MSP
+  // unchanged.
 </script>
 
 {#snippet throttle()}
   <SubSection label="receiverSettingsThrottleChannel">
     <Field
-      id="auto-throttle-range"
-      label="receiver.channel_range.automatic_throttle_range.label"
+      id="receiver-throttle-neutral"
+      label="receiverThrottleNeutral"
+      unit="μs"
     >
       {#snippet tooltip()}
-        <Tooltip help="receiver.channel_range.automatic_throttle_range.help" />
+        <Tooltip help="receiverHelpThrottleNeutral" />
       {/snippet}
-      <Switch
-        id="auto-throttle-range"
-        checked={autoThrottleRange}
-        onchange={(e) => {
-          if (e.target.checked) {
-            initial_rc_min_throttle = FC.RC_CONFIG.rc_min_throttle;
-            initial_rc_max_throttle = FC.RC_CONFIG.rc_max_throttle;
-
-            FC.RC_CONFIG.rc_min_throttle = 0;
-            FC.RC_CONFIG.rc_max_throttle = 0;
-          } else {
-            FC.RC_CONFIG.rc_min_throttle = initial_rc_min_throttle || 1100;
-            FC.RC_CONFIG.rc_max_throttle = initial_rc_max_throttle || 1900;
-          }
-        }}
-      />
+      <span id="receiver-throttle-neutral" class="readout">
+        {$i18n.t("receiverThrottleNeutralValue", {
+          1: FC.RC_CONFIG.rc_center,
+          2: THROTTLE_NEUTRAL_DEADBAND,
+        })}
+      </span>
     </Field>
-    {#if !autoThrottleRange}
-      <div transition:slide>
-        <Field
-          id="receiver-zero-throttle"
-          label="receiverZeroThrottle"
-          unit="μs"
-        >
-          {#snippet tooltip()}
-            <Tooltip
-              help="receiverHelpZeroThrottle2"
-              attrs={[
-                { name: "genericDefault", value: "1100μs" },
-                { name: "genericRange", value: "885μs - 2115μs" },
-              ]}
-            />
-          {/snippet}
-          <NumberInput
-            id="receiver-zero-throttle"
-            min="885"
-            max="2115"
-            bind:value={FC.RC_CONFIG.rc_min_throttle}
-          />
-        </Field>
-        <Field
-          id="receiver-full-throttle"
-          label="receiverFullThrottle"
-          unit="μs"
-        >
-          {#snippet tooltip()}
-            <Tooltip
-              help="receiverHelpFullThrottle2"
-              attrs={[
-                { name: "genericDefault", value: "1900μs" },
-                { name: "genericRange", value: "885μs - 2115μs" },
-              ]}
-            />
-          {/snippet}
-          <NumberInput
-            id="receiver-full-throttle"
-            min="885"
-            max="2115"
-            bind:value={FC.RC_CONFIG.rc_max_throttle}
-          />
-        </Field>
-      </div>
-    {/if}
   </SubSection>
 {/snippet}
 
@@ -132,40 +76,6 @@
         bind:value={FC.RC_CONFIG.rc_deflection}
       />
     </Field>
-    <Field id="receiver-roll-deadband" label="receiverRollDeadband" unit="μs">
-      {#snippet tooltip()}
-        <Tooltip
-          help="receiverHelpRollDeadband"
-          attrs={[
-            { name: "genericDefault", value: "5μs" },
-            { name: "genericRange", value: "0μs - 100μs" },
-          ]}
-        />
-      {/snippet}
-      <NumberInput
-        id="receiver-roll-deadband"
-        min="0"
-        max="100"
-        bind:value={FC.RC_CONFIG.rc_roll_deadband}
-      />
-    </Field>
-    <Field id="receiver-pitch-deadband" label="receiverPitchDeadband" unit="μs">
-      {#snippet tooltip()}
-        <Tooltip
-          help="receiverHelpPitchDeadband"
-          attrs={[
-            { name: "genericDefault", value: "5μs" },
-            { name: "genericRange", value: "0μs - 100μs" },
-          ]}
-        />
-      {/snippet}
-      <NumberInput
-        id="receiver-pitch-deadband"
-        min="0"
-        max="100"
-        bind:value={FC.RC_CONFIG.rc_pitch_deadband}
-      />
-    </Field>
     <Field id="receiver-yaw-deadband" label="receiverYawDeadband" unit="μs">
       {#snippet tooltip()}
         <Tooltip
@@ -188,4 +98,10 @@
 </Section>
 
 <style lang="scss">
+  .readout {
+    display: inline-block;
+    padding: 0 4px;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-soft);
+  }
 </style>

@@ -6,6 +6,7 @@
   import { FC } from "@/js/fc.svelte.js";
   import { i18n } from "@/js/i18n.js";
   import { MSPCodes } from "@/js/msp/MSPCodes.js";
+  import { auxChannelLabel } from "@/js/rcChannels.js";
   import { getTabHelpURL } from "@/js/help";
 
   import CollapsibleGroup from "@/components/CollapsibleGroup.svelte";
@@ -65,7 +66,7 @@
   let channelOptions = $derived(
     Array.from({ length: auxChannelCount }, (_, i) => ({
       value: i,
-      label: `CH #${i + 5}`,
+      label: auxChannelLabel(i, FC.RC_MAP),
     })),
   );
   let enaChannelOptions = $derived([
@@ -238,6 +239,7 @@
   onMount(async () => {
     await MSP.promise(MSPCodes.MSP_STATUS);
     await MSP.promise(MSPCodes.MSP_RC);
+    await MSP.promise(MSPCodes.MSP_RX_MAP);
     await MSP.promise(MSPCodes.MSP_ADJUSTMENT_RANGES);
 
     initialVisibleSlots = FC.ADJUSTMENT_RANGES.map((range, i) => i).filter(

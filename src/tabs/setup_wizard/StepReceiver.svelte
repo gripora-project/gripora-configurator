@@ -17,9 +17,15 @@
   import RxWiringDetectWizard from "@/tabs/receiver/RxWiringDetectWizard.svelte";
 
   import ReceiverArt from "./ReceiverArt.svelte";
-  import SticksBottomLeft from "./SticksBottomLeft.svelte";
+  import WheelLeftBrake from "./WheelLeftBrake.svelte";
   import StickIcon from "./StickIcon.svelte";
-  import { mapFromDetected, movedChannel, orderLabel } from "./receiver.js";
+  import { movedChannel } from "./receiver.js";
+  import {
+    CAR_RC_MAP,
+    RC_FUNCTION,
+    carMapFromControls,
+    carOrderLabel,
+  } from "@/js/rcChannels.js";
 
   const wiz = getContext("setupWizard");
 
@@ -32,25 +38,31 @@
     (p) => p.feature === "RX_SERIAL" && !p.hide,
   );
 
-  // The two common orders. RC_MAP[function] = receiver channel, functions in
-  // the order roll, pitch, yaw, throttle, aux 1-4.
-  const ORDERS = [
-    { key: "aetr", map: [0, 1, 3, 2, 4, 5, 6, 7] },
-    { key: "taer", map: [1, 2, 3, 0, 4, 5, 6, 7] },
-  ];
+  // The car order (firmware default RT1234AE): CH1 steering, CH2 throttle.
+  // RC_MAP[function] = receiver channel, functions in the order roll, pitch,
+  // yaw, throttle, aux 1-4; roll and pitch are parked on unused channels.
+  const ORDERS = [{ key: "car", map: CAR_RC_MAP }];
 
   // `move`: the stick movement asked for when detecting the order, drawn
   // with StickIcon (x 1 right, y -1 forward).
+  // A car's controls: steering (yaw) and throttle. `fn` is the RC_MAP index.
   const FUNCTIONS = [
-    { key: "roll", label: "controlAxisRoll", move: { x: 1, y: 0 } },
-    { key: "pitch", label: "controlAxisPitch", move: { x: 0, y: -1 } },
-    { key: "yaw", label: "controlAxisYaw", move: { x: 1, y: 0 } },
-    { key: "throttle", label: "controlAxisThrottle", move: { x: 0, y: -1 } },
+    {
+      key: "yaw",
+      fn: RC_FUNCTION.STEERING,
+      label: "controlAxisYaw",
+      move: { x: 1, y: 0 },
+    },
+    {
+      key: "throttle",
+      fn: RC_FUNCTION.THROTTLE,
+      label: "controlAxisThrottle",
+      move: { x: 0, y: -1 },
+    },
   ];
 
-  // Order detection asks for throttle first: it is the one stick that
-  // starts at an end, so it is the least likely to be bumped by mistake.
-  const DETECT_ORDER = [3, 0, 1, 2].map((i) => FUNCTIONS[i]);
+  // Order detection asks for throttle first, then steering.
+  const DETECT_ORDER = [1, 0].map((i) => FUNCTIONS[i]);
 
   // How far from center (fraction of rc_deflection) counts as "at the end".
   const AT_END = 0.7;
@@ -267,9 +279,10 @@
     const next = [...found, channel];
     if (next.length === DETECT_ORDER.length) {
       orderDetect = null;
-      // Back into roll, pitch, yaw, throttle order.
-      const byFunction = FUNCTIONS.map((fn) => next[DETECT_ORDER.indexOf(fn)]);
-      setMap(mapFromDetected(byFunction, FC.RC_MAP.length));
+      const [steering, throttle] = FUNCTIONS.map(
+        (fn) => next[DETECT_ORDER.indexOf(fn)],
+      );
+      setMap(carMapFromControls(steering, throttle, FC.RC_MAP.length));
       return;
     }
     // Next stick: measured from where everything is now.
@@ -298,7 +311,9 @@
     };
   }
 
-  let readings = $derived(FUNCTIONS.map((fn, i) => ({ ...fn, ...reading(i) })));
+  let readings = $derived(
+    FUNCTIONS.map((fn) => ({ ...fn, ...reading(fn.fn) })),
+  );
   let allLeft = $derived(readings.every((r) => r.state === "left"));
   let anyRight = $derived(readings.some((r) => r.state === "right"));
 </script>
@@ -431,7 +446,7 @@
               <i class="fas fa-check-circle" aria-hidden="true"></i>
             {/if}
           </span>
-          <span class="code">{orderLabel(o.map).slice(0, 4)}</span>
+          <span class="code">{carOrderLabel(o.map)}</span>
           <span class="muted"
             >{$i18n.t(`setupWizardReceiverOrderHelp_${o.key}`)}</span
           >
@@ -453,7 +468,7 @@
           {/if}
         </span>
         {#if !order && FC.RC_MAP}
-          <span class="code">{orderLabel(FC.RC_MAP).slice(0, 4)}</span>
+          <span class="code">{carOrderLabel(FC.RC_MAP)}</span>
         {/if}
         <span class="muted"
           >{$i18n.t("setupWizardReceiverOrderHelp_custom")}</span
@@ -497,7 +512,7 @@
     {/if}
 
     <div class="check">
-      <SticksBottomLeft />
+      <WheelLeftBrake />
       <div class="check-text">
         <strong>{$i18n.t("setupWizardReceiverCheckTitle")}</strong>
         <span>{$i18n.t("setupWizardReceiverCheckText")}</span>

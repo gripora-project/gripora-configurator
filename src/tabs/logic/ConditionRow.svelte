@@ -2,6 +2,7 @@
   import { FC } from "@/js/fc.svelte.js";
   import { i18n } from "@/js/i18n.js";
   import { LogicCondition } from "@/js/LogicCondition.js";
+  import { isParkedFunction } from "@/js/rcChannels.js";
 
   import Select from "@/components/Select.svelte";
   import Switch from "@/components/Switch.svelte";
@@ -98,6 +99,14 @@
     bDisplay = live;
     commit();
   }
+
+  // Roll and pitch are parked on channels a car does not use: list them
+  // only when this condition already reads one.
+  function carChannelOptions(selected) {
+    return channelOptions.filter(
+      (o) => !isParkedFunction(o.value) || o.value === selected,
+    );
+  }
 </script>
 
 <div class="row" class:disabled={!enabled}>
@@ -147,7 +156,7 @@
       <div class="value-group">
         <Select
           bind:value={aDisplay}
-          options={channelOptions}
+          options={carChannelOptions(aDisplay)}
           disabled={!usesA}
           onchange={commit}
         />
@@ -213,7 +222,7 @@
       <div class="value-group">
         <Select
           bind:value={bDisplay}
-          options={channelOptions}
+          options={carChannelOptions(bDisplay)}
           disabled={!usesB}
           onchange={commit}
         />

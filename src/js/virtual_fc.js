@@ -853,7 +853,9 @@ export function applyVirtualConfig() {
     rssi: 700,
   });
 
-  FC.RC_MAP = [0, 1, 3, 2, 5, 4, 6, 7];
+  // Car channel order RT1234AE (firmware pg/rx.c): CH1 steering, CH2
+  // throttle, CH3-CH6 aux 1-4, roll and pitch parked on CH7/CH8.
+  FC.RC_MAP = [6, 7, 0, 1, 2, 3, 4, 5];
 
   Object.assign(FC.TELEMETRY_CONFIG, {
     crsf_telemetry_mode: 1,
