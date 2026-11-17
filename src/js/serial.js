@@ -264,7 +264,7 @@ export const serial = {
 
         chrome.sockets.tcp.create({
             persistent: false,
-            name: 'Wingflight',
+            name: 'Gripora',
             bufferSize: 65535,
         }, function(createInfo) {
             if (createInfo && !self.openCanceled || !checkChromeRuntimeError()) {

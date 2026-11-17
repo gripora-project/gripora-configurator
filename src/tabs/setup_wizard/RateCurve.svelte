@@ -1,6 +1,6 @@
 <script>
   // Stick deflection (0 to full, left to right) against rotation rate, as
-  // the firmware works it out (applyWingflightRates() in fc/rc_rates.c):
+  // the firmware works it out (applyGriporaRates() in fc/rc_rates.c):
   // rate * (x * (1 - expo) + x^shape * expo). Every curve on the page uses
   // the same `scale` (deg/s at the top) so they can be compared. One series:
   // the value at full stick is labelled, so there's no legend.

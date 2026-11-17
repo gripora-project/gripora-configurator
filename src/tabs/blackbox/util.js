@@ -46,7 +46,7 @@ export const LOG_RATES = {
 };
 
 export function getDebugModes() {
-  // Index = debugType_e value in wingflight-firmware src/main/build/debug.h.
+  // Index = debugType_e value in gripora-firmware src/main/build/debug.h.
   // Keep in the same order; UNUSED_n are reserved slots with no data.
   return [
     "NONE",

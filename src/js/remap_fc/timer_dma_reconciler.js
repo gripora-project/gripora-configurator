@@ -13,7 +13,7 @@
  * the `timer`/`dma pin` CLI commands needed to apply it.
  *
  * Deliberately an all-or-nothing decision, matching the original
- * Wingflight remap tool: a clash anywhere means every feature's timer
+ * Gripora remap tool: a clash anywhere means every feature's timer
  * and DMA is reallocated from scratch together, rather than patching
  * around just the clashing ones -- the whole point of the base-
  * exclusivity and critical-base rules is that one feature's "safe"

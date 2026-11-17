@@ -49,13 +49,13 @@ export function getAppIdentity(pkg) {
   const [major, minor] = channel.split(".");
   return {
     channel,
-    // wingflight-configurator-2.3: package, profile and install dir names
+    // gripora-configurator-2.3: package, profile and install dir names
     name: `${pkg.name}-${channel}`,
-    // Wingflight Configurator 2.3: what the pilot sees
+    // Gripora Configurator 2.3: what the pilot sees
     productName: `${pkg.productName} ${isDev ? "(dev)" : channel}`,
     // A component of a reverse-DNS id can't hold a dot, and on Android it
     // has to start with a letter.
-    bundleId: `org.wingflight.configurator.${isDev ? "dev" : `v${major}-${minor}`}`,
-    androidId: `org.wingflight.wingflightconfigurator.${isDev ? "dev" : `v${major}_${minor}`}`,
+    bundleId: `org.gripora.configurator.${isDev ? "dev" : `v${major}-${minor}`}`,
+    androidId: `org.gripora.griporaconfigurator.${isDev ? "dev" : `v${major}_${minor}`}`,
   };
 }

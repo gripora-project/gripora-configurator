@@ -14,7 +14,7 @@ import { buildResourceCommand } from "./hardware_parser.js";
 // actually drive (see feature_classifier.js's MOTOR_RE/SERVO_RE, which
 // caps classification the same way). A Betaflight-shared target can
 // define more -- up to 8 motors, sometimes 12 servos -- surfaced only
-// via wingflight_target_source.js for a board with no
+// via gripora_target_source.js for a board with no
 // Rotorflight-specific build of its own, since Rotorflight's own
 // `dump hardware` never reports beyond these. A beyond-capacity option
 // (e.g. "M5") still gets a normal row (remap_fc.svelte's setHardware)
@@ -48,7 +48,7 @@ export function isOverCapacity(optionKey) {
  * remap_fc.svelte (to decide whether to show a bare, uncased PCB board
  * diagram instead of a real cased one) and remap_fc.js (to decide
  * whether to fetch richer Betaflight-target defaults from
- * wingflight_target_source.js) -- both need the identical check.
+ * gripora_target_source.js) -- both need the identical check.
  * @param {?string} boardDesign - e.g. "F7C5", "BTFL", or null/undefined, from FC.CONFIG.boardDesign.
  * @returns {boolean}
  */
@@ -123,11 +123,11 @@ export const TABLE_OPTION_KEYS = [
 //
 // M5-M12/S9-S12 go beyond MAX_VALID_MOTORS/MAX_VALID_SERVOS — see
 // isOverCapacity's own comment for why a board can still report them
-// (via wingflight_target_source.js) despite Rotorflight itself never
+// (via gripora_target_source.js) despite Rotorflight itself never
 // being able to use them. RX/TX go up to 12 and SDA/SCL up to 4 to
 // match the CLI's own resource catalog (`resource SERIAL_RX 12 ...`,
 // `resource I2C_SDA 4 ...`), even though only a handful of MCUs — none
-// currently supported by Rotorflight/Wingflight — actually wire that
+// currently supported by Rotorflight/Gripora — actually wire that
 // many UART/I2C instances. Every one of these stays invisible for a
 // board that doesn't actually report it — getAddableOptions gates on
 // `option in defaultHardware`, and setHardware's own visibleOptions

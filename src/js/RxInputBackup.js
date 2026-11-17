@@ -1,4 +1,4 @@
-// Backup receivers - see wingflight-firmware's drivers/rx_input_backup.h.
+// Backup receivers - see gripora-firmware's drivers/rx_input_backup.h.
 //
 // The firmware supports RX_INPUT_BACKUP_COUNT independent backup RX ports.
 // Failover is a fixed priority chain: the primary RX, then backup 1, then
@@ -12,7 +12,7 @@ export const RX_INPUT_BACKUP_COUNT = 2;
 // in priority order. Index into this with the backup number minus one.
 export const RX_INPUT_BACKUP_FUNCTIONS = [8388608, 16777216];
 
-// Keep in sync with wingflight-firmware's cli/settings.c
+// Keep in sync with gripora-firmware's cli/settings.c
 // lookupTableRxInputBackupProvider[] (same order, NONE=0 first) - this
 // array's index must match the firmware enum. Display text matches
 // RX_PROTOCOLS' own naming (tabs/receiver/protocols.js) for the same

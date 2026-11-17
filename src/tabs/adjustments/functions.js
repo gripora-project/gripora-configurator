@@ -8,7 +8,7 @@ import { i18n } from '@/js/localization.js';
 // adjustmentConfigs[] table (mostly heli-only concepts like cyclic/
 // collective/governor/cross-coupling carried over from this firmware's
 // Rotorflight lineage) - selecting one is silently inert, not dangerous,
-// but does nothing on wingflight.
+// but does nothing on gripora.
 export function getFunctions() {
     return [
         { id: 0,    name: 'None',                       min: 0,     max: 100,    ticks: 10,   pips: [ 0, 20, 40, 60, 80, 100 ] },

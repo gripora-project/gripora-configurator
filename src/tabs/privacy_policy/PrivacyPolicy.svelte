@@ -13,15 +13,15 @@
     <p class="effective-date">Effective date: August 09, 2020</p>
 
     <p>
-      The Wingflight Group ("us", "we", or "our") operates the website and the
-      Wingflight Configurator application (the "Service").
+      The Gripora Group ("us", "we", or "our") operates the website and the
+      Gripora Configurator application (the "Service").
     </p>
 
     <p>
       This page informs you of our policies regarding the collection, use, and
       disclosure of personal data when you use our Service and the choices you
-      have associated with that data. This Privacy Policy for The Wingflight
-      Group is powered by
+      have associated with that data. This Privacy Policy for The Gripora Group
+      is powered by
       <a
         target="_blank"
         rel="noopener noreferrer"
@@ -90,7 +90,7 @@
     </ul>
 
     <h2>Use of Data</h2>
-    <p>The Wingflight Group uses the collected data for various purposes:</p>
+    <p>The Gripora Group uses the collected data for various purposes:</p>
     <ul>
       <li>To provide and maintain the Service</li>
       <li>To notify you about changes to our Service</li>
@@ -124,24 +124,22 @@
       information represents your agreement to that transfer.
     </p>
     <p>
-      The Wingflight Group will take all steps reasonably necessary to ensure
-      that your data is treated securely and in accordance with this Privacy
-      Policy and no transfer of your Personal Data will take place to an
-      organization or a country unless there are adequate controls in place
-      including the security of your data and other personal information.
+      The Gripora Group will take all steps reasonably necessary to ensure that
+      your data is treated securely and in accordance with this Privacy Policy
+      and no transfer of your Personal Data will take place to an organization
+      or a country unless there are adequate controls in place including the
+      security of your data and other personal information.
     </p>
 
     <h2>Disclosure Of Data</h2>
     <h3>Legal Requirements</h3>
     <p>
-      The Wingflight Group may disclose your Personal Data in the good faith
-      belief that such action is necessary to:
+      The Gripora Group may disclose your Personal Data in the good faith belief
+      that such action is necessary to:
     </p>
     <ul>
       <li>To comply with a legal obligation</li>
-      <li>
-        To protect and defend the rights or property of The Wingflight Group
-      </li>
+      <li>To protect and defend the rights or property of The Gripora Group</li>
       <li>
         To prevent or investigate possible wrongdoing in connection with the
         Service
@@ -222,8 +220,8 @@
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href="https://github.com/WingFlight/wingflight-configurator/issues"
-          >https://github.com/WingFlight/wingflight-configurator/issues</a
+          href="https://github.com/gripora-project/gripora-configurator/issues"
+          >https://github.com/gripora-project/gripora-configurator/issues</a
         >
       </li>
     </ul>

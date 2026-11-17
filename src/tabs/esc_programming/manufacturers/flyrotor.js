@@ -1,4 +1,4 @@
-// Ported verbatim from C:\GitHub\wingflight-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_FLYROTOR.lua
+// Ported verbatim from C:\GitHub\gripora-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_FLYROTOR.lua
 // and escmfg/flrtr/{init.lua,pages/*.lua}. Group B (native MSP, no target-switch handshake).
 // Fields from active_freewheel through battery_capacity only exist on firmware/api>=22.0.0 in
 // the Lua source; here they're simply mandatory:false so the engine's buffer-length-driven

@@ -8,7 +8,7 @@ Name work branches `feature/<name>` with a short, lowercase, hyphenated name
 GitHub Pages deploy path and the build label (`VITE_APP_BUILD_LABEL`), so long
 names give unwieldy URLs and labels. This matches the firmware repo, where the
 branch name goes into the version string and a long one fails the build (see
-`wingflight-firmware/AGENTS.md`).
+`gripora-firmware/AGENTS.md`).
 
 ## Never bump version numbers
 
@@ -17,8 +17,8 @@ when a new version is released. This keeps version changes to a minimum.
 
 Do not touch:
 
-- the `API_VERSION_*` constants, `API_VERSION_WGFL_MIN`,
-  `API_VERSION_WGFL_MAX`, `FW_VERSION_WGFL_MIN` or `FW_VERSION_WGFL_MAX` in
+- the `API_VERSION_*` constants, `API_VERSION_GRPA_MIN`,
+  `API_VERSION_GRPA_MAX`, `FW_VERSION_GRPA_MIN` or `FW_VERSION_GRPA_MAX` in
   `src/js/configurator.svelte.js`,
 - the Virtual firmware versions in `virtualFirmwareVersions`
   (`src/js/utils/common.js`),
@@ -40,7 +40,7 @@ If you change MSP behaviour, update the Virtual FC in the same change:
 
 - **New or changed read (`MSP_*` decoded in `MSPHelper.process_data`)**: seed
   the `FC` fields it fills in `applyVirtualConfig()`. Use the firmware's reset
-  defaults (`wingflight-firmware/src/main/pg/*.c`), not zeros. Fixed-size pools
+  defaults (`gripora-firmware/src/main/pg/*.c`), not zeros. Fixed-size pools
   (mode ranges, mixer rules and curves, gain curves, LED colors, meters) must
   be seeded at their full firmware length, because tabs index into them.
 - **New field on an existing `FC` object**: add it to the matching seed or

@@ -13,7 +13,7 @@
  */
 
 const RAW_BASE =
-  "https://raw.githubusercontent.com/WingFlight/wingflight-configurator/master/src/tabs/remap_fc/";
+  "https://raw.githubusercontent.com/gripora-project/gripora-configurator/master/src/tabs/remap_fc/";
 
 const FETCH_TIMEOUT_MS = 4000;
 

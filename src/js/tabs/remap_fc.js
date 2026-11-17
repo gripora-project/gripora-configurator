@@ -20,7 +20,7 @@ import {
   parseReservedTimers,
 } from "@/js/remap_fc/timer_dma_lookup.js";
 import { withTimeout } from "@/js/remap_fc/with_timeout.js";
-import { fetchWingflightTargetDefaults } from "@/js/remap_fc/wingflight_target_source.js";
+import { fetchGriporaTargetDefaults } from "@/js/remap_fc/gripora_target_source.js";
 
 const IDLE_THRESHOLD_MS = 500;
 
@@ -436,14 +436,14 @@ class RemapFcTab {
       // up to whatever Rotorflight's own runtime was compiled to
       // support -- kick off a lookup of the richer default set its own
       // shared Betaflight target actually defines (see
-      // wingflight_target_source.js), in parallel with the CLI
+      // gripora_target_source.js), in parallel with the CLI
       // restore sequence below since it's an unrelated network fetch,
       // not something to make the user wait on twice. Purely for
       // display -- this.#defaultHardware itself, used below to compute
       // what actually gets sent back to the FC, stays exactly what was
       // really read regardless of how this resolves.
       const targetDefaultsPromise = isGenericBoardDesign(FC.CONFIG.boardDesign)
-        ? fetchWingflightTargetDefaults(
+        ? fetchGriporaTargetDefaults(
             FC.CONFIG.manufacturerId,
             FC.CONFIG.boardName,
           )

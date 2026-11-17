@@ -105,7 +105,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-linux-${{ env.GIT_VER }}
+        name: gripora-configurator-linux-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -164,7 +164,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-macos-x86_64-${{ env.GIT_VER }}
+        name: gripora-configurator-macos-x86_64-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -223,7 +223,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-macos-arm64-${{ env.GIT_VER }}
+        name: gripora-configurator-macos-arm64-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -282,7 +282,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-win64-${{ env.GIT_VER }}
+        name: gripora-configurator-win64-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -341,7 +341,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-win32-${{ env.GIT_VER }}
+        name: gripora-configurator-win32-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -412,5 +412,5 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-android-${{ env.GIT_VER }}
+        name: gripora-configurator-android-${{ env.GIT_VER }}
         path: redist/*

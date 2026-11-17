@@ -183,7 +183,7 @@ jobs:
         env:
           BUILT_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
-          PREVIEW_URL="https://cfg.wingflight.org/pr/$PR_NUMBER/"
+          PREVIEW_URL="https://cfg.gripora.org/pr/$PR_NUMBER/"
           MARKER="<!-- pr-preview -->"
           BODY="$MARKER
           **Web preview:** $PREVIEW_URL

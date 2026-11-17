@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name={{name}}
+Comment=Crossplatform configuration tool for the Gripora flight control system
+Exec={{installdir}}/gripora-configurator
+Icon={{installdir}}/icon/rf_icon.png
+Terminal=false
+Type=Application
+Categories=Utility

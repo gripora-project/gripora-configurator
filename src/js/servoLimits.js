@@ -1,4 +1,4 @@
-// Servo output limits, matching the firmware (wingflight-firmware
+// Servo output limits, matching the firmware (gripora-firmware
 // src/main/flight/servos.c). The stored min/max are kept as set, and
 // servoTravelMin/Max() limit them against the center when the output is
 // worked out, so center + travel stays inside the servo's signal range.

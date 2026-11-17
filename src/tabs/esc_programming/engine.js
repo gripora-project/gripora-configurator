@@ -1,6 +1,6 @@
 // Generic byte-buffer <-> parameter-value engine shared by every ESC manufacturer module.
 // Field tuples are a superset of the dialects found in the Lua ESC_PARAMETERS_*.lua sources
-// (see C:\GitHub\wingflight-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_*.lua
+// (see C:\GitHub\gripora-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_*.lua
 // and core.lua's createConfigAPI). Manufacturers with genuinely non-declarative logic (AM32,
 // Bluejay, HW5) layer optional parseRead/buildWritePayload hooks on top of this engine instead
 // of forcing their quirks into the generic tuple shape.

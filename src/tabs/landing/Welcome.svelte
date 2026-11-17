@@ -19,13 +19,9 @@
     <img
       class="logo logo-light"
       src="/images/cf_logo_black.svg"
-      alt="Wingflight"
+      alt="Gripora"
     />
-    <img
-      class="logo logo-dark"
-      src="/images/cf_logo_white.svg"
-      alt="Wingflight"
-    />
+    <img class="logo logo-dark" src="/images/cf_logo_white.svg" alt="Gripora" />
     <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     <p>{@html $i18n.t("defaultWelcomeIntro")}</p>
   </div>

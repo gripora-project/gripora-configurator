@@ -40,7 +40,7 @@ temporary full-range mode slot that is never written to EEPROM.
 ## Wizard ideas
 
 - **Docs page**: write *Getting Started → Set Up Your Aircraft* in
-  wingflight-docs with the same steps. The wizard's Help button already
+  gripora-docs with the same steps. The wizard's Help button already
   points at `getting-started/aircraft-setup`.
 - **Bus servos and flaps**: the wizard covers PWM servos 1–8 driven by roll,
   pitch and yaw only.

@@ -22,9 +22,9 @@ convertRegex = {
     'betaflight': 'rotorflight',
     'Betaflight': 'Rotorflight',
     'BetaFlight': 'Rotorflight',
-    'rotorflight': 'wingflight',
-    'Rotorflight': 'Wingflight',
-    'RotorFlight': 'WingFlight',
+    'rotorflight': 'gripora',
+    'Rotorflight': 'Gripora',
+    'RotorFlight': 'Gripora',
 }
 
 def matchRegex(key,reglist):

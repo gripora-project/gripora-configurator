@@ -389,13 +389,13 @@
         "message": "Show update notifications for unstable versions of the configurator"
     },
     "configuratorDevelopmentNotice": {
-        "message": "You are using a <b>development version</b> of the <b>Wingflight Configurator</b>.<br> Please consider using a released version, unless you have a good reason for using an unreleased development version."
+        "message": "You are using a <b>development version</b> of the <b>Gripora Configurator</b>.<br> Please consider using a released version, unless you have a good reason for using an unreleased development version."
     },
     "configuratorUpdateNotice": {
-        "message": "You are using an outdated version of the <b>Wingflight Configurator</b>.<br>$t(configuratorUpdateHelp.message)"
+        "message": "You are using an outdated version of the <b>Gripora Configurator</b>.<br>$t(configuratorUpdateHelp.message)"
     },
     "configuratorUpdateHelp": {
-        "message": "Using a newer version of the firmware with an outdated version of Configurator means that changing some settings will result in a <strong>corrupted firmware configuration and a non-working craft</strong>. Furthermore, some features of the firmware will only be configurable in CLI.<br><strong>Wingflight Configurator version <b>$1</b> is available for download online</strong>, please visit <a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">this page</a> to download and install the latest version with fixes and improvements.<br>Please close the configurator window before updating."
+        "message": "Using a newer version of the firmware with an outdated version of Configurator means that changing some settings will result in a <strong>corrupted firmware configuration and a non-working craft</strong>. Furthermore, some features of the firmware will only be configurable in CLI.<br><strong>Gripora Configurator version <b>$1</b> is available for download online</strong>, please visit <a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">this page</a> to download and install the latest version with fixes and improvements.<br>Please close the configurator window before updating."
     },
     "configuratorUpdateWebsite": {
         "message": "Go to Release Website"
@@ -1218,7 +1218,7 @@
         "message": "USB DFU not found"
     },
     "stm32UsbDfuNotFoundAfterReboot": {
-        "message": "The board rebooted into the bootloader, but its USB DFU device did not appear. On Windows this usually means the DFU driver is missing or failed: run the <a href=\"https://github.com/WingFlight/wingflight-driver-fixer/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight driver fixer</a>, then unplug and replug the board and flash again. The board stays in the bootloader until it is power-cycled."
+        "message": "The board rebooted into the bootloader, but its USB DFU device did not appear. On Windows this usually means the DFU driver is missing or failed: run the <a href=\"https://github.com/WingFlight/wingflight-driver-fixer/releases\" target=\"_blank\" rel=\"noopener noreferrer\">WingFlight driver fixer</a>, then unplug and replug the board and flash again. The board stays in the bootloader until it is power-cycled."
     },
     "stm32RebootingToBootloader": {
         "message": "Initiating reboot to bootloader ..."
@@ -1268,14 +1268,14 @@
     "stm32ProgrammingSuccessful": {
         "message": "Programming: SUCCESSFUL"
     },
-    "stm32WaitingForWingflightLoader": {
-        "message": "Waiting for the Wingflight loader ..."
+    "stm32WaitingForGriporaLoader": {
+        "message": "Waiting for the Gripora loader ..."
     },
-    "stm32WingflightLoaderNotFound": {
-        "message": "The Wingflight loader was written, but its USB DFU device did not appear. Unplug and replug the board, then flash again."
+    "stm32GriporaLoaderNotFound": {
+        "message": "The Gripora loader was written, but its USB DFU device did not appear. Unplug and replug the board, then flash again."
     },
-    "stm32WingflightLoaderOutdated": {
-        "message": "The Wingflight loader on this board can't wipe the config. Flash the board through the ST ROM DFU to update the loader, then flash again."
+    "stm32GriporaLoaderOutdated": {
+        "message": "The Gripora loader on this board can't wipe the config. Flash the board through the ST ROM DFU to update the loader, then flash again."
     },
     "stm32ProgrammingFailed": {
         "message": "Programming: FAILED"
@@ -1311,7 +1311,7 @@
         "message": "This firmware version is <span class=\"message-negative\">not supported</span>. Please use a firmware version that is supported by this version of the Configurator. Use CLI for backup before flashing. CLI backup/restore procedure is in the documentation.<br />Alternatively download and use an old version of the configurator if you are not ready to upgrade."
     },
     "firmwareTypeNotSupported": {
-        "message": "Non - Wingflight firmware is <span class=\"message-negative\">not supported</span>, except for CLI mode."
+        "message": "Non - Gripora firmware is <span class=\"message-negative\">not supported</span>, except for CLI mode."
     },
     "firmwareVersionInvalid": {
         "message": "Firmware version: [$1] is <span class=\"message-negative\">invalid</span>. Please use a firmware version that is supported by this version of the Configurator."
@@ -1456,43 +1456,43 @@
         "message": "EEPROM <span class=\"message-positive\">saved</span>"
     },
     "defaultWelcomeIntro": {
-        "message": "Welcome to <strong>Wingflight - Configurator</strong>, a utility designed to simplify updating, configuring and tuning of your flight controller."
+        "message": "Welcome to <strong>Gripora - Configurator</strong>, a utility designed to simplify updating, configuring and tuning of your flight controller."
     },
     "defaultDownloadsHead": {
         "message": "Downloads"
     },
     "defaultDownloadsText": {
-        "message": "The latest Wingflight software downloads are available here:<br /><ul><li><a href=\"https://github.com/WingFlight/wingflight-configurator/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight Configurator</a></li><li><a href=\"https://github.com/WingFlight/wingflight-blackbox/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight Blackbox Log Viewer</a></li><li><a href=\"https://github.com/WingFlight/wingflight-lua-edgetx/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for EdgeTx & OpenTx</a></li><li><a href=\"https://github.com/WingFlight/wingflight-lua-ethos-suite/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for FrSky Ethos</a></li></ul>Wingflight is <b>Open Source</b> software. The source code is available in <a href=\"https://github.com/WingFlight?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>."
+        "message": "The latest Gripora software downloads are available here:<br /><ul><li><a href=\"https://github.com/gripora-project/gripora-configurator/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora Configurator</a></li><li><a href=\"https://github.com/gripora-project/gripora-blackbox/releases\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora Blackbox Log Viewer</a></li><li><a href=\"https://github.com/gripora-project/gripora-lua-edgetx/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for EdgeTx & OpenTx</a></li><li><a href=\"https://github.com/gripora-project/gripora-lua-ethos-suite/releases\" target=\"_blank\" rel=\"noopener noreferrer\">LUA Scripts for FrSky Ethos</a></li></ul>Gripora is <b>Open Source</b> software. The source code is available in <a href=\"https://github.com/gripora-project?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub</a>."
     },
     "defaultCommunityHead": {
         "message": "Community"
     },
     "defaultCommunityText": {
-        "message": "Wingflight has an active online community of normal users, pro-pilots, and developers."
+        "message": "Gripora has an active online community of normal users, pro-pilots, and developers."
     },
     "defaultWebsiteText": {
-        "message": "<a href=\"https://www.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight website</a> is the first stop for instructions, manuals, and information."
+        "message": "<a href=\"https://www.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora website</a> is the first stop for instructions, manuals, and information."
     },
     "defaultDiscordText": {
         "message": "<a href=\"https://discord.gg/aEyyAJTXRw/\" target=\"_blank\" rel=\"noopener noreferrer\">Discord</a> is the official place for online support and discussions."
     },
     "defaultFacebookText": {
-        "message": "<a href=\"https://www.facebook.com/groups/wingflight/\" target=\"_blank\" rel=\"noopener noreferrer\">Facebook Group</a> is a good place for hanging out with other Wingflight pilots."
+        "message": "<a href=\"https://www.facebook.com/groups/wingflight/\" target=\"_blank\" rel=\"noopener noreferrer\">Facebook Group</a> is a good place for hanging out with other Gripora pilots."
     },
     "defaultContributingHead": {
         "message": "Contributing"
     },
     "defaultContributingText": {
-        "message": "Wingflight is an open-source community project. Anybody can join in and help to make it better, including:<br /><ul><li>helping other users on Wingflight Discord or other online forums</li><li><a href=\"https://github.com/WingFlight?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">reporting</a> bugs and issues, and suggesting improvements</li><li>testing new software versions, new features and fixes; and providing feedback</li><li>participating in discussions on new features</li><li>create or update content on <a href=\"https://www.wingflight.org\" target=\"_blank\" rel=\"noopener noreferrer\">our Website</a></li><li><a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">contributing</a> to the software development - fixing bugs, implementing new features and improvements</li><li><a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">translating</a> Wingflight Configurator into a new language, or helping to maintain an existing translation</li></ul>"
+        "message": "Gripora is an open-source community project. Anybody can join in and help to make it better, including:<br /><ul><li>helping other users on Gripora Discord or other online forums</li><li><a href=\"https://github.com/gripora-project?tab=repositories\" target=\"_blank\" rel=\"noopener noreferrer\">reporting</a> bugs and issues, and suggesting improvements</li><li>testing new software versions, new features and fixes; and providing feedback</li><li>participating in discussions on new features</li><li>create or update content on <a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">our Website</a></li><li><a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">contributing</a> to the software development - fixing bugs, implementing new features and improvements</li><li><a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">translating</a> Gripora Configurator into a new language, or helping to maintain an existing translation</li></ul>"
     },
     "defaultDonateHead": {
-        "message": "Supporting Wingflight"
+        "message": "Supporting Gripora"
     },
     "defaultDonateText": {
-        "message": "<p>Wingflight is <i>open source software</i> and is available <i>free of charge</i>, without warranty.</p><p>If you find Wingflight useful, please consider <b>supporting</b> the development by donating to the Wingflight Project.</p>"
+        "message": "<p>Gripora is <i>open source software</i> and is available <i>free of charge</i>, without warranty.</p><p>If you find Gripora useful, please consider <b>supporting</b> the development by donating to the Gripora Project.</p>"
     },
     "defaultDonateTooltip": {
-        "message": "Donate to the Wingflight Project"
+        "message": "Donate to the Gripora Project"
     },
     "defaultChangelogHead": {
         "message": "Configurator - Changelog"
@@ -1501,16 +1501,16 @@
         "message": "Documentation / Manual"
     },
     "defaultDocumentation": {
-        "message": "Wingflight documentation is available in release notes and website.<br /><br />"
+        "message": "Gripora documentation is available in release notes and website.<br /><br />"
     },
     "defaultDocumentation1": {
-        "message": "The Wingflight documentation is a great resource for information, it can be found <a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
+        "message": "The Gripora documentation is a great resource for information, it can be found <a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
     },
     "defaultDocumentation2": {
-        "message": "The latest news can be read on the Wingflight website, <a href=\"https://www.wingflight.org\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
+        "message": "The latest news can be read on the Gripora website, <a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
     },
     "defaultDocumentation3": {
-        "message": "The release notes for the firmware can be read at GitHub releases page, <a href=\"https://github.com/WingFlight/wingflight-firmware/releases\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
+        "message": "The release notes for the firmware can be read at GitHub releases page, <a href=\"https://github.com/gripora-project/gripora-firmware/releases\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
     },
     "defaultSupportHead": {
         "message": "Support"
@@ -1522,10 +1522,10 @@
         "message": "For support please search the forums and website first or contact your vendor.<br /><br />"
     },
     "defaultSupport1": {
-        "message": "<a href=\"https://www.wingflight.org\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight Website</a>"
+        "message": "<a href=\"https://www.gripora.org\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora Website</a>"
     },
     "defaultSupport3": {
-        "message": "<a href=\"https://discord.com/invite/aEyyAJTXRw\" target=\"_blank\" rel=\"noopener noreferrer\">Wingflight discussion on Discord</a>"
+        "message": "<a href=\"https://discord.com/invite/aEyyAJTXRw\" target=\"_blank\" rel=\"noopener noreferrer\">Gripora discussion on Discord</a>"
     },
     "statusButtonResetZaxis": {
         "message": "Reset Z axis, offset: 0 deg"
@@ -1576,7 +1576,7 @@
         "message": "Arming Allowed"
     },
     "statusArmingDisableFlagsTooltip": {
-        "message": "List of flags indicating why arming is currently not allowed. Pass the mouse over the flag or refer to the Website tutorial <a href=\"https://doc.wingflight.org/\" target=\"_blank\" rel=\"noopener noreferrer\">(Arm Mode flags)</a> for more info."
+        "message": "List of flags indicating why arming is currently not allowed. Pass the mouse over the flag or refer to the Website tutorial <a href=\"https://doc.gripora.org/\" target=\"_blank\" rel=\"noopener noreferrer\">(Arm Mode flags)</a> for more info."
     },
     "statusArmingDisableFlagsTooltipNO_GYRO": {
         "message": "A gyro was not detected",
@@ -1646,7 +1646,7 @@
         "description": "Message that pops up to describe the BST arming disable flag"
     },
     "statusArmingDisableFlagsTooltipMSP": {
-        "message": "MSP connection is active, probably with this Wingflight Configurator",
+        "message": "MSP connection is active, probably with this Gripora Configurator",
         "description": "Message that pops up to describe the MSP arming disable flag"
     },
     "statusArmingDisableFlagsTooltipPARALYZE": {
@@ -2706,7 +2706,7 @@
         "message": "Telemetry Packet Ratio"
     },
     "receiverHelpCrsfTelemetryMode": {
-        "message": "Enables the Custom Wingflight telemetry with ELRS. Requires a Lua script in the Tx for decoding the sensors. Custom telemetry provides a plethora of sensors for your aircraft."
+        "message": "Enables the Custom Gripora telemetry with ELRS. Requires a Lua script in the Tx for decoding the sensors. Custom telemetry provides a plethora of sensors for your aircraft."
     },
     "receiverHelpCrsfTelemetryRate": {
         "message": "Radio link packet rate for telemetry. Set this to the same value as the ELRS packet rate in the Tx."
@@ -3120,7 +3120,7 @@
         "message": "Preview"
     },
     "receiverMspWarningText": {
-        "message": "These sticks allow Wingflight to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and rotor blades must not be attached.</strong><br /><br />This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if rotor blades are left on.</strong>"
+        "message": "These sticks allow Gripora to be armed and tested without a transmitter or receiver being present. However, <strong>this feature is not intended for flight and rotor blades must not be attached.</strong><br /><br />This feature does not guarantee reliable control of your craft. <strong>Serious injury is likely to result if rotor blades are left on.</strong>"
     },
     "receiverMspEnableButton": {
         "message": "Enable controls"
@@ -5893,7 +5893,7 @@
         "message": "Backup captured -- it's held in memory and will be offered for restore automatically once the new firmware boots. Saving a copy to a file below is optional, but recommended in case anything goes wrong."
     },
     "firmwareFlasherWizardBackupForeignFirmware": {
-        "message": "This board isn't currently running Wingflight, so this backup won't be offered for restore automatically after flashing -- its settings aren't guaranteed to carry over. Save a copy below if you want it for reference."
+        "message": "This board isn't currently running Gripora, so this backup won't be offered for restore automatically after flashing -- its settings aren't guaranteed to carry over. Save a copy below if you want it for reference."
     },
     "firmwareFlasherWizardBackupSaved": {
         "message": "Saved"
@@ -6208,13 +6208,13 @@
         "message": "Message:"
     },
     "firmwareFlasherWarningText": {
-        "message": "Please do <span class=\"message-negative\">ONLY</span> flash <strong>Wingflight</strong> or <strong>Betaflight</strong> hardware with this firmware flasher.<br /><br /><strong>Note: </strong>STM32 bootloader is stored in ROM, it cannot be bricked.<br /><strong>Note: </strong><span class=\"message-negative\">Auto-Connect</span> is always disabled while you are inside firmware flasher.<br /><strong>Note: </strong>Make sure you have a backup; some upgrades/downgrades will wipe your configuration.<br /><strong>Note:</strong> If you have problems flashing <strong>try disconnecting all cables from your FC</strong> first, try rebooting, upgrade drivers.<br /><strong>Note:</strong> When flashing boards that have directly connected USB sockets (most newer boards) ensure you have read the USB Flashing section of the manual and have the correct software and drivers installed"
+        "message": "Please do <span class=\"message-negative\">ONLY</span> flash <strong>Gripora</strong> or <strong>Betaflight</strong> hardware with this firmware flasher.<br /><br /><strong>Note: </strong>STM32 bootloader is stored in ROM, it cannot be bricked.<br /><strong>Note: </strong><span class=\"message-negative\">Auto-Connect</span> is always disabled while you are inside firmware flasher.<br /><strong>Note: </strong>Make sure you have a backup; some upgrades/downgrades will wipe your configuration.<br /><strong>Note:</strong> If you have problems flashing <strong>try disconnecting all cables from your FC</strong> first, try rebooting, upgrade drivers.<br /><strong>Note:</strong> When flashing boards that have directly connected USB sockets (most newer boards) ensure you have read the USB Flashing section of the manual and have the correct software and drivers installed"
     },
     "firmwareFlasherRecoveryHead": {
         "message": "<strong>Recovery / Lost communication</strong>"
     },
     "firmwareFlasherRecoveryText": {
-        "message": "If you have lost communication with your board follow these steps to restore communication: <ul><li>Power off</li><li>Enable 'Full chip erase'.</li><li>Jumper the BOOT pins or hold BOOT button.</li><li>Power on (activity LED will NOT flash if done correctly).</li><li>Install the correct USB driver if required &mdash; use <a href=\"https://github.com/WingFlight/wingflight-driver-fixer/releases\" target=\"_blank\" rel=\"noopener noreferrer\">WingFlight Driver Fixer</a> to detect your board and install it automatically (see <a href=\"https://doc.wingflight.org/getting-started/flashing-the-firmware/\" target=\"_blank\" rel=\"noopener noreferrer\">USB Flashing</a> section of the manual for details).</li><li>Close configurator, Restart Configurator.</li><li>Release BOOT button if your FC has one.</li><li>Flash with correct firmware (using manual baud rate if specified in your FC's manual).</li><li>Power off.</li><li>Remove BOOT jumper.</li><li>Power on (activity LED should flash).</li><li>Connect normally.</li></ul>"
+        "message": "If you have lost communication with your board follow these steps to restore communication: <ul><li>Power off</li><li>Enable 'Full chip erase'.</li><li>Jumper the BOOT pins or hold BOOT button.</li><li>Power on (activity LED will NOT flash if done correctly).</li><li>Install the correct USB driver if required &mdash; use <a href=\"https://github.com/WingFlight/wingflight-driver-fixer/releases\" target=\"_blank\" rel=\"noopener noreferrer\">WingFlight Driver Fixer</a> to detect your board and install it automatically (see <a href=\"https://doc.gripora.org/getting-started/flashing-the-firmware/\" target=\"_blank\" rel=\"noopener noreferrer\">USB Flashing</a> section of the manual for details).</li><li>Close configurator, Restart Configurator.</li><li>Release BOOT button if your FC has one.</li><li>Flash with correct firmware (using manual baud rate if specified in your FC's manual).</li><li>Power off.</li><li>Remove BOOT jumper.</li><li>Power on (activity LED should flash).</li><li>Connect normally.</li></ul>"
     },
     "firmwareFlasherFirmwareNotLoaded": {
         "message": "Firmware not loaded"
@@ -7751,7 +7751,7 @@
         "message": "Smart Fuel Alert Level"
     },
     "powerSmartFuelAlertPercentHelp": {
-        "message": "<p>The charge, in percent, you want left in the pack when you land.</p><p>The Wingflight radio suite scales its fuel gauge to this reserve: a full pack reads 100% and the reserve reads 0%, so the gauge shows only the charge you can still use. For example, with a 30% reserve, a pack at 65% shows 50% fuel.</p><p>The flight controller's own low fuel warning is off by default. To use it, enter <code>set use_cbat_alerts = ON</code> in the CLI.</p>"
+        "message": "<p>The charge, in percent, you want left in the pack when you land.</p><p>The Gripora radio suite scales its fuel gauge to this reserve: a full pack reads 100% and the reserve reads 0%, so the gauge shows only the charge you can still use. For example, with a 30% reserve, a pack at 65% shows 50% fuel.</p><p>The flight controller's own low fuel warning is off by default. To use it, enter <code>set use_cbat_alerts = ON</code> in the CLI.</p>"
     },
     "powerBatteryMinimumCellVoltage": {
         "message": "Minimum Cell Voltage"
@@ -8948,7 +8948,7 @@
         "message": "Choose a protocol"
     },
     "receiverElrsFullResWarning": {
-        "message": "ExpressLRS: set the switch mode to <b>Full Res 16ch Rate/2</b> (100Hz Full or 333Hz Full packet rate). Wingflight doesn't support the other switch modes, which send channel 5 (AUX1) only as a two-position arm switch. Wingflight uses channel 5 as a normal full-resolution channel, for example for flaps."
+        "message": "ExpressLRS: set the switch mode to <b>Full Res 16ch Rate/2</b> (100Hz Full or 333Hz Full packet rate). Gripora doesn't support the other switch modes, which send channel 5 (AUX1) only as a two-position arm switch. Gripora uses channel 5 as a normal full-resolution channel, for example for flaps."
     },
     "setupWizardReceiverProtocolHelp": {
         "message": "ExpressLRS and Crossfire use TBS CRSF."

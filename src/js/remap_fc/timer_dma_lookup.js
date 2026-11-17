@@ -76,7 +76,7 @@ function parseDmaChoices(rawDma) {
 // pin data for that board -- never guessed ahead of an actual report.
 const MCU_ALIASES = {
   STM32F405: "STM32F40X",
-  // Wingflight's FBUS mux FPGA build of the STM32F7X2 unified target
+  // Gripora's FBUS mux FPGA build of the STM32F7X2 unified target
   // (board designs ending in M, e.g. F7B5M) -- same chip, same pins.
   STM32F7X2M: "STM32F7X2",
   // The firmware builds the H730 with the H743's timer table

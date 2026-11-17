@@ -816,7 +816,7 @@ export function applyVirtualConfig() {
     name: "VirtualFC",
     buildVersion: CONFIGURATOR.virtualFwVersion,
     flightControllerVersion: CONFIGURATOR.virtualFwVersion,
-    flightControllerIdentifier: "WGFL",
+    flightControllerIdentifier: "GRPA",
     apiVersion: CONFIGURATOR.virtualApiVersion,
     motorCount: 2, // lets the motor 2 RPM filter group be exercised in virtual mode
     servoCount: 4,
@@ -1105,7 +1105,7 @@ export function applyVirtualConfig() {
     mag_hardware: 1,
   };
 
-  // Mirrors the boxes wingflight-firmware reports (msp/msp_box.c) for a board with an
+  // Mirrors the boxes gripora-firmware reports (msp/msp_box.c) for a board with an
   // accelerometer and no GPS, LED strip or thrust vector: names and permanent IDs pair by index.
   FC.AUX_CONFIG = [
     "ARM",

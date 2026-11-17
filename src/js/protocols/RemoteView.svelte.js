@@ -46,7 +46,7 @@ const FRAGMENT_INTERVAL = 2;
 // falling further and further behind.
 const MAX_QUEUED_FRAGMENTS = 600;
 const REQUEST_RETRY_INTERVAL = 2000;
-const CANVAS_EVENT = 'wingflight-canvas';
+const CANVAS_EVENT = 'gripora-canvas';
 const CANVAS_INTERVAL = 200;
 const CANVAS_MAX_WIDTH = 640;
 const DISCONNECT_TIMEOUT = 4000;

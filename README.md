@@ -1,35 +1,35 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/WingFlight/wingflight-landing-page/master/logos/wf_logo_dark_white.svg">
-    <img src="https://raw.githubusercontent.com/WingFlight/wingflight-landing-page/master/logos/wf_logo_dark.svg" alt="Wingflight" width="420">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/gripora-project/gripora-website/master/branding/gripora_logo_white.svg">
+    <img src="https://raw.githubusercontent.com/gripora-project/gripora-website/master/branding/gripora_logo_dark.svg" alt="Gripora" width="420">
   </picture>
 </p>
 
-# Wingflight Configurator
+# Gripora Configurator
 
-The Configurator flashes [Wingflight](https://github.com/WingFlight/wingflight-firmware) onto a
+The Configurator flashes [Gripora](https://github.com/gripora-project/gripora-firmware) onto a
 flight controller and sets it up: receiver, mixer, servos, motors, flight modes, tuning and
-logging. Wingflight is open-source flight controller firmware for fixed-wing aircraft.
+logging. Gripora is open-source flight controller firmware for fixed-wing aircraft.
 
-**[Open in the browser](https://cfg.wingflight.org)** ·
-**[Desktop downloads](https://github.com/WingFlight/wingflight-configurator/releases)** ·
-**[Documentation](https://doc.wingflight.org/configurator/)** ·
+**[Open in the browser](https://cfg.gripora.org)** ·
+**[Desktop downloads](https://github.com/gripora-project/gripora-configurator/releases)** ·
+**[Documentation](https://doc.gripora.org/configurator/)** ·
 **[Discord](https://discord.gg/aEyyAJTXRw)**
 
-![The Configurator's Status tab](https://raw.githubusercontent.com/WingFlight/wingflight-docs/main/docs/assets/images/configurator-status.png)
+![The Configurator's Status tab](https://raw.githubusercontent.com/gripora-project/gripora-docs/main/docs/assets/images/configurator-status.png)
 
 
 ## Using it
 
-**In the browser.** Open [cfg.wingflight.org](https://cfg.wingflight.org) in Chrome, Edge, Brave or
+**In the browser.** Open [cfg.gripora.org](https://cfg.gripora.org) in Chrome, Edge, Brave or
 Opera. There is nothing to install and it is always the current version. Firefox and Safari do not
 work: they have no WebSerial or WebUSB.
 
 **On the desktop.** Download the build for Windows, macOS or Linux from the
-[releases page](https://github.com/WingFlight/wingflight-configurator/releases). Use it offline, or
+[releases page](https://github.com/gripora-project/gripora-configurator/releases). Use it offline, or
 with [Remote Support](#remote-support).
 
-New to Wingflight? Follow [Getting Started](https://doc.wingflight.org/getting-started/).
+New to Gripora? Follow [Getting Started](https://doc.gripora.org/getting-started/).
 
 
 ## What it does
@@ -44,7 +44,7 @@ New to Wingflight? Follow [Getting Started](https://doc.wingflight.org/getting-s
 * Blackbox setup and log download
 * Backup and restore of the whole configuration, and a CLI
 
-Every tab has a page in the [documentation](https://doc.wingflight.org/configurator/).
+Every tab has a page in the [documentation](https://doc.gripora.org/configurator/).
 
 
 ## Notes
@@ -54,7 +54,7 @@ Every tab has a page in the [documentation](https://doc.wingflight.org/configura
 The desktop app needs Windows 10 or later.
 
 If Windows does not detect the flight controller in bootloader (DFU) mode, run
-[Wingflight Driver Fixer](https://github.com/WingFlight/wingflight-driver-fixer/releases). It
+[WingFlight Driver Fixer](https://github.com/WingFlight/wingflight-driver-fixer/releases). It
 finds the board, reboots it into DFU mode if needed and installs the USB driver.
 
 #### Linux
@@ -70,13 +70,13 @@ sudo usermod -aG dialout ${USER}
 
 The desktop app can use a flight controller plugged into someone else's computer, for flashing,
 MSP and the CLI, through the
-[Wingflight Remote Support](https://github.com/WingFlight/wingflight-remote-support) tool. Start
+[WingFlight Remote Support](https://github.com/WingFlight/wingflight-remote-support) tool. Start
 the tool, join the session with the code the pilot gives you, and the pilot's ports appear in the
 port list as `remote:…`.
 
 #### Graphics issues
 
-If the desktop app shows display problems or smudged fonts, start `wingflight-configurator` with
+If the desktop app shows display problems or smudged fonts, start `gripora-configurator` with
 the `--disable-gpu` switch to turn off hardware acceleration. Turning off antialiasing in the
 graphics driver (for example FXAA on NVIDIA cards) can also help.
 
@@ -97,9 +97,9 @@ web app, and [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 ## Contributing
 
-Wingflight is a community project. You can help by:
+Gripora is a community project. You can help by:
 
-* testing new versions and [reporting bugs](https://github.com/WingFlight/wingflight-configurator/issues)
+* testing new versions and [reporting bugs](https://github.com/gripora-project/gripora-configurator/issues)
 * helping other pilots on [Discord](https://discord.gg/aEyyAJTXRw)
 * translating the Configurator, or keeping a translation up to date
 * fixing bugs and adding features
@@ -107,7 +107,7 @@ Wingflight is a community project. You can help by:
 
 ## Origins
 
-Wingflight is open source and free of charge, with no warranty.
+Gripora is open source and free of charge, with no warranty.
 
 The Configurator is a fork of the [Rotorflight](https://github.com/rotorflight) Configurator, which
 is a fork of the [Betaflight](https://github.com/betaflight) Configurator, which is a fork of the

@@ -6,7 +6,7 @@
  * rejecting a promise nothing is left to handle (an unhandled
  * rejection a few seconds into every successful call, not just a
  * slow/failed one). Shared by remap_fc.js (bounding its bulk CLI
- * transfer steps) and wingflight_target_source.js (bounding its
+ * transfer steps) and gripora_target_source.js (bounding its
  * GitHub fetches), which both need the identical race/cleanup but
  * bound different kinds of work.
  * @param {Promise} promise

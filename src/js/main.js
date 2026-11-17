@@ -402,7 +402,7 @@ export function checkForConfiguratorUpdates() {
         return;
     }
 
-    const releaseChecker = new ReleaseChecker('configurator', 'https://api.github.com/repos/WingFlight/wingflight-configurator/releases');
+    const releaseChecker = new ReleaseChecker('configurator', 'https://api.github.com/repos/gripora-project/gripora-configurator/releases');
 
     releaseChecker.loadReleaseData(notifyOutdatedVersion);
 }

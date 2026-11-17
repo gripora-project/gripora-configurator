@@ -1,10 +1,10 @@
 # Web Deployment Guide
 
-This document describes the web deployment of Wingflight Configurator for use in web browsers.
+This document describes the web deployment of Gripora Configurator for use in web browsers.
 
 ## Overview
 
-Wingflight Configurator has been adapted to run as a web application using modern browser APIs for device communication. The app is deployed automatically via GitHub Actions to GitHub Pages with support for versioned releases, and can be installed as a Progressive Web App (PWA) in supported browsers.
+Gripora Configurator has been adapted to run as a web application using modern browser APIs for device communication. The app is deployed automatically via GitHub Actions to GitHub Pages with support for versioned releases, and can be installed as a Progressive Web App (PWA) in supported browsers.
 
 ## Browser Requirements
 
@@ -90,7 +90,7 @@ The application automatically detects browser compatibility on startup:
 ```
 ⚠️ Unsupported Browser: Mozilla Firefox
 
-Wingflight Configurator Web is optimized for Chromium-based browsers:
+Gripora Configurator Web is optimized for Chromium-based browsers:
 - Google Chrome
 - Microsoft Edge
 - Brave Browser
@@ -125,36 +125,36 @@ pnpm run build:web:versioned
 
 ### GitHub Pages URLs
 
-The application is automatically deployed to GitHub Pages, served from the custom domain `cfg.wingflight.org` (via the `CNAME` file on the `gh-pages` branch):
+The application is automatically deployed to GitHub Pages, served from the custom domain `cfg.gripora.org` (via the `CNAME` file on the `gh-pages` branch):
 
 ```
-https://cfg.wingflight.org/
+https://cfg.gripora.org/
 ```
 
 #### Available URLs
 
 - **Master Branch** (latest development)
   ```
-  https://cfg.wingflight.org/master/
+  https://cfg.gripora.org/master/
   ```
 
 - **Latest Stable Release** (recommended for most users)
   ```
-  https://cfg.wingflight.org/latest/
+  https://cfg.gripora.org/latest/
   ```
 
 - **Release Lines** (install one as an app to keep it next to other lines)
   ```
-  https://cfg.wingflight.org/v1.0/
+  https://cfg.gripora.org/v1.0/
   ```
   Follows the line's snapshots until it is released, then its releases;
   before 1.0, the 0.0.N snapshots are line 1.0. See `release-channel.mjs`.
 
 - **Specific Release Versions**
   ```
-  https://cfg.wingflight.org/1.0.0/
-  https://cfg.wingflight.org/1.1.0/
-  https://cfg.wingflight.org/2.0.0-rc1/
+  https://cfg.gripora.org/1.0.0/
+  https://cfg.gripora.org/1.1.0/
+  https://cfg.gripora.org/2.0.0-rc1/
   ```
 
 ### Deployment Workflow

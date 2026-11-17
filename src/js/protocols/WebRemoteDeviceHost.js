@@ -215,7 +215,7 @@ export class WebRemoteDeviceHost {
             dfu,
             // Only what the pilot has allowed is listed: tell the supporter
             // they can ask for more (RemoteSupport.js, CONTROL.ALLOW_*).
-            // Not part of the Wingflight device list; others ignore it.
+            // Not part of the Gripora device list; others ignore it.
             allow: { serial: Boolean(this.serialProvider), dfu: Boolean(this.usbProvider) },
         });
     }

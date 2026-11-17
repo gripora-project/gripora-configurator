@@ -5,7 +5,7 @@
  * Compatibility is transport-based (mirrors Betaflight Configurator's
  * checkCompatibility.js): the app is usable as long as at least one of
  * Web Serial, Web Bluetooth, or WebUSB is available, rather than requiring
- * a specific browser family. There is no native app fallback -- Wingflight
+ * a specific browser family. There is no native app fallback -- Gripora
  * Configurator is web-only, so an unsupported browser is just unsupported.
  */
 
@@ -99,7 +99,7 @@ export const BrowserCompat = {
     const message = `
 ⚠️ Unsupported Browser: ${compat.browserName}
 
-Wingflight Configurator Web needs at least one of the following APIs to
+Gripora Configurator Web needs at least one of the following APIs to
 talk to a flight controller, and your browser has none of them:
 ${missing.map(f => `  • ${f}`).join('\n')}
 

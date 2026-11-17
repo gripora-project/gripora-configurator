@@ -1,7 +1,7 @@
 // Splits a parsed hex (see workers/hex_parser.js) into the part a DFU device
 // can write now and the part that has to wait for another DFU device.
 //
-// The FrSky Aegis Lite (STM32H730) hex holds the Wingflight loader for the
+// The FrSky Aegis Lite (STM32H730) hex holds the Gripora loader for the
 // internal flash (0x08000000) and the firmware for the external flash
 // (0x90000000). The ST ROM DFU only exposes the internal flash, so it writes
 // the loader, then the loader comes up as its own DFU device that only

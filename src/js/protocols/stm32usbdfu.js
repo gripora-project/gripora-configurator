@@ -1,7 +1,7 @@
 import { RemoteSupport } from '@/js/protocols/RemoteSupport.js';
 import { lowestAddress, planDfuStage } from '@/js/protocols/dfu_hex_split.js';
 
-// Waiting for the DFU device of the next stage (the Wingflight loader, after
+// Waiting for the DFU device of the next stage (the Gripora loader, after
 // the ROM DFU wrote it and left): poll every NEXT_STAGE_POLL_MS for up to
 // NEXT_STAGE_POLL_ATTEMPTS polls, after NEXT_STAGE_FIRST_POLL_MS.
 const NEXT_STAGE_FIRST_POLL_MS = 1000;
@@ -971,7 +971,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                 }
 
                 if (self.stage > 1 && !isExternal) {
-                    // Expected the Wingflight loader (external flash only),
+                    // Expected the Gripora loader (external flash only),
                     // got something else, e.g. the ROM DFU again.
                     console.log('Next stage device does not expose the external flash');
                     self.failNextStage();
@@ -983,7 +983,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
 
                 // Only write what this device exposes; on an internal flash
                 // device, blocks for the external flash are kept for the
-                // Wingflight loader (next stage).
+                // Gripora loader (next stage).
                 const plan = planDfuStage(self.hex, self.flash_layout, isExternal);
                 self.hex = plan.hex;
                 self.pendingHex = plan.next;
@@ -997,7 +997,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                 }
 
                 // SPRacing H7 EXST: flash, config, firmware, ... partitions,
-                // firmware goes to the 3rd one. The Wingflight loader
+                // firmware goes to the 3rd one. The Gripora loader
                 // exposes the external flash as one group, written as a whole.
                 self.isLoaderLayout = isExternal && self.flash_layout.sectors.length < 3;
 
@@ -1182,7 +1182,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
             // erase
                 // find out which pages to erase
                 var erase_pages = [];
-                // The Wingflight loader has no mass erase, so "erase chip"
+                // The Gripora loader has no mass erase, so "erase chip"
                 // erases all of its 64 KB blocks, plus a request that wipes
                 // the rest of the board's flash (see below).
                 const erase_all = self.options.erase_chip;
@@ -1249,7 +1249,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                 var erase_failed = function (reason) {
                     // A loader without the config wipe request rejects its address
                     if (erase_pages[page].address !== undefined) {
-                        const message = i18n.getMessage('stm32WingflightLoaderOutdated');
+                        const message = i18n.getMessage('stm32GriporaLoaderOutdated');
                         GUI.log(message);
                         TABS.firmware_flasher.flashingMessage(message, TABS.firmware_flasher.FLASH_MESSAGE_TYPES.INVALID);
                     }
@@ -1464,7 +1464,7 @@ STM32DFU_protocol.prototype.upload_procedure = function (step) {
                         }
 
                         if (verify && self.pendingHex) {
-                            // More to write through the Wingflight loader this
+                            // More to write through the Gripora loader this
                             // just wrote: leave DFU, which starts it.
                             console.log('Programming stage ' + self.stage + ': SUCCESSFUL');
                             self.leave(function () {
@@ -1524,7 +1524,7 @@ STM32DFU_protocol.prototype.leave = function (onLeft) {
 };
 
 // The device that was left is gone (or going); find the DFU device that
-// comes up instead (the Wingflight loader) and write the remaining blocks.
+// comes up instead (the Gripora loader) and write the remaining blocks.
 STM32DFU_protocol.prototype.waitForNextStage = function () {
     const self = this;
 
@@ -1543,7 +1543,7 @@ STM32DFU_protocol.prototype.waitForNextStage = function () {
     const previous = self.device;
     self.device = null;
 
-    const message = i18n.getMessage('stm32WaitingForWingflightLoader');
+    const message = i18n.getMessage('stm32WaitingForGriporaLoader');
     GUI.log(message);
     TABS.firmware_flasher.flashingMessage(message, TABS.firmware_flasher.FLASH_MESSAGE_TYPES.NEUTRAL).flashProgress(0);
 
@@ -1640,13 +1640,13 @@ STM32DFU_protocol.prototype.listDfuDevices = function (callback) {
     listLocal([]);
 };
 
-// The next stage device didn't come up (or isn't the Wingflight loader); the
+// The next stage device didn't come up (or isn't the Gripora loader); the
 // attempt ends here.
 STM32DFU_protocol.prototype.failNextStage = function () {
     const self = this;
 
-    const message = i18n.getMessage('stm32WingflightLoaderNotFound');
-    console.log('Wingflight loader not found');
+    const message = i18n.getMessage('stm32GriporaLoaderNotFound');
+    console.log('Gripora loader not found');
     GUI.log(message);
     TABS.firmware_flasher.flashingMessage(message, TABS.firmware_flasher.FLASH_MESSAGE_TYPES.INVALID);
 

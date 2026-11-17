@@ -21,7 +21,7 @@
   const wiz = getContext("setupWizard");
 
   // The firmware's expo exponent for an axis: sRates / 16 + 2
-  // (applyWingflightRates() in fc/rc_rates.c); RC_TUNING holds sRates / 100.
+  // (applyGriporaRates() in fc/rc_rates.c); RC_TUNING holds sRates / 100.
   // The styles leave it alone, so their curves use the current roll shape.
   function shape(axis) {
     return ((FC.RC_TUNING[`${axis}_srate`] ?? 0) * 100) / 16 + 2;

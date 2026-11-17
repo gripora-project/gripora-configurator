@@ -1,7 +1,7 @@
 {
-  "name": "Wingflight Configurator",
-  "short_name": "Wingflight",
-  "description": "Configure Wingflight flight controllers from the browser.",
+  "name": "Gripora Configurator",
+  "short_name": "Gripora",
+  "description": "Configure Gripora flight controllers from the browser.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

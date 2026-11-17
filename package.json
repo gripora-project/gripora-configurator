@@ -1,7 +1,7 @@
 {
-  "name": "wingflight-configurator",
-  "productName": "Wingflight Configurator",
-  "description": "Crossplatform configuration tool for Wingflight.",
+  "name": "gripora-configurator",
+  "productName": "Gripora Configurator",
+  "description": "Crossplatform configuration tool for Gripora.",
   "version": "0.0.0",
   "main": "http://localhost:5077/",
   "node-remote": "http://localhost:*",
@@ -20,11 +20,11 @@
     "id": "main-window",
     "min_width": 1024,
     "min_height": 550,
-    "title": "Wingflight Configurator"
+    "title": "Gripora Configurator"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/WingFlight/wingflight-configurator"
+    "url": "github.com/gripora-project/gripora-configurator"
   },
   "webview": {
     "partitions": [
@@ -42,7 +42,7 @@
       }
     ]
   },
-  "author": "The Wingflight open source project.",
+  "author": "The Gripora open source project.",
   "license": "GPL-3.0",
   "engines": {
     "node": ">=24"

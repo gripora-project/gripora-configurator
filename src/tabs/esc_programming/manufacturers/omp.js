@@ -1,4 +1,4 @@
-// Ported from C:\GitHub\wingflight-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_OMP.lua
+// Ported from C:\GitHub\gripora-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_OMP.lua
 // and escmfg/omp/{init.lua,pages/*.lua}. Group B (native MSP, no target-switch handshake).
 //
 // OMP/XDFly/ZTW happen to share a byte-identical FIELD_SPEC in the Lua source (confirmed by

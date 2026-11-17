@@ -2,7 +2,7 @@ export const ConfigInserter = function () {
 };
 
 // The external flash for firmware executing in place from it (STM32H730), or
-// internal flash. External first: the STM32H730 hex also holds the Wingflight
+// internal flash. External first: the STM32H730 hex also holds the Gripora
 // loader in internal flash, whose code covers 0x08002800.
 const CUSTOM_DEFAULTS_POINTER_ADDRESSES = [0x90002800, 0x08002800];
 const BLOCK_SIZE = 16384;

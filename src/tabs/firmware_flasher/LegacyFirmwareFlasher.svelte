@@ -60,7 +60,7 @@
 
   const releaseChecker = new ReleaseChecker(
     "firmware",
-    "https://api.github.com/repos/WingFlight/wingflight-firmware/releases",
+    "https://api.github.com/repos/gripora-project/gripora-firmware/releases",
   );
 
   const BUILD_TYPES = [
@@ -244,7 +244,7 @@
     if (cacheAge > expirationPeriod) {
       try {
         supportedTargets = await github.getContents(
-          "WingFlight/wingflight-targets",
+          "gripora-project/gripora-targets",
           "master",
           "configs",
         );
@@ -366,7 +366,7 @@
 
           const commit = targetSpec.supported
             ? await github.getFileLastCommitInfo(
-                "WingFlight/wingflight-targets",
+                "gripora-project/gripora-targets",
                 "master",
                 targetSpec.path,
               )
@@ -846,7 +846,7 @@
     const summary = selectedVersionEntry()?.summary;
     writeTextFile(intelHex, {
       suggestedName: summary?.file ?? "firmware.hex",
-      description: "Wingflight Firmware (.hex)",
+      description: "Gripora Firmware (.hex)",
     }).catch((err) => console.log("Error saving firmware file", err));
   }
 

@@ -1,4 +1,4 @@
-// Ported verbatim from C:\GitHub\wingflight-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_BLUEJAY.lua
+// Ported verbatim from C:\GitHub\gripora-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_BLUEJAY.lua
 // and escmfg/bluejay/{init.lua,pages/*.lua}. Group A (bootloader-bridged, shares esc_signature
 // 0xC1 with BLHeli_S -- disambiguated by main_revision === 0).
 //

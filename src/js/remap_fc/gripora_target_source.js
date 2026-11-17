@@ -1,5 +1,5 @@
 /**
- * File: src/js/remap_fc/wingflight_target_source.js
+ * File: src/js/remap_fc/gripora_target_source.js
  * A board with no Rotorflight-specific build of its own reports
  * "BTFL" (or nothing at all) as its board_design -- see
  * remap_fc.svelte's boardDiagramSrc for the same check. Its own
@@ -10,7 +10,7 @@
  * commonly up to 8 motors, sometimes 12 servos.
  *
  * This looks up that same target's own unified config file from
- * WingFlight/wingflight-targets -- the same GitHub repository the
+ * gripora-project/gripora-targets -- the same GitHub repository the
  * Firmware Flasher tab already reads builds from (see
  * FirmwareFlasher.svelte) -- and parses it with hardware_parser.js's
  * own parseHardwareDump, unmodified: a unified target config is
@@ -34,7 +34,7 @@ import * as github from "@/js/GitHubApi.js";
 import { parseHardwareDump } from "./hardware_parser.js";
 import { withTimeout } from "./with_timeout.js";
 
-const REPO = "WingFlight/wingflight-targets";
+const REPO = "gripora-project/gripora-targets";
 const BRANCH = "master";
 const CONFIGS_PATH = "configs";
 const FETCH_TIMEOUT_MS = 4000;
@@ -56,7 +56,7 @@ async function fetchRawConfig(url) {
  * @param {?string} boardName - e.g. "MATEKF405TE", from FC.CONFIG.boardName.
  * @returns {Promise<?import("./hardware_parser.js").HardwareMap>}
  */
-export async function fetchWingflightTargetDefaults(manufacturerId, boardName) {
+export async function fetchGriporaTargetDefaults(manufacturerId, boardName) {
   if (!manufacturerId || !boardName) return null;
 
   // Config filenames follow "<manufacturer>-<board>.config" -- the
@@ -69,31 +69,31 @@ export async function fetchWingflightTargetDefaults(manufacturerId, boardName) {
     const entries = await withTimeout(
       github.getContents(REPO, BRANCH, CONFIGS_PATH),
       FETCH_TIMEOUT_MS,
-      "the wingflight-targets config listing",
+      "the gripora-targets config listing",
     );
     const match = entries.find(
       (entry) => entry.name.toUpperCase() === wantedName,
     );
     if (!match?.download_url) {
-      console.log(`remap_fc: no wingflight-targets config found for ${wantedName}`);
+      console.log(`remap_fc: no gripora-targets config found for ${wantedName}`);
       return null;
     }
 
     const configText = await withTimeout(
       fetchRawConfig(match.download_url),
       FETCH_TIMEOUT_MS,
-      "the wingflight-targets config file",
+      "the gripora-targets config file",
     );
     const hardware = parseHardwareDump(configText);
     if (Object.keys(hardware).length === 0) {
       throw new Error("parsed target config had no resources");
     }
 
-    console.log(`remap_fc: loaded default hardware from wingflight-targets (${match.name})`);
+    console.log(`remap_fc: loaded default hardware from gripora-targets (${match.name})`);
     return hardware;
   } catch (err) {
     console.log(
-      "remap_fc: could not load wingflight-targets default hardware, falling back to the FC's own defaults",
+      "remap_fc: could not load gripora-targets default hardware, falling back to the FC's own defaults",
       err,
     );
     return null;

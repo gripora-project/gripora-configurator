@@ -64,7 +64,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-linux-release-${{ env.GIT_VER }}
+        name: gripora-configurator-linux-release-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -122,7 +122,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-macos-x86_64-release-${{ env.GIT_VER }}
+        name: gripora-configurator-macos-x86_64-release-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -180,7 +180,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-macos-arm64-release-${{ env.GIT_VER }}
+        name: gripora-configurator-macos-arm64-release-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -238,7 +238,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-win64-release-${{ env.GIT_VER }}
+        name: gripora-configurator-win64-release-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -296,7 +296,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-win32-release-${{ env.GIT_VER }}
+        name: gripora-configurator-win32-release-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -376,7 +376,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v7
       with:
-        name: wingflight-configurator-android-release-${{ env.GIT_VER }}
+        name: gripora-configurator-android-release-${{ env.GIT_VER }}
         path: redist/*
 
 
@@ -411,12 +411,12 @@ jobs:
     - name: Download Artifacts
       uses: actions/download-artifact@v4
       with:
-        pattern: wingflight-configurator-*-${{ env.GIT_VER }}
+        pattern: gripora-configurator-*-${{ env.GIT_VER }}
         merge-multiple: true
 
     - name: Create Release
       run: |
         .github/scripts/extract-release-notes.py "${{ env.GIT_VER }}" Releases.md > Notes.md
-        gh release create ${{ env.GIT_TAG }} --notes-file Notes.md --title "Wingflight Configurator ${{ env.GH_TYPE }} ${{ env.GIT_VER }}" wingflight-configurator*
+        gh release create ${{ env.GIT_TAG }} --notes-file Notes.md --title "Gripora Configurator ${{ env.GH_TYPE }} ${{ env.GIT_VER }}" gripora-configurator*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -120,7 +120,7 @@ export const RX_PROTOCOLS = [
     feature: "RX_SERIAL",
     telemetry: { type: TelemetryType.TOGGLE },
   },
-  // Not compiled into Wingflight firmware. Kept hidden so a stale config
+  // Not compiled into Gripora firmware. Kept hidden so a stale config
   // still shows its real name instead of mapping to another entry.
   { name: "ImmersionRC GHOST", id: 14, feature: "RX_SERIAL", hide: true },
   {
@@ -166,7 +166,7 @@ export const RX_PROTOCOLS = [
     feature: "RX_SERIAL",
     telemetry: { type: TelemetryType.TOGGLE },
   },
-  // Not compiled into Wingflight firmware, see GHOST above.
+  // Not compiled into Gripora firmware, see GHOST above.
   { name: "CPPM", id: 0, feature: "RX_PPM", hide: true },
   { name: "MSP", id: 0, feature: "RX_MSP" },
 

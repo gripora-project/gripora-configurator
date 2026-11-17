@@ -1,4 +1,4 @@
-// Ported verbatim from C:\GitHub\wingflight-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_SCORPION.lua
+// Ported verbatim from C:\GitHub\gripora-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_SCORPION.lua
 // and escmfg/scorp/{init.lua,pages/*.lua}. Group B (native MSP, no target-switch handshake).
 // powerCycleRequired: Scorpion has no soft target-switch/reset path -- the Lua tool requires
 // the user to manually power-cycle the ESC as part of the workflow (init.lua: powerCycle=true).

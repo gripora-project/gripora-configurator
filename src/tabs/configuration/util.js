@@ -75,7 +75,7 @@ export const BAUD_RATE_OPTIONS = {
 // receivers in failover order, telemetry to the radio, ESC links, and the
 // buses the flight controller hosts. The labels (portsFunction_<name>) share
 // a "Group: Item" form within each group.
-// hide: not compiled into Wingflight firmware. Listed only for a port that is
+// hide: not compiled into Gripora firmware. Listed only for a port that is
 // still set to it, so it shows its real name instead of "Custom".
 export const PORT_FUNCTIONS = [
   { id: 0, excl: 0, name: "DISABLED", type: PORT_TYPES.DISABLED },

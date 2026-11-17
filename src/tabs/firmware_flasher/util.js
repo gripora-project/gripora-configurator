@@ -3,7 +3,7 @@ import semver from "semver";
 import { FirmwareCache } from "@/js/FirmwareCache.js";
 
 const FILENAME_EXPRESSION =
-  /^wingflight_([\d]+[.][\d]+[.][\d]+((-[A-Za-z][\w]*)|(-[\d]+(?:[.][\d]+)*))?)_([A-Za-z][\w]*)[.]hex$/;
+  /^gripora_([\d]+[.][\d]+[.][\d]+((-[A-Za-z][\w]*)|(-[\d]+(?:[.][\d]+)*))?)_([A-Za-z][\w]*)[.]hex$/;
 
 export function supportsUnifiedTargets(version) {
   return semver.gte(version, "4.2.0");
@@ -12,13 +12,13 @@ export function supportsUnifiedTargets(version) {
 // GitHub Release assets are served from release-assets.githubusercontent.com,
 // which sends no Access-Control-Allow-Origin header -- fetching one directly
 // from the browser is always blocked by CORS, regardless of origin. The
-// wingflight-firmware release/snapshot workflows also mirror each build's
-// .hex files into WingFlight/wingflight-artifacts (firmware/<tag>/<file>),
+// gripora-firmware release/snapshot workflows also mirror each build's
+// .hex files into gripora-project/gripora-artifacts (firmware/<tag>/<file>),
 // a plain public repo, and jsDelivr's GitHub CDN mirrors that with correct
 // CORS headers plus real caching -- so fetch from there instead of the
 // release asset's browser_download_url.
 export function firmwareArtifactUrl(tag, filename) {
-  return `https://cdn.jsdelivr.net/gh/WingFlight/wingflight-artifacts@master/firmware/${tag}/${filename}`;
+  return `https://cdn.jsdelivr.net/gh/gripora-project/gripora-artifacts@master/firmware/${tag}/${filename}`;
 }
 
 // The board dropdown's "Custom" entries: a plain MCU build with no
@@ -47,7 +47,7 @@ function formatDate(date) {
   return `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
 }
 
-// Feature-branch dev builds (wingflight-firmware's dev-build.yml, tag
+// Feature-branch dev builds (gripora-firmware's dev-build.yml, tag
 // dev/<branch-slug>) are also GitHub prereleases, same as snapshot/* builds --
 // but they're rebuilt on every push to an in-progress branch rather than a
 // deliberate snapshot cut, so they get their own build-type tier instead of
@@ -213,9 +213,10 @@ export function cleanUnifiedConfigFile(input) {
   let fork = "BF";
   input.split(/[\r\n]+/).forEach((rawLine, index) => {
     let line = rawLine;
-    if (index === 0 && line.match(/^# [A-Za-z]*flight/)) {
-      // Wingflight configs carry the same Rotorflight-style serial/feature lines
-      if (line.match(/^# (Rotor|Wing)flight/)) fork = "RF";
+    if (index === 0 && line.match(/^# (Gripora|[A-Za-z]*flight)/)) {
+      // Gripora (and upstream Rotorflight/Wingflight) configs carry the same
+      // Rotorflight-style serial/feature lines
+      if (line.match(/^# (Gripora|Rotorflight|Wingflight)/)) fork = "RF";
     } else {
       line = line
         .replace(/#.*$/, "")
@@ -232,14 +233,14 @@ export function cleanUnifiedConfigFile(input) {
 
 // Turns a captured `diff hardware bare` (see readHardwareConfigOverSerial())
 // into a target config, the same shape cleanUnifiedConfigFile() gives a
-// wingflight-targets .config. The capture opens with the echoed command and
-// a "# version" line, so it's cut to start at the "# Wingflight / <MCU>"
+// gripora-targets .config. The capture opens with the echoed command and
+// a "# version" line, so it's cut to start at the "# Gripora / <MCU>"
 // banner that cleanUnifiedConfigFile() and grabBuildNameFromConfig() expect.
 // Returns null when there's no banner, or nothing hardware-specific to carry
 // across the flash (a board running the bare MCU build's own defaults).
 export function hardwareConfigFromCliOutput(text) {
   const lines = (text ?? "").split(/\r?\n/);
-  const start = lines.findIndex((line) => /^#\s*Wingflight\s*\//.test(line));
+  const start = lines.findIndex((line) => /^#\s*Gripora\s*\//.test(line));
   if (start < 0) return null;
 
   const cfg = cleanUnifiedConfigFile(lines.slice(start).join("\n"))
@@ -288,7 +289,7 @@ export function injectTargetInfo(targetConfig, configName, targetName, manufactu
   targetConfig = targetConfig.replace(configLineRegex, "");
 
   return (
-    "## Wingflight Custom Defaults\n" +
+    "## Gripora Custom Defaults\n" +
     `# config: ${configName}\n` +
     `# board: ${targetName}\n` +
     `# make: ${manufacturerId}\n` +

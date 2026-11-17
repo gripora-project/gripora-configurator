@@ -1,4 +1,4 @@
-// Servo names (wingflight-firmware pg/servo_name.h): a short label per servo,
+// Servo names (gripora-firmware pg/servo_name.h): a short label per servo,
 // read with MSP2_WING_SERVO_NAMES and set with MSP2_WING_SET_SERVO_NAME.
 
 import { FC } from "@/js/fc.svelte.js";

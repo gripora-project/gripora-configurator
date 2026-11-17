@@ -27,7 +27,7 @@
     onSaveRequested,
   } = $props();
 
-  // Keep in sync with wingflight-firmware's rx.h rxSerialTrialState_e.
+  // Keep in sync with gripora-firmware's rx.h rxSerialTrialState_e.
   const RX_SERIAL_TRIAL = {
     IDLE: 0,
     RUNNING: 1,
@@ -195,7 +195,7 @@
       // Reboot" discards the result (the caller's onClose reverts its FC
       // config since `saved` never got set), so an unattended auto-close
       // silently threw away a successful detection - see
-      // wingflight-configurator's EscWiringDetectWizard.svelte for the same
+      // gripora-configurator's EscWiringDetectWizard.svelte for the same
       // fix and the full writeup. The result now sits here until the user
       // takes an explicit action.
       setWizard(

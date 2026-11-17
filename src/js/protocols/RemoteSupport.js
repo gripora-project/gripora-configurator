@@ -9,7 +9,7 @@ import { getSerialProvider } from '@/js/protocols/WebSerial.js';
 /*
     Remote support: a supporter works on the flight controller plugged into
     the pilot's computer, from their own configurator, through the relay
-    (wss://remote.wingflight.org). This module makes the pilot's serial ports
+    (wss://remote.gripora.org). This module makes the pilot's serial ports
     and DFU devices usable like local ones on the supporter's side:
 
     - serial.js connects to ports whose path starts with REMOTE_PORT_PREFIX
@@ -79,7 +79,7 @@ export const VIEW_DATA = 0x50;
 export const VIEW_REQUEST = 0x51;
 
 const DEFAULT_UDP_PORT = 5763;
-const DEFAULT_RELAY_URL = 'wss://remote.wingflight.org';
+const DEFAULT_RELAY_URL = 'wss://remote.gripora.org';
 const PROTOCOL_VERSION = 1;
 const HELLO_INTERVAL = 1000;
 // No STATUS reply for this long means the tool is gone.

@@ -1,4 +1,4 @@
-// Ported verbatim from C:\GitHub\wingflight-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_AM32.lua
+// Ported verbatim from C:\GitHub\gripora-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_AM32.lua
 // and escmfg/am32/{init.lua,pages/*.lua}. Group A (bootloader-bridged via
 // MSP_SET_4WIF_ESC_FWD_PROG, needs the target-switch handshake in handshake.js).
 //

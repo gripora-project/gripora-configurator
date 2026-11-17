@@ -144,7 +144,7 @@
   // matter how it's squeezed -- so below that width this becomes a list of
   // servos you tap into one at a time, each opening a single-column form
   // with every field at a legible size, mirroring the list->editor pattern
-  // wingflight-lua-ethos-suite uses for the same reason (servos_pwm.lua).
+  // gripora-lua-ethos-suite uses for the same reason (servos_pwm.lua).
   let selectedIndex = $state(null);
   let selectedServo = $derived(
     servos.find((servo) => servo.index === selectedIndex) ?? null,

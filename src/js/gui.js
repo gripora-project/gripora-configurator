@@ -427,7 +427,7 @@ GuiControl.prototype.content_ready = function (callback) {
 
     this.switchery();
 
-    // Build link to Wingflight documentation
+    // Build link to Gripora documentation
     if (CONFIGURATOR.connectionValid) {
         const tabName = $('#content .tab_title').attr("i18n");
         const helpButton = $('#content #button-documentation');

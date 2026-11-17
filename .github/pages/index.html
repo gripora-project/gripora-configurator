@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wingflight Configurator</title>
-  <meta name="description" content="Wingflight Configurator — Advanced open source flight control configuration for fixed wing aircraft.">
+  <title>Gripora Configurator</title>
+  <meta name="description" content="Gripora Configurator — Advanced open source flight control configuration for fixed wing aircraft.">
   <link rel="icon" type="image/svg+xml" href="bundle/images/favicon/favicon.svg">
   <style>
     /* ── Reset & Base ─────────────────────────────────────────── */
@@ -667,11 +667,11 @@
   <!-- ── Navigation ──────────────────────────────────────────── -->
   <nav>
     <a href="#" class="nav-logo">
-      <img src="logos/logos_svg/wf_logo_dark_white.svg" alt="Wingflight">
+      <img src="bundle/images/cf_logo_white.svg" alt="Gripora">
     </a>
     <ul class="nav-links">
       <li><a href="#versions">Versions</a></li>
-      <li><a href="https://github.com/WingFlight" target="_blank" rel="noopener" class="nav-cta">GitHub</a></li>
+      <li><a href="https://github.com/gripora-project" target="_blank" rel="noopener" class="nav-cta">GitHub</a></li>
     </ul>
   </nav>
 
@@ -680,18 +680,18 @@
     <div class="hero-bg"></div>
 
     <div class="hero-wing-bg">
-      <img src="logos/logos_svg/light-wide-2-compact.svg" alt="">
+      <img src="bundle/images/light-wide-2-compact.svg" alt="">
     </div>
 
     <span class="hero-eyebrow">Open Source Flight Control</span>
-    <h1>Wingflight <em>Configurator</em></h1>
-    <p class="hero-sub">Browser-based configuration tool for Wingflight flight controllers. Advanced stabilization for gliders, sport aircraft, and jets.</p>
+    <h1>Gripora <em>Configurator</em></h1>
+    <p class="hero-sub">Browser-based configuration tool for Gripora flight controllers. Advanced stabilization for gliders, sport aircraft, and jets.</p>
     <div class="hero-actions">
       <a href="#versions" class="btn btn-primary">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5-5 3a.5.5 0 0 1-.5-.866V6.366a.5.5 0 0 1 .5-.866l5 3a.5.5 0 0 1 0 .866z"/></svg>
         Launch Configurator
       </a>
-      <a href="https://github.com/WingFlight" target="_blank" rel="noopener" class="btn btn-ghost">
+      <a href="https://github.com/gripora-project" target="_blank" rel="noopener" class="btn btn-ghost">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
         View on GitHub
       </a>
@@ -752,20 +752,20 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div>
-          <a href="https://wingflight.org/" target="_blank" rel="noopener" class="footer-logo">
-            <img src="logos/logos_svg/wf_logo_dark_white.svg" alt="Wingflight">
+          <a href="https://gripora.org/" target="_blank" rel="noopener" class="footer-logo">
+            <img src="bundle/images/cf_logo_white.svg" alt="Gripora">
           </a>
           <p class="footer-tagline">Advanced Open Source Flight Control for Fixed Wing Aircraft</p>
         </div>
         <ul class="footer-links">
-          <li><a href="https://wingflight.org/" target="_blank" rel="noopener">Project Website</a></li>
-          <li><a href="https://github.com/WingFlight" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://gripora.org/" target="_blank" rel="noopener">Project Website</a></li>
+          <li><a href="https://github.com/gripora-project" target="_blank" rel="noopener">GitHub</a></li>
           <li><a href="https://discord.gg/aEyyAJTXRw" target="_blank" rel="noopener">Discord</a></li>
           <li><a href="#versions">Versions</a></li>
         </ul>
       </div>
       <div class="footer-bottom">
-        <span>© 2026 Wingflight Project. All rights reserved.</span>
+        <span>© 2026 Gripora Project. All rights reserved.</span>
         <span>Freedom in Flight</span>
       </div>
     </div>
@@ -842,7 +842,7 @@
       if (notes) meta += `<span>${ICON_CLOCK} ${esc(notes)}</span>`;
 
       card.innerHTML = `
-        <img class="version-card-icon" src="logos/wf_icon.svg" alt="" aria-hidden="true">
+        <img class="version-card-icon" src="bundle/images/favicon/favicon.svg" alt="" aria-hidden="true">
         <div class="badge-row">${badges}</div>
         ${heading}
         ${meta ? `<div class="version-meta">${meta}</div>` : ''}

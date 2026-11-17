@@ -777,7 +777,7 @@ class FlightController {
       failsafe_switch_mode:           0,
       failsafe_throttle_low_delay:    0,
       failsafe_procedure:             0,
-      // Appended MSP field (wingflight-firmware#146); defaulted here so a save
+      // Appended MSP field (gripora-firmware#146); defaulted here so a save
       // against firmware that predates it (data.remaining() < 2 on read, so
       // this is never overwritten) still crunches a real number, not undefined.
       failsafe_recovery_delay:        0,

@@ -99,7 +99,7 @@ function desktopDir() {
       : process.platform === "darwin"
         ? path.join(os.homedir(), "Library", "Application Support")
         : process.env.XDG_CONFIG_HOME || path.join(os.homedir(), ".config");
-  return path.join(base, "Wingflight", "Configurator", "settings");
+  return path.join(base, "Gripora", "Configurator", "settings");
 }
 
 function readDesktopLine(line) {

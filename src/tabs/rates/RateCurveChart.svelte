@@ -13,7 +13,7 @@
     liveSetpoints,
   } = $props();
 
-  const RATES_TYPE_WINGFLIGHT = 0;
+  const RATES_TYPE_GRIPORA = 0;
   const SUPER_EXPO = true;
   const DEADBAND = 0;
 
@@ -42,7 +42,7 @@
     context.strokeStyle = colour;
     context.translate(0, yOffset);
     rateCurve.draw(
-      RATES_TYPE_WINGFLIGHT,
+      RATES_TYPE_GRIPORA,
       rate,
       rcRate,
       rcExpo,

@@ -1,5 +1,5 @@
 ; ------------------------------------------
-; Installer for Wingflight Configurator
+; Installer for Gripora Configurator
 ; ------------------------------------------
 ; It receives from the command line with /D the parameters:
 ; version
@@ -14,21 +14,21 @@
 ; AppId, folder and shortcuts, and only replaces an install of the same line,
 ; including one from before the lines (see InitializeSetup).
 #if channel == "dev"
-  #define ApplicationName "Wingflight Configurator (dev)"
+  #define ApplicationName "Gripora Configurator (dev)"
 #else
-  #define ApplicationName "Wingflight Configurator " + channel
+  #define ApplicationName "Gripora Configurator " + channel
 #endif
-#define CompanyName "The Wingflight open source project"
-#define CompanyUrl "https://github.com/WingFlight/"
-#define ExecutableFileName "wingflight-configurator.exe"
-#define GroupName "Wingflight"
-#define InstallerFileName "wingflight-configurator-installer_" + version + "_" + archName
+#define CompanyName "The Gripora open source project"
+#define CompanyUrl "https://github.com/gripora-project/"
+#define ExecutableFileName "gripora-configurator.exe"
+#define GroupName "Gripora"
+#define InstallerFileName "gripora-configurator-installer_" + version + "_" + archName
 #define SourcePath "..\..\" + sourceFolder
-#define TargetFolderName "Wingflight-Configurator-" + channel
-#define UpdatesUrl "https://github.com/WingFlight/wingflight-configurator/releases"
+#define TargetFolderName "Gripora-Configurator-" + channel
+#define UpdatesUrl "https://github.com/gripora-project/gripora-configurator/releases"
 
 [CustomMessages]
-AppName=wingflight-configurator
+AppName=gripora-configurator
 LaunchProgram=Start {#ApplicationName}
 UninstallError=Error uninstalling Configurator %1.
 
@@ -77,7 +77,7 @@ Filename: "pnputil.exe"; Parameters: "/add-driver ""{tmp}\stm32\STM32Bootloader.
 Filename: {app}\{cm:AppName}.exe; Description: {cm:LaunchProgram,{cm:AppName}}; Flags: nowait postinstall skipifsilent
 
 [Setup]
-AppId=wingflight-configurator-{#channel}
+AppId=gripora-configurator-{#channel}
 AppName={#ApplicationName}
 AppPublisher={#CompanyName}
 AppPublisherURL={#CompanyUrl}

@@ -16,7 +16,7 @@ const functions = ['endsWithSave', 'replayBackup'].map((name) => {
 const capture = [
     '# diff all',
     '# version',
-    '# Wingflight / STM32H743 (SH74) 4.6.0-0.0.26',
+    '# Gripora / STM32H743 (SH74) 4.6.0-0.0.26',
     'batch start',
     'defaults nosave',
     'set some_renamed_setting = 5',

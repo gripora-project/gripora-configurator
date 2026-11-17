@@ -26,7 +26,7 @@
   const SERIALRX_FUNCTION = 64;
   const POLL_MS = 100;
 
-  // Serial receivers only: SPI and PPM are not built into Wingflight, and
+  // Serial receivers only: SPI and PPM are not built into Gripora, and
   // MSP input is for simulators.
   const PROTOCOLS = RX_PROTOCOLS.filter(
     (p) => p.feature === "RX_SERIAL" && !p.hide,

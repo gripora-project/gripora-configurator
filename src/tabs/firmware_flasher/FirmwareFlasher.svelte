@@ -19,7 +19,7 @@
     backupOverSerial,
     restoreOverSerial,
     saveBackupToFile,
-    isWingflightBackup,
+    isGriporaBackup,
     readHardwareConfigOverSerial,
     BACKUP_TYPES,
   } from "@/js/cli_backup.js";
@@ -70,7 +70,7 @@
 
   const releaseChecker = new ReleaseChecker(
     "firmware",
-    "https://api.github.com/repos/WingFlight/wingflight-firmware/releases",
+    "https://api.github.com/repos/gripora-project/gripora-firmware/releases",
   );
 
   const BUILD_TYPES = [
@@ -369,11 +369,11 @@
   // they're only ever read imperatively (by runBackup()/runRestore()
   // themselves), never rendered.
   // foreignFirmware: set once the capture is in and text doesn't carry
-  // Wingflight's own version banner (see isWingflightBackup()) -- the diff
+  // Gripora's own version banner (see isGriporaBackup()) -- the diff
   // still gets shown/saveable, just never handed to the post-flash
   // auto-restore, since there's no guarantee another firmware's settings
   // dump means the same thing (or even parses) once replayed into
-  // Wingflight's CLI.
+  // Gripora's CLI.
   let backupRun = $state({
     status: "idle",
     text: null,
@@ -762,7 +762,7 @@
     if (cacheAge > expirationPeriod) {
       try {
         supportedTargets = await github.getContents(
-          "WingFlight/wingflight-targets",
+          "gripora-project/gripora-targets",
           "master",
           "configs",
         );
@@ -902,7 +902,7 @@
       async function fetchLatestCommit() {
         return targetSpec.supported
           ? github.getFileLastCommitInfo(
-              "WingFlight/wingflight-targets",
+              "gripora-project/gripora-targets",
               "master",
               targetSpec.path,
             )
@@ -917,7 +917,7 @@
       // hardware, so even inside the cache window, cheaply confirm the
       // source file actually hasn't changed since we cached it rather than
       // trusting age alone -- otherwise a config fix (e.g.
-      // WingFlight/wingflight-targets#1) can go completely unnoticed for up
+      // gripora-project/gripora-targets#1) can go completely unnoticed for up
       // to expirationPeriod: every reflash keeps re-injecting the same
       // stale, already-fixed-upstream blob, no matter how thoroughly the
       // board itself is erased and reflashed, since chrome.storage.local
@@ -1336,9 +1336,9 @@
 
     backupRun.text = text;
     // Still captured and saveable either way -- just not trustworthy as an
-    // automatic restore target once it's not Wingflight's own dump/diff on
+    // automatic restore target once it's not Gripora's own dump/diff on
     // the other end. See onClickFlash()'s use of this.
-    backupRun.foreignFirmware = !isWingflightBackup(text);
+    backupRun.foreignFirmware = !isGriporaBackup(text);
     backupRun.status = "ready";
   }
 
@@ -1719,7 +1719,7 @@
 
   // Reads the detected board's hardware config back over the CLI and uses it
   // as the target config, with the plain MCU build as the firmware -- the
-  // same pairing a wingflight-targets .config and its MCU build make. Only
+  // same pairing a gripora-targets .config and its MCU build make. Only
   // offered on an explicit click, since entering/leaving the CLI reboots the
   // board. The MCU's versions are already listed by then (see
   // onBoardChange()) -- a board still running the bare MCU build has
@@ -1753,9 +1753,9 @@
     const cfg = hardwareConfigFromCliOutput(text);
     if (!cfg || grabBuildNameFromConfig(cfg) !== customBoard.mcu) {
       setFlashingEnabled(!!parsedHex);
-      // The CLI answered with a Wingflight banner but no resources, timers
+      // The CLI answered with a Gripora banner but no resources, timers
       // or DMA at all: a board still on the bare MCU build's defaults.
-      if (!cfg && isWingflightBackup(text)) {
+      if (!cfg && isGriporaBackup(text)) {
         customConfigStatus = "empty";
         GUI.log($i18n.t("firmwareFlasherBoardConfigEmpty"));
         return;
@@ -1790,7 +1790,7 @@
 
     // populateBuilds() treats a missing manufacturer as a legacy
     // (pre-unified) build -- this is a unified one, just one whose config
-    // came off the board rather than wingflight-targets.
+    // came off the board rather than gripora-targets.
     const builds = {};
     populateBuilds(builds, make || mcu, releases[mcu]);
     showVersions(builds);
@@ -1835,7 +1835,7 @@
     const summary = selectedVersionEntry()?.summary;
     writeTextFile(intelHex, {
       suggestedName: summary?.file ?? "firmware.hex",
-      description: "Wingflight Firmware (.hex)",
+      description: "Gripora Firmware (.hex)",
     }).catch((err) => console.log("Error saving firmware file", err));
   }
 
@@ -1846,7 +1846,7 @@
   function onSaveConfig() {
     writeTextFile(unifiedTarget.config, {
       suggestedName: `${unifiedTarget.fileName || bareBoard || "target"}.config`,
-      description: "Wingflight Target Config (.config)",
+      description: "Gripora Target Config (.config)",
     }).catch((err) => console.log("Error saving target config file", err));
   }
 

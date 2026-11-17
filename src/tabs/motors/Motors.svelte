@@ -27,7 +27,7 @@
   // reactive. A plain variable's reassignment isn't a tracked dependency in
   // runes mode, so if `changes` were ever first evaluated before onMount
   // sets this, its $derived.by would memoize at [] permanently regardless of
-  // later edits - see wingflight-configurator commit cdce9cddc for the
+  // later edits - see gripora-configurator commit cdce9cddc for the
   // full writeup of this exact bug in the Receiver tab.
   let initialState = $state();
   let pollerTimer;

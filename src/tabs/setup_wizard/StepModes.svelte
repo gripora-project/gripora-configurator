@@ -15,7 +15,7 @@
   // and where it went, and writes a mode range for that position.
   const wiz = getContext("setupWizard");
 
-  // Permanent box IDs (wingflight-firmware msp/msp_box.c) and the box names
+  // Permanent box IDs (gripora-firmware msp/msp_box.c) and the box names
   // the FC reports for them, before and after the firmware#182 rename. ARM
   // is the only one the model can't fly without; the rest are optional,
   // flight modes first and the PASSTHROUGH bench tool last. ATT HOLD and TRAINER

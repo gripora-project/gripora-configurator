@@ -29,7 +29,7 @@
   // one, and on channel N of a bus output (SBUS, F.Bus) when one is set up.
   // The FC lists the servos in use, the larger of the two counts.
 
-  // Bus output channel counts: wingflight-firmware's sbus_out_channels /
+  // Bus output channel counts: gripora-firmware's sbus_out_channels /
   // fbus_master_channels, carried in MSP_MIXER_CONFIG.
   const SBUS_OUT_CHANNEL_OPTIONS = [8, 12, 16];
   const FBUS_OUT_CHANNEL_OPTIONS = [8, 12, 16, 24];

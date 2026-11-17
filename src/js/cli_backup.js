@@ -26,22 +26,22 @@ const BACKUP_COMMANDS = {
 // whatever custom defaults the board was last flashed with -- otherwise a
 // board that already carries its config as custom defaults would diff as
 // empty. It also skips the `batch start`/`batch end` wrapper, so the output
-// reads like a wingflight-targets .config. A diff rather than a dump, since
+// reads like a gripora-targets .config. A diff rather than a dump, since
 // it has to fit the custom defaults area (6K on F405/F411/F722).
 const HARDWARE_CONFIG_COMMAND = "diff hardware bare";
 
 // Both `dump all` and `diff all` open with cli.c's printVersion() banner --
-// "# Wingflight / <target> (...) <version> ...". A board still running
+// "# Gripora / <target> (...) <version> ...". A board still running
 // Rotorflight, Betaflight, or anything else prints its own firmware name
 // there instead, which is what this checks for: the settings a `dump`/`diff`
 // captures aren't guaranteed to mean the same thing (or even parse) once
-// replayed into Wingflight's CLI after the flash, so a backup that doesn't
+// replayed into Gripora's CLI after the flash, so a backup that doesn't
 // match shouldn't be trusted for an automatic restore -- see its one caller
 // in FirmwareFlasher.svelte.
-const WINGFLIGHT_VERSION_BANNER = /^#\s*Wingflight\s*\//m;
+const GRIPORA_VERSION_BANNER = /^#\s*Gripora\s*\//m;
 
-export function isWingflightBackup(text) {
-  return !!text && WINGFLIGHT_VERSION_BANNER.test(text);
+export function isGriporaBackup(text) {
+  return !!text && GRIPORA_VERSION_BANNER.test(text);
 }
 
 // Firmware before MSP API 22.16 kept bus servos in slots of their own: S9-S32

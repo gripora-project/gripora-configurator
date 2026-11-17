@@ -39,7 +39,7 @@ const tick = () => new Promise((resolve) => setTimeout(resolve));
 FirmwareCache.load();
 await tick();
 
-const release = { file: 'wingflight_4.6.0_STM32H743.hex' };
+const release = { file: 'gripora_4.6.0_STM32H743.hex' };
 
 test('a write over quota does not throw or leave the release journalled', async () => {
     assert.doesNotThrow(() => FirmwareCache.put(release, ':'.repeat(5000)));
@@ -56,7 +56,7 @@ test('a small write is cached and readable', async () => {
 });
 
 test('a journal entry with no stored data is dropped on read', async () => {
-    const stale = { file: 'wingflight_4.6.0_STM32F405.hex' };
+    const stale = { file: 'gripora_4.6.0_STM32F405.hex' };
     FirmwareCache.put(stale, ':firmware');
     await tick();
     store.delete(OWN + 'cache:' + stale.file);

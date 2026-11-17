@@ -314,13 +314,13 @@ jobs:
         run: |
           DEPLOY_PATH="${{ steps.path.outputs.deploy_path }}"
 
-          echo "Deployment index: https://cfg.wingflight.org/"
-          echo "Deployment: https://cfg.wingflight.org/$DEPLOY_PATH/"
+          echo "Deployment index: https://cfg.gripora.org/"
+          echo "Deployment: https://cfg.gripora.org/$DEPLOY_PATH/"
           if [ "${{ steps.path.outputs.update_latest }}" = "true" ]; then
-            echo "Latest stable: https://cfg.wingflight.org/latest/"
+            echo "Latest stable: https://cfg.gripora.org/latest/"
           fi
           if [ -n "${{ steps.line.outputs.channel_path }}" ]; then
-            echo "Release line: https://cfg.wingflight.org/${{ steps.line.outputs.channel_path }}/"
+            echo "Release line: https://cfg.gripora.org/${{ steps.line.outputs.channel_path }}/"
           fi
 
       - name: Create/update GitHub Release notes
@@ -334,11 +334,11 @@ jobs:
           VERSION="${TAG##*/}"
 
           if [[ "$TAG" == release/* ]]; then
-            TITLE="Wingflight Configurator Release $VERSION"
+            TITLE="Gripora Configurator Release $VERSION"
             PRERELEASE_ARGS=()
             PRERELEASE=false
           else
-            TITLE="Wingflight Configurator Snapshot $VERSION"
+            TITLE="Gripora Configurator Snapshot $VERSION"
             PRERELEASE_ARGS=(--prerelease)
             PRERELEASE=true
           fi
@@ -351,7 +351,7 @@ jobs:
             echo
             echo "---"
             echo
-            echo "🔗 Try this build: https://cfg.wingflight.org/$DEPLOY_PATH/"
+            echo "🔗 Try this build: https://cfg.gripora.org/$DEPLOY_PATH/"
           } >> Notes.md
 
           if gh release view "$TAG" >/dev/null 2>&1; then

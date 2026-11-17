@@ -1,8 +1,8 @@
 
-// Base URL for the published WingFlight docs site (built from the
-// wingflight-docs repo via MkDocs) -- directory-style URLs, no .md/.html
-// extension, trailing slash (e.g. https://doc.wingflight.org/flight-modes/auto-trim/).
-const docsBaseURL = 'https://doc.wingflight.org';
+// Base URL for the published Gripora docs site (built from the
+// gripora-docs repo via MkDocs) -- directory-style URLs, no .md/.html
+// extension, trailing slash (e.g. https://doc.gripora.org/flight-modes/auto-trim/).
+const docsBaseURL = 'https://doc.gripora.org';
 
 // default URL - used when a tab has no specific docs page mapped below
 const defaultHelpURL = `${docsBaseURL}/`;

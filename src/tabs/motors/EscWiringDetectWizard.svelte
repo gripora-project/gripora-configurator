@@ -11,7 +11,7 @@
   // a direct "Save & Reboot" action on the success screen so finding a
   // working combo doesn't require the user to separately notice the tab
   // went dirty and hunt for its own Save button. Mirrors the receiver tab's
-  // RxWiringDetectWizard.svelte (see wingflight-firmware's
+  // RxWiringDetectWizard.svelte (see gripora-firmware's
   // docs/rx-wiring-autodetect-design.md for the underlying mechanism) - kept
   // as a separate component rather than a shared one since the wire shape
   // genuinely differs (no `inverted` field, 4 combos not 8), matching this
@@ -20,7 +20,7 @@
   // unrelated tabs.
   let { onDetected, onButtonDisabled, onClose, onSaveRequested } = $props();
 
-  // Keep in sync with wingflight-firmware's sensors/esc_sensor.h
+  // Keep in sync with gripora-firmware's sensors/esc_sensor.h
   // escSensorTrialState_e.
   const ESC_SENSOR_TRIAL = {
     IDLE: 0,
@@ -41,7 +41,7 @@
   let canSave = $state(false);
   // Small diagnostic line, kept intentionally (not stripped after the
   // "combination 1 of 4" investigation that added it) - see
-  // wingflight-firmware's escSensorTrialStatus_t for the extra fields this
+  // gripora-firmware's escSensorTrialStatus_t for the extra fields this
   // reads. Useful on any future bench-test report without needing devtools
   // open: whether the FC-side trial is actually ticking (elapsedMs growing),
   // seeing any frames at all (frameDelta), and has the port open.

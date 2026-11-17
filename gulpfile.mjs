@@ -41,7 +41,7 @@ const BUNDLE_DIR = "./bundle";
 const APP_DIR = "./app";
 const REDIST_DIR = "./redist";
 
-const LINUX_INSTALL_DIR = "/opt/wingflight";
+const LINUX_INSTALL_DIR = "/opt/gripora";
 const LINUX_APP_DIR = `${LINUX_INSTALL_DIR}/${identity.name}`;
 
 const NWJS_CACHE_DIR = "nwjs_cache";
@@ -295,7 +295,7 @@ function build_redist_tar_xz() {
 
   const filename = `${pkg.name}_${pkg.version}_${platform}_${arch}.tar.xz`;
   const output = `${path.relative(context.appdir, REDIST_DIR)}/${filename}`;
-  const command = `tar -cJf '${output}' --transform 's|^\\./|wingflight-configurator-${pkg.version}/|' .`;
+  const command = `tar -cJf '${output}' --transform 's|^\\./|gripora-configurator-${pkg.version}/|' .`;
 
   return runAsync(
     new Promise((resolve, reject) =>

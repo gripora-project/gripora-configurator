@@ -1,4 +1,4 @@
-// Ported verbatim from C:\GitHub\wingflight-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_YGE.lua
+// Ported verbatim from C:\GitHub\gripora-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_YGE.lua
 // and escmfg/yge/{init.lua,pages/*.lua}. Group B (native MSP, no target-switch handshake).
 // The `flags` U8 field packs 4 boolean/enum sub-values (direction, f3cauto, keepmah, bec12v)
 // at bits 0-3 -- expressed declaratively via engine.js's `bitmap` primitive, no custom

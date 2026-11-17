@@ -1,7 +1,7 @@
 // Pure helpers for the Setup Wizard: which servos are control surfaces, how
 // far full stick drives each one, and the gain/scale changes that turn a
 // measured throw into a wanted one. Mirrors the firmware signal chain
-// (wingflight-firmware flight/mixer.c mixerUpdateRules() and flight/servos.c
+// (gripora-firmware flight/mixer.c mixerUpdateRules() and flight/servos.c
 // servoUpdate()):
 //
 //   input (+-1) * axis throw -> rule weight (input >= 0) / weightNeg (< 0)

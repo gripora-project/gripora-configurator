@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Wingflight Configurator
-Source: https://github.com/WingFlight/wingflight-configurator
+Upstream-Name: Gripora Configurator
+Source: https://github.com/gripora-project/gripora-configurator
 
 Files: *
 Copyright: Copyright 2018 The Wingflight open source project

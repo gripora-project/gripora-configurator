@@ -1,4 +1,4 @@
-// Ported from C:\GitHub\wingflight-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_HW5.lua
+// Ported from C:\GitHub\gripora-lua-ethos-suite\src\wfsuite\tasks\scheduler\msp\api\ESC_PARAMETERS_HW5.lua
 // and escmfg/hw5/init.lua. Group B (native MSP, no target-switch handshake). The most bespoke
 // of the 10 manufacturers: after a fixed ASCII header (firmware/hardware/esc_type/mode_name
 // strings), a run of single-byte "item" fields follows whose *byte position* depends on which

@@ -18,19 +18,19 @@ export const API_VERSION_22_16 = "22.16.0";
 
 // 22.16 made PWM and bus servos one list of 24 servos and renumbered the
 // servo messages, so older firmware is not supported.
-export const API_VERSION_WGFL_MIN = API_VERSION_22_16;
-export const API_VERSION_WGFL_MAX = API_VERSION_22_16;
+export const API_VERSION_GRPA_MIN = API_VERSION_22_16;
+export const API_VERSION_GRPA_MAX = API_VERSION_22_16;
 
-export const FW_VERSION_WGFL_MIN = "4.3.0-0";
-export const FW_VERSION_WGFL_MAX = "4.6.99";
+export const FW_VERSION_GRPA_MIN = "4.3.0-0";
+export const FW_VERSION_GRPA_MAX = "4.6.99";
 
 export const CONFIGURATOR = $state({
   // all versions are specified and compared using semantic versioning http://semver.org/
-  API_VERSION_MIN_SUPPORTED: API_VERSION_WGFL_MIN,
-  API_VERSION_MAX_SUPPORTED: API_VERSION_WGFL_MAX,
+  API_VERSION_MIN_SUPPORTED: API_VERSION_GRPA_MIN,
+  API_VERSION_MAX_SUPPORTED: API_VERSION_GRPA_MAX,
 
-  FW_VERSION_MIN_SUPPORTED: FW_VERSION_WGFL_MIN,
-  FW_VERSION_MAX_SUPPORTED: FW_VERSION_WGFL_MAX,
+  FW_VERSION_MIN_SUPPORTED: FW_VERSION_GRPA_MIN,
+  FW_VERSION_MAX_SUPPORTED: FW_VERSION_GRPA_MAX,
 
   connectionValid: false,
   virtualMode: false,
@@ -43,9 +43,9 @@ export const CONFIGURATOR = $state({
   buildLabel: __BUILD_LABEL__,
   latestVersion: "0.0.1",
   latestVersionReleaseUrl:
-    "https://github.com/WingFlight/wingflight-configurator/releases",
+    "https://github.com/gripora-project/gripora-configurator/releases",
   allReleasesUrl:
-    "https://github.com/WingFlight/wingflight-configurator/releases",
+    "https://github.com/gripora-project/gripora-configurator/releases",
   // See user_level.js. expertMode is true only on "advanced".
   userLevel: "intermediate",
   expertMode: false,

@@ -190,7 +190,7 @@
     pollBackupRx();
 
     // Separate, slower poll for `armed` rather than folding it into the
-    // 200ms poll above - see wingflight-configurator's own Motors.svelte fix
+    // 200ms poll above - see gripora-configurator's own Motors.svelte fix
     // for why: piggybacking a status-only field onto an existing hot loop
     // risks queueing/contending with a wizard's own polling under real
     // (non-instant) serial traffic, which read there as the ESC wiring
@@ -300,7 +300,7 @@
   );
 
   // Backup receivers - see FUNCTION_RX_INPUT_BACKUP/FUNCTION_RX_INPUT_BACKUP2
-  // in wingflight-firmware (js/RxInputBackup.js). No dedicated feature bit,
+  // in gripora-firmware (js/RxInputBackup.js). No dedicated feature bit,
   // same as SERIALRX_FUNCTION above: the port assignment itself is the
   // enablement. One box per backup whose port is assigned.
   let backupPortAssigned = $derived(

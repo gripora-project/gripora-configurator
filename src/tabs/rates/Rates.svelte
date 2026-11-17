@@ -22,11 +22,11 @@
   const RATE_PROFILE_MASK = 128;
   const RATE_PROFILE_COUNT = 6;
 
-  const RATES_TYPE_WINGFLIGHT = 0;
+  const RATES_TYPE_GRIPORA = 0;
   const SUPER_EXPO = true;
   const DEADBAND = 0;
 
-  // Wingflight is the only supported rates system.
+  // Gripora is the only supported rates system.
   const RATES_DEFAULTS = {
     rcRateDef: 250,
     rcRateYawDef: 400,
@@ -112,7 +112,7 @@
 
   function maxAngularVelFor(rate, rcRate, rcExpo) {
     return rateCurve.getMaxAngularVel(
-      RATES_TYPE_WINGFLIGHT,
+      RATES_TYPE_GRIPORA,
       rate,
       rcRate,
       rcExpo,
@@ -156,7 +156,7 @@
     liveSetpoints = {
       roll: rateCurve.rcCommandRawToDegreesPerSecond(
         1500 + FC.RC_COMMAND[0],
-        RATES_TYPE_WINGFLIGHT,
+        RATES_TYPE_GRIPORA,
         currentRates.roll_srate,
         currentRates.roll_rc_rate,
         currentRates.roll_rc_expo,
@@ -165,7 +165,7 @@
       ),
       pitch: rateCurve.rcCommandRawToDegreesPerSecond(
         1500 + FC.RC_COMMAND[1],
-        RATES_TYPE_WINGFLIGHT,
+        RATES_TYPE_GRIPORA,
         currentRates.pitch_srate,
         currentRates.pitch_rc_rate,
         currentRates.pitch_rc_expo,
@@ -174,7 +174,7 @@
       ),
       yaw: rateCurve.rcCommandRawToDegreesPerSecond(
         1500 + FC.RC_COMMAND[2],
-        RATES_TYPE_WINGFLIGHT,
+        RATES_TYPE_GRIPORA,
         currentRates.yaw_srate,
         currentRates.yaw_rc_rate,
         currentRates.yaw_rc_expo,

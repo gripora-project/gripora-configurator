@@ -42,7 +42,7 @@ export function checkChromeRuntimeError() {
 }
 
 const virtualFirmwareVersions = [
-  { fw: '4.6.99', msp: '22.0.0', label: 'Wingflight 1.0.x'},
+  { fw: '4.6.99', msp: '22.0.0', label: 'Gripora 1.0.x'},
 ];
 
 export function generateVirtualApiVersions() {
