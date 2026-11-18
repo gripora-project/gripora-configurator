@@ -71,9 +71,6 @@
     "titleHeading": {
         "message": "Heading"
     },
-    "titleAltitude": {
-        "message": "Altitude"
-    },
     "titleAttitude": {
         "message": "Attitude"
     },
@@ -1700,6 +1697,72 @@
     },
     "statusAttitude": {
         "message": "$1 deg"
+    },
+    "statusSteering": {
+        "message": "Steering"
+    },
+    "statusSteeringStick": {
+        "message": "Stick"
+    },
+    "statusSteeringOutput": {
+        "message": "Output"
+    },
+    "statusSteeringLeft": {
+        "message": "Left {{percent}}%"
+    },
+    "statusSteeringRight": {
+        "message": "Right {{percent}}%"
+    },
+    "statusSteeringCentre": {
+        "message": "Centre"
+    },
+    "statusSteeringNoServo": {
+        "message": "No servo is driven by steering in the mixer."
+    },
+    "statusThrottle": {
+        "message": "Throttle and brake"
+    },
+    "statusThrottleTransmitter": {
+        "message": "Transmitter"
+    },
+    "statusThrottleEsc": {
+        "message": "To ESC"
+    },
+    "statusAidAbs": {
+        "message": "ABS"
+    },
+    "statusAidTc": {
+        "message": "Traction"
+    },
+    "statusAidLc": {
+        "message": "Launch"
+    },
+    "statusAidsOff": {
+        "message": "Aids off"
+    },
+    "statusDriveUnsupported": {
+        "message": "This firmware doesn't report the drive state."
+    },
+    "statusTurnRate": {
+        "message": "Turn rate"
+    },
+    "statusTurnRateLeft": {
+        "message": "Left {{rate}}°/s"
+    },
+    "statusTurnRateRight": {
+        "message": "Right {{rate}}°/s"
+    },
+    "statusTurnRateStraight": {
+        "message": "Straight"
+    },
+    "statusTurnRateScaleLeft": {
+        "message": "360°/s left"
+    },
+    "statusTurnRateScaleRight": {
+        "message": "360°/s right"
+    },
+    "statusBodyTilt": {
+        "message": "Body roll and pitch"
     },
     "statusConfigBare": {
         "message": "<span class=\"configBare\">BARE</span>"

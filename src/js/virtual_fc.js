@@ -1054,6 +1054,10 @@ export function applyVirtualConfig() {
     };
   }
 
+  // MSP_SERVO: a disarmed car with the sticks centred holds every servo at
+  // its Mid.
+  FC.SERVO_DATA = FC.SERVO_CONFIG.map((config) => config.mid);
+
   FC.ADJUSTMENT_RANGES = new Array(42);
   for (let i = 0; i < FC.ADJUSTMENT_RANGES.length; i++) {
     FC.ADJUSTMENT_RANGES[i] = {
