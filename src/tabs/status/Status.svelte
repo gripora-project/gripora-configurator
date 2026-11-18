@@ -14,6 +14,19 @@
   import Meter from "@/components/Meter.svelte";
   import Model from "@/components/Model.svelte";
   import { rcDataLabel, shownRcDataIndexes } from "@/js/rcChannels.js";
+  import { DRIVE_STATES } from "@/js/Drive.js";
+  import { surfacesFromRules } from "@/tabs/setup_wizard/surfaces.js";
+
+  import CentreBar from "./CentreBar.svelte";
+  import SteeringGauge from "./SteeringGauge.svelte";
+  import TiltIndicator from "./TiltIndicator.svelte";
+  import {
+    rcThrottleFraction,
+    steeringOutput,
+    steeringStick,
+    throttleFraction,
+    turnRate,
+  } from "./carStatus.js";
 
   const BAR_SCALE_MIN = 750;
   const BAR_SCALE_MAX = 2250;
@@ -58,12 +71,13 @@
 
   let modelRef;
   let confirmDialogEl;
-  let attitudeIndicator;
-  let headingIndicator;
-  let altitudeIndicator;
 
   let fastInterval;
   let slowInterval;
+  // A poll still waiting for replies when the next is due is skipped, so a
+  // slow link doesn't pile requests up.
+  let fastBusy = false;
+  let slowBusy = false;
 
   let numChs = $derived(Math.min(FC.RC.active_channels ?? 0, 24));
   let numBars = $derived(Math.max(numChs, 8));
@@ -110,6 +124,99 @@
     }
     return list;
   });
+
+  //// Car readouts, from data the tab polls: MSP_RC_COMMAND (stick),
+  //// MSP_SERVO (the steering servo's pulse), MSP_RAW_IMU (gyro yaw),
+  //// MSP_ATTITUDE (roll and pitch), and the drive state and drive aids
+  //// status where the firmware has them.
+
+  // The first servo the steering mix drives (S1 on the car preset).
+  let steeringServo = $derived(
+    surfacesFromRules(
+      FC.MIXER_RULES ?? [],
+      Math.min(FC.CONFIG.servoCount ?? 0, FC.SERVO_CONFIG?.length ?? 0),
+    )[0] ?? null,
+  );
+
+  let stick = $derived(steeringStick(FC.RC_COMMAND[2]));
+  let output = $derived(
+    steeringServo
+      ? steeringOutput(
+          FC.SERVO_DATA?.[steeringServo.servo],
+          FC.SERVO_CONFIG[steeringServo.servo],
+          steeringServo,
+        )
+      : null,
+  );
+
+  let aids = $derived(FC.DRIVE_AIDS_STATUS);
+  let drive = $derived(FC.DRIVE_STATUS);
+
+  // Transmitter and sent-to-ESC throttle. Without the drive aids status,
+  // only the transmitter (MSP_RC_COMMAND) is known.
+  let throttleIn = $derived(
+    aids.supported
+      ? throttleFraction(aids.throttle_in)
+      : rcThrottleFraction(FC.RC_COMMAND[3]),
+  );
+  let throttleOut = $derived(
+    aids.supported ? throttleFraction(aids.throttle_out) : null,
+  );
+
+  let aidBadges = $derived([
+    {
+      key: "abs",
+      label: "statusAidAbs",
+      armed: aids.abs_armed,
+      active: aids.abs_active,
+    },
+    {
+      key: "tc",
+      label: "statusAidTc",
+      armed: aids.tc_armed,
+      active: aids.tc_active,
+    },
+    {
+      key: "lc",
+      label: "statusAidLc",
+      armed: aids.lc_staged,
+      active: aids.lc_active,
+    },
+  ]);
+
+  let yawRate = $derived(turnRate(FC.SENSOR_DATA.gyroscope?.[2]));
+
+  function steerText(v) {
+    if (v === null) return "—";
+    const percent = Math.round(Math.abs(v) * 100);
+    if (percent === 0) return $i18n.t("statusSteeringCentre");
+    return $i18n.t(v > 0 ? "statusSteeringRight" : "statusSteeringLeft", {
+      percent,
+    });
+  }
+
+  function throttleText(v) {
+    if (v === null) return "—";
+    const percent = Math.round(Math.abs(v) * 100);
+    if (percent === 0) return $i18n.t("profilesAbsThrottleNeutral");
+    return $i18n.t(
+      v > 0 ? "profilesAbsThrottleForward" : "profilesAbsThrottleBrake",
+      { percent },
+    );
+  }
+
+  function turnText(v) {
+    if (v === null) return "—";
+    const rate = Math.round(Math.abs(v));
+    if (rate === 0) return $i18n.t("statusTurnRateStraight");
+    return $i18n.t(v > 0 ? "statusTurnRateRight" : "statusTurnRateLeft", {
+      rate,
+    });
+  }
+
+  function angleText(v) {
+    return $i18n.t("statusAttitude", { 1: (v ?? 0).toFixed(1) });
+  }
 
   let armingCurrentlyPossible = $derived(
     (FC.CONFIG.armingDisableFlags ?? 1) === 0,
@@ -159,51 +266,49 @@
     await MSP.promise(MSPCodes.MSP_FLIGHT_STATS);
     await MSP.promise(MSPCodes.MSP_RC);
     await MSP.promise(MSPCodes.MSP_RX_MAP);
+    // Which servo steers, and its Mid, scale and Reverse for the dial.
+    await MSP.promise(MSPCodes.MSP_MIXER_RULES);
+    await MSP.promise(MSPCodes.MSP_SERVO_CONFIGURATIONS);
+    // Drive state and drive aids (next API version): `supported` stays false
+    // on firmware without them, and those readouts say so.
+    await mspHelper.loadDriveStatus();
+    await mspHelper.loadDriveAidsStatus();
 
     updateArming(FC.CONFIG.enableArmingFlag);
     loading = false;
     await tick();
 
-    const options = {
-      size: 90,
-      showBox: false,
-      img_directory: "/images/flightindicators/",
-    };
-    attitudeIndicator = globalThis.$.flightIndicator(
-      "#attitude",
-      "attitude",
-      options,
-    );
-    headingIndicator = globalThis.$.flightIndicator(
-      "#heading",
-      "heading",
-      options,
-    );
-    altitudeIndicator = globalThis.$.flightIndicator(
-      "#altitude",
-      "altimeter",
-      options,
-    );
-
     fastInterval = setInterval(async () => {
-      await MSP.promise(MSPCodes.MSP_RC);
-      await MSP.promise(MSPCodes.MSP_RC_COMMAND);
-      await MSP.promise(MSPCodes.MSP_ATTITUDE);
-
-      renderModelTick();
-      attitudeIndicator.setRoll(FC.SENSOR_DATA.kinematics[0]);
-      attitudeIndicator.setPitch(FC.SENSOR_DATA.kinematics[1]);
-      headingIndicator.setHeading(FC.SENSOR_DATA.kinematics[2]);
+      if (fastBusy) return;
+      fastBusy = true;
+      try {
+        await MSP.promise(MSPCodes.MSP_RC);
+        await MSP.promise(MSPCodes.MSP_RC_COMMAND);
+        await MSP.promise(MSPCodes.MSP_ATTITUDE);
+        await MSP.promise(MSPCodes.MSP_SERVO);
+        await MSP.promise(MSPCodes.MSP_RAW_IMU);
+        if (FC.DRIVE_AIDS_STATUS.supported) {
+          await mspHelper.loadDriveAidsStatus();
+        }
+        renderModelTick();
+      } finally {
+        fastBusy = false;
+      }
     }, 50);
 
     slowInterval = setInterval(async () => {
-      await MSP.promise(MSPCodes.MSP_STATUS);
-      await MSP.promise(MSPCodes.MSP_BATTERY_STATE);
-      await MSP.promise(MSPCodes.MSP_ANALOG);
-      await MSP.promise(MSPCodes.MSP_ALTITUDE);
-
-      // Usually altimeter indicates feet. We show centimeters, as it is more useful here.
-      altitudeIndicator.setAltitude(FC.SENSOR_DATA.altitude * 100);
+      if (slowBusy) return;
+      slowBusy = true;
+      try {
+        await MSP.promise(MSPCodes.MSP_STATUS);
+        await MSP.promise(MSPCodes.MSP_BATTERY_STATE);
+        await MSP.promise(MSPCodes.MSP_ANALOG);
+        if (FC.DRIVE_STATUS.supported) {
+          await mspHelper.loadDriveStatus();
+        }
+      } finally {
+        slowBusy = false;
+      }
     }, 250);
   });
 
@@ -352,15 +457,125 @@
         </tbody>
       </table>
     </Section>
-
-    <Section label="statusInstrumentsHead">
-      <div class="instruments">
-        <div id="attitude"></div>
-        <div id="heading"></div>
-        <div id="altitude"></div>
-      </div>
-    </Section>
   </div>
+
+  <Section label="statusInstrumentsHead">
+    <div class="readouts">
+      <div class="readout steering">
+        <span class="readout-title">{$i18n.t("statusSteering")}</span>
+        <SteeringGauge {stick} {output} />
+        <dl class="pairs">
+          <dt>
+            <span class="key key-stick"></span>{$i18n.t("statusSteeringStick")}
+          </dt>
+          <dd>{steerText(stick)}</dd>
+          <dt>
+            <span class="key key-output"></span>{$i18n.t(
+              "statusSteeringOutput",
+            )}
+          </dt>
+          <dd>{steerText(output)}</dd>
+        </dl>
+        {#if !steeringServo}
+          <span class="muted">{$i18n.t("statusSteeringNoServo")}</span>
+        {/if}
+      </div>
+
+      <div class="readout">
+        <span class="readout-title">{$i18n.t("statusThrottle")}</span>
+        <div class="bar-row">
+          <span class="bar-label">{$i18n.t("statusThrottleTransmitter")}</span>
+          <span class="bar-value">{throttleText(throttleIn)}</span>
+        </div>
+        <CentreBar value={throttleIn} negativeTone="brake" />
+        {#if aids.supported}
+          <div class="bar-row">
+            <span class="bar-label">{$i18n.t("statusThrottleEsc")}</span>
+            <span class="bar-value">{throttleText(throttleOut)}</span>
+          </div>
+          <CentreBar
+            value={throttleOut}
+            marker={throttleIn}
+            negativeTone="brake"
+          />
+          <div class="aids">
+            {#each aidBadges as aid (aid.key)}
+              <span
+                class={[
+                  "aid",
+                  aids.enabled && aid.armed && "armed",
+                  aid.active && "active",
+                ]}>{$i18n.t(aid.label)}</span
+              >
+            {/each}
+            {#if !aids.enabled}
+              <span class="muted">{$i18n.t("statusAidsOff")}</span>
+            {/if}
+          </div>
+        {/if}
+      </div>
+
+      <div class="readout">
+        <span class="readout-title">{$i18n.t("motorsDriveLiveSpeed")}</span>
+        {#if drive.supported}
+          <span class={["big", !drive.speed_known && "muted"]}>
+            {drive.speed_known
+              ? $i18n.t("motorsDriveSpeedValue", {
+                  speed: (drive.speed / 10).toFixed(1),
+                })
+              : $i18n.t("motorsDriveNoRpmSource")}
+          </span>
+          <dl class="pairs">
+            <dt>{$i18n.t("motorsDriveLiveDirection")}</dt>
+            <dd>
+              {drive.direction < 0
+                ? $i18n.t("motorsDriveDirectionReverse")
+                : $i18n.t("motorsDriveDirectionForward")}
+            </dd>
+            <dt>{$i18n.t("motorsDriveLiveState")}</dt>
+            <dd>
+              {$i18n.t(
+                `motorsDriveState_${DRIVE_STATES[drive.state] ?? "NEUTRAL"}`,
+              )}
+            </dd>
+            <dt>{$i18n.t("motorsDriveLiveCorrection")}</dt>
+            <dd>{drive.correction}%</dd>
+          </dl>
+        {:else}
+          <span class="big muted">—</span>
+          <span class="muted">{$i18n.t("statusDriveUnsupported")}</span>
+        {/if}
+      </div>
+
+      <div class="readout">
+        <span class="readout-title">{$i18n.t("statusTurnRate")}</span>
+        <span class="big">{turnText(yawRate)}</span>
+        <CentreBar value={yawRate === null ? null : yawRate / 360} />
+        <div class="scale">
+          <span>{$i18n.t("statusTurnRateScaleLeft")}</span>
+          <span>{$i18n.t("statusTurnRateScaleRight")}</span>
+        </div>
+      </div>
+
+      <div class="readout">
+        <span class="readout-title">{$i18n.t("statusBodyTilt")}</span>
+        <div class="tilt-row">
+          <TiltIndicator view="roll" angle={FC.SENSOR_DATA.kinematics[0]} />
+          <dl class="pairs">
+            <dt>{$i18n.t("titleRoll")}</dt>
+            <dd>{angleText(FC.SENSOR_DATA.kinematics[0])}</dd>
+          </dl>
+        </div>
+        <div class="tilt-row">
+          <TiltIndicator view="pitch" angle={FC.SENSOR_DATA.kinematics[1]} />
+          <dl class="pairs">
+            <dt>{$i18n.t("titlePitch")}</dt>
+            <dd>{angleText(FC.SENSOR_DATA.kinematics[1])}</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </Section>
 
   <div class="bottom-grid">
     <div class="model-panel">
@@ -540,10 +755,153 @@
     color: white;
   }
 
-  .instruments {
-    display: flex;
-    justify-content: space-around;
+  //// Car readouts, one card each.
+
+  .readouts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 12px;
     padding: 8px 0;
+  }
+
+  .readout {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface-sunken);
+    font-size: 0.8rem;
+  }
+
+  .steering {
+    align-items: center;
+
+    .readout-title,
+    .pairs,
+    .muted {
+      align-self: stretch;
+    }
+  }
+
+  .readout-title {
+    font-weight: 600;
+  }
+
+  .big {
+    font-size: 1.35rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .muted {
+    color: var(--color-text-soft);
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  .pairs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 10px;
+    margin: 0;
+
+    dt {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-text-soft);
+    }
+
+    dd {
+      margin: 0;
+      text-align: right;
+      white-space: nowrap;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  .key {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  .key-stick {
+    background-color: var(--color-text);
+  }
+
+  .key-output {
+    background-color: var(--color-accent-500);
+  }
+
+  .bar-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .bar-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--color-text-soft);
+  }
+
+  .bar-value {
+    white-space: nowrap;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .aids {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .aid {
+    padding: 1px 6px;
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-xs);
+    color: var(--color-text-soft);
+    font-size: 0.7rem;
+    font-weight: 600;
+
+    &.armed {
+      border-color: var(--color-accent-500);
+      color: var(--color-text);
+    }
+
+    &.active {
+      border-color: var(--color-accent-500);
+      background-color: var(--color-accent-500);
+      color: var(--color-accent-fg);
+    }
+  }
+
+  .scale {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-text-soft);
+    font-size: 0.7rem;
+  }
+
+  .tilt-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .pairs {
+      flex: 1;
+    }
   }
 
   .bottom-grid {
