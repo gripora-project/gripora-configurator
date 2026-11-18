@@ -5,13 +5,6 @@
       "name": "master",
       "path": "./master/",
       "notes": "Latest development build"
-    },
-    {
-      "type": "branch",
-      "name": "feature-launch-control",
-      "path": "./feature-launch-control/",
-      "branch": "feature/launch-control",
-      "date": "2026-11-18T09:57:05Z"
     }
   ]
 }
