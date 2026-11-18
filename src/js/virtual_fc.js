@@ -924,9 +924,12 @@ export function applyVirtualConfig() {
 
   Object.assign(FC.TELEMETRY_CONFIG, {
     crsf_telemetry_mode: 1,
-    crsf_telemetry_rate: 500,
+    crsf_telemetry_rate: 250,
     crsf_telemetry_ratio: 8,
-    telemetry_sensors_list: [4, 5, 6, 7, 8],
+    // Firmware telemetry defaults (pg/telemetry.c).
+    telemetry_sensors_list: [
+      3, 4, 5, 6, 15, 43, 50, 52, 60, 89, 91, 93, 94, 99, 120, 121,
+    ],
   });
 
   FC.RC = {
