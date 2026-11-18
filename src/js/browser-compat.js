@@ -100,7 +100,7 @@ export const BrowserCompat = {
 ⚠️ Unsupported Browser: ${compat.browserName}
 
 Gripora Configurator Web needs at least one of the following APIs to
-talk to a flight controller, and your browser has none of them:
+talk to a controller, and your browser has none of them:
 ${missing.map(f => `  • ${f}`).join('\n')}
 
 Please use a Chromium-based desktop browser (Chrome, Edge, Brave, or Opera).

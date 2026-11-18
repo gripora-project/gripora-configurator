@@ -1,7 +1,7 @@
 export const DEBUG_AXIS = [
   "0 / ROLL",
   "1 / PITCH",
-  "2 / YAW",
+  "2 / STEERING",
   "3 / THROTTLE",
   "4",
   "5",
