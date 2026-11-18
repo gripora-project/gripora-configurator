@@ -77,9 +77,11 @@ function selectProfile(index) {
     getVirtualResponse(MSPCodes.MSP_SELECT_SETTING, [index]);
 }
 
-// The Virtual FC has traction control, so its replies carry the TC fields
-const defaults = { ...defaultDriveAidsConfig(), tc_supported: true };
-const tuned = { ...defaults, abs_mode: 2, abs_freq: 12, abs_corner_hold: 15, tc_mode: 1, tc_ramp_time: 800 };
+// The Virtual FC has traction control and launch control, so its replies
+// carry their fields
+const defaults = { ...defaultDriveAidsConfig(), tc_supported: true, lc_supported: true };
+const tuned = { ...defaults, abs_mode: 2, abs_freq: 12, abs_corner_hold: 15, tc_mode: 1, tc_ramp_time: 800,
+    lc_mode: 1, lc_throttle: 30, lc_ramp_time: 1500 };
 
 test('each PID profile has its own drive aids', () => {
     applyVirtualConfig();
@@ -101,6 +103,9 @@ test('each PID profile has its own drive aids', () => {
     assert.equal(FC.DRIVE_AIDS_CONFIG.abs_freq, 12);
     assert.equal(FC.DRIVE_AIDS_CONFIG.tc_mode, 1);
     assert.equal(FC.DRIVE_AIDS_CONFIG.tc_ramp_time, 800);
+    assert.equal(FC.DRIVE_AIDS_CONFIG.lc_mode, 1);
+    assert.equal(FC.DRIVE_AIDS_CONFIG.lc_throttle, 30);
+    assert.equal(FC.DRIVE_AIDS_CONFIG.lc_ramp_time, 1500);
 });
 
 test('a 9-byte SET leaves traction control as it is', () => {
@@ -109,6 +114,21 @@ test('a 9-byte SET leaves traction control as it is', () => {
     setAids(tuned);
     assert.deepEqual(setAids({ ...tuned, abs_mode: 1, tc_supported: false }), new Uint8Array(0));
     assert.deepEqual(readAids(), { ...tuned, abs_mode: 1 });
+});
+
+test('a 12-byte SET leaves launch control as it is', () => {
+    applyVirtualConfig();
+    assert.equal(FC.DRIVE_AIDS_CONFIG.lc_supported, true);
+    setAids(tuned);
+    assert.deepEqual(setAids({ ...tuned, tc_ramp_time: 600, lc_mode: 0, lc_supported: false }), new Uint8Array(0));
+    assert.deepEqual(readAids(), { ...tuned, tc_ramp_time: 600 });
+});
+
+test('the Virtual FC offers the LAUNCH mode (permanent id 67)', () => {
+    applyVirtualConfig();
+    const index = FC.AUX_CONFIG.indexOf('LAUNCH');
+    assert.ok(index >= 0);
+    assert.equal(FC.AUX_CONFIG_IDS[index], 67);
 });
 
 test('saving the PID profile keeps the drive aids', () => {
@@ -127,6 +147,9 @@ test('a refused SET changes nothing', () => {
     assert.equal(setAids({ ...tuned, abs_freq: 34 }), VIRTUAL_ERROR);
     assert.equal(setAids({ ...tuned, tc_ramp_time: 49 }), VIRTUAL_ERROR);
     assert.equal(setAids({ ...tuned, tc_mode: 2 }), VIRTUAL_ERROR);
+    assert.equal(setAids({ ...tuned, lc_mode: 2 }), VIRTUAL_ERROR);
+    assert.equal(setAids({ ...tuned, lc_throttle: 9 }), VIRTUAL_ERROR);
+    assert.equal(setAids({ ...tuned, lc_ramp_time: 5001 }), VIRTUAL_ERROR);
     assert.equal(getVirtualResponse(MSPCodes.MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG, [2, 12]), VIRTUAL_ERROR);
     assert.deepEqual(readAids(), tuned);
 });
