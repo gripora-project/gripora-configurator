@@ -14,6 +14,13 @@ import {
   writeDriveAidsConfig,
   writeDriveAidsStatus,
 } from "@/js/DriveAids.js";
+import {
+  DRIFT_BOX_ID,
+  defaultDriftConfig,
+  isValidDriftConfig,
+  parseDriftConfigRequest,
+  writeDriftConfig,
+} from "@/js/Drift.js";
 import { FC } from "@/js/fc.svelte.js";
 import { GainCurve } from "@/js/GainCurve.js";
 import { MixerCurve } from "@/js/MixerCurve.js";
@@ -138,6 +145,8 @@ function defaultPidSlot() {
     },
     // MSP2_GRIPORA_DRIVE_AIDS_CONFIG: per profile, pg/drive_aids.c defaults
     driveAids: defaultDriveAidsConfig(),
+    // MSP2_GRIPORA_DRIFT_CONFIG: per profile, pg/drift.c defaults
+    drift: defaultDriftConfig(),
   };
 }
 
@@ -187,6 +196,7 @@ function loadPidSlot(index) {
   copyPids(FC.PIDS_ACTIVE, slot.pids);
   Object.assign(FC.PID_PROFILE, slot.profile);
   Object.assign(FC.DRIVE_AIDS_CONFIG, slot.driveAids);
+  Object.assign(FC.DRIFT_CONFIG, slot.drift);
   FC.CONFIG.profile = index;
 }
 
@@ -599,6 +609,13 @@ function encodeDriveAidsConfig() {
   );
 }
 
+// MSP2_GRIPORA_DRIFT_CONFIG / _SET_: the active PID profile's slot.
+function encodeDriftConfig() {
+  return Uint8Array.from(
+    writeDriftConfig([], pidSlots[FC.CONFIG.profile].drift),
+  );
+}
+
 // MSP2_GRIPORA_DRIVE_AIDS_STATUS for a disarmed car: aids off, nothing shaped.
 function encodeDriveAidsStatus() {
   return Uint8Array.from(writeDriveAidsStatus([], idleDriveAidsStatus()));
@@ -660,6 +677,15 @@ export function getVirtualResponse(code, requestData) {
     }
     case MSPCodes.MSP2_GRIPORA_DRIVE_AIDS_STATUS:
       return decodeVirtualReply(code, encodeDriveAidsStatus());
+    case MSPCodes.MSP2_GRIPORA_DRIFT_CONFIG:
+      return decodeVirtualReply(code, encodeDriftConfig());
+    // Checked like msp.c: one bad value refuses the lot and changes nothing.
+    case MSPCodes.MSP2_GRIPORA_SET_DRIFT_CONFIG: {
+      const config = parseDriftConfigRequest(requestData);
+      if (!config || !isValidDriftConfig(config)) return VIRTUAL_ERROR;
+      Object.assign(pidSlots[FC.CONFIG.profile].drift, config);
+      return new Uint8Array(0);
+    }
     case MSPCodes.MSP_SELECT_SETTING: {
       const index = requestData[0];
       if (index & RATE_PROFILE_MASK) {
@@ -1119,8 +1145,9 @@ export function applyVirtualConfig() {
     "BLACKBOX ERASE",
     "DRIVE AIDS OFF",
     "LAUNCH",
+    "DRIFT",
   ];
-  FC.AUX_CONFIG_IDS = [0, 27, 12, 36, 13, 52, 26, 31, 66, 67];
+  FC.AUX_CONFIG_IDS = [0, 27, 12, 36, 13, 52, 26, 31, 66, 67, DRIFT_BOX_ID];
 
   // Modes: ARM on AUX1 high, GYRO OFF on AUX2 high; the rest of the
   // MAX_MODE_ACTIVATION_CONDITION_COUNT slots unused, as the FC reports them.
@@ -1146,12 +1173,13 @@ export function applyVirtualConfig() {
   };
   FC.MODE_RANGES_EXTRA[1].id = 12;
 
-  // Profiles/Rates (also sets FC.PIDS, PID_PROFILE, DRIVE_AIDS_CONFIG and
-  // RC_TUNING from the active slots)
+  // Profiles/Rates (also sets FC.PIDS, PID_PROFILE, DRIVE_AIDS_CONFIG,
+  // DRIFT_CONFIG and RC_TUNING from the active slots)
   resetProfileSlots();
   FC.DRIVE_AIDS_CONFIG.supported = true;
   FC.DRIVE_AIDS_CONFIG.tc_supported = true;
   FC.DRIVE_AIDS_CONFIG.lc_supported = true;
+  FC.DRIFT_CONFIG.supported = true;
 
   FC.GAIN_CURVES = Array.from({ length: GainCurve.CURVE_COUNT }, () =>
     GainCurve.nullCurve(),

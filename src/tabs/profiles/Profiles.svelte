@@ -18,6 +18,7 @@
   import GainCurves from "./GainCurves.svelte";
   import MasterGains from "./MasterGains.svelte";
   import DriveAids from "./DriveAids.svelte";
+  import Drift from "./Drift.svelte";
 
   let loading = $state(true);
   let initialState = $state(null);
@@ -36,6 +37,7 @@
       PIDS: FC.PIDS,
       PID_PROFILE: FC.PID_PROFILE,
       DRIVE_AIDS_CONFIG: FC.DRIVE_AIDS_CONFIG,
+      DRIFT_CONFIG: FC.DRIFT_CONFIG,
     });
   }
 
@@ -109,6 +111,8 @@
       await mspHelper.loadDriveAidsStatus();
       await mspHelper.loadDriveStatus();
     }
+    // Drift mode, per PID profile (next API version): detected the same way.
+    await mspHelper.loadDriftConfig();
 
     mountedProfile = FC.CONFIG.profile;
     initialState = snapshotState();
@@ -218,6 +222,9 @@
     ) {
       GUI.log($i18n.t("profilesDriveAidsSaveRejected"));
     }
+    if (FC.DRIFT_CONFIG.supported && !(await mspHelper.sendDriftConfig())) {
+      GUI.log($i18n.t("profilesDriftSaveRejected"));
+    }
     await MSP.promise(MSPCodes.MSP_EEPROM_WRITE);
     GUI.log($i18n.t("eepromSaved"));
 
@@ -228,6 +235,7 @@
     FC.PIDS.forEach((axis, i) => Object.assign(axis, initialState.PIDS[i]));
     Object.assign(FC.PID_PROFILE, initialState.PID_PROFILE);
     Object.assign(FC.DRIVE_AIDS_CONFIG, initialState.DRIVE_AIDS_CONFIG);
+    Object.assign(FC.DRIFT_CONFIG, initialState.DRIFT_CONFIG);
   }
 
   export function isDirty() {
@@ -286,6 +294,9 @@
       {/if}
       {#if FC.DRIVE_AIDS_CONFIG.supported}
         <DriveAids />
+      {/if}
+      {#if FC.DRIFT_CONFIG.supported}
+        <Drift />
       {/if}
     </div>
     <!-- Expert Mode panels sit below the main ones rather than in a side
