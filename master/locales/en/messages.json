@@ -71,9 +71,6 @@
     "titleHeading": {
         "message": "Heading"
     },
-    "titleAltitude": {
-        "message": "Altitude"
-    },
     "titleAttitude": {
         "message": "Attitude"
     },
@@ -1700,6 +1697,72 @@
     },
     "statusAttitude": {
         "message": "$1 deg"
+    },
+    "statusSteering": {
+        "message": "Steering"
+    },
+    "statusSteeringStick": {
+        "message": "Stick"
+    },
+    "statusSteeringOutput": {
+        "message": "Output"
+    },
+    "statusSteeringLeft": {
+        "message": "Left {{percent}}%"
+    },
+    "statusSteeringRight": {
+        "message": "Right {{percent}}%"
+    },
+    "statusSteeringCentre": {
+        "message": "Centre"
+    },
+    "statusSteeringNoServo": {
+        "message": "No servo is driven by steering in the mixer."
+    },
+    "statusThrottle": {
+        "message": "Throttle and brake"
+    },
+    "statusThrottleTransmitter": {
+        "message": "Transmitter"
+    },
+    "statusThrottleEsc": {
+        "message": "To ESC"
+    },
+    "statusAidAbs": {
+        "message": "ABS"
+    },
+    "statusAidTc": {
+        "message": "Traction"
+    },
+    "statusAidLc": {
+        "message": "Launch"
+    },
+    "statusAidsOff": {
+        "message": "Aids off"
+    },
+    "statusDriveUnsupported": {
+        "message": "This firmware doesn't report the drive state."
+    },
+    "statusTurnRate": {
+        "message": "Turn rate"
+    },
+    "statusTurnRateLeft": {
+        "message": "Left {{rate}}°/s"
+    },
+    "statusTurnRateRight": {
+        "message": "Right {{rate}}°/s"
+    },
+    "statusTurnRateStraight": {
+        "message": "Straight"
+    },
+    "statusTurnRateScaleLeft": {
+        "message": "360°/s left"
+    },
+    "statusTurnRateScaleRight": {
+        "message": "360°/s right"
+    },
+    "statusBodyTilt": {
+        "message": "Body roll and pitch"
     },
     "statusConfigBare": {
         "message": "<span class=\"configBare\">BARE</span>"
@@ -4153,7 +4216,7 @@
         "message": "<span class=\"message-negative\">Servo $1:</span> at <i>Center</i> $2, <i>Min</i> can only reach $3, because the output can't go below $4 µs. Move the center closer to the middle to use more."
     },
     "servoSignalHelp": {
-        "message": "The live output. The marks on the bar are the Min and Max the servo can reach and the dot is where it is now. For a servo moved by the roll, pitch, steering or flap mix, the bar also shows how far full stick on every axis at once takes each side. Red means that side reaches its limit before full stick, so the stabilizer has no travel left there. The same check as the Setup Wizard's Travel check."
+        "message": "The live output. The marks on the bar are the Min and Max the servo can reach and the dot is where it is now. For a steering servo, the bar also shows how far full steering takes each side. Red means that side reaches its limit before full steering, so the stabilizer has no travel left there. The same check as the Setup Wizard's Travel check."
     },
     "servoTravelReach": {
         "message": "Full stick"
@@ -4165,7 +4228,7 @@
         "message": "Includes this servo's balance curve."
     },
     "servoTravelNotEstimated": {
-        "message": "Full-stick travel isn't shown for this servo: its mixer rules use Mul, curves, conditions, offsets, a later Set, or inputs other than the stabilized axes and the flap channel."
+        "message": "Full-steering travel isn't shown for this servo: its mixer rules use Mul, curves, conditions, offsets, a later Set, or inputs other than stabilized steering."
     },
     "servoTravelNotEstimatedShort": {
         "message": "Not estimated for this mix"
@@ -5606,6 +5669,42 @@
     },
     "profilesDriveAidsSaveRejected": {
         "message": "The controller refused the drive aids settings (a value is out of range), so they were not changed."
+    },
+    "profilesSectionLabelDrift": {
+        "message": "Drift"
+    },
+    "profilesDriftSummary": {
+        "message": "Put DRIFT on a switch on the Modes tab. While it is on, the steering wheel steers the wheels directly, as with GYRO OFF, and the gyro only catches over-rotation: it counter-steers against turn rate beyond the allowed rate, with no heading hold. Raise the allowed rate to hold more angle; the counter-steer limit caps how much lock the gyro adds. GYRO OFF and failsafe win over DRIFT. These settings belong to the profile selected above."
+    },
+    "profilesDrift_gain": {
+        "message": "Counter-steer gain"
+    },
+    "profilesDrift_gain_help": {
+        "message": "How hard the gyro counter-steers once the car rotates faster than the allowed rate. At 100 % it gives full lock 360 °/s past the allowance; 200 % gets there twice as soon, 0 % turns the counter-steer off."
+    },
+    "profilesDrift_allow": {
+        "message": "Allowed turn rate"
+    },
+    "profilesDrift_allow_help": {
+        "message": "Turn rate the gyro leaves alone, so the car can hold a slip angle. Raise it to hold more angle, lower it for the gyro to catch the car sooner."
+    },
+    "profilesDrift_limit": {
+        "message": "Counter-steer limit"
+    },
+    "profilesDrift_limit_help": {
+        "message": "The most lock the gyro adds, as a share of full lock. Lower it if the counter-steer snaps the car straight."
+    },
+    "profilesDriftPreview": {
+        "message": "Counter-steers from {{allow}} °/s; full lock at {{rate}} °/s."
+    },
+    "profilesDriftPreviewLimited": {
+        "message": "Counter-steers from {{allow}} °/s; reaches its {{limit}} % limit at {{rate}} °/s."
+    },
+    "profilesDriftPreviewOff": {
+        "message": "Gain 0 %: the gyro doesn't counter-steer, and DRIFT is the same as GYRO OFF."
+    },
+    "profilesDriftSaveRejected": {
+        "message": "The controller refused the drift settings (a value is out of range), so they were not changed."
     },
     "motorsThrottleEndpoints": {
         "message": "Throttle Range"
@@ -8136,6 +8235,12 @@
     "modeHelp LAUNCH": {
         "message": "Stages a launch for launch control (PID Profiles tab, Drive aids). Turn it on at the line with the throttle at neutral or braking; the first forward throttle launches the car. One launch per flip of the switch."
     },
+    "mode DRIFT": {
+        "message": "DRIFT"
+    },
+    "modeHelp DRIFT": {
+        "message": "Drift mode (PID Profiles tab, Drift): the steering wheel steers the wheels directly and the gyro only counter-steers turn rate beyond the allowed rate. GYRO OFF and failsafe win over it."
+    },
     "mode BEEPER": {
         "message": "BEEPER"
     },
@@ -8886,12 +8991,6 @@
     "setupWizardReceiverChannelsTitle": {
         "message": "Channel order and direction"
     },
-    "setupWizardReceiverOrderHelp_aetr": {
-        "message": "Aileron, elevator, throttle, rudder. ExpressLRS, Crossfire, FrSky, Futaba, Jeti."
-    },
-    "setupWizardReceiverOrderHelp_taer": {
-        "message": "Throttle, aileron, elevator, rudder. Spektrum, Graupner, JR."
-    },
     "setupWizardReceiverOrder_car": {
         "message": "Car"
     },
@@ -8906,12 +9005,6 @@
     },
     "setupWizardReceiverDetectTitle": {
         "message": "Move each one in turn, all the way, and leave the others still."
-    },
-    "setupWizardReceiverDetect_roll": {
-        "message": "Move roll (aileron)"
-    },
-    "setupWizardReceiverDetect_pitch": {
-        "message": "Move pitch (elevator)"
     },
     "setupWizardReceiverDetect_yaw": {
         "message": "Move steering (yaw)"
@@ -9360,29 +9453,8 @@
     "setupWizardSurfaceLabel": {
         "message": "Servo $1 · $2"
     },
-    "setupWizardSurface_flaperon": {
-        "message": "Flaperon"
-    },
-    "setupWizardSurface_aileron": {
-        "message": "Aileron"
-    },
-    "setupWizardSurface_elevator": {
-        "message": "Elevator"
-    },
-    "setupWizardSurface_rudder": {
+    "setupWizardSurface_steering": {
         "message": "Steering"
-    },
-    "setupWizardSurface_elevon": {
-        "message": "Elevon"
-    },
-    "setupWizardSurface_ruddervator": {
-        "message": "V-tail"
-    },
-    "setupWizardSurface_mixed": {
-        "message": "Mixed surface"
-    },
-    "setupWizardSurface_flap": {
-        "message": "Flap"
     },
     "setupWizardAxis_roll": {
         "message": "Roll"
@@ -9714,9 +9786,6 @@
     "setupWizardCentreTipSurface": {
         "message": "Wheels pointing straight ahead"
     },
-    "setupWizardCentreFlapHint": {
-        "message": "Flaps are held at flaps up: set them in line with the wing."
-    },
     "setupWizardCentreFlagNear": {
         "message": "Near center"
     },
@@ -9771,9 +9840,6 @@
     "setupWizardDirectionReversed": {
         "message": "Reversed"
     },
-    "setupWizardDirectionMixedHint": {
-        "message": "This servo also works another axis, so reversing it would break that one. If every servo is wrong here, invert the steering below. If only one is, change its mix on the Mixer tab."
-    },
     "setupWizardDirectionAllWrong": {
         "message": "Every steering servo moved the wrong way?"
     },
@@ -9824,9 +9890,6 @@
     },
     "setupWizardLimitsHowTo": {
         "message": "A side you don't set keeps its old limit."
-    },
-    "setupWizardLimitsFlapNote": {
-        "message": "These are the flap end points: Max is full flap and Min is as far up as the flap may go. The wizard sets the flap travel so the ends of the flap channel land on them."
     },
     "setupWizardBypassTurnOff": {
         "message": "Switch $1 mode off for this step: in $1 mode the sticks drive the servos directly and the controller may not be able to move them."
@@ -9889,7 +9952,7 @@
         "message": "Optional"
     },
     "setupWizardModesOptionalHint": {
-        "message": "Add GYRO OFF if you want a switch that turns the gyro off, DRIVE AIDS OFF for one that turns ABS, traction control and launch control off, and LAUNCH for launch control."
+        "message": "Add GYRO OFF if you want a switch that turns the gyro off, DRIVE AIDS OFF for one that turns ABS, traction control and launch control off, LAUNCH for launch control, and DRIFT for drift mode."
     },
     "setupWizardModesArmMissing": {
         "message": "ARM isn't on a switch yet. Without it the motor can't be armed and the car can't drive."
@@ -9917,6 +9980,12 @@
     },
     "setupWizardModesHelp_launch": {
         "message": "Stages a launch for launch control: turn it on at the line, and the first pull of the trigger launches the car. Set launch control up on the PID Profiles tab, under Drive aids."
+    },
+    "setupWizardModes_drift": {
+        "message": "DRIFT"
+    },
+    "setupWizardModesHelp_drift": {
+        "message": "For drifting: the steering wheel steers the wheels directly and the gyro only catches over-rotation. Set it up on the PID Profiles tab, under Drift."
     },
     "setupWizardModesAssigned": {
         "message": "On a switch"
