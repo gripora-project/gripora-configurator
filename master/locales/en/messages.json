@@ -5379,17 +5379,20 @@
     "motorsDriveSaveRejected": {
         "message": "The flight controller refused the Drive settings (a value is out of range), so they were not changed."
     },
-    "profilesSectionLabelAbs": {
-        "message": "ABS"
+    "profilesSectionLabelDriveAids": {
+        "message": "Drive aids"
     },
-    "profilesAbsSummary": {
-        "message": "Pulses the brake when you brake hard, so the wheels keep turning and the car keeps steering instead of locking up and sliding. These settings belong to the profile selected above: each profile has its own, and switching profile switches them. ABS never pushes the throttle past neutral into reverse."
+    "profilesDriveAidsSummary": {
+        "message": "ABS and traction control shape the throttle and brake you give before they reach the ESC. They belong to the profile selected above: each profile has its own, and switching profile switches them. A DRIVE AIDS OFF switch on the Modes tab turns them off from the transmitter. The ESC's mixer rule must take the stabilized throttle, as the car mixer preset does; a rule fed straight from the RC throttle bypasses them."
+    },
+    "profilesAbsTitle": {
+        "message": "ABS"
     },
     "profilesAbsMode": {
-        "message": "ABS"
+        "message": "Mode"
     },
     "profilesAbsModeHelp": {
-        "message": "ABS works only while the ESC is braking a car that is still rolling. A DRIVE AIDS OFF switch on the Modes tab turns it off from the transmitter. The ESC's mixer rule must take the stabilized throttle, as the car mixer preset does; a rule fed straight from the RC throttle bypasses ABS."
+        "message": "Pulses the brake when you brake hard, so the wheels keep turning and the car keeps steering instead of locking up and sliding. ABS works only while the ESC is braking a car that is still rolling, and never pushes the throttle past neutral into reverse."
     },
     "profilesAbsMode_OFF": {
         "message": "Off"
@@ -5472,6 +5475,48 @@
     "profilesAbs_abs_corner_hold_help": {
         "message": "Hold at full steering lock, moving towards it with steering. 0 is off. Where this and the full-brake hold both apply, the shorter one wins."
     },
+    "profilesTcTitle": {
+        "message": "Traction control"
+    },
+    "profilesTcMode": {
+        "message": "Mode"
+    },
+    "profilesTcModeHelp": {
+        "message": "Stops the wheels spinning up when you pull the trigger hard: the throttle may only rise at a limited rate. Letting off is instant, and the brake and reverse are never touched. It works from the trigger and time only, with no sensors."
+    },
+    "profilesTcMode_OFF": {
+        "message": "Off"
+    },
+    "profilesTcMode_RAMP": {
+        "message": "Ramp"
+    },
+    "profilesTcModeHelp_OFF": {
+        "message": "The throttle goes to the ESC as you give it."
+    },
+    "profilesTcModeHelp_RAMP": {
+        "message": "The throttle rises no faster than zero to full in the ramp time. After a brake or a let-off it rises again from where the throttle is."
+    },
+    "profilesTc_tc_ramp_time": {
+        "message": "Ramp time"
+    },
+    "profilesTc_tc_ramp_time_help": {
+        "message": "The quickest the throttle may go from zero to full. Longer is gentler: try longer on a slippery surface, shorter on high grip."
+    },
+    "profilesTcRampPreview": {
+        "message": "Zero to full throttle in {{seconds}} s at the quickest."
+    },
+    "profilesTcLive": {
+        "message": "Traction control"
+    },
+    "profilesTcLiveIdle": {
+        "message": "Idle"
+    },
+    "profilesTcLiveArmed": {
+        "message": "On, driving forward"
+    },
+    "profilesTcLiveLimiting": {
+        "message": "Holding the throttle back"
+    },
     "profilesAbsLiveTitle": {
         "message": "Live"
     },
@@ -5511,8 +5556,8 @@
     "profilesAbsThrottleNeutral": {
         "message": "Neutral"
     },
-    "profilesAbsSaveRejected": {
-        "message": "The flight controller refused the ABS settings (a value is out of range), so they were not changed."
+    "profilesDriveAidsSaveRejected": {
+        "message": "The flight controller refused the drive aids settings (a value is out of range), so they were not changed."
     },
     "motorsThrottleEndpoints": {
         "message": "Throttle Range"
@@ -8035,7 +8080,7 @@
         "message": "DRIVE AIDS OFF"
     },
     "modeHelp DRIVE AIDS OFF": {
-        "message": "Turns the drive aids (ABS) off: the throttle and brake go to the ESC exactly as you give them. The gyro still steers."
+        "message": "Turns the drive aids (ABS and traction control) off: the throttle and brake go to the ESC exactly as you give them. The gyro still steers."
     },
     "mode BEEPER": {
         "message": "BEEPER"
@@ -9790,7 +9835,7 @@
         "message": "Optional"
     },
     "setupWizardModesOptionalHint": {
-        "message": "Add GYRO OFF if you want a switch that turns the gyro off, and DRIVE AIDS OFF for one that turns ABS off."
+        "message": "Add GYRO OFF if you want a switch that turns the gyro off, and DRIVE AIDS OFF for one that turns ABS and traction control off."
     },
     "setupWizardModesArmMissing": {
         "message": "ARM isn't on a switch yet. Without it the motor can't be armed and the car can't drive."
@@ -9811,7 +9856,7 @@
         "message": "DRIVE AIDS OFF"
     },
     "setupWizardModesHelp_driveAidsOff": {
-        "message": "Turns ABS off: the throttle and brake go straight to the ESC. The gyro still steers."
+        "message": "Turns ABS and traction control off: the throttle and brake go straight to the ESC. The gyro still steers."
     },
     "setupWizardModesAssigned": {
         "message": "On a switch"
