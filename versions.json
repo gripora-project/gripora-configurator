@@ -11,11 +11,7 @@
       "name": "feature-car-tidy",
       "path": "./feature-car-tidy/",
       "branch": "feature/car-tidy",
-      "date": "2026-11-18T10:51:38Z",
-      "number": 2,
-      "title": "Car Status readouts, steering-only wizard, Drift panel",
-      "url": "https://github.com/gripora-project/gripora-configurator/pull/2",
-      "draft": false
+      "date": "2026-11-18T10:51:38Z"
     }
   ]
 }
