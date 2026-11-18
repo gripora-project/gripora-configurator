@@ -116,8 +116,19 @@
     })),
   ]);
 
+  // The roles (flap compensation, differential thrust steering) are
+  // aircraft mixes, so a car only offers None. A role a loaded rule already
+  // carries stays listed, so it shows by name and can be cleared.
   let roleOptions = $derived(
-    Mixer.roleNames.map((key, i) => ({ value: i, label: $i18n.t(key) })),
+    Mixer.roleNames
+      .map((key, i) => ({ value: i, label: $i18n.t(key) }))
+      .filter(
+        (option) =>
+          option.value === Mixer.ROLE_NONE ||
+          FC.MIXER_RULES.some(
+            (rule) => !Mixer.isNullRule(rule) && rule.role === option.value,
+          ),
+      ),
   );
 
   // Dims any rule row whose assigned condition is currently false, so it's

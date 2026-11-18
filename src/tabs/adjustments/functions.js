@@ -135,8 +135,10 @@ export function getFunctions() {
         // keeps both motors' rules opposite signs (a differential, not a
         // common-mode push) -- see applyRoleWeight()'s own comment. Ranges
         // match rc_adjustments.c's ADJ_ENTRY.
-        { id: 112,  name: 'FlapCompensationGain',        min: -1000, max: 1000, ticks: 50,   pips: [ -1000, -500, 0, 500, 1000 ] },
-        { id: 113,  name: 'DiffThrustYawGain',           min: -1000, max: 1000, ticks: 50,   pips: [ -1000, -500, 0, 500, 1000 ] },
+        // Both roles are aircraft mixes, so hidden on a car (the Mixer tab
+        // no longer offers them).
+        { id: 112,  name: 'FlapCompensationGain',        min: -1000, max: 1000, ticks: 50,   pips: [ -1000, -500, 0, 500, 1000 ], hide: true },
+        { id: 113,  name: 'DiffThrustYawGain',           min: -1000, max: 1000, ticks: 50,   pips: [ -1000, -500, 0, 500, 1000 ], hide: true },
         // Per-axis I-term decay time in 0.01 s (60 = 0.60 s), range matches
         // ITERM_DECAY_TIME_MIN/MAX in the firmware's pg/pid.h.
         { id: 114,  name: 'ItermDecayTimeRoll',          min: 1,     max: 100,  ticks: 5,    pips: [ 1, 20, 40, 60, 80, 100 ], hide: true },
