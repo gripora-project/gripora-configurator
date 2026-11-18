@@ -11,7 +11,11 @@
       "name": "feature-drive-tlm",
       "path": "./feature-drive-tlm/",
       "branch": "feature/drive-tlm",
-      "date": "2026-11-18T14:16:42Z"
+      "date": "2026-11-18T14:16:42Z",
+      "number": 3,
+      "title": "Telemetry: drive status and wheel speed sensors",
+      "url": "https://github.com/gripora-project/gripora-configurator/pull/3",
+      "draft": false
     }
   ]
 }
