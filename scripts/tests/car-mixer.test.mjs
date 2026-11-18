@@ -84,7 +84,7 @@ test('hand-edited or aircraft rules are not a car setup', () => {
 test('the wizard sees the steering servos and not the ESCs', () => {
     const rules = buildCarRules({ rearSteering: true, secondEsc: true });
     const surfaces = surfacesFromRules(rules, 8);
-    assert.deepEqual(surfaces.map((s) => [s.servo, s.kind]), [[0, 'rudder'], [1, 'rudder']]);
+    assert.deepEqual(surfaces.map((s) => [s.servo, s.kind]), [[0, 'steering'], [1, 'steering']]);
     assert.equal(surfaces[1].axes.yaw.pos, -0.5);
 });
 

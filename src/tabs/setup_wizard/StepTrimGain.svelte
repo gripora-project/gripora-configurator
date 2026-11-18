@@ -336,7 +336,7 @@
     ]}
   >
     {#if axis}
-      <AxisIcon {axis} size={28} />
+      <AxisIcon size={28} />
       <span class="row-name">{$i18n.t(`setupWizardAxis_${axis}`)}</span>
     {:else}
       <span class="row-name">{$i18n.t("setupWizardGainAllAxes")}</span>

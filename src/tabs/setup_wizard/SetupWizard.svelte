@@ -19,7 +19,6 @@
     servosPastCount,
     axisGainsFromInputs,
     AXES,
-    FLAP_INPUT,
   } from "./surfaces.js";
   import StepSensors from "./StepSensors.svelte";
   import StepReceiver from "./StepReceiver.svelte";
@@ -62,9 +61,8 @@
     { key: "finish", component: StepFinish },
   ];
 
-  // Mixer inputs the wizard holds with overrides: the stabilized axes, and
-  // the flap channel for the flap direction check.
-  const HELD_INPUTS = [...AXES.map((a) => a.input), FLAP_INPUT];
+  // Mixer inputs the wizard holds with overrides: stabilized steering.
+  const HELD_INPUTS = AXES.map((a) => a.input);
 
   const STEP_STORAGE_KEY = "setupWizardStep";
   // MAX_SUPPORTED_SERVOS in the firmware
@@ -321,12 +319,6 @@
       FC.MIXER_OVERRIDE[axis.input] = Math.round(value * 1000);
       mspHelper.sendMixerOverride(axis.input, undefined, overrideTimeout());
     }
-    // The flap channel only when asked for: the other steps leave it on the
-    // pilot's switch.
-    if ("flap" in values) {
-      FC.MIXER_OVERRIDE[FLAP_INPUT] = Math.round(values.flap * 1000);
-      mspHelper.sendMixerOverride(FLAP_INPUT, undefined, overrideTimeout());
-    }
   }
 
   function releaseAxes() {
@@ -360,7 +352,7 @@
     releaseProbes();
   }
 
-  //// Live changes. Every edit goes to the FC straight away so the surface
+  //// Live changes. Every edit goes to the FC straight away so the servo
   //// moves; Save writes them to EEPROM.
 
   function sendServo(servo) {

@@ -1,8 +1,8 @@
 // Per-servo output trim curve, added on top of a servo's own output on the
 // flight controller (after mixing and geometry correction, if enabled) -
 // see servoUpdate() in flight/servos.c. Used to nudge one servo's travel to
-// match another servo driving the same control surface (e.g. dual
-// ailerons), so they don't fight each other near full deflection.
+// match another servo driving the same linkage (e.g. two steering
+// servos), so they don't fight each other near full travel.
 //
 // Unlike MixerCurve/GainCurve, this is a corrective delta, not a reshape:
 // x is the servo's own output (full -100%..100% range), but y is a small

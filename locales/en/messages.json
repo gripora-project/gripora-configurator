@@ -4153,7 +4153,7 @@
         "message": "<span class=\"message-negative\">Servo $1:</span> at <i>Center</i> $2, <i>Min</i> can only reach $3, because the output can't go below $4 µs. Move the center closer to the middle to use more."
     },
     "servoSignalHelp": {
-        "message": "The live output. The marks on the bar are the Min and Max the servo can reach and the dot is where it is now. For a servo moved by the roll, pitch, steering or flap mix, the bar also shows how far full stick on every axis at once takes each side. Red means that side reaches its limit before full stick, so the stabilizer has no travel left there. The same check as the Setup Wizard's Travel check."
+        "message": "The live output. The marks on the bar are the Min and Max the servo can reach and the dot is where it is now. For a steering servo, the bar also shows how far full steering takes each side. Red means that side reaches its limit before full steering, so the stabilizer has no travel left there. The same check as the Setup Wizard's Travel check."
     },
     "servoTravelReach": {
         "message": "Full stick"
@@ -4165,7 +4165,7 @@
         "message": "Includes this servo's balance curve."
     },
     "servoTravelNotEstimated": {
-        "message": "Full-stick travel isn't shown for this servo: its mixer rules use Mul, curves, conditions, offsets, a later Set, or inputs other than the stabilized axes and the flap channel."
+        "message": "Full-steering travel isn't shown for this servo: its mixer rules use Mul, curves, conditions, offsets, a later Set, or inputs other than stabilized steering."
     },
     "servoTravelNotEstimatedShort": {
         "message": "Not estimated for this mix"
@@ -8886,12 +8886,6 @@
     "setupWizardReceiverChannelsTitle": {
         "message": "Channel order and direction"
     },
-    "setupWizardReceiverOrderHelp_aetr": {
-        "message": "Aileron, elevator, throttle, rudder. ExpressLRS, Crossfire, FrSky, Futaba, Jeti."
-    },
-    "setupWizardReceiverOrderHelp_taer": {
-        "message": "Throttle, aileron, elevator, rudder. Spektrum, Graupner, JR."
-    },
     "setupWizardReceiverOrder_car": {
         "message": "Car"
     },
@@ -8906,12 +8900,6 @@
     },
     "setupWizardReceiverDetectTitle": {
         "message": "Move each one in turn, all the way, and leave the others still."
-    },
-    "setupWizardReceiverDetect_roll": {
-        "message": "Move roll (aileron)"
-    },
-    "setupWizardReceiverDetect_pitch": {
-        "message": "Move pitch (elevator)"
     },
     "setupWizardReceiverDetect_yaw": {
         "message": "Move steering (yaw)"
@@ -9360,29 +9348,8 @@
     "setupWizardSurfaceLabel": {
         "message": "Servo $1 · $2"
     },
-    "setupWizardSurface_flaperon": {
-        "message": "Flaperon"
-    },
-    "setupWizardSurface_aileron": {
-        "message": "Aileron"
-    },
-    "setupWizardSurface_elevator": {
-        "message": "Elevator"
-    },
-    "setupWizardSurface_rudder": {
+    "setupWizardSurface_steering": {
         "message": "Steering"
-    },
-    "setupWizardSurface_elevon": {
-        "message": "Elevon"
-    },
-    "setupWizardSurface_ruddervator": {
-        "message": "V-tail"
-    },
-    "setupWizardSurface_mixed": {
-        "message": "Mixed surface"
-    },
-    "setupWizardSurface_flap": {
-        "message": "Flap"
     },
     "setupWizardAxis_roll": {
         "message": "Roll"
@@ -9714,9 +9681,6 @@
     "setupWizardCentreTipSurface": {
         "message": "Wheels pointing straight ahead"
     },
-    "setupWizardCentreFlapHint": {
-        "message": "Flaps are held at flaps up: set them in line with the wing."
-    },
     "setupWizardCentreFlagNear": {
         "message": "Near center"
     },
@@ -9771,9 +9735,6 @@
     "setupWizardDirectionReversed": {
         "message": "Reversed"
     },
-    "setupWizardDirectionMixedHint": {
-        "message": "This servo also works another axis, so reversing it would break that one. If every servo is wrong here, invert the steering below. If only one is, change its mix on the Mixer tab."
-    },
     "setupWizardDirectionAllWrong": {
         "message": "Every steering servo moved the wrong way?"
     },
@@ -9824,9 +9785,6 @@
     },
     "setupWizardLimitsHowTo": {
         "message": "A side you don't set keeps its old limit."
-    },
-    "setupWizardLimitsFlapNote": {
-        "message": "These are the flap end points: Max is full flap and Min is as far up as the flap may go. The wizard sets the flap travel so the ends of the flap channel land on them."
     },
     "setupWizardBypassTurnOff": {
         "message": "Switch $1 mode off for this step: in $1 mode the sticks drive the servos directly and the controller may not be able to move them."

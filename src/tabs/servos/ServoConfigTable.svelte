@@ -57,8 +57,8 @@
     );
   }
 
-  // A servo can be mixed from more than one stabilized axis at once (e.g. a
-  // flying-wing elevon mixes both Roll and Pitch), so this returns every
+  // A servo can be mixed from more than one stabilized axis at once in a
+  // hand-built mix, so this returns every
   // applicable, currently-configured trim rather than just the first match.
   function servoTrimAdjustments(servo) {
     return SERVO_TRIM_ADJUSTMENT_FUNCTIONS.map((adjFunction, axisIndex) => {

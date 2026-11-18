@@ -95,7 +95,7 @@
 <ol class="checks">
   {#each checks as axis, n (axis)}
     <li class={["check", results[axis]]}>
-      <GyroCheckArt {axis} />
+      <GyroCheckArt />
       <div class="check-text">
         <span class="check-title">
           <span class="index">{n + 1}</span>
