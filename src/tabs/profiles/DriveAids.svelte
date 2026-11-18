@@ -92,72 +92,97 @@
   label="profilesSectionLabelDriveAids"
   summary="profilesDriveAidsSummary"
 >
-  <SubSection label="profilesAbsTitle">
-    <Field id="abs-mode" label="profilesAbsMode">
-      {#snippet tooltip()}
-        <Tooltip help="profilesAbsModeHelp" />
-      {/snippet}
-      <select id="abs-mode" bind:value={config.abs_mode}>
-        {#each DRIVE_ABS_MODES as mode, index (mode)}
-          <option value={index}>{$i18n.t(`profilesAbsMode_${mode}`)}</option>
-        {/each}
-      </select>
-    </Field>
-    <p class="explain">
-      {$i18n.t(
-        `profilesAbsModeHelp_${DRIVE_ABS_MODES[config.abs_mode] ?? "OFF"}`,
-      )}
-    </p>
-    {#if config.abs_mode !== DRIVE_ABS_OFF && cannotSeeBrake}
-      <div transition:slide>
-        <WarningNote message="profilesAbsNoBrakeNote" />
-      </div>
-    {/if}
-  </SubSection>
-
-  {#if config.abs_mode !== DRIVE_ABS_OFF}
-    <div transition:slide>
-      <SubSection label="profilesAbsPulseTitle">
-        {@render numberField(
-          "abs_trigger",
-          "%",
-          DRIVE_ABS_TRIGGER_MIN,
-          DRIVE_ABS_TRIGGER_MAX,
-          30,
-        )}
-        {@render numberField(
-          "abs_freq",
-          "Hz",
-          DRIVE_ABS_FREQ_MIN,
-          DRIVE_ABS_FREQ_MAX,
-          10,
-        )}
-        {@render numberField("abs_floor", "%", 0, DRIVE_ABS_FLOOR_MAX, 40)}
-        {@render numberField("abs_hold", "ms", 0, DRIVE_ABS_HOLD_MAX, 20)}
-        {#if pulse}
-          <p class="explain">
-            {$i18n.t("profilesAbsPulsePreview", {
-              freq: +pulse.freq.toFixed(1),
-              full: Math.round(pulse.fullTime * 1000),
-              release: Math.round((pulse.period - pulse.fullTime) * 1000),
-              brake: Math.round(pulse.released * 100),
-            })}
-          </p>
+  <!-- Two columns on a wide window, ABS on the left, traction control and the
+       live readout on the right, so each field's input sits next to its label
+       instead of across the full width; one column on a narrow window. -->
+  <div class="aids-layout">
+    <div class="aids-column">
+      <SubSection label="profilesAbsTitle">
+        <Field id="abs-mode" label="profilesAbsMode">
+          {#snippet tooltip()}
+            <Tooltip help="profilesAbsModeHelp" />
+          {/snippet}
+          <select id="abs-mode" bind:value={config.abs_mode}>
+            {#each DRIVE_ABS_MODES as mode, index (mode)}
+              <option value={index}>{$i18n.t(`profilesAbsMode_${mode}`)}</option
+              >
+            {/each}
+          </select>
+        </Field>
+        <p class="explain">
+          {$i18n.t(
+            `profilesAbsModeHelp_${DRIVE_ABS_MODES[config.abs_mode] ?? "OFF"}`,
+          )}
+        </p>
+        {#if config.abs_mode !== DRIVE_ABS_OFF && cannotSeeBrake}
+          <div transition:slide>
+            <WarningNote message="profilesAbsNoBrakeNote" />
+          </div>
         {/if}
       </SubSection>
 
-      {#if config.abs_mode === DRIVE_ABS_DYNAMIC}
+      {#if config.abs_mode !== DRIVE_ABS_OFF}
         <div transition:slide>
-          <SubSection label="profilesAbsDynamicTitle">
+          <SubSection label="profilesAbsPulseTitle">
             {@render numberField(
-              "abs_dyn_freq",
+              "abs_trigger",
+              "%",
+              DRIVE_ABS_TRIGGER_MIN,
+              DRIVE_ABS_TRIGGER_MAX,
+              30,
+            )}
+            {@render numberField(
+              "abs_freq",
               "Hz",
               DRIVE_ABS_FREQ_MIN,
               DRIVE_ABS_FREQ_MAX,
-              15,
+              10,
+            )}
+            {@render numberField("abs_floor", "%", 0, DRIVE_ABS_FLOOR_MAX, 40)}
+            {@render numberField("abs_hold", "ms", 0, DRIVE_ABS_HOLD_MAX, 20)}
+            {#if pulse}
+              <p class="explain">
+                {$i18n.t("profilesAbsPulsePreview", {
+                  freq: +pulse.freq.toFixed(1),
+                  full: Math.round(pulse.fullTime * 1000),
+                  release: Math.round((pulse.period - pulse.fullTime) * 1000),
+                  brake: Math.round(pulse.released * 100),
+                })}
+              </p>
+            {/if}
+          </SubSection>
+
+          {#if config.abs_mode === DRIVE_ABS_DYNAMIC}
+            <div transition:slide>
+              <SubSection label="profilesAbsDynamicTitle">
+                {@render numberField(
+                  "abs_dyn_freq",
+                  "Hz",
+                  DRIVE_ABS_FREQ_MIN,
+                  DRIVE_ABS_FREQ_MAX,
+                  15,
+                )}
+                {@render numberField(
+                  "abs_dyn_hold",
+                  "ms",
+                  0,
+                  DRIVE_ABS_HOLD_MAX,
+                  0,
+                )}
+              </SubSection>
+            </div>
+          {/if}
+
+          <SubSection label="profilesAbsCornerTitle">
+            {@render numberField(
+              "abs_corner_freq",
+              "Hz",
+              0,
+              DRIVE_ABS_CORNER_FREQ_MAX,
+              0,
             )}
             {@render numberField(
-              "abs_dyn_hold",
+              "abs_corner_hold",
               "ms",
               0,
               DRIVE_ABS_HOLD_MAX,
@@ -166,95 +191,103 @@
           </SubSection>
         </div>
       {/if}
-
-      <SubSection label="profilesAbsCornerTitle">
-        {@render numberField(
-          "abs_corner_freq",
-          "Hz",
-          0,
-          DRIVE_ABS_CORNER_FREQ_MAX,
-          0,
-        )}
-        {@render numberField("abs_corner_hold", "ms", 0, DRIVE_ABS_HOLD_MAX, 0)}
-      </SubSection>
     </div>
-  {/if}
 
-  {#if config.tc_supported}
-    <SubSection label="profilesTcTitle">
-      <Field id="tc-mode" label="profilesTcMode">
-        {#snippet tooltip()}
-          <Tooltip help="profilesTcModeHelp" />
-        {/snippet}
-        <select id="tc-mode" bind:value={config.tc_mode}>
-          {#each DRIVE_TC_MODES as mode, index (mode)}
-            <option value={index}>{$i18n.t(`profilesTcMode_${mode}`)}</option>
-          {/each}
-        </select>
-      </Field>
-      <p class="explain">
-        {$i18n.t(
-          `profilesTcModeHelp_${DRIVE_TC_MODES[config.tc_mode] ?? "OFF"}`,
-        )}
-      </p>
-      {#if config.tc_mode !== DRIVE_TC_OFF}
-        <div transition:slide>
-          <Field id="tc-ramp-time" label="profilesTc_tc_ramp_time" unit="ms">
+    <div class="aids-column">
+      {#if config.tc_supported}
+        <SubSection label="profilesTcTitle">
+          <Field id="tc-mode" label="profilesTcMode">
             {#snippet tooltip()}
-              <Tooltip
-                help="profilesTc_tc_ramp_time_help"
-                attrs={[
-                  { name: "genericDefault", value: "500 ms" },
-                  {
-                    name: "genericRange",
-                    value: `${DRIVE_TC_RAMP_TIME_MIN} - ${DRIVE_TC_RAMP_TIME_MAX} ms`,
-                  },
-                ]}
-              />
+              <Tooltip help="profilesTcModeHelp" />
             {/snippet}
-            <NumberInput
-              id="tc-ramp-time"
-              min={DRIVE_TC_RAMP_TIME_MIN}
-              max={DRIVE_TC_RAMP_TIME_MAX}
-              step="10"
-              bind:value={config.tc_ramp_time}
-            />
+            <select id="tc-mode" bind:value={config.tc_mode}>
+              {#each DRIVE_TC_MODES as mode, index (mode)}
+                <option value={index}
+                  >{$i18n.t(`profilesTcMode_${mode}`)}</option
+                >
+              {/each}
+            </select>
           </Field>
           <p class="explain">
-            {$i18n.t("profilesTcRampPreview", {
-              seconds: +(config.tc_ramp_time / 1000).toFixed(2),
-            })}
+            {$i18n.t(
+              `profilesTcModeHelp_${DRIVE_TC_MODES[config.tc_mode] ?? "OFF"}`,
+            )}
           </p>
-        </div>
+          {#if config.tc_mode !== DRIVE_TC_OFF}
+            <div transition:slide>
+              <Field
+                id="tc-ramp-time"
+                label="profilesTc_tc_ramp_time"
+                unit="ms"
+              >
+                {#snippet tooltip()}
+                  <Tooltip
+                    help="profilesTc_tc_ramp_time_help"
+                    attrs={[
+                      { name: "genericDefault", value: "500 ms" },
+                      {
+                        name: "genericRange",
+                        value: `${DRIVE_TC_RAMP_TIME_MIN} - ${DRIVE_TC_RAMP_TIME_MAX} ms`,
+                      },
+                    ]}
+                  />
+                {/snippet}
+                <NumberInput
+                  id="tc-ramp-time"
+                  min={DRIVE_TC_RAMP_TIME_MIN}
+                  max={DRIVE_TC_RAMP_TIME_MAX}
+                  step="10"
+                  bind:value={config.tc_ramp_time}
+                />
+              </Field>
+              <p class="explain">
+                {$i18n.t("profilesTcRampPreview", {
+                  seconds: +(config.tc_ramp_time / 1000).toFixed(2),
+                })}
+              </p>
+            </div>
+          {/if}
+        </SubSection>
       {/if}
-    </SubSection>
-  {/if}
 
-  {#if status.supported}
-    <SubSection label="profilesAbsLiveTitle">
-      <dl class="live">
-        <dt>{$i18n.t("profilesAbsLiveAids")}</dt>
-        <dd class={[!status.enabled && "muted"]}>
-          {status.enabled
-            ? $i18n.t("profilesAbsLiveAidsOn")
-            : $i18n.t("profilesAbsLiveAidsOff")}
-        </dd>
-        <dt>{$i18n.t("profilesAbsLiveAbs")}</dt>
-        <dd class={[!status.abs_armed && "muted"]}>{absText}</dd>
-        {#if config.tc_supported}
-          <dt>{$i18n.t("profilesTcLive")}</dt>
-          <dd class={[!status.tc_armed && "muted"]}>{tcText}</dd>
-        {/if}
-        <dt>{$i18n.t("profilesAbsLiveIn")}</dt>
-        <dd>{throttleText(status.throttle_in)}</dd>
-        <dt>{$i18n.t("profilesAbsLiveOut")}</dt>
-        <dd>{throttleText(status.throttle_out)}</dd>
-      </dl>
-    </SubSection>
-  {/if}
+      {#if status.supported}
+        <SubSection label="profilesAbsLiveTitle">
+          <dl class="live">
+            <dt>{$i18n.t("profilesAbsLiveAids")}</dt>
+            <dd class={[!status.enabled && "muted"]}>
+              {status.enabled
+                ? $i18n.t("profilesAbsLiveAidsOn")
+                : $i18n.t("profilesAbsLiveAidsOff")}
+            </dd>
+            <dt>{$i18n.t("profilesAbsLiveAbs")}</dt>
+            <dd class={[!status.abs_armed && "muted"]}>{absText}</dd>
+            {#if config.tc_supported}
+              <dt>{$i18n.t("profilesTcLive")}</dt>
+              <dd class={[!status.tc_armed && "muted"]}>{tcText}</dd>
+            {/if}
+            <dt>{$i18n.t("profilesAbsLiveIn")}</dt>
+            <dd>{throttleText(status.throttle_in)}</dd>
+            <dt>{$i18n.t("profilesAbsLiveOut")}</dt>
+            <dd>{throttleText(status.throttle_out)}</dd>
+          </dl>
+        </SubSection>
+      {/if}
+    </div>
+  </div>
 </Section>
 
 <style lang="scss">
+  .aids-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 0 24px;
+    align-items: start;
+  }
+
+  .aids-column {
+    min-width: 0;
+  }
+
   .explain {
     margin: 0;
     padding: 2px 8px 8px;
