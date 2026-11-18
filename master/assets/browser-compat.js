@@ -2,7 +2,7 @@ var e={hasWebSerial(){return`serial`in navigator},hasWebBluetooth(){return`bluet
 ⚠️ Unsupported Browser: ${e.browserName}
 
 Gripora Configurator Web needs at least one of the following APIs to
-talk to a flight controller, and your browser has none of them:
+talk to a controller, and your browser has none of them:
 ${t.map(e=>`  • ${e}`).join(`
 `)}
 

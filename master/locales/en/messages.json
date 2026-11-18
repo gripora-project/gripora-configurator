@@ -49,7 +49,7 @@
         "description": "Pitch axis in capital letters"
     },
     "axisYAW": {
-        "message": "YAW",
+        "message": "STEERING",
         "description": "Yaw axis in capital letters"
     },
     "axisCOLLECTIVE": {
@@ -395,7 +395,7 @@
         "message": "You are using an outdated version of the <b>Gripora Configurator</b>.<br>$t(configuratorUpdateHelp.message)"
     },
     "configuratorUpdateHelp": {
-        "message": "Using a newer version of the firmware with an outdated version of Configurator means that changing some settings will result in a <strong>corrupted firmware configuration and a non-working craft</strong>. Furthermore, some features of the firmware will only be configurable in CLI.<br><strong>Gripora Configurator version <b>$1</b> is available for download online</strong>, please visit <a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">this page</a> to download and install the latest version with fixes and improvements.<br>Please close the configurator window before updating."
+        "message": "Using a newer version of the firmware with an outdated version of Configurator means that changing some settings will result in a <strong>corrupted firmware configuration and a non-working car</strong>. Furthermore, some features of the firmware will only be configurable in CLI.<br><strong>Gripora Configurator version <b>$1</b> is available for download online</strong>, please visit <a href=\"$2\" target=\"_blank\" rel=\"noopener noreferrer\">this page</a> to download and install the latest version with fixes and improvements.<br>Please close the configurator window before updating."
     },
     "configuratorUpdateWebsite": {
         "message": "Go to Release Website"
@@ -1369,7 +1369,7 @@
         "message": "Unique device ID: <strong>0x$1</strong>"
     },
     "craftNameReceived": {
-        "message": "Craft name: <strong>$1</strong>"
+        "message": "Car name: <strong>$1</strong>"
     },
     "realTimeClockSet": {
         "message": "Real-Time Clock set"
@@ -1549,7 +1549,7 @@
         "message": "Charge level:"
     },
     "statusCraftName": {
-        "message": "Craft Name:"
+        "message": "Car Name:"
     },
     "statusBoardName": {
         "message": "Board:"
@@ -1604,7 +1604,7 @@
         "description": "Message that pops up to describe the CRASH arming disable flag"
     },
     "statusArmingDisableFlagsTooltipTHROTTLE": {
-        "message": "Throttle is not at neutral. Centre the throttle stick to arm",
+        "message": "Throttle is not at neutral. Centre the throttle trigger to arm",
         "description": "Message that pops up to describe the THROTTLE arming disable flag"
     },
     "statusArmingDisableFlagsTooltipANGLE": {
@@ -1810,7 +1810,7 @@
         "message": "<strong>Enable Arming</strong>"
     },
     "initialSetupEnableArmingText": {
-        "message": "Enable arming the craft with the transmitter while the Configurator is connected. Arming your craft will allow the motors to spool up."
+        "message": "Enable arming the car with the transmitter while the Configurator is connected. Arming your car will allow the motors to spool up."
     },
     "initialSetupEnableMotorOverride": {
         "message": "<strong>Enable Motor Override</strong>"
@@ -2122,7 +2122,7 @@
         "message": "Dshot Beacon Tone"
     },
     "configurationDshotBeaconHelp": {
-        "message": "The Dshot beacon uses the ESCs and motors to produce sound. This means that the Dshot beacon cannot be used when the motors are spinning. If arming is attempted while the Dshot beacon is active, there is a 2 second delay after the last Dshot beacon tone before the craft is armed. This is to prevent the Dshot beacon functionality from interfering with the Dshot commands sent when arming.<br/><strong>Warning:</strong> Since the Dshot beacon is running current through your motors when active, this can result in excessive heat production and damage to your motors and / or ESCs if the beacon strength is set too high. Use BLHeli Configurator or the BLHeli Suite to adjust and test the beacon strength."
+        "message": "The Dshot beacon uses the ESCs and motors to produce sound. This means that the Dshot beacon cannot be used when the motors are spinning. If arming is attempted while the Dshot beacon is active, there is a 2 second delay after the last Dshot beacon tone before the car is armed. This is to prevent the Dshot beacon functionality from interfering with the Dshot commands sent when arming.<br/><strong>Warning:</strong> Since the Dshot beacon is running current through your motors when active, this can result in excessive heat production and damage to your motors and / or ESCs if the beacon strength is set too high. Use BLHeli Configurator or the BLHeli Suite to adjust and test the beacon strength."
     },
     "configurationBeeper": {
         "message": "Buzzer Configuration"
@@ -2167,13 +2167,13 @@
         "message": "Beeps when TX is turned off or signal lost (repeat until TX is okay)"
     },
     "beeper_RX_LOST_LANDING": {
-        "message": "Beeps SOS when armed and TX is turned off or signal lost (autolanding/autodisarm)"
+        "message": "Beeps SOS when armed and TX is turned off or signal lost (autodisarm)"
     },
     "beeper_DISARMING": {
-        "message": "Beep when disarming the flightcontroller"
+        "message": "Beep when disarming the controller"
     },
     "beeper_ARMING": {
-        "message": "Beep when arming the flightcontroller"
+        "message": "Beep when arming the controller"
     },
     "beeper_ARMING_GPS_FIX": {
         "message": "Beep a special tone when arming the FC and GPS has fix"
@@ -2191,10 +2191,10 @@
         "message": "Beeps when aux channel is set for beep"
     },
     "beeper_ACC_CALIBRATION": {
-        "message": "Accelerometer inflight calibration completed confirmation"
+        "message": "Accelerometer calibration completed confirmation"
     },
     "beeper_ACC_CALIBRATION_FAIL": {
-        "message": "Accelerometer inflight calibration failed"
+        "message": "Accelerometer calibration failed"
     },
     "beeper_READY_BEEP": {
         "message": "Ring a tone when GPS is locked and ready"
@@ -2486,21 +2486,21 @@
         "message": "Proportional"
     },
     "profilesProportionalHelp": {
-        "message": "Controls how tightly the car tracks the steering stick (the yaw-rate Setpoint) and corrects for external influences such as bumps or grip changes. Higher values (gains) provide tighter tracking, but can cause overshoot or steering oscillation if too high in proportion to the derivative (D-gain). Think of the P-term as the spring in a suspension.",
+        "message": "Controls how tightly the car tracks the steering wheel (the turn-rate Setpoint) and corrects for external influences such as bumps or grip changes. Higher values (gains) provide tighter tracking, but can cause overshoot or steering oscillation if too high in proportion to the derivative (D-gain). Think of the P-term as the spring in a suspension.",
         "description": "Proportional Term helpicon message on PID table titlebar"
     },
     "profilesIntegral": {
         "message": "Integral"
     },
     "profilesIntegralHelp": {
-        "message": "Controls how tightly the car holds the yaw rate setpoint over time. Similar to Proportional, but for longer-lasting yaw errors and persistent outside influences, for example a camber or crosswind, uneven grip or a car that pulls to one side. Higher gains hold the setpoint more firmly (i.e. through long sweeping corners), but can make the car keep rotating after a quick steering input is released. If extremely high in proportion to the D-term, can cause oscillations.",
+        "message": "Controls how tightly the car holds the turn-rate setpoint over time. Similar to Proportional, but for longer-lasting turn-rate errors and persistent outside influences, for example a camber or crosswind, uneven grip or a car that pulls to one side. Higher gains hold the setpoint more firmly (i.e. through long sweeping corners), but can make the car keep rotating after a quick steering input is released. If extremely high in proportion to the D-term, can cause oscillations.",
         "description": "Integral Term helpicon message on PID table titlebar"
     },
     "profilesDerivative": {
         "message": "Derivative"
     },
     "profilesDerivativeHelp": {
-        "message": "Controls the strength of damping ANY yaw acceleration of the car, whether from steering inputs or external influences. For steering inputs, the D-term damps the movement to prevent overshooting. For an outside influence (a bump or sudden grip change) the D-term damps the disturbance. Higher gains provide more damping and reduce possible overshoot from high P-terms. However, the D-term is VERY sensitive to high frequency gyro vibrations (noise | magnifies by 10x to 100x). High frequency noise in the control loop can cause excessive servo heat and burn out servos if the gyro noise is not filtered properly (see Gyro tab). Think of the D-term as the shock absorber on your car, but with the inherent negative property of magnifying high frequency gyro noise.",
+        "message": "Controls the strength of damping ANY change in the car's turn rate (yaw acceleration), whether from steering inputs or external influences. For steering inputs, the D-term damps the movement to prevent overshooting. For an outside influence (a bump or sudden grip change) the D-term damps the disturbance. Higher gains provide more damping and reduce possible overshoot from high P-terms. However, the D-term is VERY sensitive to high frequency gyro vibrations (noise | magnifies by 10x to 100x). High frequency noise in the control loop can cause excessive servo heat and burn out servos if the gyro noise is not filtered properly (see Gyro tab). Think of the D-term as the shock absorber on your car, but with the inherent negative property of magnifying high frequency gyro noise.",
         "description": "Derivative Term helpicon message on PID table titlebar"
     },
     "profilesFeedforward": {
@@ -2637,7 +2637,7 @@
         "message": "The throttle channel value where throttle is considered 0%."
     },
     "receiverHelpZeroThrottle2": {
-        "message": "<p>The throttle channel value where throttle is considered 0%.</p><p><strong>Note:</strong> Throttle is signed around the stick centre: forward above it, brake/reverse below it. To arm, the throttle stick must be at neutral (centre).</p>"
+        "message": "<p>The throttle channel value where throttle is considered 0%.</p><p><strong>Note:</strong> Throttle is signed around the channel centre: forward above it, brake/reverse below it. To arm, the throttle trigger must be at neutral (centre).</p>"
     },
     "receiverFullThrottle": {
         "message": "Max Throttle - 100%"
@@ -2745,7 +2745,7 @@
         "message": "FC Temperature"
     },
     "receiverTelemetrySensor_MODE": {
-        "message": "Flight Mode"
+        "message": "Drive Mode"
     },
     "receiverTelemetrySensor_PITCH": {
         "message": "Pitch angle (attitude)"
@@ -2877,13 +2877,13 @@
         "message": "Control (hi-res)"
     },
     "receiverTelemetrySensor_PITCH_CONTROL": {
-        "message": "Pitch Control"
+        "message": "Pitch Control (unused)"
     },
     "receiverTelemetrySensor_ROLL_CONTROL": {
-        "message": "Roll Control"
+        "message": "Roll Control (unused)"
     },
     "receiverTelemetrySensor_YAW_CONTROL": {
-        "message": "Yaw Control"
+        "message": "Steering Control"
     },
     "receiverTelemetrySensor_COLLECTIVE_CONTROL": {
         "message": "Collective Control"
@@ -3051,7 +3051,7 @@
         "message": "RT Load"
     },
     "receiverTelemetrySensor_FLIGHT_MODE": {
-        "message": "Flight Mode"
+        "message": "Drive Mode"
     },
     "receiverTelemetrySensor_ARMING_DISABLE_FLAGS": {
         "message": "Arming Disable Flags"
@@ -3376,19 +3376,19 @@
         "message": "Accelerometer roll trim. Corrects roll drift in stabilised modes like Angle."
     },
     "adjustmentsFunctionHelpYawDynCeilingGain": {
-        "message": "Reduces the yaw stick travel needed for maximum rate while the stick is moving quickly toward its end."
+        "message": "Reduces the steering travel needed for maximum rate while the wheel is moving quickly toward its end."
     },
     "adjustmentsFunctionHelpYawDynDeadbandGain": {
-        "message": "Widens the yaw stick deadband while the stick is moving quickly back toward centre."
+        "message": "Widens the steering deadband while the wheel is moving quickly back toward centre."
     },
     "adjustmentsFunctionHelpYawDynDeadbandFilter": {
-        "message": "Smoothing for the yaw stick speed that drives the dynamic ceiling and deadband (cutoff in 0.1 Hz). Lower reacts more slowly."
+        "message": "Smoothing for the steering speed that drives the dynamic ceiling and deadband (cutoff in 0.1 Hz). Lower reacts more slowly."
     },
     "adjustmentsFunctionHelpFlapCompensationGain": {
         "message": "Scales every mixer rule tagged Flap Compensation. Negative values reverse them all together."
     },
     "adjustmentsFunctionHelpDiffThrustYawGain": {
-        "message": "Scales the differential thrust yaw mix, which speeds up one motor and slows the other for extra yaw authority. Negative values reverse it."
+        "message": "Scales the differential thrust steering mix, which speeds up one motor and slows the other for extra steering authority. Negative values reverse it."
     },
     "adjustmentsFunctionHelpRollRate": {
         "message": "The roll Rate value in the active rate profile. Its exact effect depends on the rates type."
@@ -3529,49 +3529,49 @@
         "message": "Thrust vector loop: how strongly the pitch axis stops a fast manoeuvre bouncing back. Higher means less bounce-back."
     },
     "adjustmentsFunctionHelpYawRate": {
-        "message": "The yaw Rate value in the active rate profile. Its exact effect depends on the rates type."
+        "message": "The steering Rate value in the active rate profile. Its exact effect depends on the rates type."
     },
     "adjustmentsFunctionHelpYawRCRate": {
-        "message": "The yaw RC Rate value in the active rate profile. Its exact effect depends on the rates type."
+        "message": "The steering RC Rate value in the active rate profile. Its exact effect depends on the rates type."
     },
     "adjustmentsFunctionHelpYawRCExpo": {
-        "message": "The yaw expo in the active rate profile. Higher softens the stick around centre."
+        "message": "The steering expo in the active rate profile. Higher softens the steering around centre."
     },
     "adjustmentsFunctionHelpYawP": {
-        "message": "Yaw P-gain: how hard the yaw axis corrects errors right now. Too high oscillates quickly."
+        "message": "Steering P-gain: how hard the steering corrects errors right now. Too high oscillates quickly."
     },
     "adjustmentsFunctionHelpYawI": {
-        "message": "Yaw I-gain: how firmly the yaw axis holds against steady errors such as trim, wind or CG."
+        "message": "Steering I-gain: how firmly the steering holds against steady errors such as trim, camber or a car that pulls to one side."
     },
     "adjustmentsFunctionHelpYawD": {
-        "message": "Yaw D-gain: damps yaw movement to stop overshoot. Too high runs hot and amplifies noise."
+        "message": "Steering D-gain: damps turning movement to stop overshoot. Too high runs hot and amplifies noise."
     },
     "adjustmentsFunctionHelpYawF": {
-        "message": "Yaw feedforward: pushes the yaw axis from stick input alone, for a sharper response to commands."
+        "message": "Steering feedforward: pushes the steering from the steering input alone, for a sharper response to commands."
     },
     "adjustmentsFunctionHelpYawB": {
-        "message": "Yaw boost: extra feedforward from how fast the yaw stick is moving, for a sharper start and stop."
+        "message": "Steering boost: extra feedforward from how fast the steering wheel is moving, for a sharper start and stop."
     },
     "adjustmentsFunctionHelpYawGyroCutoff": {
-        "message": "Yaw PID loop overall bandwidth in Hz."
+        "message": "Steering PID loop overall bandwidth in Hz."
     },
     "adjustmentsFunctionHelpYawDtermCutoff": {
-        "message": "Yaw D-term cutoff frequency in Hz. Lower is smoother but adds delay."
+        "message": "Steering D-term cutoff frequency in Hz. Lower is smoother but adds delay."
     },
     "adjustmentsFunctionHelpYawSetpointBoostGain": {
-        "message": "Boosts yaw stick inputs for a snappier feel."
+        "message": "Boosts steering inputs for a snappier feel."
     },
     "adjustmentsFunctionHelpMasterGainYaw": {
-        "message": "Scales yaw P, I, D and F together, live, without changing the stored gains. 100% is the tune as configured."
+        "message": "Scales steering P, I, D and F together, live, without changing the stored gains. 100% is the tune as configured."
     },
     "adjustmentsFunctionHelpItermDecayTimeYaw": {
-        "message": "How long the yaw axis holds a correction after a bump or grip change before letting it go. Longer feels more locked in."
+        "message": "How long the steering holds a correction after a bump or grip change before letting it go. Longer feels more locked in."
     },
     "adjustmentsFunctionHelpBouncebackYaw": {
-        "message": "How strongly the yaw axis stops the car bouncing back the other way after a fast steering input when you centre the stick. Higher means less bounce-back."
+        "message": "How strongly the steering stops the car bouncing back the other way after a fast steering input when you centre the wheel. Higher means less bounce-back."
     },
     "adjustmentsFunctionHelpServoTrimYaw": {
-        "message": "Trim in µs for servos on the yaw axis, added on top of the servo Center (never changing it). Mapped: follows the channel, is not saved and starts from zero after a reboot. Stepped: each press of the switch moves the trim one step, holding it repeats; saved on disarm."
+        "message": "Trim in µs for servos on the steering axis, added on top of the servo Center (never changing it). Mapped: follows the channel, is not saved and starts from zero after a reboot. Stepped: each press of the switch moves the trim one step, holding it repeats; saved on disarm."
     },
     "adjustmentsFunctionHelpTVMasterGainYaw": {
         "message": "Thrust vector loop: scales yaw P, I, D and F together, live, without changing the stored gains."
@@ -3619,7 +3619,7 @@
         "message": "Filters"
     },
     "adjustmentsGroupYawDynamics": {
-        "message": "Yaw Dynamics"
+        "message": "Steering Dynamics"
     },
     "adjustmentsGroupStability": {
         "message": "Stability"
@@ -3673,7 +3673,7 @@
         "message": "Roll Rate"
     },
     "adjustmentsFunctionYawRate": {
-        "message": "Yaw Rate"
+        "message": "Steering Rate"
     },
     "adjustmentsFunctionPitchRCRate": {
         "message": "Pitch RC Rate"
@@ -3682,7 +3682,7 @@
         "message": "Roll RC Rate"
     },
     "adjustmentsFunctionYawRCRate": {
-        "message": "Yaw RC Rate"
+        "message": "Steering RC Rate"
     },
     "adjustmentsFunctionPitchRCExpo": {
         "message": "Pitch RC Expo"
@@ -3691,7 +3691,7 @@
         "message": "Roll RC Expo"
     },
     "adjustmentsFunctionYawRCExpo": {
-        "message": "Yaw RC Expo"
+        "message": "Steering RC Expo"
     },
     "adjustmentsFunctionPitchP": {
         "message": "Pitch P-gain"
@@ -3718,16 +3718,16 @@
         "message": "Roll F-gain"
     },
     "adjustmentsFunctionYawP": {
-        "message": "Yaw P-gain"
+        "message": "Steering P-gain"
     },
     "adjustmentsFunctionYawI": {
-        "message": "Yaw I-gain"
+        "message": "Steering I-gain"
     },
     "adjustmentsFunctionYawD": {
-        "message": "Yaw D-gain"
+        "message": "Steering D-gain"
     },
     "adjustmentsFunctionYawF": {
-        "message": "Yaw F-gain"
+        "message": "Steering F-gain"
     },
     "adjustmentsFunctionYawCWStopGain": {
         "message": "Yaw CW Stop Gain"
@@ -3757,7 +3757,7 @@
         "message": "Roll Gyro Cutoff"
     },
     "adjustmentsFunctionYawGyroCutoff": {
-        "message": "Yaw Gyro Cutoff"
+        "message": "Steering Gyro Cutoff"
     },
     "adjustmentsFunctionPitchDtermCutoff": {
         "message": "Pitch D-term Cutoff"
@@ -3766,7 +3766,7 @@
         "message": "Roll D-term Cutoff"
     },
     "adjustmentsFunctionYawDtermCutoff": {
-        "message": "Yaw D-term Cutoff"
+        "message": "Steering D-term Cutoff"
     },
     "adjustmentsFunctionRescueClimbCollective": {
         "message": "Rescue Climb Collective"
@@ -3799,7 +3799,7 @@
         "message": "Master Gain Roll"
     },
     "adjustmentsFunctionMasterGainYaw": {
-        "message": "Master Gain Yaw"
+        "message": "Master Gain Steering"
     },
     "adjustmentsFunctionAttHoldGain": {
         "message": "Attitude Hold Gain"
@@ -3811,7 +3811,7 @@
         "message": "Servo Trim Pitch"
     },
     "adjustmentsFunctionServoTrimYaw": {
-        "message": "Servo Trim Yaw"
+        "message": "Servo Trim Steering"
     },
     "adjustmentsFunctionTVMasterGainRoll": {
         "message": "TV Master Gain Roll"
@@ -3877,7 +3877,7 @@
         "message": "Flap Compensation Gain"
     },
     "adjustmentsFunctionDiffThrustYawGain": {
-        "message": "Differential Thrust Yaw Gain"
+        "message": "Differential Thrust Steering Gain"
     },
     "adjustmentsFunctionItermDecayTimeRoll": {
         "message": "I-Term Decay Roll (0.01 s)"
@@ -3886,7 +3886,7 @@
         "message": "I-Term Decay Pitch (0.01 s)"
     },
     "adjustmentsFunctionItermDecayTimeYaw": {
-        "message": "I-Term Decay Yaw (0.01 s)"
+        "message": "I-Term Decay Steering (0.01 s)"
     },
     "adjustmentsFunctionTVItermDecayTimeRoll": {
         "message": "TV I-Term Decay Roll (0.01 s)"
@@ -3904,7 +3904,7 @@
         "message": "I-Term Relax Pitch"
     },
     "adjustmentsFunctionBouncebackYaw": {
-        "message": "I-Term Relax Yaw"
+        "message": "I-Term Relax Steering"
     },
     "adjustmentsFunctionTVBouncebackRoll": {
         "message": "TV I-Term Relax Roll"
@@ -3946,7 +3946,7 @@
         "message": "Roll B-gain"
     },
     "adjustmentsFunctionYawB": {
-        "message": "Yaw B-gain"
+        "message": "Steering B-gain"
     },
     "adjustmentsFunctionPitchO": {
         "message": "Pitch O-gain"
@@ -3982,19 +3982,19 @@
         "message": "Roll Setpoint Boost Gain"
     },
     "adjustmentsFunctionYawSetpointBoostGain": {
-        "message": "Yaw Setpoint Boost Gain"
+        "message": "Steering Setpoint Boost Gain"
     },
     "adjustmentsFunctionCollectiveSetpointBoostGain": {
         "message": "Collective Setpoint Boost Gain"
     },
     "adjustmentsFunctionYawDynCeilingGain": {
-        "message": "Yaw Dynamic Ceiling Gain"
+        "message": "Steering Dynamic Ceiling Gain"
     },
     "adjustmentsFunctionYawDynDeadbandGain": {
-        "message": "Yaw Dynamic Deadband Gain"
+        "message": "Steering Dynamic Deadband Gain"
     },
     "adjustmentsFunctionYawDynDeadbandFilter": {
-        "message": "Yaw Dynamic Deadband Filter"
+        "message": "Steering Dynamic Deadband Filter"
     },
     "adjustmentsFunctionYawPrecompCutoff": {
         "message": "Yaw Precomp Cutoff"
@@ -4015,7 +4015,7 @@
         "message": "Governor Yaw F-gain"
     },
     "servoHelp": {
-        "message": "Servo 101<ul><li>First check the servo direction. Check the steering servo by moving the steering stick: the wheels should turn the same way. Reverse the servo if needed.</li><li>Centre the servo arm by enabling <i> Servo Override</i> and adjusting <i>Center</i>. The wheels should point straight ahead in this position.</li><li>Adjust <i>Scale</i> so that servo angles are correct. Specify an angle of 30&deg; for a servo under <i>Servo Override</i>. The servo should now move to 30&deg;. If it's less, increase the <i>Scale</i> for that servo. If it's more, decrease it.</li><li>You can limit or extend the servo movement range by adjusting <i>Min</i> or <i>Max</i>. Do this only if there's a mechanical issue, like servo or steering binding. Use the mixer to limit steering throw.</li></ul>"
+        "message": "Servo 101<ul><li>First check the servo direction. Check the steering servo by turning the steering wheel: the wheels should turn the same way. Reverse the servo if needed.</li><li>Centre the servo arm by enabling <i> Servo Override</i> and adjusting <i>Center</i>. The wheels should point straight ahead in this position.</li><li>Adjust <i>Scale</i> so that servo angles are correct. Specify an angle of 30&deg; for a servo under <i>Servo Override</i>. The servo should now move to 30&deg;. If it's less, increase the <i>Scale</i> for that servo. If it's more, decrease it.</li><li>You can limit or extend the servo movement range by adjusting <i>Min</i> or <i>Max</i>. Do this only if there's a mechanical issue, like servo or steering binding. Use the mixer to limit steering throw.</li></ul>"
     },
     "servoConfiguration": {
         "message": "Servo Configuration"
@@ -4054,10 +4054,10 @@
         "message": "Trim"
     },
     "servoTrimColumnHelp": {
-        "message": "Saved trim in µs, added on top of Center. Stepped ServoTrim adjustments and Auto Trim set it; it never changes Center or the Min/Max end stops, and the output stays inside Min/Max. Limited to 20% of the larger Scale. While a ServoTrim adjustment covers the servo, the field is read-only and shows the trim in use (saved plus live). A badge shows a ServoTrim Roll/Pitch/Yaw adjustment range (Adjustments tab) for this servo's stabilized axis, highlighted when active, with the controlling AUX channel."
+        "message": "Saved trim in µs, added on top of Center. Stepped ServoTrim adjustments and Auto Trim set it; it never changes Center or the Min/Max end stops, and the output stays inside Min/Max. Limited to 20% of the larger Scale. While a ServoTrim adjustment covers the servo, the field is read-only and shows the trim in use (saved plus live). A badge shows a Servo Trim Steering adjustment range (Adjustments tab) for this servo's stabilized axis, highlighted when active, with the controlling AUX channel."
     },
     "servoTrimBadgesHelp": {
-        "message": "Shows a badge when a ServoTrim Roll/Pitch/Yaw adjustment range (Adjustments tab) is configured for this servo's stabilized axis. Highlighted when currently active, with the controlling AUX channel."
+        "message": "Shows a badge when a Servo Trim Steering adjustment range (Adjustments tab) is configured for this servo's stabilized axis. Highlighted when currently active, with the controlling AUX channel."
     },
     "servoTrimDrivenHelp": {
         "message": "Set by a ServoTrim adjustment (Adjustments tab), so it can't be edited here. Shows the trim in use: saved $1 µs (Stepped, Auto Trim) plus live $2 µs (Mapped, not saved). Clear trims sets the saved part to 0."
@@ -4153,7 +4153,7 @@
         "message": "<span class=\"message-negative\">Servo $1:</span> at <i>Center</i> $2, <i>Min</i> can only reach $3, because the output can't go below $4 µs. Move the center closer to the middle to use more."
     },
     "servoSignalHelp": {
-        "message": "The live output. The marks on the bar are the Min and Max the servo can reach and the dot is where it is now. For a servo moved by the roll, pitch, yaw or flap mix, the bar also shows how far full stick on every axis at once takes each side. Red means that side reaches its limit before full stick, so the stabilizer has no travel left there. The same check as the Setup Wizard's Travel check."
+        "message": "The live output. The marks on the bar are the Min and Max the servo can reach and the dot is where it is now. For a servo moved by the roll, pitch, steering or flap mix, the bar also shows how far full stick on every axis at once takes each side. Red means that side reaches its limit before full stick, so the stabilizer has no travel left there. The same check as the Setup Wizard's Travel check."
     },
     "servoTravelReach": {
         "message": "Full stick"
@@ -4240,13 +4240,13 @@
         "message": "-"
     },
     "mixerInputStabilizedRoll": {
-        "message": "Stabilized Roll"
+        "message": "Stabilized Roll (unused)"
     },
     "mixerInputStabilizedPitch": {
-        "message": "Stabilized Pitch"
+        "message": "Stabilized Pitch (unused)"
     },
     "mixerInputStabilizedYaw": {
-        "message": "Stabilized Yaw"
+        "message": "Stabilized Steering"
     },
     "mixerInputStabilizedTVRoll": {
         "message": "Stabilized TV Roll"
@@ -4264,13 +4264,13 @@
         "message": "Stabilized Throttle"
     },
     "mixerInputRCCommandRoll": {
-        "message": "Commanded Roll"
+        "message": "Commanded Roll (unused)"
     },
     "mixerInputRCCommandPitch": {
-        "message": "Commanded Pitch"
+        "message": "Commanded Pitch (unused)"
     },
     "mixerInputRCCommandYaw": {
-        "message": "Commanded Yaw"
+        "message": "Commanded Steering"
     },
     "mixerInputRCCommandCollective": {
         "message": "Commanded Collective"
@@ -4450,7 +4450,7 @@
         "message": "Steering Override"
     },
     "mixerOverrideHelp": {
-        "message": "Forces a fixed value into a stabilized axis (Roll/Pitch/Yaw) so you can measure the resulting steering throw without touching the sticks. Only takes effect while disarmed. Use it together with Axis Throw above: enable an axis, command a known % (e.g. 100%), measure the steering angle at the wheels, then adjust that axis's throw until the measured angle matches what you want."
+        "message": "Forces a fixed value into a stabilized axis (Steering; Roll and Pitch are unused) so you can measure the resulting steering throw without touching the radio. Only takes effect while disarmed. Use it together with Axis Throw above: enable an axis, command a known % (e.g. 100%), measure the steering angle at the wheels, then adjust that axis's throw until the measured angle matches what you want."
     },
     "mixerEnableOverrideLabel": {
         "message": "<strong>Enable steering override</strong>"
@@ -4480,7 +4480,7 @@
         "message": "Steering Invert"
     },
     "mixerAxisInvertHelp": {
-        "message": "Flips the direction of every rule reading the steering (stabilized yaw) at once: the stick and the gyro correction together. To reverse only the gyro, use Gyro Direction instead."
+        "message": "Flips the direction of every rule reading the steering (Stabilized Steering) at once: the wheel and the gyro correction together. To reverse only the gyro, use Gyro Direction instead."
     },
     "mixerAxisInvertNormal": {
         "message": "Normal"
@@ -4549,7 +4549,7 @@
         "message": "Mixer curves reshape a mixer rule's input before it's weighted onto an output - useful for a non-linear throttle-to-motor response, asymmetric steering throw, and similar shaping. Assign one to a rule on the Mixer tab."
     },
     "curveCategoryHelpGain": {
-        "message": "Gain curves scale a profile axis's Master Gain (Driving Feel on the Profiles tab) by stick deflection (0-100%, same in both directions) - useful for tapering stabilization gain in or out as the stick moves away from center. Assign one to Roll/Pitch/Yaw on the Profiles tab."
+        "message": "Gain curves scale a profile axis's Master Gain (Driving Feel on the Profiles tab) by steering deflection (0-100%, same in both directions) - useful for tapering stabilization gain in or out as the wheel moves away from center. Assign one to Steering on the Profiles tab."
     },
     "curveCategoryHelpServo": {
         "message": "Servo curves add a small corrective delta to a single servo's own output after mixing (and after geometry correction, if enabled) - use this to match the physical travel of two or more servos driving the same steering (e.g. dual steering servos) so they don't fight each other at the extremes."
@@ -4777,7 +4777,7 @@
         "message": "Flap Compensation"
     },
     "mixerRoleDifferentialThrustYaw": {
-        "message": "Differential Thrust Yaw"
+        "message": "Differential Thrust Steering"
     },
     "mixerRuleActionsHeader": {
         "message": ""
@@ -4804,7 +4804,7 @@
         "message": "Always"
     },
     "mixerCarSteering": {
-        "message": "Steering servo (front wheels), on the steering stick"
+        "message": "Steering servo (front wheels), on the steering wheel"
     },
     "mixerCarEsc": {
         "message": "ESC (reversible: forward, brake and reverse)"
@@ -5377,7 +5377,7 @@
         "message": "Without motor RPM the controller can't tell when the car is stopped, so the gyro stays fully active at a standstill. For the best low-speed and reverse behaviour, use an ESC with RPM telemetry (bidirectional DShot or ESC telemetry) or fit a speed sensor on the frequency input."
     },
     "motorsDriveSaveRejected": {
-        "message": "The flight controller refused the Drive settings (a value is out of range), so they were not changed."
+        "message": "The controller refused the Drive settings (a value is out of range), so they were not changed."
     },
     "profilesSectionLabelDriveAids": {
         "message": "Drive aids"
@@ -5557,7 +5557,7 @@
         "message": "Neutral"
     },
     "profilesDriveAidsSaveRejected": {
-        "message": "The flight controller refused the drive aids settings (a value is out of range), so they were not changed."
+        "message": "The controller refused the drive aids settings (a value is out of range), so they were not changed."
     },
     "motorsThrottleEndpoints": {
         "message": "Throttle Range"
@@ -6805,10 +6805,10 @@
         "message": "deep pink"
     },
     "controlAxisRoll": {
-        "message": "Roll"
+        "message": "Roll (unused)"
     },
     "controlAxisPitch": {
-        "message": "Pitch"
+        "message": "Pitch (unused)"
     },
     "controlAxisYaw": {
         "message": "Steering"
@@ -6925,13 +6925,13 @@
         "message": "Hard limit for the angle error in the PID loop. The absolute error and thus the I-term will never go above these limits."
     },
     "profilesErrorLimitYaw": {
-        "message": "Error Limit for Yaw Axis [&deg;]"
+        "message": "Error Limit for Steering [&deg;]"
     },
     "profilesFwTpaHelp": {
-        "message": "Throttle: scales Yaw P, D, F and B with throttle: set a percentage, and optionally a curve (evaluated on throttle, 0-100%). 100% with no curve means no change. Throttle and GPS Speed together never go below 25%, and GYRO OFF mode is not affected."
+        "message": "Throttle: scales Steering P, D, F and B with throttle: set a percentage, and optionally a curve (evaluated on throttle, 0-100%). 100% with no curve means no change. Throttle and GPS Speed together never go below 25%, and GYRO OFF mode is not affected."
     },
     "profilesFwSpaHelp": {
-        "message": "GPS Speed: scales Yaw P, D, F and B with GPS speed, on top of Throttle. Steering gets more effective as speed rises, so this is used to reduce gain when fast, for example on a long straight. Set a percentage and a curve (evaluated on GPS speed, 0 to the speed at the curve's right edge, set in Gain Curves). It needs a GPS with a fix and does nothing without a curve. If the fix is lost it holds for 3 s, then eases back to 100%."
+        "message": "GPS Speed: scales Steering P, D, F and B with GPS speed, on top of Throttle. Steering gets more effective as speed rises, so this is used to reduce gain when fast, for example on a long straight. Set a percentage and a curve (evaluated on GPS speed, 0 to the speed at the curve's right edge, set in Gain Curves). It needs a GPS with a fix and does nothing without a curve. If the fix is lost it holds for 3 s, then eases back to 100%."
     },
     "profilesFwSpaCurveTooltip": {
         "message": "Speed: the curve shapes the Speed gain by the car's speed, from the motor RPM (wheel speed) or, without an RPM source, a GPS. Left: the speed at the curve's right edge (10-300 km/h, default 60); faster than that uses the curve's last point. Right: the curve, edited on the Curves tab. \"-\" turns Speed off, so its Driving Feel percentage has no effect."
@@ -6943,7 +6943,7 @@
         "message": "Master Gain [%]"
     },
     "profilesMasterGainHelp": {
-        "message": "How hard the gyro corrects unwanted yaw. Raise it if the car twitches out of line on bumps or under power; lower it if the steering oscillates or wobbles at speed. Scales the axis's P, I, D and FF together, live (for example on an Adjustments knob). 100% is your tune as configured; it does not change the stored P/I/D/F values."
+        "message": "How hard the gyro corrects unwanted turning. Raise it if the car twitches out of line on bumps or under power; lower it if the steering oscillates or wobbles at speed. Scales the axis's P, I, D and FF together, live (for example on an Adjustments knob). 100% is your tune as configured; it does not change the stored P/I/D/F values."
     },
     "profilesGainCurveColumn": {
         "message": "Curve"
@@ -6952,7 +6952,7 @@
         "message": "Gain Curves"
     },
     "profilesGainCurveHelp": {
-        "message": "Optionally shapes each axis's Master Gain with a curve from the Curves tab: by stick deflection on Roll, Pitch and Yaw (the same both ways), by throttle on the Throttle row, by GPS speed on the Speed row (0 to the speed curve range, in km/h). \"-\" means no curve, so Master Gain applies as set. Driving Feel shows a CURVE badge on any Master Gain a curve is shaping."
+        "message": "Optionally shapes each axis's Master Gain with a curve from the Curves tab: by steering deflection on the Steering row (the same both ways), by throttle on the Throttle row, by GPS speed on the Speed row (0 to the speed curve range, in km/h). \"-\" means no curve, so Master Gain applies as set. Driving Feel shows a CURVE badge on any Master Gain a curve is shaping."
     },
     "profilesGainCurveBadge": {
         "message": "CURVE"
@@ -7006,7 +7006,7 @@
         "message": "What these do"
     },
     "profilesFlightFeelGuideGain": {
-        "message": "How hard the car fights unwanted yaw. Raise it if the car wanders or feels soft; lower it if the steering wobbles or buzzes."
+        "message": "How hard the car fights unwanted turning. Raise it if the car wanders or feels soft; lower it if the steering wobbles or buzzes."
     },
     "profilesFlightFeelGuideDecay": {
         "message": "How long it holds its line after a bump. Longer feels more locked in; shorter feels freer and suits drifting."
@@ -7024,7 +7024,7 @@
         "message": "I-Term Relax Level"
     },
     "profilesItermRelaxLevelYaw": {
-        "message": "Level for Yaw [°/s]"
+        "message": "Level for Steering [°/s]"
     },
     "profilesItermRelaxLevelHelp": {
         "message": "Stick movement, in °/s, at which I-term build-up is fully suppressed during a fast move. Lower values suppress more strongly. The main setting is I-Term Relax in the Driving Feel panel; leave level at the default (22) unless that is not enough."
@@ -7039,7 +7039,7 @@
         "message": "PID Loop overall bandwidth in Hz"
     },
     "profilesGyroCutoffYaw": {
-        "message": "Yaw Bandwidth"
+        "message": "Steering Bandwidth"
     },
     "profilesDtermCutoffGroup": {
         "message": "D-term Cutoff"
@@ -7048,7 +7048,7 @@
         "message": "D-term Cutoff Frequency in Hz"
     },
     "profilesDtermCutoffYaw": {
-        "message": "Yaw D-term Cutoff"
+        "message": "Steering D-term Cutoff"
     },
     "profilesBtermCutoffGroup": {
         "message": "B-term Cutoff"
@@ -7057,7 +7057,7 @@
         "message": "B-term Cutoff Frequency in Hz"
     },
     "profilesBtermCutoffYaw": {
-        "message": "Yaw B-term Cutoff"
+        "message": "Steering B-term Cutoff"
     },
     "profilesLevelingSettings": {
         "message": "Auto-leveling Settings"
@@ -7429,7 +7429,7 @@
         "message": "Revert"
     },
     "failsafeFeaturesHelpNew": {
-        "message": "Failsafe has two stages. <strong>Stage 1</strong> is entered when a flightchannel has an invalid pulse length, the receiver reports failsafe mode or there is no signal from the receiver at all, the channel fallback settings are applied to <span class=\"message-negative\">all channels</span> and a short amount of time is provided to allow for recovery. <strong>Stage 2</strong> is entered when the error condition takes longer than the configured guard time while the craft is <span class=\"message-negative\">armed</span>, all channels will remain at the applied channel fallback setting unless overruled by the chosen procedure. <br /><strong>Note:</strong> Prior to entering stage 1, channel fallback settings are also applied to individual AUX channels that have invalid pulses."
+        "message": "Failsafe has two stages. <strong>Stage 1</strong> is entered when a control channel has an invalid pulse length, the receiver reports failsafe mode or there is no signal from the receiver at all, the channel fallback settings are applied to <span class=\"message-negative\">all channels</span> and a short amount of time is provided to allow for recovery. <strong>Stage 2</strong> is entered when the error condition takes longer than the configured guard time while the car is <span class=\"message-negative\">armed</span>, all channels will remain at the applied channel fallback setting unless overruled by the chosen procedure. <br /><strong>Note:</strong> Prior to entering stage 1, channel fallback settings are also applied to individual AUX channels that have invalid pulses."
     },
     "failsafePulsrangeTitle": {
         "message": "Pulse Width Limit"
@@ -7447,10 +7447,10 @@
         "message": "Channel Fallback"
     },
     "failsafeChannelFallbackSettingsHelp": {
-        "message": "Configure the failsafe behavior of each channel.<br><strong>Auto:</strong> Sets channel to a safe value. Center for Roll, Pitch, Yaw, Collective. Low for Throttle.<br><strong>Hold:</strong> Holds channel at the last known position.<br><strong>Set:</strong> Sets channel to the specified value [μs]."
+        "message": "Configure the failsafe behavior of each channel.<br><strong>Auto:</strong> Sets channel to a safe value. Center for Steering, neutral (center) for Throttle.<br><strong>Hold:</strong> Holds channel at the last known position.<br><strong>Set:</strong> Sets channel to the specified value [μs]."
     },
     "failsafeChannelFallbackSettingsAuto": {
-        "message": "<strong>Auto</strong> means Roll, Pitch and Yaw to center and Throttle to neutral (center). <strong>Hold</strong> means maintain the last good value received"
+        "message": "<strong>Auto</strong> means Steering to center and Throttle to neutral (center). <strong>Hold</strong> means maintain the last good value received"
     },
     "failsafeChannelFallbackSettingsHold": {
         "message": "<strong>Hold</strong> means maintain the last good value received. <strong>Set</strong> means the value given here will be used"
@@ -7576,7 +7576,7 @@
         "message": "Failsafe Switch Action"
     },
     "failsafeSwitchModeHelp": {
-        "message": "This option determines what happens when Failsafe is activated through AUX switch:<br/><strong>Stage 1</strong> activates Stage 1 failsafe. This is useful if you want to simulate the exact signal loss failsafe behavior.<br/><strong>Stage 2</strong> skips Stage 1 and activates the Stage 2 procedure immediately<br/><strong>Kill</strong> disarms instantly (your craft will crash)"
+        "message": "This option determines what happens when Failsafe is activated through AUX switch:<br/><strong>Stage 1</strong> activates Stage 1 failsafe. This is useful if you want to simulate the exact signal loss failsafe behavior.<br/><strong>Stage 2</strong> skips Stage 1 and activates the Stage 2 procedure immediately<br/><strong>Kill</strong> disarms instantly (your car will coast out of control)"
     },
     "failsafeSwitchOptionStage1": {
         "message": "Stage 1"
@@ -7693,7 +7693,7 @@
         "message": "Calibration Manager"
     },
     "powerCalibrationManagerHelp": {
-        "message": "To calibrate, use a multimeter to measure the actual voltage / current draw on your craft (with a battery plugged in), and enter the values below. Then, with the same battery still plugged in, click [Calibrate]."
+        "message": "To calibrate, use a multimeter to measure the actual voltage / current draw on your car (with a battery plugged in), and enter the values below. Then, with the same battery still plugged in, click [Calibrate]."
     },
     "powerCalibrationManagerNote": {
         "message": "<strong>Note:</strong> Before calibrating the scale make sure that divider and multiplier for voltage and offset for current is set properly.<br>Leaving the values at 0 will not apply calibration.</br><strong>Remember to remove rotor blades before plugging in a battery!</strong>"
@@ -7948,7 +7948,7 @@
         "message": "Personalization"
     },
     "craftName": {
-        "message": "Craft name"
+        "message": "Car name"
     },
     "blackboxMode": {
         "message": "Logging mode"
@@ -9490,10 +9490,10 @@
         "message": "Centred"
     },
     "setupWizardMotorNeutralIntro": {
-        "message": "The controller sends neutral to the ESC as $1 µs. Calibrate the ESC with its neutral at $1 µs (follow the throttle calibration in its manual, with the throttle stick centred), or the car creeps or brakes with the stick at centre."
+        "message": "The controller sends neutral to the ESC as $1 µs. Calibrate the ESC with its neutral at $1 µs (follow the throttle calibration in its manual, with the throttle trigger centred), or the car creeps or brakes with the trigger at centre."
     },
     "setupWizardMotorNeutralStick": {
-        "message": "Throttle stick"
+        "message": "Throttle trigger"
     },
     "setupWizardMotorNeutralReading": {
         "message": "$1 µs (centre $2 µs)"
@@ -9502,7 +9502,7 @@
         "message": "No signal from the radio"
     },
     "setupWizardMotorNeutralCheck": {
-        "message": "With the throttle stick at centre the wheels must not turn. The car only arms with the throttle at neutral."
+        "message": "With the throttle trigger at centre the wheels must not turn. The car only arms with the throttle at neutral."
     },
     "setupWizardMotorHoldForward": {
         "message": "Hold: forward"
