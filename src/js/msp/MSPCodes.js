@@ -269,6 +269,9 @@ export const MSPCodes = {
     MSP2_GRIPORA_DRIVE_AIDS_CONFIG:   0x5F3F,
     MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG: 0x5F40,
     MSP2_GRIPORA_DRIVE_AIDS_STATUS:   0x5F41,
+    // Drift mode (src/js/Drift.js)
+    MSP2_GRIPORA_DRIFT_CONFIG:        0x5F42,
+    MSP2_GRIPORA_SET_DRIFT_CONFIG:    0x5F43,
 
     // MSPv2 Betaflight specific
     MSP2_BETAFLIGHT_BIND:               0x3000,

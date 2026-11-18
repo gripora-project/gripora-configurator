@@ -1,5 +1,6 @@
 import { defaultDriveConfig } from "./Drive.js";
 import { defaultDriveAidsConfig, idleDriveAidsStatus } from "./DriveAids.js";
+import { defaultDriftConfig } from "./Drift.js";
 import { Features } from "./features.svelte.js";
 import {
   RX_INPUT_BACKUP_COUNT,
@@ -104,6 +105,7 @@ class FlightController {
   DRIVE_STATUS = $state();
   DRIVE_AIDS_CONFIG = $state();
   DRIVE_AIDS_STATUS = $state();
+  DRIFT_CONFIG = $state();
   TELEMETRY_CONFIG = $state();
   TRANSPONDER = $state();
   TUNING_SLIDERS = $state();
@@ -336,6 +338,12 @@ class FlightController {
     this.DRIVE_AIDS_STATUS = {
       supported:                  false,
       ...idleDriveAidsStatus(),
+    };
+    // MSP2_GRIPORA_DRIFT_CONFIG (src/js/Drift.js), firmware defaults until
+    // read. `supported` is set only when the FC answers with a payload.
+    this.DRIFT_CONFIG = {
+      supported:                  false,
+      ...defaultDriftConfig(),
     };
     // FBUS mux FPGA (src/js/FbusMux.js), null on builds without one
     this.FBUS_MUX = null;

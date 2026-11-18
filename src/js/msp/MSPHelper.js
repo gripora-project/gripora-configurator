@@ -2,6 +2,7 @@ import { readAttitudeLimits, writeAttitudeLimits } from "@/js/AttitudeLimits.js"
 import { readFbusMuxConfig } from "@/js/FbusMux.js";
 import { readDriveConfig, readDriveStatus, writeDriveConfig } from "@/js/Drive.js";
 import { readDriveAidsConfig, readDriveAidsStatus, writeDriveAidsConfig } from "@/js/DriveAids.js";
+import { readDriftConfig, writeDriftConfig } from "@/js/Drift.js";
 import { readFwSpa, writeFwSpa } from "@/js/FwSpa.js";
 import { readLevelDamping, writeLevelDamping } from "@/js/LevelDamping.js";
 import { readSnapRelax, writeSnapRelax } from "@/js/SnapRelax.js";
@@ -811,6 +812,19 @@ MspHelper.prototype.process_data = function(dataHandler) {
                 }
                 break;
             }
+
+            case MSPCodes.MSP2_GRIPORA_DRIFT_CONFIG: {
+                const config = readDriftConfig(data);
+                FC.DRIFT_CONFIG.supported = !!config;
+                if (config) {
+                    Object.assign(FC.DRIFT_CONFIG, config);
+                }
+                break;
+            }
+
+            case MSPCodes.MSP2_GRIPORA_SET_DRIFT_CONFIG:
+                console.log('Drift config saved');
+                break;
 
             case MSPCodes.MSP2_GRIPORA_FBUS_MUX_CONFIG:
                 FC.FBUS_MUX = readFbusMuxConfig(data);
@@ -2454,6 +2468,10 @@ MspHelper.prototype.crunch = function(code) {
             writeDriveAidsConfig(buffer, FC.DRIVE_AIDS_CONFIG);
             break;
 
+        case MSPCodes.MSP2_GRIPORA_SET_DRIFT_CONFIG:
+            writeDriftConfig(buffer, FC.DRIFT_CONFIG);
+            break;
+
         case MSPCodes.MSP2_GRIPORA_SET_SRXL2_ESC_CONFIG: {
             // Same fields as the read, without its version byte.
             buffer.push16(FC.SRXL2_ESC_CONFIG.throttle_rate_hz)
@@ -3380,6 +3398,26 @@ MspHelper.prototype.loadDriveAidsStatus = async function()
 MspHelper.prototype.sendDriveAidsConfig = function()
 {
     const code = MSPCodes.MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG;
+    return new Promise((resolve) => {
+        MSP.send_message(code, this.crunch(code), false,
+            (response) => resolve(!!response && !response.unsupported && !response.crcError), true);
+    });
+};
+
+// Reads MSP2_GRIPORA_DRIFT_CONFIG. Firmware without it answers unsupported,
+// which leaves FC.DRIFT_CONFIG.supported false. Resolves to that flag.
+MspHelper.prototype.loadDriftConfig = async function()
+{
+    FC.DRIFT_CONFIG.supported = false;
+    await MSP.promise(MSPCodes.MSP2_GRIPORA_DRIFT_CONFIG);
+    return FC.DRIFT_CONFIG.supported;
+};
+
+// Sends FC.DRIFT_CONFIG. Resolves false when the FC refused it: it applies
+// none of the fields if any is out of range.
+MspHelper.prototype.sendDriftConfig = function()
+{
+    const code = MSPCodes.MSP2_GRIPORA_SET_DRIFT_CONFIG;
     return new Promise((resolve) => {
         MSP.send_message(code, this.crunch(code), false,
             (response) => resolve(!!response && !response.unsupported && !response.crcError), true);

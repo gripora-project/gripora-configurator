@@ -3,8 +3,8 @@ import { createRequire, register } from 'node:module';
 import test from 'node:test';
 import { pathToFileURL } from 'node:url';
 
-// The Virtual FC keeps the drive aids (ABS) per PID profile, as the firmware
-// does. It imports the app's FC state, so this loads it the way Vite would:
+// The Virtual FC keeps the drive aids (ABS) and the drift settings per PID
+// profile, as the firmware does. It imports the app's FC state, so this loads it the way Vite would:
 // the "@/..." alias, and .svelte.js modules compiled with the Svelte compiler.
 const require = createRequire(import.meta.url);
 const srcRoot = new URL('../../src/', import.meta.url).href;
@@ -168,4 +168,64 @@ test('profile copy and reset include the drive aids', () => {
     assert.equal(FC.DRIVE_AIDS_CONFIG.abs_mode, 0);
     selectProfile(0);
     assert.deepEqual(readAids(), tuned);
+});
+
+//// Drift mode, also per PID profile
+
+const { defaultDriftConfig, readDriftConfig, writeDriftConfig } = await import('../../src/js/Drift.js');
+
+function readDrift() {
+    const payload = getVirtualResponse(MSPCodes.MSP2_GRIPORA_DRIFT_CONFIG);
+    return readDriftConfig(new DataView(payload.buffer));
+}
+
+function setDrift(config) {
+    return getVirtualResponse(MSPCodes.MSP2_GRIPORA_SET_DRIFT_CONFIG, writeDriftConfig([], config));
+}
+
+const drifty = { gain: 150, allow: 90, limit: 70 };
+
+test('each PID profile has its own drift settings', () => {
+    applyVirtualConfig();
+    assert.equal(FC.DRIFT_CONFIG.supported, true);
+    assert.deepEqual(readDrift(), defaultDriftConfig());
+    assert.deepEqual(setDrift(drifty), new Uint8Array(0));
+    assert.deepEqual(readDrift(), drifty);
+
+    selectProfile(1);
+    assert.deepEqual(readDrift(), defaultDriftConfig());
+    assert.equal(FC.DRIFT_CONFIG.gain, 100);
+    selectProfile(0);
+    assert.deepEqual(readDrift(), drifty);
+    assert.equal(FC.DRIFT_CONFIG.allow, 90);
+});
+
+test('a refused drift SET changes nothing', () => {
+    applyVirtualConfig();
+    setDrift(drifty);
+    assert.equal(setDrift({ ...drifty, gain: 201 }), VIRTUAL_ERROR);
+    assert.equal(setDrift({ ...drifty, allow: 721 }), VIRTUAL_ERROR);
+    assert.equal(setDrift({ ...drifty, limit: 9 }), VIRTUAL_ERROR);
+    assert.equal(getVirtualResponse(MSPCodes.MSP2_GRIPORA_SET_DRIFT_CONFIG, [100, 30]), VIRTUAL_ERROR);
+    assert.deepEqual(readDrift(), drifty);
+});
+
+test('profile copy and reset include the drift settings; saving the PID profile keeps them', () => {
+    applyVirtualConfig();
+    setDrift(drifty);
+    getVirtualResponse(MSPCodes.MSP_SET_PID_PROFILE, []);
+    getVirtualResponse(MSPCodes.MSP_COPY_PROFILE, [0, 2, 0]);
+    selectProfile(2);
+    assert.deepEqual(readDrift(), drifty);
+    getVirtualResponse(MSPCodes.MSP_SET_RESET_CURR_PID);
+    assert.deepEqual(readDrift(), defaultDriftConfig());
+    selectProfile(0);
+    assert.deepEqual(readDrift(), drifty);
+});
+
+test('the Virtual FC offers the DRIFT mode (permanent id 68)', () => {
+    applyVirtualConfig();
+    const index = FC.AUX_CONFIG.indexOf('DRIFT');
+    assert.ok(index >= 0);
+    assert.equal(FC.AUX_CONFIG_IDS[index], 68);
 });
