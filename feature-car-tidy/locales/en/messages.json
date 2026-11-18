@@ -5670,6 +5670,42 @@
     "profilesDriveAidsSaveRejected": {
         "message": "The controller refused the drive aids settings (a value is out of range), so they were not changed."
     },
+    "profilesSectionLabelDrift": {
+        "message": "Drift"
+    },
+    "profilesDriftSummary": {
+        "message": "Put DRIFT on a switch on the Modes tab. While it is on, the steering wheel steers the wheels directly, as with GYRO OFF, and the gyro only catches over-rotation: it counter-steers against turn rate beyond the allowed rate, with no heading hold. Raise the allowed rate to hold more angle; the counter-steer limit caps how much lock the gyro adds. GYRO OFF and failsafe win over DRIFT. These settings belong to the profile selected above."
+    },
+    "profilesDrift_gain": {
+        "message": "Counter-steer gain"
+    },
+    "profilesDrift_gain_help": {
+        "message": "How hard the gyro counter-steers once the car rotates faster than the allowed rate. At 100 % it gives full lock 360 °/s past the allowance; 200 % gets there twice as soon, 0 % turns the counter-steer off."
+    },
+    "profilesDrift_allow": {
+        "message": "Allowed turn rate"
+    },
+    "profilesDrift_allow_help": {
+        "message": "Turn rate the gyro leaves alone, so the car can hold a slip angle. Raise it to hold more angle, lower it for the gyro to catch the car sooner."
+    },
+    "profilesDrift_limit": {
+        "message": "Counter-steer limit"
+    },
+    "profilesDrift_limit_help": {
+        "message": "The most lock the gyro adds, as a share of full lock. Lower it if the counter-steer snaps the car straight."
+    },
+    "profilesDriftPreview": {
+        "message": "Counter-steers from {{allow}} °/s; full lock at {{rate}} °/s."
+    },
+    "profilesDriftPreviewLimited": {
+        "message": "Counter-steers from {{allow}} °/s; reaches its {{limit}} % limit at {{rate}} °/s."
+    },
+    "profilesDriftPreviewOff": {
+        "message": "Gain 0 %: the gyro doesn't counter-steer, and DRIFT is the same as GYRO OFF."
+    },
+    "profilesDriftSaveRejected": {
+        "message": "The controller refused the drift settings (a value is out of range), so they were not changed."
+    },
     "motorsThrottleEndpoints": {
         "message": "Throttle Range"
     },
@@ -8199,6 +8235,12 @@
     "modeHelp LAUNCH": {
         "message": "Stages a launch for launch control (PID Profiles tab, Drive aids). Turn it on at the line with the throttle at neutral or braking; the first forward throttle launches the car. One launch per flip of the switch."
     },
+    "mode DRIFT": {
+        "message": "DRIFT"
+    },
+    "modeHelp DRIFT": {
+        "message": "Drift mode (PID Profiles tab, Drift): the steering wheel steers the wheels directly and the gyro only counter-steers turn rate beyond the allowed rate. GYRO OFF and failsafe win over it."
+    },
     "mode BEEPER": {
         "message": "BEEPER"
     },
@@ -9910,7 +9952,7 @@
         "message": "Optional"
     },
     "setupWizardModesOptionalHint": {
-        "message": "Add GYRO OFF if you want a switch that turns the gyro off, DRIVE AIDS OFF for one that turns ABS, traction control and launch control off, and LAUNCH for launch control."
+        "message": "Add GYRO OFF if you want a switch that turns the gyro off, DRIVE AIDS OFF for one that turns ABS, traction control and launch control off, LAUNCH for launch control, and DRIFT for drift mode."
     },
     "setupWizardModesArmMissing": {
         "message": "ARM isn't on a switch yet. Without it the motor can't be armed and the car can't drive."
@@ -9938,6 +9980,12 @@
     },
     "setupWizardModesHelp_launch": {
         "message": "Stages a launch for launch control: turn it on at the line, and the first pull of the trigger launches the car. Set launch control up on the PID Profiles tab, under Drive aids."
+    },
+    "setupWizardModes_drift": {
+        "message": "DRIFT"
+    },
+    "setupWizardModesHelp_drift": {
+        "message": "For drifting: the steering wheel steers the wheels directly and the gyro only catches over-rotation. Set it up on the PID Profiles tab, under Drift."
     },
     "setupWizardModesAssigned": {
         "message": "On a switch"
