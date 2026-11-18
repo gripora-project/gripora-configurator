@@ -2882,6 +2882,9 @@
     "receiverTelemetryGroup_RPM": {
         "message": "RPM"
     },
+    "receiverTelemetryGroup_DRIVE": {
+        "message": "Drive"
+    },
     "receiverTelemetryGroup_BATTERY": {
         "message": "Battery"
     },
@@ -3118,6 +3121,12 @@
     },
     "receiverTelemetrySensor_ARMING_DISABLE_FLAGS": {
         "message": "Arming Disable Flags"
+    },
+    "receiverTelemetrySensor_DRIVE_STATUS": {
+        "message": "Drive Status"
+    },
+    "receiverTelemetrySensor_DRIVE_SPEED": {
+        "message": "Wheel Speed"
     },
     "receiverTelemetrySensor_PID_PROFILE": {
         "message": "PID Profile"

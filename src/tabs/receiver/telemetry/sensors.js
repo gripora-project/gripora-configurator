@@ -106,7 +106,9 @@ export const TELEMETRY_SENSORS = {
   // 90 free (was arming flags, now in SYSTEM_STATUS)
   ARMING_DISABLE_FLAGS: 91,
   // 92 free (was heli rescue)
-  // 93, 94 free (were heli governor)
+  // Car drive state, in the slots of the removed heli governor sensors
+  DRIVE_STATUS: 93,
+  DRIVE_SPEED: 94,
   // 95-98 free (were PID/rates/battery/LED profile, now in SYSTEM_CONFIG)
 
   ADJFUNC: 99,

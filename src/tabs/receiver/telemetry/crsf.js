@@ -86,6 +86,10 @@ export function getCustomCrsfSensors() {
       sensors: [{ name: "MOTOR1SPEED" }, { name: "MOTOR2SPEED" }],
     },
     {
+      title: "DRIVE",
+      sensors: [{ name: "DRIVE_STATUS" }, { name: "DRIVE_SPEED" }],
+    },
+    {
       title: "BARO",
       sensors: [{ name: "ALTITUDE" }, { name: "VARIOMETER" }],
     },
