@@ -1,5 +1,5 @@
-// Balancing two servos that drive the same control surface (e.g. two servos
-// on one aileron) with the balanced servo's balance curve.
+// Balancing two servos that drive the same thing (e.g. two steering servos
+// on one front axle) with the balanced servo's balance curve.
 //
 // Two servos never track each other exactly: horns, linkages and the servos
 // themselves differ a little, so at some points of the travel one pushes
@@ -16,8 +16,9 @@ import { ServoBalanceCurve } from "./ServoBalanceCurve.js";
 // SERVO_FLAG_REVERSED
 const FLAG_REVERSE = 1;
 
-// Stabilized roll/pitch/yaw and the flap channel (MIXER_IN_RC_CHANNEL_AUX1):
-// the inputs that move a surface, in the order a shared one is looked for.
+// Stabilized roll/pitch/yaw and AUX1 (MIXER_IN_RC_CHANNEL_AUX1): the inputs
+// a shared one is looked for in, in this order. Only yaw (steering) moves on
+// a car; the rest are kept so a hand-built mix still finds its direction.
 const SURFACE_INPUTS = [1, 2, 3, 13];
 
 // Point counts the tool offers: the ends only (a straight offset or tilt),
@@ -39,8 +40,8 @@ function ruleSign(rule) {
 
 // Whether servos `a` and `b` (0-based) are mixed the same way: the same inputs
 // with the same weights, perhaps all of opposite sign. Two servos on one
-// surface are; a left and a right aileron (opposite roll, same pitch on a
-// flaperon) are not.
+// steering linkage are; a front and a rear steering servo at different
+// weights are not.
 export function sameMix(rules, a, b) {
   const key = (servo, sign) =>
     rulesFor(rules, servo)
@@ -53,7 +54,7 @@ export function sameMix(rules, a, b) {
 }
 
 // Servos (0-based) mixed the same way as `servo`: the likely other servos on
-// its surface.
+// its linkage.
 export function referenceCandidates(rules, servo, servoCount) {
   return Array.from({ length: servoCount }, (_, i) => i).filter(
     (i) => i !== servo && sameMix(rules, servo, i),
@@ -62,7 +63,7 @@ export function referenceCandidates(rules, servo, servoCount) {
 
 // +1 when the mix moves `reference` the same way as `servo`, -1 when it has
 // the opposite weight (mounted mirrored and reversed in the mix rather than
-// with the servo's Reverse flag), from the first surface input they share.
+// with the servo's Reverse flag), from the first input they share.
 // null when they share none.
 export function mixDirection(rules, servo, reference) {
   const own = rulesFor(rules, servo);

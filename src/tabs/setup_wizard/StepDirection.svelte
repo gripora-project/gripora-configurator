@@ -6,7 +6,7 @@
 
   import LivePulse from "./LivePulse.svelte";
   import RadioIcon from "./RadioIcon.svelte";
-  import { primaryAxis, SERVO_FLAG_REVERSE } from "./surfaces.js";
+  import { SERVO_FLAG_REVERSE } from "./surfaces.js";
 
   const wiz = getContext("setupWizard");
 
@@ -40,12 +40,7 @@
   function hold(check) {
     active = check.key;
     holding = true;
-    wiz.holdAxes({
-      roll: 0,
-      pitch: 0,
-      yaw: 0,
-      [check.axis]: check.sign * deflection,
-    });
+    wiz.holdAxes({ [check.axis]: check.sign * deflection });
   }
 
   function setDeflection(value) {
@@ -55,7 +50,7 @@
     if (check) hold(check);
   }
 
-  // Lets the surfaces go but keeps the check open for answering.
+  // Lets the servos go but keeps the check open for answering.
   function stop() {
     holding = false;
     wiz.releaseAxes();
@@ -158,7 +153,6 @@
         <tbody>
           {#each wiz.surfaces.filter( (s) => movedBy(s, check), ) as surface (surface.servo)}
             {@const state = answers[`${check.key}:${surface.servo}`]}
-            {@const ownAxis = primaryAxis(surface) === check.axis}
             <tr>
               <td class="name">{wiz.surfaceLabel(surface)}</td>
               <td><LivePulse servo={surface.servo} /></td>
@@ -172,14 +166,12 @@
                 >
                   {$i18n.t("setupWizardDirectionCorrect")}
                 </button>
-                {#if ownAxis}
-                  <button
-                    class="btn"
-                    onclick={() => answer(check, surface, false)}
-                  >
-                    {$i18n.t("setupWizardDirectionWrong")}
-                  </button>
-                {/if}
+                <button
+                  class="btn"
+                  onclick={() => answer(check, surface, false)}
+                >
+                  {$i18n.t("setupWizardDirectionWrong")}
+                </button>
               </td>
               <td class="state">
                 {#if state === "ok"}
@@ -187,10 +179,6 @@
                 {:else if state === "fixed"}
                   <span class="good"
                     >{$i18n.t("setupWizardDirectionReversed")}</span
-                  >
-                {:else if !ownAxis}
-                  <span class="muted"
-                    >{$i18n.t("setupWizardDirectionMixedHint")}</span
                   >
                 {/if}
               </td>

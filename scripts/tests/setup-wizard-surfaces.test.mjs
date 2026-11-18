@@ -1,52 +1,46 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
-    surfacesFromRules, primaryAxis, outputForAxis, servoSide,
-    travelReach, maxScale,
+    surfacesFromRules, outputForAxis, servoSide, servosPastCount,
+    travelReach, outputTravelReach, maxScale,
 } from '../../src/tabs/setup_wizard/surfaces.js';
 import { STYLES, applyStyle, matchingStyle } from '../../src/tabs/setup_wizard/styles.js';
 
-const SET = 1, ADD = 2;
-const rule = (oper, src, dst, weight, weightNeg = weight) => ({ oper, src, dst, weight, weightNeg });
+const SET = 1, ADD = 2, MUL = 3;
+const ROLL = 1, PITCH = 2, YAW = 3, THROTTLE = 4, AUX1 = 13;
+const rule = (oper, src, dst, weight, weightNeg = weight) => ({ oper, src, dst, weight, weightNeg, offset: 0 });
 const servo = (overrides = {}) => ({ mid: 1520, min: -500, max: 500, rneg: 500, rpos: 500, flags: 0, ...overrides });
-const gains = { roll: 1, pitch: 1, yaw: 1 };
+const gains = { yaw: 1 };
 
-test('conventional layout names each surface from its axes', () => {
+test('servos moved by stabilized yaw are steering; other inputs are not servos to set up', () => {
     const rules = [
-        rule(SET, 1, 1, 1000), rule(SET, 1, 2, -1000),
-        rule(SET, 2, 3, 1000), rule(SET, 3, 4, 1000),
-        rule(SET, 4, 27, 1000), // throttle to a motor, not a servo
+        rule(SET, YAW, 1, 1000), rule(SET, YAW, 2, -500),
+        rule(SET, ROLL, 3, 1000), rule(SET, PITCH, 4, 1000), rule(SET, AUX1, 5, 1000),
+        rule(SET, THROTTLE, 27, 1000), // throttle to the ESC, not a servo
     ];
     const surfaces = surfacesFromRules(rules, 8);
-    assert.deepEqual(surfaces.map((s) => [s.servo, s.kind]),
-        [[0, 'aileron'], [1, 'aileron'], [2, 'elevator'], [3, 'rudder']]);
-    assert.equal(primaryAxis(surfaces[0]), 'roll');
-    assert.equal(primaryAxis(surfaces[3]), 'yaw');
+    assert.deepEqual(surfaces.map((s) => [s.servo, s.kind]), [[0, 'steering'], [1, 'steering']]);
+    assert.equal(surfaces[1].axes.yaw.pos, -0.5);
+    assert.deepEqual(Object.keys(surfaces[0].axes), ['yaw']);
 });
 
-test('elevon sums pitch and roll and clips at full deflection on both', () => {
-    const rules = [rule(SET, 2, 1, 1000), rule(ADD, 1, 1, 1000)];
-    const [elevon] = surfacesFromRules(rules, 8);
-    assert.equal(elevon.kind, 'elevon');
-    assert.equal(primaryAxis(elevon), 'pitch');
-    const reach = travelReach(elevon, servo({ max: 450, min: -450 }), gains);
-    assert.equal(reach.pos.us, 1000);
-    assert.ok(Math.abs(reach.pos.fraction - 1000 / 450) < 1e-9);
-    assert.ok(reach.neg.fraction > 2);
+test('a later SET replaces earlier rules on the same output, ADD adds on', () => {
+    const [replaced] = surfacesFromRules([rule(SET, YAW, 1, 1000), rule(SET, YAW, 1, 600)], 8);
+    assert.equal(replaced.axes.yaw.pos, 0.6);
+    const [added] = surfacesFromRules([rule(SET, YAW, 1, 600), rule(ADD, YAW, 1, 200)], 8);
+    assert.ok(Math.abs(added.axes.yaw.pos - 0.8) < 1e-9);
 });
 
-test('a later SET replaces earlier rules on the same output and axis', () => {
-    const rules = [rule(SET, 2, 1, 1000), rule(SET, 2, 1, 600)];
-    const [surface] = surfacesFromRules(rules, 8);
-    assert.equal(surface.axes.pitch.pos, 0.6);
+test('a steering servo past the servos in use is reported', () => {
+    const rules = [rule(SET, YAW, 1, 1000), rule(SET, YAW, 5, 1000), rule(SET, ROLL, 6, 1000)];
+    assert.deepEqual(servosPastCount(rules, 4, 24), [5]);
 });
 
 test('differential weights give different reach per side', () => {
-    const rules = [rule(SET, 1, 1, 1000, 500)];
-    const [aileron] = surfacesFromRules(rules, 8);
-    assert.equal(outputForAxis(aileron, 'roll', 1, gains), 1);
-    assert.equal(outputForAxis(aileron, 'roll', -1, gains), -0.5);
-    const reach = travelReach(aileron, servo(), gains);
+    const [steering] = surfacesFromRules([rule(SET, YAW, 1, 1000, 500)], 8);
+    assert.equal(outputForAxis(steering, 'yaw', 1, gains), 1);
+    assert.equal(outputForAxis(steering, 'yaw', -1, gains), -0.5);
+    const reach = travelReach(steering, servo(), gains);
     assert.equal(reach.pos.us, 500);
     assert.equal(reach.neg.us, 250);
 });
@@ -54,16 +48,25 @@ test('differential weights give different reach per side', () => {
 test('servo reverse moves the output to the other side', () => {
     assert.equal(servoSide(0.8, false), 'pos');
     assert.equal(servoSide(0.8, true), 'neg');
-    const [aileron] = surfacesFromRules([rule(SET, 1, 1, 1000, 500)], 8);
-    const reach = travelReach(aileron, servo({ flags: 1 }), gains);
+    const [steering] = surfacesFromRules([rule(SET, YAW, 1, 1000, 500)], 8);
+    const reach = travelReach(steering, servo({ flags: 1 }), gains);
     assert.equal(reach.pos.us, 250);
     assert.equal(reach.neg.us, 500);
 });
 
-test('axis gain scales the reach', () => {
-    const [elevator] = surfacesFromRules([rule(SET, 2, 1, 1000)], 8);
-    const reach = travelReach(elevator, servo(), { ...gains, pitch: 0.5 });
-    assert.equal(reach.pos.fraction, 0.5);
+test('axis gain scales the reach, and a limit inside full steering is past 1', () => {
+    const [steering] = surfacesFromRules([rule(SET, YAW, 1, 1000)], 8);
+    assert.equal(travelReach(steering, servo(), { yaw: 0.5 }).pos.fraction, 0.5);
+    const tight = travelReach(steering, servo({ max: 400, min: -400 }), gains);
+    assert.equal(tight.pos.fraction, 1.25);
+});
+
+test('output travel is only estimated for a plain steering mix', () => {
+    const config = servo();
+    assert.equal(outputTravelReach([rule(SET, THROTTLE, 27, 1000)], 1, config, gains), null);
+    assert.equal(outputTravelReach([rule(SET, YAW, 1, 1000)], 1, config, gains).estimated, true);
+    assert.equal(outputTravelReach([rule(SET, YAW, 1, 1000), rule(MUL, AUX1, 1, 500)], 1, config, gains).estimated, false);
+    assert.equal(outputTravelReach([rule(SET, AUX1, 1, 1000)], 1, config, gains).estimated, false);
 });
 
 test('largest scale that keeps full stick inside the binding limit', () => {

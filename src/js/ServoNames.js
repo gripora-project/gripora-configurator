@@ -33,21 +33,14 @@ export function servoName(index) {
 // Every servo the firmware has a name for
 const SERVO_COUNT = 24;
 
-// Short name of each surface kind (surfaces.js surfaceKind()). A servo on
-// yaw alone is a car's steering.
+// Short name of each servo kind (surfaces.js surfacesFromRules())
 const SURFACE_ABBREVIATIONS = {
-  aileron: "AIL",
-  flaperon: "FLPRN",
-  elevon: "ELEVON",
-  ruddervator: "VTAIL",
-  elevator: "ELEV",
-  rudder: "STEER",
-  flap: "FLAP",
-  mixed: "MIX",
+  steering: "STEER",
 };
 
-// Names earlier versions generated, still cleared when the mix moves on
-const LEGACY_NAMES = ["RUDDER"];
+// Names earlier versions generated (the aircraft surface names among them),
+// still cleared when the mix moves on
+const LEGACY_NAMES = ["RUDDER", "AIL", "FLPRN", "ELEVON", "VTAIL", "ELEV", "FLAP", "MIX"];
 
 // Thrust-vector mixer inputs (MIXER_IN_STABILIZED_TV_ROLL/PITCH/YAW)
 const TV_NAMES = { 27: "TV ROLL", 28: "TV PITCH", 29: "TV YAW" };
@@ -58,10 +51,9 @@ const GENERATED_NAME = new RegExp(
   `^((L |R |F )?(${[...Object.values(SURFACE_ABBREVIATIONS), ...LEGACY_NAMES].join("|")})( \\d+)?|${Object.values(TV_NAMES).join("|")})$`,
 );
 
-// Names for the servos a mixer rule set drives, by 0-based servo: a pair of
-// one kind of surface is left and right (the wizards give the left one the
-// lower servo), one alone has no side, and more are numbered. A pair of
-// steering servos is front and rear (the car setup puts the front on S1).
+// Names for the servos a mixer rule set drives, by 0-based servo: one
+// steering servo alone has no side, a pair is front and rear (the car setup
+// puts the front on S1), and more are numbered.
 export function namesFromRules(rules) {
   const names = new Map();
 
@@ -71,11 +63,10 @@ export function namesFromRules(rules) {
     byKind.get(surface.kind).push(surface.servo);
   }
   for (const [kind, servos] of byKind) {
-    const abbr = SURFACE_ABBREVIATIONS[kind] ?? SURFACE_ABBREVIATIONS.mixed;
+    const abbr = SURFACE_ABBREVIATIONS[kind] ?? SURFACE_ABBREVIATIONS.steering;
     servos.forEach((servo, i) => {
       if (servos.length === 1) names.set(servo, abbr);
-      else if (servos.length === 2 && kind === "rudder") names.set(servo, `${i ? "R" : "F"} ${abbr}`);
-      else if (servos.length === 2) names.set(servo, `${i ? "R" : "L"} ${abbr}`);
+      else if (servos.length === 2) names.set(servo, `${i ? "R" : "F"} ${abbr}`);
       else names.set(servo, `${abbr} ${i + 1}`);
     });
   }

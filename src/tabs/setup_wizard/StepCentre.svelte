@@ -15,7 +15,7 @@
   const MID_WARN_US = 100;
 
   // Servo override at 0 puts each servo exactly at its Mid, as on the Servos
-  // tab: nothing from the mixer (gyro, offsets, flaps, curves) reaches it.
+  // tab: nothing from the mixer (gyro, offsets, curves) reaches it.
   // Released by the wizard when the step is left.
   onMount(() => {
     for (const surface of wiz.surfaces) {
@@ -103,9 +103,6 @@
 
       {#if far}
         <p class="warn-text">{$i18n.t("setupWizardCentreFarWarning")}</p>
-      {/if}
-      {#if surface.kind === "flap"}
-        <p class="muted">{$i18n.t("setupWizardCentreFlapHint")}</p>
       {/if}
     </section>
   {/each}
