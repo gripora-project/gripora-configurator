@@ -653,7 +653,8 @@ export function getVirtualResponse(code, requestData) {
     case MSPCodes.MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG: {
       const config = parseDriveAidsConfigRequest(requestData);
       if (!config || !isValidDriveAidsConfig(config)) return VIRTUAL_ERROR;
-      // A 9-byte request leaves traction control as it is
+      // A 9-byte request leaves traction control as it is, and one under 16
+      // bytes launch control
       Object.assign(pidSlots[FC.CONFIG.profile].driveAids, config);
       return new Uint8Array(0);
     }
@@ -1113,8 +1114,9 @@ export function applyVirtualConfig() {
     "BLACKBOX",
     "BLACKBOX ERASE",
     "DRIVE AIDS OFF",
+    "LAUNCH",
   ];
-  FC.AUX_CONFIG_IDS = [0, 27, 12, 36, 13, 52, 26, 31, 66];
+  FC.AUX_CONFIG_IDS = [0, 27, 12, 36, 13, 52, 26, 31, 66, 67];
 
   // Modes: ARM on AUX1 high, GYRO OFF on AUX2 high; the rest of the
   // MAX_MODE_ACTIVATION_CONDITION_COUNT slots unused, as the FC reports them.
@@ -1145,6 +1147,7 @@ export function applyVirtualConfig() {
   resetProfileSlots();
   FC.DRIVE_AIDS_CONFIG.supported = true;
   FC.DRIVE_AIDS_CONFIG.tc_supported = true;
+  FC.DRIVE_AIDS_CONFIG.lc_supported = true;
 
   FC.GAIN_CURVES = Array.from({ length: GainCurve.CURVE_COUNT }, () =>
     GainCurve.nullCurve(),

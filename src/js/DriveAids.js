@@ -1,9 +1,10 @@
 // Drive aids (firmware flight/drive_aids.c, pg/drive_aids.c): shape the
-// throttle/brake command before it reaches the ESC: timed ABS and timed
-// traction control, per PID profile. Later aids (speed-based steering) will
-// append their fields to the same messages. Next API version; support is
-// detected by whether MSP2_GRIPORA_DRIVE_AIDS_CONFIG answers with a payload,
-// and traction control by whether the reply carries its fields.
+// throttle/brake command before it reaches the ESC: timed ABS, timed
+// traction control and launch control, per PID profile. Later aids
+// (speed-based steering) will append their fields to the same messages. Next
+// API version; support is detected by whether MSP2_GRIPORA_DRIVE_AIDS_CONFIG
+// answers with a payload, and traction control and launch control by whether
+// the reply carries their fields.
 //
 // Pure helpers, so the MSP decoder, the Virtual FC and the tests share them.
 
@@ -18,9 +19,18 @@ export const DRIVE_TC_MODES = ["OFF", "RAMP"];
 export const DRIVE_TC_OFF = 0;
 export const DRIVE_TC_RAMP = 1;
 
+// drive_lc_mode (driveLcMode_e)
+export const DRIVE_LC_MODES = ["OFF", "SWITCH"];
+export const DRIVE_LC_OFF = 0;
+export const DRIVE_LC_SWITCH = 1;
+
 // pg/drive_aids.h limits
 export const DRIVE_TC_RAMP_TIME_MIN = 50; // ms, zero to full throttle
 export const DRIVE_TC_RAMP_TIME_MAX = 2000; // ms
+export const DRIVE_LC_THROTTLE_MIN = 10; // %, throttle allowed as a launch starts
+export const DRIVE_LC_THROTTLE_MAX = 100; // %
+export const DRIVE_LC_RAMP_TIME_MIN = 100; // ms, from lc_throttle to full
+export const DRIVE_LC_RAMP_TIME_MAX = 5000; // ms
 export const DRIVE_ABS_FREQ_MIN = 2; // Hz
 export const DRIVE_ABS_FREQ_MAX = 33; // Hz
 export const DRIVE_ABS_FLOOR_MAX = 100; // %
@@ -40,11 +50,16 @@ export const DRIVE_AIDS_FLAG_ABS_ARMED = 1 << 1;
 export const DRIVE_AIDS_FLAG_ABS_ACTIVE = 1 << 2;
 export const DRIVE_AIDS_FLAG_TC_ARMED = 1 << 3;
 export const DRIVE_AIDS_FLAG_TC_ACTIVE = 1 << 4;
+export const DRIVE_AIDS_FLAG_LC_STAGED = 1 << 5;
+export const DRIVE_AIDS_FLAG_LC_ACTIVE = 1 << 6;
 
 // Nine ABS U8s; firmware without traction control stops there.
 export const DRIVE_AIDS_CONFIG_LENGTH = 9;
-// Then U8 tc mode + U16 tc ramp time; later aids append theirs.
+// Then U8 tc mode + U16 tc ramp time; firmware without launch control stops
+// there.
 export const DRIVE_AIDS_CONFIG_TC_LENGTH = 12;
+// Then U8 lc mode + U8 lc throttle + U16 lc ramp time; later aids append theirs.
+export const DRIVE_AIDS_CONFIG_LC_LENGTH = 16;
 // U8 + S16 + S16
 export const DRIVE_AIDS_STATUS_LENGTH = 5;
 
@@ -62,6 +77,9 @@ export function defaultDriveAidsConfig() {
     abs_corner_hold: 0,
     tc_mode: DRIVE_TC_OFF,
     tc_ramp_time: 500,
+    lc_mode: DRIVE_LC_OFF,
+    lc_throttle: 50,
+    lc_ramp_time: 1000,
   };
 }
 
@@ -80,8 +98,9 @@ const ABS_FIELDS = [
 
 // MSP2_GRIPORA_DRIVE_AIDS_CONFIG reply. Reads the fields it knows and ignores
 // any a newer firmware appends. `tc_supported` says whether the reply had the
-// traction control fields (firmware without them sends 9 bytes). Null when
-// the payload is too short.
+// traction control fields (firmware without them sends 9 bytes),
+// `lc_supported` the launch control ones (firmware without them sends 12).
+// Null when the payload is too short.
 export function readDriveAidsConfig(data) {
   if (data.byteLength < DRIVE_AIDS_CONFIG_LENGTH) return null;
   const config = {};
@@ -93,25 +112,40 @@ export function readDriveAidsConfig(data) {
     config.tc_mode = data.readU8();
     config.tc_ramp_time = data.readU16();
   }
+  config.lc_supported = data.byteLength >= DRIVE_AIDS_CONFIG_LC_LENGTH;
+  if (config.lc_supported) {
+    config.lc_mode = data.readU8();
+    config.lc_throttle = data.readU8();
+    config.lc_ramp_time = data.readU16();
+  }
   return config;
 }
 
 // MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG request: the ABS fields, then the
 // traction control fields unless the FC doesn't have them (tc_supported
-// false). The firmware leaves traction control as it is on a 9-byte request.
+// false), then the launch control fields likewise (lc_supported false). The
+// firmware leaves traction control as it is on a 9-byte request, and launch
+// control on one under 16 bytes.
 export function writeDriveAidsConfig(buffer, config) {
   for (const field of ABS_FIELDS) {
     buffer.push8(config[field]);
   }
   if (config.tc_supported !== false) {
     buffer.push8(config.tc_mode).push16(config.tc_ramp_time);
+    if (config.lc_supported !== false) {
+      buffer
+        .push8(config.lc_mode)
+        .push8(config.lc_throttle)
+        .push16(config.lc_ramp_time);
+    }
   }
   return buffer;
 }
 
 // The checks msp.c makes on MSP2_GRIPORA_SET_DRIVE_AIDS_CONFIG: any value out
 // of range refuses the whole request. The traction control fields are checked
-// when the config has them (a request of at least 12 bytes).
+// when the config has them (a request of at least 12 bytes), the launch
+// control fields likewise (at least 16 bytes).
 export function isValidDriveAidsConfig(config) {
   const inRange = (v, min, max) => Number.isInteger(v) && v >= min && v <= max;
   return (
@@ -130,13 +164,26 @@ export function isValidDriveAidsConfig(config) {
           config.tc_ramp_time,
           DRIVE_TC_RAMP_TIME_MIN,
           DRIVE_TC_RAMP_TIME_MAX,
+        ))) &&
+    (config.lc_mode === undefined ||
+      (inRange(config.lc_mode, 0, DRIVE_LC_MODES.length - 1) &&
+        inRange(
+          config.lc_throttle,
+          DRIVE_LC_THROTTLE_MIN,
+          DRIVE_LC_THROTTLE_MAX,
+        ) &&
+        inRange(
+          config.lc_ramp_time,
+          DRIVE_LC_RAMP_TIME_MIN,
+          DRIVE_LC_RAMP_TIME_MAX,
         )))
   );
 }
 
 // The SET request as bytes (the Virtual FC gets a plain array) back into a
 // config, or null when it is shorter than the firmware accepts. Without the
-// traction control fields (under 12 bytes) the config has none.
+// traction control fields (under 12 bytes) the config has none, nor launch
+// control fields under 16 bytes.
 export function parseDriveAidsConfigRequest(bytes) {
   if (!bytes || bytes.length < DRIVE_AIDS_CONFIG_LENGTH) return null;
   const config = Object.fromEntries(
@@ -145,6 +192,11 @@ export function parseDriveAidsConfigRequest(bytes) {
   if (bytes.length >= DRIVE_AIDS_CONFIG_TC_LENGTH) {
     config.tc_mode = bytes[9];
     config.tc_ramp_time = bytes[10] | (bytes[11] << 8);
+  }
+  if (bytes.length >= DRIVE_AIDS_CONFIG_LC_LENGTH) {
+    config.lc_mode = bytes[12];
+    config.lc_throttle = bytes[13];
+    config.lc_ramp_time = bytes[14] | (bytes[15] << 8);
   }
   return config;
 }
@@ -160,6 +212,8 @@ export function readDriveAidsStatus(data) {
     abs_active: !!(flags & DRIVE_AIDS_FLAG_ABS_ACTIVE),
     tc_armed: !!(flags & DRIVE_AIDS_FLAG_TC_ARMED),
     tc_active: !!(flags & DRIVE_AIDS_FLAG_TC_ACTIVE),
+    lc_staged: !!(flags & DRIVE_AIDS_FLAG_LC_STAGED),
+    lc_active: !!(flags & DRIVE_AIDS_FLAG_LC_ACTIVE),
     throttle_in: data.read16(),
     throttle_out: data.read16(),
   };
@@ -172,7 +226,9 @@ export function writeDriveAidsStatus(buffer, status) {
         (status.abs_armed ? DRIVE_AIDS_FLAG_ABS_ARMED : 0) |
         (status.abs_active ? DRIVE_AIDS_FLAG_ABS_ACTIVE : 0) |
         (status.tc_armed ? DRIVE_AIDS_FLAG_TC_ARMED : 0) |
-        (status.tc_active ? DRIVE_AIDS_FLAG_TC_ACTIVE : 0),
+        (status.tc_active ? DRIVE_AIDS_FLAG_TC_ACTIVE : 0) |
+        (status.lc_staged ? DRIVE_AIDS_FLAG_LC_STAGED : 0) |
+        (status.lc_active ? DRIVE_AIDS_FLAG_LC_ACTIVE : 0),
     )
     .push16(status.throttle_in & 0xffff)
     .push16(status.throttle_out & 0xffff);
@@ -187,6 +243,8 @@ export function idleDriveAidsStatus() {
     abs_active: false,
     tc_armed: false,
     tc_active: false,
+    lc_staged: false,
+    lc_active: false,
     throttle_in: 0,
     throttle_out: 0,
   };

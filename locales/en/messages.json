@@ -5383,7 +5383,7 @@
         "message": "Drive aids"
     },
     "profilesDriveAidsSummary": {
-        "message": "ABS and traction control shape the throttle and brake you give before they reach the ESC. They belong to the profile selected above: each profile has its own, and switching profile switches them. A DRIVE AIDS OFF switch on the Modes tab turns them off from the transmitter. The ESC's mixer rule must take the stabilized throttle, as the car mixer preset does; a rule fed straight from the RC throttle bypasses them."
+        "message": "ABS, traction control and launch control shape the throttle and brake you give before they reach the ESC. They belong to the profile selected above: each profile has its own, and switching profile switches them. A DRIVE AIDS OFF switch on the Modes tab turns them off from the transmitter. The ESC's mixer rule must take the stabilized throttle, as the car mixer preset does; a rule fed straight from the RC throttle bypasses them."
     },
     "profilesAbsTitle": {
         "message": "ABS"
@@ -5516,6 +5516,54 @@
     },
     "profilesTcLiveLimiting": {
         "message": "Holding the throttle back"
+    },
+    "profilesLcTitle": {
+        "message": "Launch control"
+    },
+    "profilesLcMode": {
+        "message": "Mode"
+    },
+    "profilesLcModeHelp": {
+        "message": "A clean start from a standing line: the first pull of the trigger is held to the start throttle and rises to full over the ramp time, so the wheels don't spin up off the line. Once per LAUNCH switch flip; the brake and reverse are never touched."
+    },
+    "profilesLcMode_OFF": {
+        "message": "Off"
+    },
+    "profilesLcMode_SWITCH": {
+        "message": "LAUNCH switch"
+    },
+    "profilesLcModeHelp_OFF": {
+        "message": "The LAUNCH switch does nothing; the throttle goes to the ESC as you give it."
+    },
+    "profilesLcModeHelp_SWITCH": {
+        "message": "Put LAUNCH on a switch on the Modes tab. At the line, with the throttle at neutral or on the brake, turn LAUNCH on: the launch is staged and the brake works as usual. Your first forward throttle launches the car. The launch ends at the end of the ramp, when you let off or brake, or when LAUNCH goes off, and it runs once: turn LAUNCH off and on again for the next one. Turning LAUNCH on with the throttle already forward stages nothing. Traction control waits until the launch is over and carries on from there."
+    },
+    "profilesLc_lc_throttle": {
+        "message": "Start throttle"
+    },
+    "profilesLc_lc_throttle_help": {
+        "message": "The most throttle the car gets the moment it launches, however far you pull. Lower is gentler: try lower on a slippery surface, higher on high grip."
+    },
+    "profilesLc_lc_ramp_time": {
+        "message": "Ramp time"
+    },
+    "profilesLc_lc_ramp_time_help": {
+        "message": "How long the limit takes to rise from the start throttle to full. Longer is gentler off the line."
+    },
+    "profilesLcRampPreview": {
+        "message": "Launches at up to {{throttle}}% throttle, rising to full in {{seconds}} s."
+    },
+    "profilesLcLive": {
+        "message": "Launch control"
+    },
+    "profilesLcLiveIdle": {
+        "message": "Idle"
+    },
+    "profilesLcLiveStaged": {
+        "message": "Staged, waiting for throttle"
+    },
+    "profilesLcLiveLaunching": {
+        "message": "Launching"
     },
     "profilesAbsLiveTitle": {
         "message": "Live"
@@ -8080,7 +8128,13 @@
         "message": "DRIVE AIDS OFF"
     },
     "modeHelp DRIVE AIDS OFF": {
-        "message": "Turns the drive aids (ABS and traction control) off: the throttle and brake go to the ESC exactly as you give them. The gyro still steers."
+        "message": "Turns the drive aids (ABS, traction control and launch control) off: the throttle and brake go to the ESC exactly as you give them. The gyro still steers."
+    },
+    "mode LAUNCH": {
+        "message": "LAUNCH"
+    },
+    "modeHelp LAUNCH": {
+        "message": "Stages a launch for launch control (PID Profiles tab, Drive aids). Turn it on at the line with the throttle at neutral or braking; the first forward throttle launches the car. One launch per flip of the switch."
     },
     "mode BEEPER": {
         "message": "BEEPER"
@@ -9835,7 +9889,7 @@
         "message": "Optional"
     },
     "setupWizardModesOptionalHint": {
-        "message": "Add GYRO OFF if you want a switch that turns the gyro off, and DRIVE AIDS OFF for one that turns ABS and traction control off."
+        "message": "Add GYRO OFF if you want a switch that turns the gyro off, DRIVE AIDS OFF for one that turns ABS, traction control and launch control off, and LAUNCH for launch control."
     },
     "setupWizardModesArmMissing": {
         "message": "ARM isn't on a switch yet. Without it the motor can't be armed and the car can't drive."
@@ -9856,7 +9910,13 @@
         "message": "DRIVE AIDS OFF"
     },
     "setupWizardModesHelp_driveAidsOff": {
-        "message": "Turns ABS and traction control off: the throttle and brake go straight to the ESC. The gyro still steers."
+        "message": "Turns ABS, traction control and launch control off: the throttle and brake go straight to the ESC. The gyro still steers."
+    },
+    "setupWizardModes_launch": {
+        "message": "LAUNCH"
+    },
+    "setupWizardModesHelp_launch": {
+        "message": "Stages a launch for launch control: turn it on at the line, and the first pull of the trigger launches the car. Set launch control up on the PID Profiles tab, under Drive aids."
     },
     "setupWizardModesAssigned": {
         "message": "On a switch"
