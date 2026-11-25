@@ -2,9 +2,12 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 
 import {
+  centreFromSamples,
+  centreIsOff,
   mapFromDetected,
   movedChannel,
   orderLabel,
+  suggestedCentre,
 } from "../../src/tabs/setup_wizard/receiver.js";
 
 test("orderLabel names the common orders", () => {
@@ -38,4 +41,56 @@ test("movedChannel waits for a clear winner", () => {
 test("movedChannel ignores channels already found", () => {
   assert.equal(movedChannel([500, 30, 420, 0], [0]), 2);
   assert.equal(movedChannel([500, 0, 0, 0], [0]), -1);
+});
+
+// Samples are [steering, throttle] in us.
+
+test("centreFromSamples finds a 1520 us centre", () => {
+  const samples = [
+    [1519, 1520],
+    [1520, 1521],
+    [1521, 1519],
+  ];
+  assert.deepEqual(centreFromSamples(samples), { status: "ok", centre: 1520 });
+  assert.equal(centreIsOff(1520, 1500), true);
+  assert.equal(centreIsOff(1502, 1500), false);
+});
+
+test("centreFromSamples needs a signal and controls at rest", () => {
+  assert.deepEqual(centreFromSamples([]), { status: "noSignal" });
+  assert.deepEqual(centreFromSamples([[1500, 0]]), { status: "noSignal" });
+  assert.deepEqual(
+    centreFromSamples([
+      [1500, 1500],
+      [1500, 1530],
+    ]),
+    { status: "moving" },
+  );
+});
+
+test("centreFromSamples sees a trim off center", () => {
+  // Steering at 1520, throttle trimmed to 1540.
+  assert.deepEqual(centreFromSamples([[1520, 1540]]), {
+    status: "trim",
+    centre: 1530,
+  });
+  // Within CENTRE_AGREE_US is fine.
+  assert.equal(centreFromSamples([[1518, 1522]]).status, "ok");
+});
+
+test("suggestedCentre only for controls resting near the centre", () => {
+  assert.equal(suggestedCentre([[1520, 1520]], 1500), 1520);
+  // Already right.
+  assert.equal(suggestedCentre([[1501, 1500]], 1500), null);
+  // Held somewhere else, not at neutral.
+  assert.equal(suggestedCentre([[1590, 1590]], 1500), null);
+  // A trim off: Detect explains that, the hint stays quiet.
+  assert.equal(suggestedCentre([[1520, 1540]], 1500), null);
+});
+
+test("centreFromSamples refuses a centre outside the range", () => {
+  assert.deepEqual(centreFromSamples([[1700, 1700]]), {
+    status: "range",
+    centre: 1700,
+  });
 });
