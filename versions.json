@@ -18,6 +18,13 @@
       "type": "snapshot",
       "name": "0.0.5",
       "path": "./snapshot/0.0.5/"
+    },
+    {
+      "type": "branch",
+      "name": "feature-rx-centre",
+      "path": "./feature-rx-centre/",
+      "branch": "feature/rx-centre",
+      "date": "2026-11-25T04:14:35Z"
     }
   ]
 }
