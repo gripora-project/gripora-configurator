@@ -29,6 +29,17 @@
       "title": "Setup wizard: detect the stick center",
       "url": "https://github.com/gripora-project/gripora-configurator/pull/4",
       "draft": false
+    },
+    {
+      "type": "pr",
+      "name": "4",
+      "path": "./pr/4/",
+      "branch": "feature/rx-centre",
+      "date": "2026-11-25T04:19:54Z",
+      "number": 4,
+      "title": "Setup wizard: detect the stick center",
+      "url": "https://github.com/gripora-project/gripora-configurator/pull/4",
+      "draft": false
     }
   ]
 }
