@@ -25,17 +25,6 @@
       "path": "./feature-rx-centre/",
       "branch": "feature/rx-centre",
       "date": "2026-11-25T08:54:35Z"
-    },
-    {
-      "type": "pr",
-      "name": "4",
-      "path": "./pr/4/",
-      "branch": "feature/rx-centre",
-      "date": "2026-11-25T08:55:20Z",
-      "number": 4,
-      "title": "Setup wizard: detect the stick center",
-      "url": "https://github.com/gripora-project/gripora-configurator/pull/4",
-      "draft": false
     }
   ]
 }
